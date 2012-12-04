@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Mavo.Asset.Models;
+using Mavo.Assets.Models;
 
-namespace Mavo.Asset
+namespace Mavo.Assets
 {
     public static class AuthConfig
     {

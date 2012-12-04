@@ -6,10 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebMatrix.WebData;
-using Mavo.Asset.Filters;
-using Mavo.Asset.Models;
+using Mavo.Assets.Filters;
+using Mavo.Assets.Models;
 
-namespace Mavo.Asset.Controllers
+namespace Mavo.Assets.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]

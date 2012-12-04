@@ -4,9 +4,9 @@ using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
-using Mavo.Asset.Models;
+using Mavo.Assets.Models;
 
-namespace Mavo.Asset.Filters
+namespace Mavo.Assets.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public sealed class InitializeSimpleMembershipAttribute : ActionFilterAttribute
@@ -25,11 +25,11 @@ namespace Mavo.Asset.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<AssetContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new AssetContext())
                     {
                         if (!context.Database.Exists())
                         {
@@ -38,7 +38,7 @@ namespace Mavo.Asset.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "Id", "Email", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "Users", "Id", "Email", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

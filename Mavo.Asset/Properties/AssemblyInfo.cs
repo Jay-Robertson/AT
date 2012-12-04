@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mavo.Asset")]
+[assembly: AssemblyTitle("Mavo.Assets")]
 [assembly: AssemblyDescription("Mavo Asset Tracking System")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Mavo.Asset")]
+[assembly: AssemblyProduct("Mavo.Assets")]
 [assembly: AssemblyCopyright("Copyright © Mavo, Inc & Apex Online Development, Inc. 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

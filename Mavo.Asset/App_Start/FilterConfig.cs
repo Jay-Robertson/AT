@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace Mavo.Asset
+namespace Mavo.Assets
 {
     public class FilterConfig
     {

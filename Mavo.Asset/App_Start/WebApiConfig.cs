@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace Mavo.Asset
+namespace Mavo.Assets
 {
     public static class WebApiConfig
     {

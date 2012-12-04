@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Mavo.Asset.Controllers
+namespace Mavo.Assets.Controllers
 {
     public class HomeController : Controller
     {

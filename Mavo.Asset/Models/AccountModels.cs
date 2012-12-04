@@ -6,22 +6,12 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 
-namespace Mavo.Asset.Models
+namespace Mavo.Assets.Models
 {
-    public class UsersContext : DbContext
+    [Table("Users")]
+    public class User
     {
-        public UsersContext() : base("DefaultConnection")
-        {
-        }
-        
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
-
-    [Table("UserProfile")]
-    public class UserProfile
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string EmployeeId { get; set; }
         public string Email { get; set; }
