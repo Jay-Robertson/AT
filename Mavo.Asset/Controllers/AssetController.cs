@@ -9,14 +9,14 @@ using Mavo.Assets.Models;
 
 namespace Mavo.Assets.Controllers
 {
-    public class AssetController : Controller
+    public partial class AssetController : Controller
     {
         private AssetContext db = new AssetContext();
 
         //
         // GET: /Asset/
 
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View(db.Assets.ToList());
         }
@@ -24,7 +24,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Asset/Details/5
 
-        public ActionResult Details(int id = 0)
+        public virtual ActionResult Details(int id = 0)
         {
             Asset asset = db.Assets.Find(id);
             if (asset == null)
@@ -37,7 +37,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Asset/Create
 
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             return View();
         }
@@ -46,7 +46,7 @@ namespace Mavo.Assets.Controllers
         // POST: /Asset/Create
 
         [HttpPost]
-        public ActionResult Create(Asset asset)
+        public virtual ActionResult Create(Asset asset)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Asset/Edit/5
 
-        public ActionResult Edit(int id = 0)
+        public virtual ActionResult Edit(int id = 0)
         {
             Asset asset = db.Assets.Find(id);
             if (asset == null)
@@ -75,7 +75,7 @@ namespace Mavo.Assets.Controllers
         // POST: /Asset/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Asset asset)
+        public virtual ActionResult Edit(Asset asset)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Asset/Delete/5
 
-        public ActionResult Delete(int id = 0)
+        public virtual ActionResult Delete(int id = 0)
         {
             Asset asset = db.Assets.Find(id);
             if (asset == null)
@@ -103,7 +103,7 @@ namespace Mavo.Assets.Controllers
         // POST: /Asset/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int id)
         {
             Asset asset = db.Assets.Find(id);
             db.Assets.Remove(asset);

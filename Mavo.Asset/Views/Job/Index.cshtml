@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "List :: Job";
+}
+
+@section LeftNav
+{
+   @{Html.RenderPartial(MVC.Job.Views._JobSidebar, (Mavo.Assets.Models.ViewModel.LeftNavViewModel)ViewBag.JobsReadyToPick);}
+}

@@ -1,0 +1,162 @@
+﻿@model Mavo.Assets.Models.Job
+@{
+    string action = "/job/create";
+    if (Model != null)
+    {
+        ViewBag.Title = "Edit :: " + Model.Name;
+        action = "/job/edit/" + Model.Id;
+    }
+    else
+    {
+        ViewBag.Title = "Create :: Job";
+    }
+}
+
+@section LeftNav
+{
+    @{Html.RenderPartial(MVC.Job.Views._JobSidebar, (Mavo.Assets.Models.ViewModel.LeftNavViewModel)ViewBag.JobsReadyToPick);}
+}
+
+<h1>@ViewBag.Action Job</h1>
+@using (Html.BeginForm(MVC.Job.Edit(Model), FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x => x.Id)
+    <fieldset>
+        <div class="well">
+            <legend>Job Details</legend>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Name)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Customer">Customer:</label>
+                <div class="controls">
+                    @Html.DropDownList("Customer", ((IList<Mavo.Assets.Models.Customer>)ViewBag.Customers).Select(x => new SelectListItem()
+                   {
+                       Value = x.Id.ToString(),
+                       Text = x.Name,
+                       Selected = Model == null || Model.Customer == null ? false : x.Id == Model.Customer.Id
+                   }), string.Empty)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.JobNumber, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.JobNumber)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.ProjectManager, new { @class = "control-label" })
+                <div class="controls">
+                    @*@Html.EditorFor(x => x.ProjectManager)*@
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.JobSiteName, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.JobSiteName)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Status, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Status)
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="well">
+            <legend>Location</legend>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.Address1, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.Address1)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.City, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.City)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.State, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.State)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.ZipCode, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.ZipCode)
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="well">
+            <legend>Contract Details</legend>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.PickupTime, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.PickupTime)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.Foreman, new { @class = "control-label" })
+                <div class="controls">
+                    @*@Html.EditorFor(x => x.Foreman)*@
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.ContractDate, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.ContractDate)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.EstimatedCompletionDate, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.EstimatedCompletionDate)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.ContractNumber, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.ContractNumber)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.ContractAmount, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.ContractAmount)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Description, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.TextAreaFor(x => x.Description)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.ForemanNote, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.TextAreaFor(x => x.ForemanNote)
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="row-fluid">
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    </div>
+}

@@ -19,6 +19,9 @@ namespace Mavo.Assets.Models
         public DbSet<AssetItem> AssetItems { get; set; }
         public DbSet<Template> Templates { get; set; }
         public DbSet<TemplateAsset> TemplateAssets { get; set; }
+
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 
     public enum AssetKind
@@ -65,6 +68,72 @@ namespace Mavo.Assets.Models
         public Template Template { get; set; }
         public Asset Asset { get; set; }
         public int Quantity { get; set; }
+    }
+
+    [Table("Jobs")]
+    public class Job
+    {
+        [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage="Job Name is Required")]
+        public string Name { get; set; }
+
+        [Required]
+        public string JobNumber { get; set; }
+        [Required]
+        public string JobSiteName { get; set; }
+
+        [Required]
+        public Address Address { get; set; }
+
+        public string ContractNumber { get; set; }
+        public decimal? ContractAmount { get; set; }
+        public string Description { get; set; }
+        public string ForemanNote { get; set; }
+
+        public Customer Customer { get; set; }
+        public User ProjectManager { get; set; }
+        public JobStatus Status { get; set; }
+        public DateTime PickupTime { get; set; }
+        public DateTime ContractDate { get; set; }
+        public DateTime EstimatedCompletionDate { get; set; }
+
+
+        public enum JobStatus
+        {
+            New,
+            Started,
+            Completed
+        }
+
+        public User Foreman { get; set; }
+    }
+
+    [ComplexType]
+    public class Address
+    {
+        [Required]
+        public string Address1 { get; set; }
+
+        public string Address2 { get; set; }
+        [Required]
+        public string City { get; set; }
+        [Required]
+        public string State { get; set; }
+        [Required]
+        public string ZipCode { get; set; }
+     
+    }
+
+    [Table("Customers")]
+    public class Customer
+    {
+        [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
     }
 }
 
