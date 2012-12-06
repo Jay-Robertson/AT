@@ -54,7 +54,7 @@
                    {
                        Value = x.Id.ToString(),
                        Text = String.Format("{0}, {1}",x.LastName,x.FirstName),
-                       Selected = Model == null || Model.Customer == null ? false : x.Id == Model.Customer.Id
+                       Selected = Model == null || Model.ProjectManager == null ? false : x.Id == Model.ProjectManager.Id
                    }), string.Empty)
                 </div>
             </div>
@@ -120,7 +120,7 @@
                    {
                        Value = x.Id.ToString(),
                        Text = String.Format("{0}, {1}",x.LastName,x.FirstName),
-                       Selected = Model == null || Model.Customer == null ? false : x.Id == Model.Customer.Id
+                       Selected = Model == null || Model.Foreman == null ? false : x.Id == Model.Foreman.Id
                    }), string.Empty)
                 </div>
             </div>

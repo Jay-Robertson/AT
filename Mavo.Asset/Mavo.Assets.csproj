@@ -198,6 +198,10 @@
     <Compile Include="Migrations\201212061559304_UserRoleMigration.Designer.cs">
       <DependentUpon>201212061559304_UserRoleMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201212061641125_DeScopedJobStatus.cs" />
+    <Compile Include="Migrations\201212061641125_DeScopedJobStatus.Designer.cs">
+      <DependentUpon>201212061641125_DeScopedJobStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
@@ -334,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212061559304_UserRoleMigration.resx">
       <DependentUpon>201212061559304_UserRoleMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212061641125_DeScopedJobStatus.resx">
+      <DependentUpon>201212061641125_DeScopedJobStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

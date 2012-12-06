@@ -48,7 +48,7 @@ namespace Mavo.Assets.Data
 
         public List<Job> GetReadyJobs()
         {
-            return Context.Jobs.Where(x => x.PickupTime >= DateTime.Now).ToList();
+            return Context.Jobs.Where(x => x.Status == JobStatus.ReadyToPick).ToList();
         }
 
 

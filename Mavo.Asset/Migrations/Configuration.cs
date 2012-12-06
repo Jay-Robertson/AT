@@ -42,7 +42,8 @@ namespace Mavo.Assets.Migrations
                     JobSiteName = "Job Site 1",
                     PickupTime = DateTime.Now.AddDays(2),
                     ProjectManager = new User() { Id = 1, FirstName = "Scott", LastName = "ProjectManager", Email = "scott@redbranchsoftware.com", Role = UserRole.ProjectManager | UserRole.Foreman },
-                    Name = "Test Job"
+                    Name = "Test Job",
+                    Status = JobStatus.ReadyToPick
                 }
             );
         }

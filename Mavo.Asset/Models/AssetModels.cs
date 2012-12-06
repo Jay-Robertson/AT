@@ -69,7 +69,13 @@ namespace Mavo.Assets.Models
         public Asset Asset { get; set; }
         public int Quantity { get; set; }
     }
-
+    public enum JobStatus
+    {
+        New,
+        Started,
+        Completed,
+        ReadyToPick
+    }
     [Table("Jobs")]
     public class Job
     {
@@ -100,12 +106,7 @@ namespace Mavo.Assets.Models
         public DateTime EstimatedCompletionDate { get; set; }
 
 
-        public enum JobStatus
-        {
-            New,
-            Started,
-            Completed
-        }
+
 
         public User Foreman { get; set; }
     }
