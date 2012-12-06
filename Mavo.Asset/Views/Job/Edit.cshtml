@@ -50,7 +50,12 @@
             <div class="control-group">
                 @Html.LabelFor(x => x.ProjectManager, new { @class = "control-label" })
                 <div class="controls">
-                    @*@Html.EditorFor(x => x.ProjectManager)*@
+                   @Html.DropDownList("ProjectManager", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
+                   {
+                       Value = x.Id.ToString(),
+                       Text = String.Format("{0}, {1}",x.LastName,x.FirstName),
+                       Selected = Model == null || Model.Customer == null ? false : x.Id == Model.Customer.Id
+                   }), string.Empty)
                 </div>
             </div>
             <div class="control-group">
@@ -111,7 +116,12 @@
             <div class="control-group">
                 @Html.LabelFor(x => x.Foreman, new { @class = "control-label" })
                 <div class="controls">
-                    @*@Html.EditorFor(x => x.Foreman)*@
+                     @Html.DropDownList("Foreman", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
+                   {
+                       Value = x.Id.ToString(),
+                       Text = String.Format("{0}, {1}",x.LastName,x.FirstName),
+                       Selected = Model == null || Model.Customer == null ? false : x.Id == Model.Customer.Id
+                   }), string.Empty)
                 </div>
             </div>
 

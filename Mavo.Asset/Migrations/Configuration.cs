@@ -15,11 +15,6 @@ namespace Mavo.Assets.Migrations
 
         protected override void Seed(Mavo.Assets.Models.AssetContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
             context.Assets.AddOrUpdate(
               new Asset { Id = 1, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test Asset", Serial = "1234" }
             );
@@ -42,10 +37,11 @@ namespace Mavo.Assets.Migrations
                     ContractDate = DateTime.Now.AddDays(100),
                     EstimatedCompletionDate = DateTime.Now.AddYears(1),
                     ForemanNote = "This is a foreman note",
+                    Foreman = new User() { FirstName = "Test", LastName = "Foreman", Email = "test@forman.com", EmployeeId = "12a", Role = UserRole.Foreman },
                     JobNumber = "4321",
                     JobSiteName = "Job Site 1",
                     PickupTime = DateTime.Now.AddDays(2),
-                    ProjectManager = new User() { Id = 1, Email = "scott@redbranchsoftware.com" },
+                    ProjectManager = new User() { Id = 1, FirstName = "Scott", LastName = "ProjectManager", Email = "scott@redbranchsoftware.com", Role = UserRole.ProjectManager | UserRole.Foreman },
                     Name = "Test Job"
                 }
             );

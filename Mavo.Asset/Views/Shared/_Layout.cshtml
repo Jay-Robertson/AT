@@ -59,15 +59,16 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
         /*
-  * Form Validation
-  * This script will set Bootstrap error classes when form.submit is called.
-  * The errors are produced by the MVC unobtrusive validation.
-  */
+        * Form Validation
+        * This script will set Bootstrap error classes when form.submit is called.
+        * The errors are produced by the MVC unobtrusive validation.
+        */
         $(function () {
             $('form').submit(function () {
                 $(this).find('div.control-group').each(function () {
@@ -104,6 +105,16 @@
             });
         }();
         /* End Form Validation */
+
+
+        $(document).ready(function () {
+            $(".date").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy',
+                gotoCurrent: true
+            });
+        });
     </script>
 
 </body>

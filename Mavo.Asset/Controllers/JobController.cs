@@ -110,6 +110,8 @@ namespace Mavo.Assets.Controllers
         private void SetListsForCrud(Job job)
         {
             ViewBag.Customers = Repo.GetCustomers();
+            ViewBag.Foremen = Repo.GetForemen();
+            ViewBag.ProjectManagers = Repo.GetProjectManagers();
             ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Repo.GetReadyJobs() };
 
         }

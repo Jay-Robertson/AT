@@ -14,6 +14,10 @@ namespace Mavo.Assets.Data
          List<Customer> GetCustomers();
 
          List<Job> GetReadyJobs();
+
+         List<User> GetForemen();
+
+         List<User> GetProjectManagers();
     }
     public class Repository : IRepository
     {
@@ -45,6 +49,17 @@ namespace Mavo.Assets.Data
         public List<Job> GetReadyJobs()
         {
             return Context.Jobs.Where(x => x.PickupTime >= DateTime.Now).ToList();
+        }
+
+
+        public List<User> GetForemen()
+        {
+            return Context.Users.Where(x => (x.Role & UserRole.Foreman) == UserRole.Foreman).ToList();
+        }
+
+        public List<User> GetProjectManagers()
+        {
+            return Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager).ToList();
         }
     }
 }

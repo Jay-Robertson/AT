@@ -19,6 +19,8 @@ namespace Mavo.Assets.Models
         public string LastName { get; set; }
 
         public string FullName { get { return String.Format("{0} {1}", FirstName, LastName); } }
+
+        public UserRole Role { get; set; }
     }
 
     public class LocalPasswordModel
