@@ -34,6 +34,7 @@
                 </div>
             </div>
 
+
             <div class="control-group">
                 @Html.LabelFor(x => x.Category, new { @class = "control-label" })
                 <div class="controls">
@@ -45,13 +46,30 @@
                    }), string.Empty)
                 </div>
             </div>
-
+        </div>
+    </fieldset> 
+    
+    <div class="well">
+        <fieldset>
+            <legend>Warehousing Data</legend>
             <div class="control-group">
                 @Html.LabelFor(x => x.Kind, new { @class = "control-label" })
                 <div class="controls">
                     @Html.DropDownListFor(model => model.Kind, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.AssetKind))))
                 </div>
             </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Inventory, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Inventory)
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="well">
+        <fieldset>
+            <legend>Manufactuer, Model and Vendor data</legend>
+
 
             <div class="control-group">
                 @Html.LabelFor(x => x.Manufacturer, new { @class = "control-label" })
@@ -73,15 +91,10 @@
                     @Html.EditorFor(x => x.UPC)
                 </div>
             </div>
-
-            <div class="control-group">
-                @Html.LabelFor(x => x.Inventory, new { @class = "control-label" })
-                <div class="controls">
-                    @Html.EditorFor(x => x.Inventory)
-                </div>
-            </div>
-        </div>
-    </fieldset>   
+        </fieldset>
+    </div>
+   
+         
     if (ViewBag.AssetItems != null)
     {
     <div class="well">
