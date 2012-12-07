@@ -16,7 +16,20 @@ namespace Mavo.Assets.Migrations
         protected override void Seed(Mavo.Assets.Models.AssetContext context)
         {
             context.Assets.AddOrUpdate(
-              new Asset { Id = 1, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test Asset", Serial = "1234" }
+              new Asset { Id = 1, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test Asset", Barcode = "1234" }
+            );
+
+            context.AssetCategories.AddOrUpdate(
+                new AssetCategory { Id = 1, Name = "Ladders" },
+                new AssetCategory { Id = 2, Name = "Respirator Filters" },
+                new AssetCategory { Id = 3, Name = "Lumber, MSC Materials" },
+                new AssetCategory { Id = 4, Name = "Poly/Disposal Materials" },
+                new AssetCategory { Id = 5, Name = "HEPA's/Vacuums" }
+            );
+
+            context.Customers.AddOrUpdate(
+                new Customer { Id = 1, Name = "Target" },
+                new Customer { Id = 2, Name = "Walmart" }
             );
 
             context.Jobs.AddOrUpdate(
