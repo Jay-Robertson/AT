@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Mavo.Assets.Models;
+using Mavo.Assets.Models.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,6 +25,8 @@ namespace Mavo.Assets
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            AutoMapper.Mapper.CreateMap<EditJobPostModel, Job>();
         }
     }
 }

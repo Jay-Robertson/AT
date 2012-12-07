@@ -108,7 +108,7 @@ namespace Mavo.Assets.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string id = "id";
-            public readonly string job = "job";
+            public readonly string jobPostModel = "jobPostModel";
         }
         static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -170,10 +170,10 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(Mavo.Assets.Models.Job job)
+        public override System.Web.Mvc.ActionResult Edit(Mavo.Assets.Models.ViewModel.EditJobPostModel jobPostModel)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "job", job);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobPostModel", jobPostModel);
             return callInfo;
         }
 

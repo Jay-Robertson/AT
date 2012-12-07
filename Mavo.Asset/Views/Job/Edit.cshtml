@@ -18,8 +18,9 @@
 }
 
 <h1>@ViewBag.Action Job</h1>
-@using (Html.BeginForm(MVC.Job.Edit(Model), FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm(MVC.Job.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
 {
+    @Html.ValidationSummary(false)
     @Html.HiddenFor(x => x.Id)
     <fieldset>
         <div class="well">
@@ -33,7 +34,7 @@
             <div class="control-group">
                 <label class="control-label" for="Customer">Customer:</label>
                 <div class="controls">
-                    @Html.DropDownList("Customer", ((IList<Mavo.Assets.Models.Customer>)ViewBag.Customers).Select(x => new SelectListItem()
+                    @Html.DropDownList("CustomerId", ((IList<Mavo.Assets.Models.Customer>)ViewBag.Customers).Select(x => new SelectListItem()
                    {
                        Value = x.Id.ToString(),
                        Text = x.Name,
@@ -50,7 +51,7 @@
             <div class="control-group">
                 @Html.LabelFor(x => x.ProjectManager, new { @class = "control-label" })
                 <div class="controls">
-                   @Html.DropDownList("ProjectManager", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
+                   @Html.DropDownList("ProjectManagerId", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
                    {
                        Value = x.Id.ToString(),
                        Text = String.Format("{0}, {1}",x.LastName,x.FirstName),
@@ -67,7 +68,7 @@
             <div class="control-group">
                 @Html.LabelFor(x => x.Status, new { @class = "control-label" })
                 <div class="controls">
-                    @Html.EditorFor(x => x.Status)
+                 @Html.DropDownListFor(model => model.Status, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.JobStatus))))
                 </div>
             </div>
         </div>
@@ -116,7 +117,7 @@
             <div class="control-group">
                 @Html.LabelFor(x => x.Foreman, new { @class = "control-label" })
                 <div class="controls">
-                     @Html.DropDownList("Foreman", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
+                     @Html.DropDownList("ForemanId", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
                    {
                        Value = x.Id.ToString(),
                        Text = String.Format("{0}, {1}",x.LastName,x.FirstName),

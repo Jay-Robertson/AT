@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mavo.Assets.Models;
+using System.Data.Entity.Migrations;
 
 namespace Mavo.Assets.Data
 {
@@ -18,6 +19,10 @@ namespace Mavo.Assets.Data
          List<User> GetForemen();
 
          List<User> GetProjectManagers();
+
+         Customer GetCustomer(int customerId);
+
+         void SaveJob(Job job);
     }
     public class Repository : IRepository
     {
@@ -60,6 +65,17 @@ namespace Mavo.Assets.Data
         public List<User> GetProjectManagers()
         {
             return Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager).ToList();
+        }
+
+
+        public Customer GetCustomer(int customerId)
+        {
+            return Context.Customers.FirstOrDefault(x => x.Id == customerId);
+        }
+
+
+        public void SaveJob(Job job)
+        {
         }
     }
 }

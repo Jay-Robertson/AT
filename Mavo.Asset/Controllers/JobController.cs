@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Mavo.Assets.Data;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
-
+using AutoMapper;
 namespace Mavo.Assets.Controllers
 {
     public partial class JobController : Controller
@@ -66,14 +66,30 @@ namespace Mavo.Assets.Controllers
         // POST: /Jobs/Edit/5
 
         [HttpPost]
-        public virtual ActionResult Edit(Job job)
+        public virtual ActionResult Edit(EditJobPostModel jobPostModel)
         {
             try
             {
+                AssetContext context = new AssetContext();
+                Job job = context.Jobs.FirstOrDefault(x=> x.Id == jobPostModel.Id);
+                job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
                 if (ModelState.IsValid)
-                    return RedirectToAction(MVC.Job.Edit(job));
+                {
+                    if (jobPostModel.CustomerId.HasValue)
+                        job.Customer = Repo.GetCustomer(jobPostModel.CustomerId.Value);
+
+                    if (!jobPostModel.Id.HasValue)
+                        context.Jobs.Add(job);
+
+                    context.SaveChanges();
+
+                    return RedirectToAction(MVC.Job.Index());
+                }
                 else
-                    return View();
+                {
+                    SetListsForCrud(job);
+                    return View(job);
+                }
             }
             catch
             {
