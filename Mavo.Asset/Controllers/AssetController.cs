@@ -66,6 +66,12 @@ namespace Mavo.Assets.Controllers
         //
         // POST: /Asset/Edit/5
 
+        public ActionResult Scan()
+        {
+            ViewBag.Assets = db.Assets.ToList();
+            return View();
+        }
+
         [HttpPost]
         public virtual ActionResult Edit(AssetPostModel asset)
         {

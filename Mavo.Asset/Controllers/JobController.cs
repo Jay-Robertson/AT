@@ -70,8 +70,7 @@ namespace Mavo.Assets.Controllers
         {
             try
             {
-                AssetContext context = new AssetContext();
-                Job job = context.Jobs.FirstOrDefault(x=> x.Id == jobPostModel.Id);
+                Job job = Repo.GetJobById(jobPostModel.Id ?? 0);
                 job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
                 if (ModelState.IsValid)
                 {
@@ -82,13 +81,13 @@ namespace Mavo.Assets.Controllers
                         job.Foreman = Repo.GetUser(jobPostModel.ForemanId.Value);
 
                     if (jobPostModel.ProjectManagerId.HasValue)
-                        job.Foreman = Repo.GetUser(jobPostModel.ProjectManagerId.Value);
+                        job.ProjectManager = Repo.GetUser(jobPostModel.ProjectManagerId.Value);
 
 
                     if (!jobPostModel.Id.HasValue)
-                        context.Jobs.Add(job);
+                        Repo.Context.Jobs.Add(job);
 
-                    context.SaveChanges();
+                    Repo.Context.SaveChanges();
 
                     return RedirectToAction(MVC.Job.Index());
                 }

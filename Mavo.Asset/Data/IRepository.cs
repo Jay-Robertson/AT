@@ -10,6 +10,7 @@ namespace Mavo.Assets.Data
 {
     public interface IRepository
     {
+        AssetContext Context { get; }
         IEnumerable<Job> GetJobs();
          Job GetJobById(int id);
          List<Customer> GetCustomers();
@@ -26,13 +27,13 @@ namespace Mavo.Assets.Data
     }
     public class Repository : IRepository
     {
-        private readonly AssetContext Context;
+        private readonly AssetContext _Context;
         /// <summary>
         /// Initializes a new instance of the Repository class.
         /// </summary>
         public Repository(AssetContext context)
         {
-            Context = context;            
+            _Context = context;            
         }
         public IEnumerable<Job> GetJobs()
         {
@@ -78,6 +79,11 @@ namespace Mavo.Assets.Data
         public User GetUser(int userId)
         {
             return Context.Users.FirstOrDefault(x => x.Id == userId);
+        }
+
+        public AssetContext Context
+        {
+            get { return this._Context; }
         }
     }
 }

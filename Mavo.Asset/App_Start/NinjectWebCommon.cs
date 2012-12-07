@@ -53,7 +53,7 @@ namespace Mavo.Assets.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<AssetContext>().ToSelf();
+            kernel.Bind<AssetContext>().ToSelf().InRequestScope();
             kernel.Bind<IRepository>().To<Repository>();
         }        
     }

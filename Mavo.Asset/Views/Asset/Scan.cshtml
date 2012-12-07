@@ -1,0 +1,68 @@
+﻿@model Mavo.Assets.Models.AssetItem
+
+@{
+    ViewBag.Title = "Scan";
+}
+@section LeftNav
+{
+    @{Html.RenderPartial(MVC.Asset.Views._AssetSidebar, new Mavo.Assets.Models.ViewModel.AssetsLeftNavViewModel() { Asset = null, Assets = ViewBag.Assets });}
+}
+<h2>Scan</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>AssetItem</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Barcode)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Barcode)
+            @Html.ValidationMessageFor(model => model.Barcode)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SerialNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SerialNumber)
+            @Html.ValidationMessageFor(model => model.SerialNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PurchaseDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PurchaseDate)
+            @Html.ValidationMessageFor(model => model.PurchaseDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PurchasePrice)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PurchasePrice)
+            @Html.ValidationMessageFor(model => model.PurchasePrice)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WarrantyExpiration)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WarrantyExpiration)
+            @Html.ValidationMessageFor(model => model.WarrantyExpiration)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

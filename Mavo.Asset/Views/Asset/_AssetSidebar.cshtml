@@ -1,16 +1,18 @@
 ﻿@model Mavo.Assets.Models.ViewModel.AssetsLeftNavViewModel
+
 <div class="span3">
     <div class="well sidebar-nav">
         <ul class="nav nav-list">
             <li class="nav-header">Actions</li>
-            <li class='@(Model.Asset == null && Url.RequestContext.RouteData.Values["action"].ToString().ToLower() != "index" ? "active" : "")'><a href="/asset/create"><i class="icon-plus"></i>Create New Asset</a></li>
-                <li class="nav-header">Assets</li>
-                @foreach (var asset in Model.Assets)
-                {
+            <li class='@(Model.Asset == null && Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "create" ? "active" : "")'><a href="/asset/create"><i class="icon-plus"></i>Create New Asset</a></li>
+            <li class='@(Model.Asset == null && Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "scan" ? "active" : "")'><a href="/asset/scan"><i class="icon-barcode"></i>Scan new item</a></li>
+            <li class="nav-header">Assets</li>
+            @foreach (var asset in Model.Assets)
+            {
                 <li class='@(Model.Asset != null && Model.Asset.Id == asset.Id ? "active" : "")'>
                     <a href="/asset/edit/@asset.Id"><i class="icon-edit"></i>@asset.Name</a>
                 </li>
-                }
+            }
 
         </ul>
     </div>
