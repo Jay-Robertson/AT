@@ -1,68 +1,80 @@
-﻿@model Mavo.Assets.Models.AssetItem
+﻿@model Mavo.Assets.Models.ViewModel.AssetScanPostModel
 
 @{
-    ViewBag.Title = "Scan";
+    ViewBag.Title = "Scan a new asset item";
 }
 @section LeftNav
 {
     @{Html.RenderPartial(MVC.Asset.Views._AssetSidebar, new Mavo.Assets.Models.ViewModel.AssetsLeftNavViewModel() { Asset = null, Assets = ViewBag.Assets });}
 }
-<h2>Scan</h2>
-
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-
+@using (Html.BeginForm(MVC.Asset.ScanItem(), FormMethod.Post, new { @class = "form-horizontal" }))
+{
     <fieldset>
-        <legend>AssetItem</legend>
+        <div class="well">
+            <legend>Item Details</legend>
+            <div class="control-group">
+                @Html.LabelFor(x => x.AssetId, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.DropDownList("AssetId", ((IList<Mavo.Assets.Models.Asset>)ViewBag.Assets).Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).Select(x => new SelectListItem()
+                   {
+                       Value = x.Id.ToString(),
+                       Text = x.Name
+                   }), string.Empty)
+                </div>
+            </div>
 
-        @Html.HiddenFor(model => model.Id)
+            <div class="control-group">
+                @Html.LabelFor(x => x.Barcode, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Barcode)
+                </div>
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Barcode)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Barcode)
-            @Html.ValidationMessageFor(model => model.Barcode)
-        </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Condition, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.Condition, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.AssetCondition))))
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SerialNumber)
+                </div>
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SerialNumber)
-            @Html.ValidationMessageFor(model => model.SerialNumber)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PurchaseDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PurchaseDate)
-            @Html.ValidationMessageFor(model => model.PurchaseDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PurchasePrice)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PurchasePrice)
-            @Html.ValidationMessageFor(model => model.PurchasePrice)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.WarrantyExpiration)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.WarrantyExpiration)
-            @Html.ValidationMessageFor(model => model.WarrantyExpiration)
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
     </fieldset>
-}
+    <fieldset>
+        <div class="well">
+            <legend>Warranty Information</legend>
+            <div class="control-group">
+                @Html.LabelFor(x => x.PurchaseDate, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.PurchaseDate)
+                </div>
+            </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.PurchasePrice, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.PurchasePrice)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.SerialNumber, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.SerialNumber)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.WarrantyExpiration, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.WarrantyExpiration)
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    
+    <div class="row-fluid">
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    </div>
+}

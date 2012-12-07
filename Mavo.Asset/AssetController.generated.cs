@@ -44,6 +44,12 @@ namespace Mavo.Assets.Controllers
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ScanItem()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ScanItem);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AssetController Actions { get { return MVC.Asset; } }
@@ -64,6 +70,8 @@ namespace Mavo.Assets.Controllers
             public readonly string Details = "Details";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string Scan = "Scan";
+            public readonly string ScanItem = "ScanItem";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -73,6 +81,8 @@ namespace Mavo.Assets.Controllers
             public const string Details = "Details";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string Scan = "Scan";
+            public const string ScanItem = "ScanItem";
         }
 
 
@@ -93,6 +103,14 @@ namespace Mavo.Assets.Controllers
             public readonly string id = "id";
             public readonly string asset = "asset";
         }
+        static readonly ActionParamsClass_ScanItem s_params_ScanItem = new ActionParamsClass_ScanItem();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ScanItem ScanItemParams { get { return s_params_ScanItem; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ScanItem
+        {
+            public readonly string scan = "scan";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -106,10 +124,12 @@ namespace Mavo.Assets.Controllers
                 public readonly string _AssetSidebar = "_AssetSidebar";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
+                public readonly string Scan = "Scan";
             }
             public readonly string _AssetSidebar = "~/Views/Asset/_AssetSidebar.cshtml";
             public readonly string Edit = "~/Views/Asset/Edit.cshtml";
             public readonly string Index = "~/Views/Asset/Index.cshtml";
+            public readonly string Scan = "~/Views/Asset/Scan.cshtml";
         }
     }
 
@@ -141,6 +161,19 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Scan()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Scan);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ScanItem(Mavo.Assets.Models.ViewModel.AssetScanPostModel scan)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ScanItem);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "scan", scan);
             return callInfo;
         }
 

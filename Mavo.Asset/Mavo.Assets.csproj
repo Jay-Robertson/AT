@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201212071704351_Assets.Designer.cs">
       <DependentUpon>201212071704351_Assets.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201212072038579_RelationshipForAssetItems.cs" />
+    <Compile Include="Migrations\201212072038579_RelationshipForAssetItems.Designer.cs">
+      <DependentUpon>201212072038579_RelationshipForAssetItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
@@ -357,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212071704351_Assets.resx">
       <DependentUpon>201212071704351_Assets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212072038579_RelationshipForAssetItems.resx">
+      <DependentUpon>201212072038579_RelationshipForAssetItems.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

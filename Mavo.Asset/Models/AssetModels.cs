@@ -69,6 +69,8 @@ namespace Mavo.Assets.Models
         public string Manufacturer { get; set; }
         public string ModelNumber { get; set; }
         public string UPC { get; set; }
+
+        public List<AssetItem> Items { get; set; }
     }
 
     [Table("AssetItems")]

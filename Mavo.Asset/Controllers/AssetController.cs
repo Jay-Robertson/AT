@@ -55,6 +55,7 @@ namespace Mavo.Assets.Controllers
         {
             ViewBag.Assets = db.Assets.ToList();
             ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
+            ViewBag.AssetItems = db.AssetItems.Where(x => x.Asset.Id == id).ToList();
             Asset asset = db.Assets.Find(id);
             if (asset == null)
             {
@@ -66,10 +67,31 @@ namespace Mavo.Assets.Controllers
         //
         // POST: /Asset/Edit/5
 
-        public ActionResult Scan()
+        public virtual ActionResult Scan()
         {
             ViewBag.Assets = db.Assets.ToList();
             return View();
+        }
+
+        [HttpPost]
+        public virtual ActionResult ScanItem(AssetScanPostModel scan)
+        {
+            if (ModelState.IsValid)
+            {
+                AssetItem assetItem = new AssetItem()
+                {
+                    Asset = db.Assets.FirstOrDefault(x => x.Id == scan.AssetId),
+                    Barcode = scan.Barcode,
+                    Condition = scan.Condition,
+                    PurchaseDate = scan.PurchaseDate,
+                    WarrantyExpiration = scan.WarrantyExpiration,
+                    SerialNumber = scan.SerialNumber,
+                    PurchasePrice = scan.PurchasePrice
+                };
+                db.AssetItems.Add(assetItem);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Scan");
         }
 
         [HttpPost]

@@ -82,10 +82,34 @@
             </div>
         </div>
     </fieldset>   
+    if (ViewBag.AssetItems != null)
+    {
+    <div class="well">
+        <fieldset>
+            <legend>Associated Asset Items</legend>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>Barcode</th>
+                    <th>Condtion</th>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.Barcode</td>
+                            <td>@item.Condition</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    }
     <div class="row-fluid">
         <div class="form-actions">
             <input type="submit" class="btn btn-primary" />
         </div>
     </div>
 }
+
 
