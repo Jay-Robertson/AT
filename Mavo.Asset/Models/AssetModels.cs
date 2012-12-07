@@ -10,13 +10,16 @@ namespace Mavo.Assets.Models
 {
     public class AssetContext : DbContext
     {
-        public AssetContext() : base("DefaultConnection")
+        public AssetContext()
+            : base("DefaultConnection")
         {
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<AssetCategory> AssetCategories { get; set; }
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetItem> AssetItems { get; set; }
+        public DbSet<AssetActivity> AssetActivity { get; set; }
         public DbSet<Template> Templates { get; set; }
         public DbSet<TemplateAsset> TemplateAssets { get; set; }
 
@@ -27,8 +30,26 @@ namespace Mavo.Assets.Models
     public enum AssetKind
     {
         Consumable,     // asset is not barcoded and not expected to return from a job
-        Serialized,     // asset is ndividually barcoded an
+        Serialized,     // asset is ndividually barcoded
         NotSerialized,  // asset is durable and expected to return from job, but not individually tracked
+    }
+
+    public enum AssetCondition
+    {
+        Good,           // asset is functional and in circulation
+        Damaged,        // asset is damaged and awaiting repairs, out of circulation for now
+        Retired         // asset could not be repaired and has been removed from circulation
+    }
+
+    [Table("AssetCategory")]
+    public class AssetCategory
+    {
+        [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int SortOrder { get; set; }
     }
 
     [Table("Assets")]
@@ -36,10 +57,18 @@ namespace Mavo.Assets.Models
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Serial { get; set; }
+        public string Barcode { get; set; }         // mavo barcode value
+        public AssetCategory Category { get; set; }
         public string Name { get; set; }
+
+        // warehousing data
         public AssetKind Kind { get; set; }
-        public int Inventory { get; set; }
+        public int? Inventory { get; set; }          // only valid for Consumable and NotSerialized assets
+
+        // manufactuer/model/vendor data
+        public string Manufacturer { get; set; }
+        public string ModelNumber { get; set; }
+        public string UPC { get; set; }
     }
 
     [Table("AssetItems")]
@@ -47,8 +76,37 @@ namespace Mavo.Assets.Models
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Serial { get; set; }
-        public Asset Type { get; set; }
+        public Asset Asset { get; set; }
+        public string Barcode { get; set; }                 // mavo barcode value
+        public AssetCondition Condition { get; set; }
+
+        // purchasing/warranty data
+        public string SerialNumber { get; set; }            // manufacturer's serial number
+        public DateTime? PurchaseDate { get; set; }
+        public decimal? PurchasePrice { get; set; }
+        public DateTime? WarrantyExpiration { get; set; }
+    }
+
+    public enum AssetAction
+    {
+        Create,
+        Edit,
+        Pick,
+        Return,
+        Repair,
+        Retire
+    }
+
+    [Table("AssetActivity")]
+    public class AssetActivity
+    {
+        [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public Asset Asset { get; set; }
+        public AssetItem Item { get; set; }
+        public AssetAction Action { get; set; }
+        public DateTime Date { get; set; }
+        public User User { get; set; }
     }
 
     [Table("Template")]
@@ -69,6 +127,7 @@ namespace Mavo.Assets.Models
         public Asset Asset { get; set; }
         public int Quantity { get; set; }
     }
+
     public enum JobStatus
     {
         New,
@@ -76,13 +135,14 @@ namespace Mavo.Assets.Models
         Completed,
         ReadyToPick
     }
+
     [Table("Jobs")]
     public class Job
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage="Job Name is Required")]
+        [Required(ErrorMessage = "Job Name is Required")]
         public string Name { get; set; }
 
         [Required]
@@ -105,9 +165,6 @@ namespace Mavo.Assets.Models
         public DateTime ContractDate { get; set; }
         public DateTime EstimatedCompletionDate { get; set; }
 
-
-
-
         public User Foreman { get; set; }
     }
 
@@ -124,7 +181,7 @@ namespace Mavo.Assets.Models
         public string State { get; set; }
         [Required]
         public string ZipCode { get; set; }
-     
+
     }
 
     [Table("Customers")]
