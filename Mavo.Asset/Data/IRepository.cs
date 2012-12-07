@@ -10,7 +10,7 @@ namespace Mavo.Assets.Data
 {
     public interface IRepository
     {
-         List<Job> GetJobs();
+        IEnumerable<Job> GetJobs();
          Job GetJobById(int id);
          List<Customer> GetCustomers();
 
@@ -34,9 +34,9 @@ namespace Mavo.Assets.Data
         {
             Context = context;            
         }
-        public List<Job> GetJobs()
+        public IEnumerable<Job> GetJobs()
         {
-            throw new NotImplementedException();
+            return Context.Jobs;
         }
 
         public Job GetJobById(int id)

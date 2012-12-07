@@ -27,8 +27,9 @@ namespace Mavo.Assets.Migrations
                 new AssetCategory { Id = 5, Name = "HEPA's/Vacuums" }
             );
 
+            Customer target = new Customer { Id = 1, Name = "Target" };
             context.Customers.AddOrUpdate(
-                new Customer { Id = 1, Name = "Target" },
+                target,
                 new Customer { Id = 2, Name = "Walmart" }
             );
 
@@ -45,7 +46,7 @@ namespace Mavo.Assets.Migrations
                     },
                     ContractAmount = 10m,
                     ContractNumber = "1234",
-                    Customer = new Customer() { Id = 1, Name = "Test Customer" },
+                    Customer = target,
                     Description = "This is a description",
                     ContractDate = DateTime.Now.AddDays(100),
                     EstimatedCompletionDate = DateTime.Now.AddYears(1),

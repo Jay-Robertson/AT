@@ -4,14 +4,15 @@
         <ul class="nav nav-list">
             <li class="nav-header">Actions</li>
             <li class='@(Model.Job == null && Url.RequestContext.RouteData.Values["action"].ToString().ToLower() != "index" ? "active" : "")'><a href="/job/create"><i class="icon-plus"></i>Create New Job</a></li>
-            <li class="nav-header">Jobs Ready to Pick</li>
-            @foreach (Mavo.Assets.Models.Job job in Model.Jobs)
+            @foreach (var grouping in Model.Jobs)
             {
+                <li class="nav-header">@grouping.Key</li>
+                foreach (var job in grouping)
+                {
                 <li class='@(Model.Job != null && Model.Job.Id == job.Id ? "active" : "")'>
-                    <a href="/job/edit/@job.Id">
-                        <i class="icon-edit"></i>@job.Name
-                    </a>
+                    <a href="/job/edit/@job.Id"><i class="icon-edit"></i>@job.Name</a>
                 </li>
+                }
             }
 
         </ul>

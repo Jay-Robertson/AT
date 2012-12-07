@@ -21,7 +21,7 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Index()
         {
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Repo.GetReadyJobs() };
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Repo.GetJobs().GroupBy(x=>x.Status) };
             return View();
         }
 
@@ -135,7 +135,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.Customers = Repo.GetCustomers();
             ViewBag.Foremen = Repo.GetForemen();
             ViewBag.ProjectManagers = Repo.GetProjectManagers();
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Repo.GetReadyJobs() };
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Repo.GetJobs().GroupBy(x=>x.Status) };
 
         }
     }

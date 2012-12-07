@@ -8,7 +8,7 @@ namespace Mavo.Assets.Models.ViewModel
     public class LeftNavViewModel
     {
         public Job Job { get; set; }
-        public List<Job> Jobs { get; set; }
-        
+
+        public IEnumerable<IGrouping<JobStatus, Models.Job>> Jobs { get; set; }
     }
 }
