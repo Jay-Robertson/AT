@@ -1,10 +1,8 @@
 ﻿@model Mavo.Assets.Models.Job
 @{
-    string action = "/job/create";
     if (Model != null)
     {
         ViewBag.Title = "Edit :: " + Model.Name;
-        action = "/job/edit/" + Model.Id;
     }
     else
     {

@@ -1,53 +1,91 @@
 ﻿@model Mavo.Assets.Models.Asset
-
 @{
-    ViewBag.Title = "Edit";
+    if (Model != null)
+    {
+        ViewBag.Title = "Edit :: " + Model.Name;
+    }
+    else
+    {
+        ViewBag.Title = "Create :: Asset";
+    }
 }
-
-<h2>Edit</h2>
-
-@using (Html.BeginForm()) {
+@section LeftNav
+{
+    @{Html.RenderPartial(MVC.Asset.Views._AssetSidebar, new Mavo.Assets.Models.ViewModel.AssetsLeftNavViewModel() { Asset = Model, Assets = ViewBag.Assets });}
+}
+@using (Html.BeginForm(MVC.Asset.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
+{
     @Html.ValidationSummary(true)
-
+    @Html.HiddenFor(x => x.Id)
     <fieldset>
-        <legend>Asset</legend>
+        <div class="well">
+            <legend>Asset Details</legend>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Name)
+                </div>
+            </div>
 
-        @Html.HiddenFor(model => model.Id)
+            <div class="control-group">
+                @Html.LabelFor(x => x.Barcode, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Barcode)
+                </div>
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Serial)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Serial)
-            @Html.ValidationMessageFor(model => model.Serial)
-        </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Category, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.DropDownList("CategoryId", ((IList<Mavo.Assets.Models.AssetCategory>)ViewBag.AssetCategories).Select(x => new SelectListItem()
+                   {
+                       Value = x.Id.ToString(),
+                       Text = x.Name,
+                       Selected = Model == null || Model.Category == null ? false : x.Id == Model.Category.Id
+                   }), string.Empty)
+                </div>
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Kind, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.Kind, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.AssetKind))))
+                </div>
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Inventory)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Inventory)
-            @Html.ValidationMessageFor(model => model.Inventory)
-        </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Manufacturer, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Manufacturer)
+                </div>
+            </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+            <div class="control-group">
+                @Html.LabelFor(x => x.ModelNumber, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.ModelNumber)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.UPC, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.UPC)
+                </div>
+            </div>
+
+            <div class="control-group">
+                @Html.LabelFor(x => x.Inventory, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Inventory)
+                </div>
+            </div>
+        </div>
+    </fieldset>   
+    <div class="row-fluid">
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

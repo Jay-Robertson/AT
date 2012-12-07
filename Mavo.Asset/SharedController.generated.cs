@@ -50,6 +50,7 @@ namespace T4MVC
             public partial class _EditorTemplatesClass
             {
                 public readonly string DateTime = "DateTime";
+                public readonly string String = "String";
             }
         }
     }

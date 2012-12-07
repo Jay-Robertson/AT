@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AssetController.cs" />
+    <Compile Include="Controllers\AssetPostModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobPostModel.cs" />
@@ -215,6 +216,8 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
     <Compile Include="Models\UserRole.cs" />
+    <Compile Include="Models\ViewModel\AssetPostModel.cs" />
+    <Compile Include="Models\ViewModel\AssetsLeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\EditJobPostModel.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -306,10 +309,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Asset\Index.cshtml" />
-    <Content Include="Views\Asset\Details.cshtml" />
-    <Content Include="Views\Asset\Create.cshtml" />
     <Content Include="Views\Asset\Edit.cshtml" />
-    <Content Include="Views\Asset\Delete.cshtml" />
     <Content Include="T4MVC.tt.hooks.t4" />
     <Content Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -321,6 +321,7 @@
     <Content Include="Views\Job\_JobSidebar.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Asset\_AssetSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -27,6 +27,7 @@ namespace Mavo.Assets
             AuthConfig.RegisterAuth();
 
             AutoMapper.Mapper.CreateMap<EditJobPostModel, Job>();
+            AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
         }
     }
 }

@@ -44,12 +44,6 @@ namespace Mavo.Assets.Controllers
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DeleteConfirmed()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AssetController Actions { get { return MVC.Asset; } }
@@ -70,8 +64,6 @@ namespace Mavo.Assets.Controllers
             public readonly string Details = "Details";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
-            public readonly string Delete = "Delete";
-            public readonly string DeleteConfirmed = "Delete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -81,8 +73,6 @@ namespace Mavo.Assets.Controllers
             public const string Details = "Details";
             public const string Create = "Create";
             public const string Edit = "Edit";
-            public const string Delete = "Delete";
-            public const string DeleteConfirmed = "Delete";
         }
 
 
@@ -94,14 +84,6 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
         }
-        static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Create
-        {
-            public readonly string asset = "asset";
-        }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
@@ -110,22 +92,6 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string asset = "asset";
-        }
-        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Delete
-        {
-            public readonly string id = "id";
-        }
-        static readonly ActionParamsClass_DeleteConfirmed s_params_DeleteConfirmed = new ActionParamsClass_DeleteConfirmed();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_DeleteConfirmed DeleteConfirmedParams { get { return s_params_DeleteConfirmed; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeleteConfirmed
-        {
-            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -137,15 +103,11 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Create = "Create";
-                public readonly string Delete = "Delete";
-                public readonly string Details = "Details";
+                public readonly string _AssetSidebar = "_AssetSidebar";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
-            public readonly string Create = "~/Views/Asset/Create.cshtml";
-            public readonly string Delete = "~/Views/Asset/Delete.cshtml";
-            public readonly string Details = "~/Views/Asset/Details.cshtml";
+            public readonly string _AssetSidebar = "~/Views/Asset/_AssetSidebar.cshtml";
             public readonly string Edit = "~/Views/Asset/Edit.cshtml";
             public readonly string Index = "~/Views/Asset/Index.cshtml";
         }
@@ -175,13 +137,6 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Create(Mavo.Assets.Models.Asset asset)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "asset", asset);
-            return callInfo;
-        }
-
         public override System.Web.Mvc.ActionResult Edit(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
@@ -189,24 +144,10 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(Mavo.Assets.Models.Asset asset)
+        public override System.Web.Mvc.ActionResult Edit(Mavo.Assets.Models.ViewModel.AssetPostModel asset)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "asset", asset);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Delete(int id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult DeleteConfirmed(int id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
