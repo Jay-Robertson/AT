@@ -22,7 +22,7 @@ namespace Mavo.Assets.Data
 
          Customer GetCustomer(int customerId);
 
-         void SaveJob(Job job);
+         User GetUser(int userId);
     }
     public class Repository : IRepository
     {
@@ -74,8 +74,10 @@ namespace Mavo.Assets.Data
         }
 
 
-        public void SaveJob(Job job)
+
+        public User GetUser(int userId)
         {
+            return Context.Users.FirstOrDefault(x => x.Id == userId);
         }
     }
 }

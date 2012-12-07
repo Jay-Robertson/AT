@@ -78,6 +78,13 @@ namespace Mavo.Assets.Controllers
                     if (jobPostModel.CustomerId.HasValue)
                         job.Customer = Repo.GetCustomer(jobPostModel.CustomerId.Value);
 
+                    if (jobPostModel.ForemanId.HasValue)
+                        job.Foreman = Repo.GetUser(jobPostModel.ForemanId.Value);
+
+                    if (jobPostModel.ProjectManagerId.HasValue)
+                        job.Foreman = Repo.GetUser(jobPostModel.ProjectManagerId.Value);
+
+
                     if (!jobPostModel.Id.HasValue)
                         context.Jobs.Add(job);
 
