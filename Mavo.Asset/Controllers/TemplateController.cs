@@ -7,7 +7,7 @@ using Mavo.Assets.Models;
 
 namespace Mavo.Assets.Controllers
 {
-    public class TemplateController : Controller
+    public partial class TemplateController : Controller
     {
         AssetContext ctx;
         //
@@ -19,7 +19,7 @@ namespace Mavo.Assets.Controllers
         {
             ctx = new AssetContext();
         }
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View(ctx.Templates.ToList());
         }
@@ -27,7 +27,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Template/Create
 
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             ViewBag.Templates = ctx.Templates.ToList();
             return View("Edit");
@@ -37,7 +37,7 @@ namespace Mavo.Assets.Controllers
         // POST: /Template/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public virtual ActionResult Create(FormCollection collection)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Template/Edit/5
 
-        public ActionResult Edit(int id)
+        public virtual ActionResult Edit(int id)
         {
             ViewBag.Templates = ctx.Templates.ToList();
             return View(ctx.Templates.FirstOrDefault(x=>x.Id == id));
@@ -64,7 +64,7 @@ namespace Mavo.Assets.Controllers
         // POST: /Template/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public virtual ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Template/Delete/5
 
-        public ActionResult Delete(int id)
+        public virtual ActionResult Delete(int id)
         {
             return View();
         }
@@ -90,7 +90,7 @@ namespace Mavo.Assets.Controllers
         // POST: /Template/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public virtual ActionResult Delete(int id, FormCollection collection)
         {
             try
             {

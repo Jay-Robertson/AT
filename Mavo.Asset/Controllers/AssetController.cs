@@ -22,7 +22,15 @@ namespace Mavo.Assets.Controllers
         {
             db.Configuration.LazyLoadingEnabled = true;
         }
-  
+
+        public virtual ActionResult AssetPickerForTemplate(int id)
+        {
+            ViewBag.IsForJob = false;
+            ViewBag.JobId = id;
+            ViewBag.Assets = db.TemplateAssets.Include(x=>x.Asset).FirstOrDefault(x => x.Id == id);
+            return PartialView("_AssetPicker", db.AssetCategories.ToList());
+        }
+
         public virtual ActionResult AssetPickerForJob(int id)
         {
             ViewBag.IsForJob = true;
