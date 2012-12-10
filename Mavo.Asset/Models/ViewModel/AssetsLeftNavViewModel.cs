@@ -5,6 +5,12 @@ using System.Web;
 
 namespace Mavo.Assets.Models.ViewModel
 {
+    public class TemplatesLeftNavViewModel
+    {
+        public IEnumerable<Template> Templates { get; set; }
+
+        public Template Template { get; set; }
+    }
     public class AssetsLeftNavViewModel
     {
         public Asset Asset { get; set; }

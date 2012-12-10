@@ -15,7 +15,8 @@ namespace Mavo.Assets.Migrations
 
         protected override void Seed(Mavo.Assets.Models.AssetContext context)
         {
-           
+
+            context.Templates.Add(new Template() { Id = 1, Name = "I'm a template!" });
 
             AssetCategory ladder = new AssetCategory { Id = 1, Name = "Ladders" };
             AssetCategory filters = new AssetCategory { Id = 2, Name = "Respirator Filters" };

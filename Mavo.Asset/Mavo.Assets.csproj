@@ -164,6 +164,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobPostModel.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -295,6 +296,9 @@
     <Content Include="Views\Asset\_AssetPicker.cshtml" />
     <Content Include="Views\Asset\_AssetPickerDetail.cshtml" />
     <Content Include="Views\Asset\_AssetRow.cshtml" />
+    <Content Include="Views\Template\Index.cshtml" />
+    <Content Include="Views\Template\Edit.cshtml" />
+    <Content Include="Views\Template\_TemplateSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

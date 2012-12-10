@@ -67,6 +67,12 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult UpdateQuantity()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateQuantity);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult ScanItem()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ScanItem);
@@ -91,6 +97,7 @@ namespace Mavo.Assets.Controllers
             public readonly string AssetPickerDetail = "AssetPickerDetail";
             public readonly string RemoveAsset = "RemoveAsset";
             public readonly string AddAsset = "AddAsset";
+            public readonly string UpdateQuantity = "UpdateQuantity";
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string Create = "Create";
@@ -106,6 +113,7 @@ namespace Mavo.Assets.Controllers
             public const string AssetPickerDetail = "AssetPickerDetail";
             public const string RemoveAsset = "RemoveAsset";
             public const string AddAsset = "AddAsset";
+            public const string UpdateQuantity = "UpdateQuantity";
             public const string Index = "Index";
             public const string Details = "Details";
             public const string Create = "Create";
@@ -148,6 +156,15 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string jobId = "jobId";
+        }
+        static readonly ActionParamsClass_UpdateQuantity s_params_UpdateQuantity = new ActionParamsClass_UpdateQuantity();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateQuantity UpdateQuantityParams { get { return s_params_UpdateQuantity; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateQuantity
+        {
+            public readonly string id = "id";
+            public readonly string quantity = "quantity";
         }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -234,6 +251,14 @@ namespace Mavo.Assets.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddAsset);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult UpdateQuantity(int id, int quantity)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateQuantity);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "quantity", quantity);
             return callInfo;
         }
 

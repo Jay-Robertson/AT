@@ -1,0 +1,3 @@
+﻿@model IList<Mavo.Assets.Models.Template>
+
+@{Html.RenderPartial("_TemplateSidebar", new Mavo.Assets.Models.ViewModel.TemplatesLeftNavViewModel() { Templates = Model });}
