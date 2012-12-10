@@ -5,13 +5,13 @@ namespace Mavo.Assets.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class Jobsv1 : IMigrationMetadata
+    public sealed partial class InitialMigratin : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Jobsv1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigratin));
         
         string IMigrationMetadata.Id
         {
-            get { return "201212052024149_Jobs-v1"; }
+            get { return "201212101949141_InitialMigratin"; }
         }
         
         string IMigrationMetadata.Source

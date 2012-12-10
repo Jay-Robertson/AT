@@ -1,0 +1,63 @@
+﻿@model IList<Mavo.Assets.Models.AssetCategory>
+<select id="asset-category">
+    @foreach (var category in Model)
+    {
+        <option value="@category.Id">@category.Name</option>
+    }
+</select>
+<span id="asset-detail">
+    @{Html.RenderAction("AssetPickerDetail", new { id = Model.First().Id });}
+</span>
+<button class="btn" id="add-asset">Add</button>
+
+<table id="asset-table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Asset</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Assets != null)
+        {
+            foreach (Mavo.Assets.Models.AssetWithQuantity asset in ViewBag.Assets)
+            {
+                Html.RenderPartial("_AssetRow", asset);
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+    function updateQuantity(assetId, quantity) {
+        $.post('/asset/updatequantity/' + assetId + '?quantity=' + quantity);
+    }
+    function removeRow(assetId) {
+        $('#row-' + assetId).remove();
+        $.post('/asset/removeasset/' + assetId + '?jobId=@(ViewBag.JobId ?? 0)').val(), function (data) {
+            $('#asset-table > tbody:last').append(data);
+        }
+        return false;
+    }
+    $(function () {
+
+        $('#asset-category').change(function () {
+            $.get('/asset/assetpickerdetail/' + $(this).val(), function (data) {
+                $('#asset-detail').html(data)
+            });
+        });
+
+        $('#add-asset').click(function () {
+            $.post('/asset/addasset/' + $('#asset-value').val() + '?jobId=@(ViewBag.JobId ?? 0)', function (data) {
+                $('#asset-table > tbody:last').append(data);
+            });
+
+            return false;
+        });
+
+
+
+    });
+</script>
+

@@ -17,6 +17,9 @@ namespace Mavo.Assets.Models
 
         public DbSet<User> Users { get; set; }
         public DbSet<AssetCategory> AssetCategories { get; set; }
+
+        public DbSet<AssetWithQuantity> JobAssets { get; set; }
+
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetItem> AssetItems { get; set; }
         public DbSet<AssetActivity> AssetActivity { get; set; }
@@ -120,14 +123,19 @@ namespace Mavo.Assets.Models
         public IList<TemplateAsset> Assets { get; set; }
     }
 
-    [Table("TemplatesAssets")]
-    public class TemplateAsset
+    [Table("AssetsWithQuantity")]
+    public class AssetWithQuantity
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public Template Template { get; set; }
         public Asset Asset { get; set; }
         public int Quantity { get; set; }
+    }
+
+    [Table("TemplatesAssets")]
+    public class TemplateAsset : AssetWithQuantity
+    {
+        public Template Template { get; set; }
     }
 
     public enum JobStatus
@@ -168,6 +176,8 @@ namespace Mavo.Assets.Models
         public DateTime EstimatedCompletionDate { get; set; }
 
         public User Foreman { get; set; }
+
+        public IList<AssetWithQuantity> Assets { get; set; }
     }
 
     [ComplexType]

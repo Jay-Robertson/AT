@@ -1,0 +1,7 @@
+﻿@model IList<Mavo.Assets.Models.Asset>
+<select id="asset-value">
+    @foreach (var value in Model)
+    {
+        <option value="@value.Id">@value.Name</option>
+    }
+</select>

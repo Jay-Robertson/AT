@@ -15,17 +15,28 @@ namespace Mavo.Assets.Migrations
 
         protected override void Seed(Mavo.Assets.Models.AssetContext context)
         {
-            context.Assets.AddOrUpdate(
-              new Asset { Id = 1, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test Asset", Barcode = "1234" }
+           
+
+            AssetCategory ladder = new AssetCategory { Id = 1, Name = "Ladders" };
+            AssetCategory filters = new AssetCategory { Id = 2, Name = "Respirator Filters" };
+            AssetCategory lumber = new AssetCategory { Id = 3, Name = "Lumber, MSC Materials" };
+            AssetCategory poly = new AssetCategory { Id = 4, Name = "Poly/Disposal Materials" };
+            AssetCategory hepa = new AssetCategory { Id = 5, Name = "HEPA's/Vacuums" };
+            context.AssetCategories.AddOrUpdate(
+                ladder,
+                filters,
+                lumber,
+                poly,
+                hepa
             );
 
-            context.AssetCategories.AddOrUpdate(
-                new AssetCategory { Id = 1, Name = "Ladders" },
-                new AssetCategory { Id = 2, Name = "Respirator Filters" },
-                new AssetCategory { Id = 3, Name = "Lumber, MSC Materials" },
-                new AssetCategory { Id = 4, Name = "Poly/Disposal Materials" },
-                new AssetCategory { Id = 5, Name = "HEPA's/Vacuums" }
-            );
+            context.Assets.AddOrUpdate(
+             new Asset { Id = 1, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test Ladder Asset (Consumable)", Barcode = "1234", Category = ladder  },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Serialized, Name = "Test Filter Asset (Serialized)", Barcode = "1234", Category = filters  },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.NotSerialized, Name = "Test Lumber Asset (NotSearilized)", Barcode = "1234", Category = lumber  },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test poly Asset", Barcode = "1234", Category = poly  },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test hepa Asset", Barcode = "1234", Category = hepa  }
+           );
 
             Customer target = new Customer { Id = 1, Name = "Target" };
             context.Customers.AddOrUpdate(

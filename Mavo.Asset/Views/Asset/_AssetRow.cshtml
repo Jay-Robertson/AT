@@ -1,0 +1,17 @@
+﻿@model Mavo.Assets.Models.AssetWithQuantity
+<tr id="row-@Model.Id">
+    <td>@Model.Asset.Name
+        @Html.HiddenFor(model => Model.Asset.Id)
+
+    </td>
+    <td>
+        <input id="quantity@(Model.Id)" class="input-mini quantity" @(Model.Asset.Kind != Mavo.Assets.Models.AssetKind.Serialized ? "disabled" : "") type="text" value="@Model.Quantity" placeholder="quantity" />
+    </td>
+    <td>
+        <a href="#" onclick="removeRow(@Model.Id); return false;" class="remove">Remove</a> 
+        @if (Model.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
+        {
+           <text> | </text><a href="#" onclick="updateQuantity(@Model.Id, $('#quantity@(Model.Id)').val()); return false;">Update</a>
+        }
+    </td>
+</tr>

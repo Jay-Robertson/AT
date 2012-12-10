@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+
     <style type="text/css">
         body
         {
@@ -57,10 +59,10 @@
 
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
+
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
@@ -115,6 +117,7 @@
                 gotoCurrent: true
             });
         });
+
     </script>
 
 </body>

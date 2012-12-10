@@ -1,0 +1,7 @@
+﻿@using Mavo.Assets
+@model decimal?
+
+<div class="input-prepend input-append">
+    <span class="add-on">$</span>
+    @Html.TextBoxFor(x => x, new { @class = "span6" })
+</div>

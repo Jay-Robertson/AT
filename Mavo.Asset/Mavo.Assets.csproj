@@ -165,7 +165,7 @@
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobPostModel.cs" />
     <Compile Include="Data\IRepository.cs" />
-    <Compile Include="EnumDropList.cs" />
+    <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -176,45 +176,9 @@
     <Compile Include="JobController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201212051932497_Initial-Migration.cs" />
-    <Compile Include="Migrations\201212051932497_Initial-Migration.Designer.cs">
-      <DependentUpon>201212051932497_Initial-Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212052024149_Jobs-v1.cs" />
-    <Compile Include="Migrations\201212052024149_Jobs-v1.Designer.cs">
-      <DependentUpon>201212052024149_Jobs-v1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212052031258_Job-AddedJobName.cs" />
-    <Compile Include="Migrations\201212052031258_Job-AddedJobName.Designer.cs">
-      <DependentUpon>201212052031258_Job-AddedJobName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212052046518_Customer-AddName.cs" />
-    <Compile Include="Migrations\201212052046518_Customer-AddName.Designer.cs">
-      <DependentUpon>201212052046518_Customer-AddName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212052050456_Customer-updatev2.cs" />
-    <Compile Include="Migrations\201212052050456_Customer-updatev2.Designer.cs">
-      <DependentUpon>201212052050456_Customer-updatev2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212052206158_Job-AddedForman.cs" />
-    <Compile Include="Migrations\201212052206158_Job-AddedForman.Designer.cs">
-      <DependentUpon>201212052206158_Job-AddedForman.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212061559304_UserRoleMigration.cs" />
-    <Compile Include="Migrations\201212061559304_UserRoleMigration.Designer.cs">
-      <DependentUpon>201212061559304_UserRoleMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212061641125_DeScopedJobStatus.cs" />
-    <Compile Include="Migrations\201212061641125_DeScopedJobStatus.Designer.cs">
-      <DependentUpon>201212061641125_DeScopedJobStatus.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212071704351_Assets.cs" />
-    <Compile Include="Migrations\201212071704351_Assets.Designer.cs">
-      <DependentUpon>201212071704351_Assets.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212072038579_RelationshipForAssetItems.cs" />
-    <Compile Include="Migrations\201212072038579_RelationshipForAssetItems.Designer.cs">
-      <DependentUpon>201212072038579_RelationshipForAssetItems.cs</DependentUpon>
+    <Compile Include="Migrations\201212101949141_InitialMigratin.cs" />
+    <Compile Include="Migrations\201212101949141_InitialMigratin.Designer.cs">
+      <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -327,6 +291,10 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Asset\_AssetSidebar.cshtml" />
     <Content Include="Views\Asset\Scan.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\decimal.cshtml" />
+    <Content Include="Views\Asset\_AssetPicker.cshtml" />
+    <Content Include="Views\Asset\_AssetPickerDetail.cshtml" />
+    <Content Include="Views\Asset\_AssetRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -335,38 +303,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201212051932497_Initial-Migration.resx">
-      <DependentUpon>201212051932497_Initial-Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212052024149_Jobs-v1.resx">
-      <DependentUpon>201212052024149_Jobs-v1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212052031258_Job-AddedJobName.resx">
-      <DependentUpon>201212052031258_Job-AddedJobName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212052046518_Customer-AddName.resx">
-      <DependentUpon>201212052046518_Customer-AddName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212052050456_Customer-updatev2.resx">
-      <DependentUpon>201212052050456_Customer-updatev2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212052206158_Job-AddedForman.resx">
-      <DependentUpon>201212052206158_Job-AddedForman.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212061559304_UserRoleMigration.resx">
-      <DependentUpon>201212061559304_UserRoleMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212061641125_DeScopedJobStatus.resx">
-      <DependentUpon>201212061641125_DeScopedJobStatus.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212071704351_Assets.resx">
-      <DependentUpon>201212071704351_Assets.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212072038579_RelationshipForAssetItems.resx">
-      <DependentUpon>201212072038579_RelationshipForAssetItems.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201212101949141_InitialMigratin.resx">
+      <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

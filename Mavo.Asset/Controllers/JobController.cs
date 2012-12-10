@@ -21,7 +21,7 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Index()
         {
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Repo.GetJobs().GroupBy(x=>x.Status) };
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Repo.GetJobs().GroupBy(x => x.Status) };
             return View();
         }
 
@@ -89,7 +89,7 @@ namespace Mavo.Assets.Controllers
 
                     Repo.Context.SaveChanges();
 
-                    return RedirectToAction(MVC.Job.Index());
+                    return RedirectToAction("Edit", new { id = job.Id });
                 }
                 else
                 {
@@ -134,7 +134,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.Customers = Repo.GetCustomers();
             ViewBag.Foremen = Repo.GetForemen();
             ViewBag.ProjectManagers = Repo.GetProjectManagers();
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Repo.GetJobs().GroupBy(x=>x.Status) };
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Repo.GetJobs().GroupBy(x => x.Status) };
 
         }
     }

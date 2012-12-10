@@ -15,9 +15,62 @@ namespace Mavo.Assets.Controllers
     {
         private AssetContext db = new AssetContext();
 
-        //
-        // GET: /Asset/
+        /// <summary>
+        /// Initializes a new instance of the AssetController class.
+        /// </summary>
+        public AssetController()
+        {
+            db.Configuration.LazyLoadingEnabled = true;
+        }
+  
+        public virtual ActionResult AssetPickerForJob(int id)
+        {
+            ViewBag.IsForJob = true;
+            ViewBag.JobId = id;
+            ViewBag.Assets = db.Jobs.Include(x=>x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == id).Assets;
+            return PartialView("_AssetPicker", db.AssetCategories.ToList());
+        }
 
+        public virtual ActionResult AssetPickerDetail(int id)
+        {
+            List<Asset> assets = db.Assets.Where(x => x.Category.Id == id).ToList();
+            return PartialView("_AssetPickerDetail", assets);
+        }
+        [HttpPost]
+        public virtual ActionResult RemoveAsset(int id, int jobId)
+        {
+            var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
+            job.Assets.RemoveAt(job.Assets.ToList().FindIndex(x => x.Id == id));
+            db.SaveChanges();
+            return null;
+        }
+        [HttpPost]
+        public virtual ActionResult AddAsset(int id, int jobId)
+        {
+            Asset asset = db.Assets.FirstOrDefault(x => x.Id == id);
+            var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
+            if (job.Assets != null && job.Assets.Any(x => x.Asset.Id == id))
+                return null;
+
+            if (job.Assets == null)
+                job.Assets = new List<AssetWithQuantity>();
+
+            AssetWithQuantity newAssetWithQuantity = new AssetWithQuantity() { Asset = asset };
+            job.Assets.Add(newAssetWithQuantity);
+
+            db.SaveChanges();
+
+            return PartialView("_AssetRow", newAssetWithQuantity);
+        }
+
+        [HttpPost]
+        public virtual ActionResult UpdateQuantity(int id, int quantity)
+        {
+            var asset = db.JobAssets.FirstOrDefault(x => x.Id == id);
+            asset.Quantity = quantity;
+            db.SaveChanges();
+            return null;
+        }
         public virtual ActionResult Index()
         {
 

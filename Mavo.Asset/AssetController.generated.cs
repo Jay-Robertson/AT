@@ -25,9 +25,6 @@ namespace Mavo.Assets.Controllers
     public partial class AssetController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AssetController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected AssetController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -44,6 +41,30 @@ namespace Mavo.Assets.Controllers
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AssetPickerForJob()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AssetPickerDetail()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerDetail);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult RemoveAsset()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RemoveAsset);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AddAsset()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddAsset);
+        }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult ScanItem()
@@ -66,6 +87,10 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
+            public readonly string AssetPickerForJob = "AssetPickerForJob";
+            public readonly string AssetPickerDetail = "AssetPickerDetail";
+            public readonly string RemoveAsset = "RemoveAsset";
+            public readonly string AddAsset = "AddAsset";
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string Create = "Create";
@@ -77,6 +102,10 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
+            public const string AssetPickerForJob = "AssetPickerForJob";
+            public const string AssetPickerDetail = "AssetPickerDetail";
+            public const string RemoveAsset = "RemoveAsset";
+            public const string AddAsset = "AddAsset";
             public const string Index = "Index";
             public const string Details = "Details";
             public const string Create = "Create";
@@ -86,6 +115,40 @@ namespace Mavo.Assets.Controllers
         }
 
 
+        static readonly ActionParamsClass_AssetPickerForJob s_params_AssetPickerForJob = new ActionParamsClass_AssetPickerForJob();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AssetPickerForJob AssetPickerForJobParams { get { return s_params_AssetPickerForJob; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AssetPickerForJob
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_AssetPickerDetail s_params_AssetPickerDetail = new ActionParamsClass_AssetPickerDetail();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AssetPickerDetail AssetPickerDetailParams { get { return s_params_AssetPickerDetail; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AssetPickerDetail
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_RemoveAsset s_params_RemoveAsset = new ActionParamsClass_RemoveAsset();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_RemoveAsset RemoveAssetParams { get { return s_params_RemoveAsset; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_RemoveAsset
+        {
+            public readonly string id = "id";
+            public readonly string jobId = "jobId";
+        }
+        static readonly ActionParamsClass_AddAsset s_params_AddAsset = new ActionParamsClass_AddAsset();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddAsset AddAssetParams { get { return s_params_AddAsset; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddAsset
+        {
+            public readonly string id = "id";
+            public readonly string jobId = "jobId";
+        }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
@@ -121,11 +184,17 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _AssetPicker = "_AssetPicker";
+                public readonly string _AssetPickerDetail = "_AssetPickerDetail";
+                public readonly string _AssetRow = "_AssetRow";
                 public readonly string _AssetSidebar = "_AssetSidebar";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
                 public readonly string Scan = "Scan";
             }
+            public readonly string _AssetPicker = "~/Views/Asset/_AssetPicker.cshtml";
+            public readonly string _AssetPickerDetail = "~/Views/Asset/_AssetPickerDetail.cshtml";
+            public readonly string _AssetRow = "~/Views/Asset/_AssetRow.cshtml";
             public readonly string _AssetSidebar = "~/Views/Asset/_AssetSidebar.cshtml";
             public readonly string Edit = "~/Views/Asset/Edit.cshtml";
             public readonly string Index = "~/Views/Asset/Index.cshtml";
@@ -137,6 +206,36 @@ namespace Mavo.Assets.Controllers
     public class T4MVC_AssetController : Mavo.Assets.Controllers.AssetController
     {
         public T4MVC_AssetController() : base(Dummy.Instance) { }
+
+        public override System.Web.Mvc.ActionResult AssetPickerForJob(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AssetPickerDetail(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerDetail);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult RemoveAsset(int id, int jobId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RemoveAsset);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AddAsset(int id, int jobId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddAsset);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.ActionResult Index()
         {
