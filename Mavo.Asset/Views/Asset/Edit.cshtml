@@ -106,12 +106,14 @@
                     <th>Condtion</th>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Items)
+                    @if (null != Model.Items) {
+                    foreach (var item in Model.Items)
                     {
                         <tr>
                             <td>@item.Barcode</td>
                             <td>@item.Condition</td>
                         </tr>
+                    }
                     }
                 </tbody>
             </table>

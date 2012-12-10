@@ -97,6 +97,7 @@ namespace Mavo.Assets.Models
         Create,
         Edit,
         Pick,
+        Transfer,
         Return,
         Repair,
         Retire
