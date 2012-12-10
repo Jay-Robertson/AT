@@ -8,8 +8,12 @@ namespace Mavo.Assets.Models
     [Flags]
     public enum UserRole
     {
-        Foreman = 1,
-        ProjectManager = 2
+        ProjectManager = 1,
+        WarehouseManager = 2,
+        WarehouseStaff = 4,
+        Foreman = 8,
 
+        // all roles
+        Administrator = 15
     }
 }
