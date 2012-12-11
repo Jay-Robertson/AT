@@ -23,18 +23,13 @@ namespace Mavo.Assets.Controllers
             return View();
         }
 
-        //
-        // GET: /Jobs/Create
-
-        public virtual ActionResult Create()
+        public virtual ActionResult Create(int? id)
         {
             SetListsForCrud(null);
             ViewBag.Action = "Create a new";
+            ViewBag.TemplateId = id;
             return View("Edit");
         }
-
-        //
-        // GET: /Jobs/Edit/5
 
         public virtual ActionResult Edit(int id)
         {
@@ -45,11 +40,10 @@ namespace Mavo.Assets.Controllers
 
                 ViewBag.Action = "Edit a";
 
-                return View("Edit", job);
+                return View("Edit", AutoMapper.Mapper.Map<Job,EditJobPostModel>(job));
             }
             else
                 return RedirectToAction(MVC.Job.Create());
-
         }
 
         //
@@ -75,7 +69,14 @@ namespace Mavo.Assets.Controllers
 
 
                     if (!jobPostModel.Id.HasValue)
+                    {
+                        if (jobPostModel.TemplateId.HasValue)
+                        {
+                            var assets = Repo.Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
+                            job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
+                        }
                         Repo.Context.Jobs.Add(job);
+                    }
 
                     Repo.Context.SaveChanges();
 
@@ -99,7 +100,6 @@ namespace Mavo.Assets.Controllers
             ViewBag.Foremen = Repo.GetForemen();
             ViewBag.ProjectManagers = Repo.GetProjectManagers();
             ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Repo.GetJobs().GroupBy(x => x.Status) };
-
         }
     }
 }

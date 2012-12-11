@@ -1,4 +1,4 @@
-﻿@model Mavo.Assets.Models.Job
+﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
 @{
     if (Model != null)
     {
@@ -24,12 +24,11 @@
     <span>@ViewBag.Action Job</span>
     @if (null != Model)
     {
-        <span>&gt; @Model.Customer.Name &gt; @Model.Name</span>
+        <span>&gt; @Model.Name</span>
     }
 </h1>
 @using (Html.BeginForm(MVC.Job.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    @Html.ValidationSummary(false)
     @Html.HiddenFor(x => x.Id)
     if (null != Model)
     {
@@ -38,6 +37,21 @@
         <li class="active"><a href="#assets" data-toggle="tab">Assets</a></li>
     </ul>
     }
+    else 
+    {
+    <div class="row-fluid">
+        <div class="well">
+            <h4>Template</h4>
+            @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name,
+                Selected = Model == null || ViewBag.TemplateId.HasValue ? false : x.Id == ViewBag.TemplateId
+            }), string.Empty)
+        </div>
+    </div>
+    }
+
     <div class="tab-content">
         <div class="tab-pane @(null == Model ? "active" : "")" id="details">
             <div class="row-fluid">
@@ -57,7 +71,7 @@
                                {
                                    Value = x.Id.ToString(),
                                    Text = x.Name,
-                                   Selected = Model == null || Model.Customer == null ? false : x.Id == Model.Customer.Id
+                                    Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
                                }), string.Empty)
                             </div>
                         </div>
@@ -68,13 +82,13 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(x => x.ProjectManager, new { @class = "control-label" })
+                            @Html.LabelFor(x => x.ProjectManagerId, new { @class = "control-label" })
                             <div class="controls">
                                 @Html.DropDownList("ProjectManagerId", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
                                {
                                    Value = x.Id.ToString(),
                                    Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
-                                   Selected = Model == null || Model.ProjectManager == null ? false : x.Id == Model.ProjectManager.Id
+                                   Selected = Model == null || Model.ProjectManagerId == null ? false : x.Id == Model.ProjectManagerId
                                }), string.Empty)
                             </div>
                         </div>
@@ -131,13 +145,13 @@
                     </div>
 
                     <div class="control-group">
-                        @Html.LabelFor(x => x.Foreman, new { @class = "control-label" })
+                        @Html.LabelFor(x => x.ForemanId, new { @class = "control-label" })
                         <div class="controls">
                             @Html.DropDownList("ForemanId", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
                            {
                                Value = x.Id.ToString(),
                                Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
-                               Selected = Model == null || Model.Foreman == null ? false : x.Id == Model.Foreman.Id
+                               Selected = Model == null || Model.ForemanId == null ? false : x.Id == Model.ForemanId
                            }), string.Empty)
                         </div>
                     </div>
