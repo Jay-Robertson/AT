@@ -53,9 +53,12 @@
 
         $('#add-asset').click(function () {
             $.post('/asset/addasset/' + $('#asset-value').val() + '?jobId=@(ViewBag.JobId ?? 0)', function (data) {
-                $('#asset-table > tbody:last').append(data);
+                var $quantity = $("input[data-asset-id='" + $('#asset-value').val() + "']");
+                if ($quantity.length > 0)
+                    $quantity.text(1 + Number($quantity.text()));
+                else
+                    $('#asset-table > tbody:last').append(data);
             });
-
             return false;
         });
 

@@ -67,26 +67,34 @@ namespace Mavo.Assets.Controllers
         {
        
             Asset asset = db.Assets.FirstOrDefault(x => x.Id == id);
-            AssetWithQuantity newAssetWithQuantity = new AssetWithQuantity() { Asset = asset };
+            AssetWithQuantity newAssetWithQuantity = new AssetWithQuantity() { Asset = asset, Quantity = 1 };
             if (jobId.HasValue)
             {
               
                 var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
                 if (job.Assets != null && job.Assets.Any(x => x.Asset.Id == id))
-                    return null;
+                {
+                    var assetToIncrease = job.Assets.FirstOrDefault(x => x.Asset.Id == id);
+                    assetToIncrease.Quantity++;
+                }
+                else
+                {
+                    if (job.Assets == null)
+                        job.Assets = new List<AssetWithQuantity>();
 
-                if (job.Assets == null)
-                    job.Assets = new List<AssetWithQuantity>();
-
-                job.Assets.Add(newAssetWithQuantity);
+                    job.Assets.Add(newAssetWithQuantity);
+                }
             }
             else if (templateId.HasValue)
             {
-                newAssetWithQuantity = new TemplateAsset() { Asset = asset }; ;
+                newAssetWithQuantity = new TemplateAsset() { Asset = asset, Quantity = 1 }; ;
 
                 var template = db.Templates.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == templateId);
                 if (template.Assets != null && template.Assets.Any(x => x.Asset.Id == id))
-                    return null;
+                {
+                    var assetToIncrease = template.Assets.FirstOrDefault(x => x.Asset.Id == id);
+                    assetToIncrease.Quantity++;
+                }
 
                 if (template.Assets == null)
                     template.Assets = new List<TemplateAsset>();
