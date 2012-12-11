@@ -33,5 +33,9 @@ namespace Mavo.Assets.Models.ViewModel
         public DateTime PickupTime { get; set; }
         public DateTime ContractDate { get; set; }
         public DateTime EstimatedCompletionDate { get; set; }
+
+        public int? TemplateId { get; set; }
+
+        public IList<Template> Templates { get; set; }
     }
 }

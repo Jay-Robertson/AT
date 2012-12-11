@@ -27,6 +27,10 @@ namespace Mavo.Assets
             AuthConfig.RegisterAuth();
 
             AutoMapper.Mapper.CreateMap<EditJobPostModel, Job>();
+            AutoMapper.Mapper.CreateMap<Job, EditJobPostModel>()
+                .ForMember(dest => dest.ProjectManagerId, opt => opt.MapFrom(src => src.ProjectManager.Id))
+                .ForMember(dest => dest.ForemanId, opt => opt.MapFrom(src => src.Foreman.Id))
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id));
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
         }
     }
