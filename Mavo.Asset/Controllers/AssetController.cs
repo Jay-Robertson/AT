@@ -13,14 +13,14 @@ namespace Mavo.Assets.Controllers
 {
     public partial class AssetController : BaseController
     {
-        private AssetContext db = new AssetContext();
+        private AssetContext db;
 
         /// <summary>
         /// Initializes a new instance of the AssetController class.
         /// </summary>
-        public AssetController()
+        public AssetController(AssetContext db)
         {
-            db.Configuration.LazyLoadingEnabled = true;
+            this.db = db;
         }
 
         public virtual ActionResult AssetPickerForTemplate(int? id = null)
