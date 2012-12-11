@@ -15,6 +15,24 @@
 }
 @using (Html.BeginForm(MVC.Asset.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
 {
+    <script>
+        jQuery(function ($) {
+            var trackKind = function () {
+                var isSerialized = ('Serialized' == $('#Kind').val());
+                if (isSerialized) {
+                    $('#UnitOfMeasure, #Inventory')[isSerialized ? 'attr' : 'removeAttr']('disabled', 'disabled');
+                }
+                else {
+                    $('#UnitOfMeasure, #Inventory').removeAttr('disabled', 'disabled');
+                }
+                $('#AssetItems').toggle(isSerialized);
+            }
+            trackKind();
+            $('#Kind').change(trackKind);
+            
+        });
+    </script>
+    
     @Html.ValidationSummary(true)
     @Html.HiddenFor(x => x.Id)
     <fieldset>
@@ -34,7 +52,6 @@
                 </div>
             </div>
 
-
             <div class="control-group">
                 @Html.LabelFor(x => x.Category, new { @class = "control-label" })
                 <div class="controls">
@@ -44,6 +61,13 @@
                        Text = x.Name,
                        Selected = Model == null || Model.Category == null ? false : x.Id == Model.Category.Id
                    }), string.Empty)
+                </div>
+            </div>
+            
+            <div class="control-group">
+                @Html.LabelFor(x => x.UnitOfMeasure, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.UnitOfMeasure)
                 </div>
             </div>
         </div>
@@ -97,13 +121,15 @@
          
     if (ViewBag.AssetItems != null)
     {
-    <div class="well">
+    <div id="AssetItems" class="well">
         <fieldset>
             <legend>Associated Asset Items</legend>
             <table class="table table-striped table-hover">
                 <thead>
-                    <th>Barcode</th>
-                    <th>Condtion</th>
+                    <tr>
+                        <th>Barcode</th>
+                        <th>Condtion</th>
+                    </tr>
                 </thead>
                 <tbody>
                     @if (null != Model.Items) {

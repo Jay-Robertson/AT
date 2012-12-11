@@ -60,13 +60,14 @@ namespace Mavo.Assets.Models
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Barcode { get; set; }         // mavo barcode value
+        public string Barcode { get; set; }          // mavo barcode value
         public AssetCategory Category { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; }            
+        public string UnitOfMeasure { get; set; }    // valid on Consumable and NonSerialized assets
 
         // warehousing data
         public AssetKind Kind { get; set; }
-        public int? Inventory { get; set; }          // only valid for Consumable and NotSerialized assets
+        public int? Inventory { get; set; }          // valid on Consumable and NotSerialized assets
 
         // manufactuer/model/vendor data
         public string Manufacturer { get; set; }

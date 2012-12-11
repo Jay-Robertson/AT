@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201212101949141_InitialMigratin.Designer.cs">
       <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201212111648092_Asset-UnitOfMeasure.cs" />
+    <Compile Include="Migrations\201212111648092_Asset-UnitOfMeasure.Designer.cs">
+      <DependentUpon>201212111648092_Asset-UnitOfMeasure.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
@@ -312,6 +316,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201212101949141_InitialMigratin.resx">
       <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212111648092_Asset-UnitOfMeasure.resx">
+      <DependentUpon>201212111648092_Asset-UnitOfMeasure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

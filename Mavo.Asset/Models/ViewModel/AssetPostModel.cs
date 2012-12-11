@@ -12,6 +12,7 @@ namespace Mavo.Assets.Models.ViewModel
         public string Barcode { get; set; }         // mavo barcode value
         public int? CategoryId { get; set; }
         public string Name { get; set; }
+        public string UnitOfMeasure { get; set; }
 
         // warehousing data
         public AssetKind Kind { get; set; }
