@@ -43,12 +43,6 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult AssetPickerForTemplate()
-        {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForTemplate);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult AssetPickerForJob()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
@@ -259,7 +253,7 @@ namespace Mavo.Assets.Controllers
     {
         public T4MVC_AssetController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult AssetPickerForTemplate(int id)
+        public override System.Web.Mvc.ActionResult AssetPickerForTemplate(int? id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForTemplate);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
