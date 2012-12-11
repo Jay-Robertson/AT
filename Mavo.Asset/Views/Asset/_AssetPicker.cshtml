@@ -30,20 +30,20 @@
 </table>
 
 <script>
-    @if (ViewBag.IsForJob)
-    {
-        <text>
-    function updateQuantity(assetId, quantity) {
-        $.post('/asset/updatequantity/' + assetId + '?quantity=' + quantity);
-    }
+    var idSpecifier = '@(ViewBag.IsForJob ? String.Format("jobId={0}", ViewBag.JobId ?? 0) : String.Format("templateId={0}", ViewBag.TemplateId))';
     function removeRow(assetId) {
         $('#row-' + assetId).remove();
-        $.post('/asset/removeasset/' + assetId + '?jobId=@(ViewBag.JobId ?? 0)').val(), function (data) {
-            $('#asset-table > tbody:last').append(data);
-        }
+        $.post('/asset/removeasset/' + assetId + '?' + idSpecifier);
         return false;
     }
-    $(function () {
+    function updateQuantity(assetId, quantity) {
+        if (0 == quantity || !quantity) {
+            return removeRow(assetId);
+        }
+        $.post('/asset/updatequantity@(ViewBag.IsForJob ? "" : "fortemplate")/' + assetId + '?quantity=' + quantity);
+        $('#asset-table #row-' + assetId + ' .btn-primary').css('visibility', 'hidden');
+    }
+    jQuery(function ($) {
 
         $('#asset-category').change(function () {
             $.get('/asset/assetpickerdetail/' + $(this).val(), function (data) {
@@ -52,54 +52,22 @@
         });
 
         $('#add-asset').click(function () {
-            $.post('/asset/addasset/' + $('#asset-value').val() + '?jobId=@(ViewBag.JobId ?? 0)', function (data) {
-                var $quantity = $("input[data-asset-id='" + $('#asset-value').val() + "']");
-                if ($quantity.length > 0)
-                    $quantity.text(1 + Number($quantity.text()));
-                else
+            $.post('/asset/addasset/' + $('#asset-value').val() + '?' + idSpecifier, function (data) {
+                var $row = $("#asset-table tr[data-asset-id='" + $('#asset-value').val() + "']");
+                if ($row.length > 0) {
+                    $row.replaceWith(data);
+                }
+                else {
                     $('#asset-table > tbody:last').append(data);
+                }
             });
             return false;
         });
 
-
-
-    });
-    </text>
-    }
-    else
-    {
-    <text>
-    function updateQuantity(assetId, quantity) {
-        $.post('/asset/updatequantityfortemplate/' + assetId + '?quantity=' + quantity);
-    }
-    function removeRow(assetId) {
-        $('#row-' + assetId).remove();
-        $.post('/asset/removeasset/' + assetId + '?templateId=@(ViewBag.TemplateId ?? 0)').val(), function (data) {
-            $('#asset-table > tbody:last').append(data);
-        }
-        return false;
-    }
-    $(function () {
-
-        $('#asset-category').change(function () {
-            $.get('/asset/assetpickerdetail/' + $(this).val(), function (data) {
-                $('#asset-detail').html(data)
-            });
+        $('#asset-table input.quantity').live('keydown change', function () {
+            $(this).closest('tr').find('.btn-primary').css('visibility', 'visible');
         });
-
-        $('#add-asset').click(function () {
-            $.post('/asset/addasset/' + $('#asset-value').val() + '?templateId=@(ViewBag.TemplateId ?? 0)', function (data) {
-                $('#asset-table > tbody:last').append(data);
-            });
-
-            return false;
-        });
-
-
-
     });
-    </text>
-    }
+
 </script>
 

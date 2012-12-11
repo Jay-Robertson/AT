@@ -76,6 +76,7 @@ namespace Mavo.Assets.Controllers
                 {
                     var assetToIncrease = job.Assets.FirstOrDefault(x => x.Asset.Id == id);
                     assetToIncrease.Quantity++;
+                    newAssetWithQuantity.Quantity = assetToIncrease.Quantity;
                 }
                 else
                 {
@@ -94,12 +95,15 @@ namespace Mavo.Assets.Controllers
                 {
                     var assetToIncrease = template.Assets.FirstOrDefault(x => x.Asset.Id == id);
                     assetToIncrease.Quantity++;
+                    newAssetWithQuantity.Quantity = assetToIncrease.Quantity;
                 }
+                else
+                {
+                    if (template.Assets == null)
+                        template.Assets = new List<TemplateAsset>();
 
-                if (template.Assets == null)
-                    template.Assets = new List<TemplateAsset>();
-
-                template.Assets.Add((TemplateAsset)newAssetWithQuantity);
+                    template.Assets.Add((TemplateAsset)newAssetWithQuantity);
+                }
             }
 
 
