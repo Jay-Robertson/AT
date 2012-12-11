@@ -30,6 +30,9 @@
 </table>
 
 <script>
+    @if (ViewBag.IsForJob)
+    {
+        <text>
     function updateQuantity(assetId, quantity) {
         $.post('/asset/updatequantity/' + assetId + '?quantity=' + quantity);
     }
@@ -59,5 +62,41 @@
 
 
     });
+    </text>
+    }
+    else
+    {
+    <text>
+    function updateQuantity(assetId, quantity) {
+        $.post('/asset/updatequantityfortemplate/' + assetId + '?quantity=' + quantity);
+    }
+    function removeRow(assetId) {
+        $('#row-' + assetId).remove();
+        $.post('/asset/removeasset/' + assetId + '?templateId=@(ViewBag.TemplateId ?? 0)').val(), function (data) {
+            $('#asset-table > tbody:last').append(data);
+        }
+        return false;
+    }
+    $(function () {
+
+        $('#asset-category').change(function () {
+            $.get('/asset/assetpickerdetail/' + $(this).val(), function (data) {
+                $('#asset-detail').html(data)
+            });
+        });
+
+        $('#add-asset').click(function () {
+            $.post('/asset/addasset/' + $('#asset-value').val() + '?templateId=@(ViewBag.TemplateId ?? 0)', function (data) {
+                $('#asset-table > tbody:last').append(data);
+            });
+
+            return false;
+        });
+
+
+
+    });
+    </text>
+    }
 </script>
 

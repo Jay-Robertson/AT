@@ -2,7 +2,7 @@
 @{Html.RenderPartial("_TemplateSidebar", new Mavo.Assets.Models.ViewModel.TemplatesLeftNavViewModel() { Template = Model, Templates = ViewBag.Templates });}
 
 <div class="row-fluid">
-    <div class="span8 offset1 well">
+    <div class="offset1 span8 well">
         <h4>Template Assets</h4>
         @{Html.RenderAction("AssetPickerForTemplate", "Asset");}
     </div>

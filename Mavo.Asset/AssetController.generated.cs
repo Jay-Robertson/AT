@@ -43,6 +43,12 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AssetPickerForTemplate()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForTemplate);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult AssetPickerForJob()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
@@ -73,6 +79,12 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult UpdateQuantityForTemplate()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateQuantityForTemplate);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult ScanItem()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ScanItem);
@@ -93,11 +105,13 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
+            public readonly string AssetPickerForTemplate = "AssetPickerForTemplate";
             public readonly string AssetPickerForJob = "AssetPickerForJob";
             public readonly string AssetPickerDetail = "AssetPickerDetail";
             public readonly string RemoveAsset = "RemoveAsset";
             public readonly string AddAsset = "AddAsset";
             public readonly string UpdateQuantity = "UpdateQuantity";
+            public readonly string UpdateQuantityForTemplate = "UpdateQuantityForTemplate";
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string Create = "Create";
@@ -109,11 +123,13 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
+            public const string AssetPickerForTemplate = "AssetPickerForTemplate";
             public const string AssetPickerForJob = "AssetPickerForJob";
             public const string AssetPickerDetail = "AssetPickerDetail";
             public const string RemoveAsset = "RemoveAsset";
             public const string AddAsset = "AddAsset";
             public const string UpdateQuantity = "UpdateQuantity";
+            public const string UpdateQuantityForTemplate = "UpdateQuantityForTemplate";
             public const string Index = "Index";
             public const string Details = "Details";
             public const string Create = "Create";
@@ -123,6 +139,14 @@ namespace Mavo.Assets.Controllers
         }
 
 
+        static readonly ActionParamsClass_AssetPickerForTemplate s_params_AssetPickerForTemplate = new ActionParamsClass_AssetPickerForTemplate();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AssetPickerForTemplate AssetPickerForTemplateParams { get { return s_params_AssetPickerForTemplate; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AssetPickerForTemplate
+        {
+            public readonly string id = "id";
+        }
         static readonly ActionParamsClass_AssetPickerForJob s_params_AssetPickerForJob = new ActionParamsClass_AssetPickerForJob();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_AssetPickerForJob AssetPickerForJobParams { get { return s_params_AssetPickerForJob; } }
@@ -147,6 +171,7 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string jobId = "jobId";
+            public readonly string templateId = "templateId";
         }
         static readonly ActionParamsClass_AddAsset s_params_AddAsset = new ActionParamsClass_AddAsset();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -156,12 +181,22 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string jobId = "jobId";
+            public readonly string templateId = "templateId";
         }
         static readonly ActionParamsClass_UpdateQuantity s_params_UpdateQuantity = new ActionParamsClass_UpdateQuantity();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_UpdateQuantity UpdateQuantityParams { get { return s_params_UpdateQuantity; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_UpdateQuantity
+        {
+            public readonly string id = "id";
+            public readonly string quantity = "quantity";
+        }
+        static readonly ActionParamsClass_UpdateQuantityForTemplate s_params_UpdateQuantityForTemplate = new ActionParamsClass_UpdateQuantityForTemplate();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateQuantityForTemplate UpdateQuantityForTemplateParams { get { return s_params_UpdateQuantityForTemplate; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateQuantityForTemplate
         {
             public readonly string id = "id";
             public readonly string quantity = "quantity";
@@ -224,6 +259,13 @@ namespace Mavo.Assets.Controllers
     {
         public T4MVC_AssetController() : base(Dummy.Instance) { }
 
+        public override System.Web.Mvc.ActionResult AssetPickerForTemplate(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForTemplate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult AssetPickerForJob(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
@@ -238,25 +280,35 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult RemoveAsset(int id, int jobId)
+        public override System.Web.Mvc.ActionResult RemoveAsset(int id, int? jobId, int? templateId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RemoveAsset);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "templateId", templateId);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult AddAsset(int id, int jobId)
+        public override System.Web.Mvc.ActionResult AddAsset(int id, int? jobId, int? templateId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddAsset);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "templateId", templateId);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult UpdateQuantity(int id, int quantity)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateQuantity);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "quantity", quantity);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult UpdateQuantityForTemplate(int id, int quantity)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdateQuantityForTemplate);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "quantity", quantity);
             return callInfo;

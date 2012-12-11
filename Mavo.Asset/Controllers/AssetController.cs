@@ -26,8 +26,8 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult AssetPickerForTemplate(int id)
         {
             ViewBag.IsForJob = false;
-            ViewBag.JobId = id;
-            ViewBag.Assets = db.TemplateAssets.Include(x=>x.Asset).FirstOrDefault(x => x.Id == id);
+            ViewBag.TemplateId = id;
+            ViewBag.Assets = db.TemplateAssets.Include(x => x.Asset).Where(x => x.Template.Id == id);
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 
@@ -35,7 +35,7 @@ namespace Mavo.Assets.Controllers
         {
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
-            ViewBag.Assets = db.Jobs.Include(x=>x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == id).Assets;
+            ViewBag.Assets = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == id).Assets;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 
@@ -45,26 +45,53 @@ namespace Mavo.Assets.Controllers
             return PartialView("_AssetPickerDetail", assets);
         }
         [HttpPost]
-        public virtual ActionResult RemoveAsset(int id, int jobId)
+        public virtual ActionResult RemoveAsset(int id, int? jobId = null, int? templateId = null)
         {
-            var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
-            job.Assets.RemoveAt(job.Assets.ToList().FindIndex(x => x.Id == id));
+            if (jobId.HasValue)
+            {
+                var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
+                job.Assets.RemoveAt(job.Assets.ToList().FindIndex(x => x.Id == id));
+            }
+            else if (templateId.HasValue)
+            {
+                var template = db.Templates.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == templateId);
+                template.Assets.RemoveAt(template.Assets.ToList().FindIndex(x => x.Id == id));
+            }
             db.SaveChanges();
             return null;
         }
         [HttpPost]
-        public virtual ActionResult AddAsset(int id, int jobId)
+        public virtual ActionResult AddAsset(int id, int? jobId = null, int? templateId = null)
         {
+       
             Asset asset = db.Assets.FirstOrDefault(x => x.Id == id);
-            var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
-            if (job.Assets != null && job.Assets.Any(x => x.Asset.Id == id))
-                return null;
-
-            if (job.Assets == null)
-                job.Assets = new List<AssetWithQuantity>();
-
             AssetWithQuantity newAssetWithQuantity = new AssetWithQuantity() { Asset = asset };
-            job.Assets.Add(newAssetWithQuantity);
+            if (jobId.HasValue)
+            {
+              
+                var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
+                if (job.Assets != null && job.Assets.Any(x => x.Asset.Id == id))
+                    return null;
+
+                if (job.Assets == null)
+                    job.Assets = new List<AssetWithQuantity>();
+
+                job.Assets.Add(newAssetWithQuantity);
+            }
+            else if (templateId.HasValue)
+            {
+                newAssetWithQuantity = new TemplateAsset() { Asset = asset }; ;
+
+                var template = db.Templates.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == templateId);
+                if (template.Assets != null && template.Assets.Any(x => x.Asset.Id == id))
+                    return null;
+
+                if (template.Assets == null)
+                    template.Assets = new List<TemplateAsset>();
+
+                template.Assets.Add((TemplateAsset)newAssetWithQuantity);
+            }
+
 
             db.SaveChanges();
 
@@ -75,6 +102,15 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult UpdateQuantity(int id, int quantity)
         {
             var asset = db.JobAssets.FirstOrDefault(x => x.Id == id);
+            asset.Quantity = quantity;
+            db.SaveChanges();
+            return null;
+        }
+
+        [HttpPost]
+        public virtual ActionResult UpdateQuantityForTemplate(int id, int quantity)
+        {
+            var asset = db.TemplateAssets.FirstOrDefault(x => x.Id == id);
             asset.Quantity = quantity;
             db.SaveChanges();
             return null;
