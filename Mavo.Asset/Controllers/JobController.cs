@@ -9,27 +9,17 @@ using Mavo.Assets.Models.ViewModel;
 using AutoMapper;
 namespace Mavo.Assets.Controllers
 {
-    public partial class JobController : Controller
+    public partial class JobController : BaseController
     {
         private readonly IRepository Repo;
         public JobController(IRepository repo)
         {
             Repo = repo;
         }
-        //
-        // GET: /Jobs/
 
         public virtual ActionResult Index()
         {
             ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Repo.GetJobs().GroupBy(x => x.Status) };
-            return View();
-        }
-
-        //
-        // GET: /Jobs/Details/5
-
-        public virtual ActionResult Details(int id)
-        {
             return View();
         }
 
@@ -96,32 +86,6 @@ namespace Mavo.Assets.Controllers
                     SetListsForCrud(job);
                     return View(job);
                 }
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Jobs/Delete/5
-
-        public virtual ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Jobs/Delete/5
-
-        [HttpPost]
-        public virtual ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
             }
             catch
             {

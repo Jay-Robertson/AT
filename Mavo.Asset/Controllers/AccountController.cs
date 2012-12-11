@@ -13,7 +13,7 @@ namespace Mavo.Assets.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public partial class AccountController : Controller
+    public partial class AccountController : BaseController
     {
         //
         // GET: /Account/Login

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Mavo.Assets.Controllers
 {
-    public partial class HomeController : Controller
+    public partial class HomeController : BaseController
     {
         public virtual ActionResult Index()
         {

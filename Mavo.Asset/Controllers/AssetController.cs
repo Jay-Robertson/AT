@@ -11,7 +11,7 @@ using AutoMapper;
 
 namespace Mavo.Assets.Controllers
 {
-    public partial class AssetController : Controller
+    public partial class AssetController : BaseController
     {
         private AssetContext db = new AssetContext();
 
