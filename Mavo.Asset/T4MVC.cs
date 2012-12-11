@@ -26,6 +26,7 @@ public static class MVC
 {
     public static Mavo.Assets.Controllers.AccountController Account = new Mavo.Assets.Controllers.T4MVC_AccountController();
     public static Mavo.Assets.Controllers.AssetController Asset = new Mavo.Assets.Controllers.T4MVC_AssetController();
+    public static Mavo.Assets.Controllers.BaseController Base = new Mavo.Assets.Controllers.T4MVC_BaseController();
     public static Mavo.Assets.Controllers.HomeController Home = new Mavo.Assets.Controllers.T4MVC_HomeController();
     public static Mavo.Assets.Controllers.JobController Job = new Mavo.Assets.Controllers.T4MVC_JobController();
     public static Mavo.Assets.Controllers.TemplateController Template = new Mavo.Assets.Controllers.T4MVC_TemplateController();
