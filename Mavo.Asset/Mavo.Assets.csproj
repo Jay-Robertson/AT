@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.Designer.cs">
       <DependentUpon>201212121908580_addedRequiredAttributeOnTemplateName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201212122046246_NotSureWhatIDid.cs" />
+    <Compile Include="Migrations\201212122046246_NotSureWhatIDid.Designer.cs">
+      <DependentUpon>201212122046246_NotSureWhatIDid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
@@ -342,6 +346,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.resx">
       <DependentUpon>201212121908580_addedRequiredAttributeOnTemplateName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212122046246_NotSureWhatIDid.resx">
+      <DependentUpon>201212122046246_NotSureWhatIDid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

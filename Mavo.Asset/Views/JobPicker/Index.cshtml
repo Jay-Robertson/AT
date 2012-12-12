@@ -1,6 +1,8 @@
 ﻿@model Mavo.Assets.Models.ViewModel.PickAJobModel
 @{
     ViewBag.Title = "Index";
+    var unserializedAssets = Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized).ToList();
+    var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
 }
 @section LeftNav
 {
@@ -53,18 +55,39 @@
                 </tr>
             </thead>
             <tbody>
-                @for (int i = 0; i < Model.Assets.Count(); i++)
+                @for (int i = 0; i < serializedAssets.Count(); i++)
+                {
+                    for (int y = 0; y < serializedAssets[i].QuantityNeeded; y++)
+                    {
+                    <tr>
+                        <td>@serializedAssets[i].Id</td>
+                        <td>@serializedAssets[i].Name</td>
+                        <td>@serializedAssets[i].Status</td>
+                        <td>
+                            <input type="text" class="input-mini" name="serializedAssets[@i + y].SerialNumber" value="@serializedAssets[i].SerialNumber"/>
+                            <input type="hidden" name="serializedAssets[@(i + y)].Name" value="@serializedAssets[i].Name" />
+                            <input type="hidden" name="serializedAssets[@(i + y)].Status" value="@serializedAssets[i].Status" />
+                            <input type="hidden" name="serializedAssets[@(i + y)].Id" value="@serializedAssets[i].Id" />
+                            <input type="hidden" name="serializedAssets[@(i + y)].QuantityNeeded" value="@serializedAssets[i].QuantityNeeded" />
+                        </td>
+                    </tr>
+                    }
+
+                }
+                @for (int i = 0; i < unserializedAssets.Count(); i++)
                 {
                     <tr>
-                        <td>@Model.Assets[i].Id</td>
-                        <td>@Model.Assets[i].Name</td>
-                        <td>@Model.Assets[i].Status</td>
+                        <td>@unserializedAssets[i].Id</td>
+                        <td>@unserializedAssets[i].Name</td>
+                        <td>@unserializedAssets[i].Status</td>
                         <td>
-                            <input type="text" class="input-mini" name="assets[@i].QuantityTaken" value="@Model.Assets[i].QuantityNeeded">/ @Model.Assets[i].QuantityNeeded
-                            <input type="hidden" name="assets[@i].Name" value="@Model.Assets[i].Name" />
-                            <input type="hidden" name="assets[@i].Status" value="@Model.Assets[i].Status" />
-                            <input type="hidden" name="assets[@i].Id" value="@Model.Assets[i].Id" />
-                            <input type="hidden" name="assets[@i].QuantityNeeded" value="@Model.Assets[i].QuantityNeeded" />
+                            <input type="text" class="input-mini" name="unserializedAssets[@i].QuantityTaken" value="@unserializedAssets[i].QuantityNeeded"/><text>/</text>
+                            @unserializedAssets[i].QuantityNeeded
+
+                            <input type="hidden" name="unserializedAssets[@i].Name" value="@unserializedAssets[i].Name" />
+                            <input type="hidden" name="unserializedAssets[@i].Status" value="@unserializedAssets[i].Status" />
+                            <input type="hidden" name="unserializedAssets[@i].Id" value="@unserializedAssets[i].Id" />
+                            <input type="hidden" name="unserializedAssets[@i].QuantityNeeded" value="@unserializedAssets[i].QuantityNeeded" />
                         </td>
                     </tr>
                 }

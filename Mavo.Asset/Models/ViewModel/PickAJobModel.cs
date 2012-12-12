@@ -41,5 +41,9 @@ namespace Mavo.Assets.Models.ViewModel
         public int? QuantityTaken { get; set; }
 
         public int? QuantityNeeded { get; set; }
+
+        public AssetKind Kind { get; set; }
+
+        public string SerialNumber { get; set; }
     }
 }

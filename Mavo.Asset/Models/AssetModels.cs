@@ -26,6 +26,7 @@ namespace Mavo.Assets.Models
         public DbSet<Template> Templates { get; set; }
         public DbSet<TemplateAsset> TemplateAssets { get; set; }
 
+        public DbSet<PickedAsset> PickedAssets { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Customer> Customers { get; set; }
     }
