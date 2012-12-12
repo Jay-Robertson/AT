@@ -134,6 +134,22 @@ namespace Mavo.Assets.Models
         public int Quantity { get; set; }
     }
 
+    [Table("PickedAsset")]
+    public class PickedAsset : AssetWithQuantity
+    {
+        public Job Job { get; set; }
+        public DateTime Picked { get; set; }
+        public AssetItem Item { get; set; }
+    }
+
+    [Table("ReturnedAsset")]
+    public class ReturnedAsset : AssetWithQuantity
+    {
+        public Job Job { get; set; }
+        public DateTime Returned { get; set; }
+        public AssetItem Item { get; set; }
+    }
+
     [Table("TemplatesAssets")]
     public class TemplateAsset : AssetWithQuantity
     {
