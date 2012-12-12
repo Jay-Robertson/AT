@@ -1,0 +1,16 @@
+﻿@{   var id = int.Parse(Url.RequestContext.RouteData.Values["id"].ToString().ToLower()); }
+
+<div class="span2">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
+            {
+                <li class="nav-header">@item.Key.ToShortDateString()</li>
+                foreach (Mavo.Assets.Models.Job job in item)
+                {
+                <li class='@(id == job.Id ? "active" : "")'><a href="/jobpicker/index/@job.Id">@job.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>

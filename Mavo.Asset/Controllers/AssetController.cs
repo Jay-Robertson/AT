@@ -29,7 +29,7 @@ namespace Mavo.Assets.Controllers
                 return null;
             ViewBag.IsForJob = false;
             ViewBag.TemplateId = id;
-            ViewBag.Assets = db.TemplateAssets.Include(x => x.Asset).Where(x => x.Template.Id == id);
+            ViewBag.Assets = db.TemplateAssets.Include(x => x.Asset).Where(x => x.Template.Id == id).ToList();
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 

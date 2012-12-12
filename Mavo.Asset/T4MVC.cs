@@ -29,6 +29,7 @@ public static class MVC
     public static Mavo.Assets.Controllers.BaseController Base = new Mavo.Assets.Controllers.T4MVC_BaseController();
     public static Mavo.Assets.Controllers.HomeController Home = new Mavo.Assets.Controllers.T4MVC_HomeController();
     public static Mavo.Assets.Controllers.JobController Job = new Mavo.Assets.Controllers.T4MVC_JobController();
+    public static Mavo.Assets.Controllers.JobPickerController JobPicker = new Mavo.Assets.Controllers.T4MVC_JobPickerController();
     public static Mavo.Assets.Controllers.TemplateController Template = new Mavo.Assets.Controllers.T4MVC_TemplateController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

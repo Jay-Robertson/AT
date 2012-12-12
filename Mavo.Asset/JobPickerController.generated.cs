@@ -22,10 +22,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace Mavo.Assets.Controllers
 {
-    public partial class TemplateController
+    public partial class JobPickerController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected TemplateController(Dummy d) { }
+        protected JobPickerController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -43,19 +43,19 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Edit()
+        public System.Web.Mvc.ActionResult Index()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public TemplateController Actions { get { return MVC.Template; } }
+        public JobPickerController Actions { get { return MVC.JobPicker; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Template";
+        public readonly string Name = "JobPicker";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Template";
+        public const string NameConst = "JobPicker";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -64,27 +64,23 @@ namespace Mavo.Assets.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string Create = "Create";
-            public readonly string Edit = "Edit";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string Create = "Create";
-            public const string Edit = "Edit";
         }
 
 
-        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Edit
+        public class ActionParamsClass_Index
         {
             public readonly string id = "id";
-            public readonly string template = "template";
+            public readonly string assets = "assets";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -96,45 +92,31 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _TemplateSidebar = "_TemplateSidebar";
-                public readonly string Edit = "Edit";
+                public readonly string _JobPickerSidebar = "_JobPickerSidebar";
                 public readonly string Index = "Index";
             }
-            public readonly string _TemplateSidebar = "~/Views/Template/_TemplateSidebar.cshtml";
-            public readonly string Edit = "~/Views/Template/Edit.cshtml";
-            public readonly string Index = "~/Views/Template/Index.cshtml";
+            public readonly string _JobPickerSidebar = "~/Views/JobPicker/_JobPickerSidebar.cshtml";
+            public readonly string Index = "~/Views/JobPicker/Index.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_TemplateController : Mavo.Assets.Controllers.TemplateController
+    public class T4MVC_JobPickerController : Mavo.Assets.Controllers.JobPickerController
     {
-        public T4MVC_TemplateController() : base(Dummy.Instance) { }
+        public T4MVC_JobPickerController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult Index(int id, System.Collections.Generic.IList<Mavo.Assets.Models.ViewModel.JobAsset> assets)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Create()
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Edit(int id)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "assets", assets);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(int id, Mavo.Assets.Models.Template template)
+        public override System.Web.Mvc.ActionResult Index(int id)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "template", template);
             return callInfo;
         }
 

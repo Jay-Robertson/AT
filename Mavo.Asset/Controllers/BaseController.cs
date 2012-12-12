@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Mavo.Assets.Models;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Mavo.Assets.Controllers
 {
@@ -11,7 +12,10 @@ namespace Mavo.Assets.Controllers
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.Templates = new AssetContext().Templates.ToList();
+
+            AssetContext assetContext =  ServiceLocator.Current.GetInstance<AssetContext>();
+            ViewBag.Templates = assetContext.Templates.ToList();
+            ViewBag.JobsReadyToPickForNav = assetContext.Jobs.Where(x=>x.Status == JobStatus.ReadyToPick).ToList().GroupBy(x=>x.PickupTime.Date).OrderBy(x=>x.Key);
             base.OnActionExecuting(filterContext);
         }
     }

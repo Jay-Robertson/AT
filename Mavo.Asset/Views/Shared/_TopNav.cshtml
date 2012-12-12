@@ -52,6 +52,21 @@
                         </ul>
                     </li>
                 </ul>
+                  <ul class="nav">
+                    <li class="dropdown @(controller == "jobpicker" ? "active" : "")">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pick a Job <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                           @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
+                           {
+                               <li class="nav-header">@item.Key.ToShortDateString()</li>
+                               foreach (Mavo.Assets.Models.Job job in item)
+                               {
+                                   <li><a href="/jobpicker/index/@job.Id">@job.Name</a></li>
+                               }
+                           }
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

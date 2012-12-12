@@ -11,15 +11,15 @@ namespace Mavo.Assets.Controllers
 {
     public partial class JobController : BaseController
     {
-        private readonly IRepository Repo;
-        public JobController(IRepository repo)
+        private readonly AssetContext Context;
+        public JobController(AssetContext context)
         {
-            Repo = repo;
+            Context = context;
         }
 
         public virtual ActionResult Index()
         {
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Repo.GetJobs().GroupBy(x => x.Status) };
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Context.Jobs.GroupBy(x => x.Status) };
             return View();
         }
 
@@ -33,7 +33,7 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Edit(int id)
         {
-            Mavo.Assets.Models.Job job = Repo.GetJobById(id);
+            Mavo.Assets.Models.Job job = Context.Jobs.FirstOrDefault(x=>x.Id == id);
             if (job != null)
             {
                 SetListsForCrud(job);
@@ -54,31 +54,31 @@ namespace Mavo.Assets.Controllers
         {
             try
             {
-                Job job = Repo.GetJobById(jobPostModel.Id ?? 0);
+                Job job = Context.Jobs.FirstOrDefault(x => x.Id == (jobPostModel.Id ?? 0));
                 job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
                 if (ModelState.IsValid)
                 {
                     if (jobPostModel.CustomerId.HasValue)
-                        job.Customer = Repo.GetCustomer(jobPostModel.CustomerId.Value);
+                        job.Customer = Context.Customers.FirstOrDefault(x=>x.Id == jobPostModel.CustomerId.Value);
 
                     if (jobPostModel.ForemanId.HasValue)
-                        job.Foreman = Repo.GetUser(jobPostModel.ForemanId.Value);
+                        job.Foreman = Context.Users.FirstOrDefault(x=>x.Id == jobPostModel.ForemanId.Value);
 
                     if (jobPostModel.ProjectManagerId.HasValue)
-                        job.ProjectManager = Repo.GetUser(jobPostModel.ProjectManagerId.Value);
+                        job.ProjectManager = Context.Users.FirstOrDefault(x=>x.Id == jobPostModel.ProjectManagerId.Value);
 
 
                     if (!jobPostModel.Id.HasValue)
                     {
                         if (jobPostModel.TemplateId.HasValue)
                         {
-                            var assets = Repo.Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
+                            var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
                             job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
                         }
-                        Repo.Context.Jobs.Add(job);
+                        Context.Jobs.Add(job);
                     }
 
-                    Repo.Context.SaveChanges();
+                    Context.SaveChanges();
 
                     return RedirectToAction("Edit", new { id = job.Id });
                 }
@@ -96,10 +96,10 @@ namespace Mavo.Assets.Controllers
 
         private void SetListsForCrud(Job job)
         {
-            ViewBag.Customers = Repo.GetCustomers();
-            ViewBag.Foremen = Repo.GetForemen();
-            ViewBag.ProjectManagers = Repo.GetProjectManagers();
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Repo.GetJobs().GroupBy(x => x.Status) };
+            ViewBag.Customers = Context.Customers.ToList();
+            ViewBag.Foremen = Context.Users.Where(x => (x.Role & UserRole.Foreman) == UserRole.Foreman).ToList();
+            ViewBag.ProjectManagers = Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager).ToList();
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Context.Jobs.ToList().GroupBy(x => x.Status) };
         }
     }
 }

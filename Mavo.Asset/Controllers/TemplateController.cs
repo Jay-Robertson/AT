@@ -44,18 +44,22 @@ namespace Mavo.Assets.Controllers
         //
         // POST: /Template/Edit/5
         [HttpPost]
-        public virtual ActionResult Edit(int id, FormCollection collection)
+        public virtual ActionResult Edit(int id, Template template)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
+            if (template == null)
                 return View();
+
+            if (id == 0)
+                ctx.Templates.Add(template);
+            else
+            {
+                var toSave = ctx.Templates.FirstOrDefault(x => x.Id == id);
+                toSave.Name = template.Name;
             }
+
+            ctx.SaveChanges();
+
+            return RedirectToAction(MVC.Template.Edit(id));
         }
     }
 }

@@ -20,6 +20,7 @@
         $('#job-tabs').tab();
     });
 </script>
+
 <h1>
     <span>@ViewBag.Action Job</span>
     @if (null != Model)
@@ -27,17 +28,19 @@
         <span>&gt; @Model.Name</span>
     }
 </h1>
-@using (Html.BeginForm(MVC.Job.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
+@if (null != Model)
 {
-    @Html.HiddenFor(x => x.Id)
-    if (null != Model)
-    {
     <ul id="job-tabs" class="nav nav-tabs">
         <li><a href="#details" data-toggle="tab">Details</a></li>
         <li class="active"><a href="#assets" data-toggle="tab">Assets</a></li>
     </ul>
-    }
-    else 
+}
+
+@using (Html.BeginForm(MVC.Job.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.HiddenFor(x => x.Id)
+   
+    if (Model == null)
     {
     <div class="row-fluid">
         <div class="well">
@@ -71,7 +74,7 @@
                                {
                                    Value = x.Id.ToString(),
                                    Text = x.Name,
-                                    Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
+                                   Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
                                }), string.Empty)
                             </div>
                         </div>
@@ -195,22 +198,23 @@
                     </div>
                 </div>
             </div>
-        </div>
-        @if (null != Model)
-        {
-        <div class="tab-pane active" id="assets">
             <div class="row-fluid">
-                <div class="span12 well">
-                    <h4>Job Assets</h4>
-                    @{Html.RenderAction("AssetPickerForJob", "Asset", new { id = Model.Id });}
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" />
                 </div>
             </div>
         </div>
+           
+        @if (null != Model)
+        {
+            <div class="tab-pane active" id="assets">
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <h4>Job Assets</h4>
+                        @{Html.RenderAction("AssetPickerForJob", "Asset", new { id = Model.Id });}
+                    </div>
+                </div>
+            </div>
         }
-    </div>
-    <div class="row-fluid">
-        <div class="form-actions">
-            <input type="submit" class="btn btn-primary" />
-        </div>
     </div>
 }

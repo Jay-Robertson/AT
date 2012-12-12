@@ -43,6 +43,9 @@
       <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -51,6 +54,9 @@
     </Reference>
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="NinjectAdapter">
+      <HintPath>..\packages\CommonServiceLocator.NinjectAdapter.1.0.0.0\lib\NinjectAdapter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -166,6 +172,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\JobPickerController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="HtmlExtensions.cs" />
@@ -179,6 +186,9 @@
     <Compile Include="JobController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="JobPickerController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201212101949141_InitialMigratin.cs" />
     <Compile Include="Migrations\201212101949141_InitialMigratin.Designer.cs">
       <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
@@ -186,6 +196,10 @@
     <Compile Include="Migrations\201212111648092_Asset-UnitOfMeasure.cs" />
     <Compile Include="Migrations\201212111648092_Asset-UnitOfMeasure.Designer.cs">
       <DependentUpon>201212111648092_Asset-UnitOfMeasure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.cs" />
+    <Compile Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.Designer.cs">
+      <DependentUpon>201212121908580_addedRequiredAttributeOnTemplateName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -195,6 +209,7 @@
     <Compile Include="Models\ViewModel\AssetsLeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\EditJobPostModel.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
+    <Compile Include="Models\ViewModel\PickAJobModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -308,6 +323,9 @@
     <Content Include="Views\Template\Index.cshtml" />
     <Content Include="Views\Template\Edit.cshtml" />
     <Content Include="Views\Template\_TemplateSidebar.cshtml" />
+    <Content Include="Views\JobPicker\Index.cshtml" />
+    <Content Include="Views\JobPicker\_JobPickerSidebar.cshtml" />
+    <Content Include="Views\JobPicker\EditorTemplates\JobAsset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -321,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212111648092_Asset-UnitOfMeasure.resx">
       <DependentUpon>201212111648092_Asset-UnitOfMeasure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.resx">
+      <DependentUpon>201212121908580_addedRequiredAttributeOnTemplateName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

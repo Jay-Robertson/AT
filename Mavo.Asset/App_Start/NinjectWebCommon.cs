@@ -7,9 +7,11 @@ namespace Mavo.Assets.App_Start
     using System.Web;
     using Mavo.Assets.Data;
     using Mavo.Assets.Models;
+    using Microsoft.Practices.ServiceLocation;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Common;
+    using NinjectAdapter;
 
     public static class NinjectWebCommon 
     {
@@ -44,6 +46,10 @@ namespace Mavo.Assets.App_Start
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             
             RegisterServices(kernel);
+
+            ServiceLocator.SetLocatorProvider(() => new NinjectServiceLocator(kernel));
+
+
             return kernel;
         }
 
@@ -54,7 +60,6 @@ namespace Mavo.Assets.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<AssetContext>().ToSelf().InRequestScope();
-            kernel.Bind<IRepository>().To<Repository>();
         }        
     }
 }

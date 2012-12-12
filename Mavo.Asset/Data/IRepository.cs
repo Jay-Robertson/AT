@@ -8,24 +8,24 @@ using System.Data.Entity.Migrations;
 
 namespace Mavo.Assets.Data
 {
-    public interface IRepository
-    {
-        AssetContext Context { get; }
-        IEnumerable<Job> GetJobs();
-         Job GetJobById(int id);
-         List<Customer> GetCustomers();
+    //public interface IRepository
+    //{
+    //    AssetContext Context { get; }
+    //    IEnumerable<Job> GetJobs();
+    //     Job GetJobById(int id);
+    //     List<Customer> GetCustomers();
 
-         List<Job> GetReadyJobs();
+    //     List<Job> GetReadyJobs();
 
-         List<User> GetForemen();
+    //     List<User> GetForemen();
 
-         List<User> GetProjectManagers();
+    //     List<User> GetProjectManagers();
 
-         Customer GetCustomer(int customerId);
+    //     Customer GetCustomer(int customerId);
 
-         User GetUser(int userId);
-    }
-    public class Repository : IRepository
+    //     User GetUser(int userId);
+    //}
+    public class Repository 
     {
         private readonly AssetContext _Context;
         /// <summary>
