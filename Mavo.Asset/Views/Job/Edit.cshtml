@@ -112,12 +112,15 @@
                                 @Html.EditorFor(x => x.JobSiteName)
                             </div>
                         </div>
+                        @if(Model != null)
+                        {
                         <div class="control-group">
                             @Html.LabelFor(x => x.Status, new { @class = "control-label" })
                             <div class="controls">
                                 @Html.DisplayFor(model => model.Status)
                             </div>
                         </div>
+                        }
                     </div>
                     <div class="well">
                         <h4>Job Location</h4>
