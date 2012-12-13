@@ -18,7 +18,10 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult Index(JobStatus? status = null, int? customerId = null, int? projectManagerId = null)
         {
             SetListsForCrud(null);
-            return Index(new SearchResult() { Status = status, CustomerId = customerId, ProjectManagerId = projectManagerId });
+            if (status.HasValue || customerId.HasValue || projectManagerId.HasValue)
+                return Index(new SearchResult() { Status = status, CustomerId = customerId, ProjectManagerId = projectManagerId });
+            else
+                return View();
         }
 
         [HttpPost]
