@@ -3,23 +3,23 @@
     <div class="well sidebar-nav">
         <ul class="nav nav-list">
             <li class="nav-header">Jobs By Status</li>
-            <li><a href="/job?status=0">New</a></li>
-            <li><a href="/job?status=1">Started</a></li>
-            <li><a href="/job?status=2">Completed</a></li>
-            <li><a href="/job?status=3">Ready To Pick</a></li>
+            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "0" ? "active" : "")'><a href="/job?status=0">New</a></li>
+            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "1" ? "active" : "")'><a href="/job?status=1">Started</a></li>
+            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "2" ? "active" : "")'><a href="/job?status=2">Completed</a></li>
+            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "3" ? "active" : "")'><a href="/job?status=3">Ready To Pick</a></li>
         </ul>
         <ul class="nav nav-list">
             <li class="nav-header">Jobs By Customer</li>
             @foreach (var item in ViewBag.Customers)
             {
-            <li><a href="/job?customerId=@item.Id">@item.Name</a></li>
+            <li class='@(Url.RequestContext.HttpContext.Request["customerId"] != null && Url.RequestContext.HttpContext.Request["customerId"] == item.Id.ToString() ? "active" : "")'><a href="/job?customerId=@item.Id">@item.Name</a></li>
             }
         </ul>
         <ul class="nav nav-list">
             <li class="nav-header">Jobs By Manager</li>
             @foreach (var item in ViewBag.ProjectManagers)
             {
-            <li><a href="/job?projectManagerId=@item.Id">@item.FullName</a></li>
+            <li  class='@(Url.RequestContext.HttpContext.Request["projectManagerId"] != null && Url.RequestContext.HttpContext.Request["projectManagerId"] == item.Id.ToString() ? "active" : "")'><a href="/job?projectManagerId=@item.Id">@item.FullName</a></li>
             }
         </ul>
     </div>

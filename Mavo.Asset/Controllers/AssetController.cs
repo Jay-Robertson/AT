@@ -22,14 +22,17 @@ namespace Mavo.Assets.Controllers
         {
             this.db = db;
         }
-
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
+            base.OnActionExecuting(filterContext);
+        }
         public virtual ActionResult AssetPickerForTemplate(int? id = null)
         {
             if (!id.HasValue)
                 return null;
             ViewBag.IsForJob = false;
             ViewBag.TemplateId = id;
-            ViewBag.Assets = db.TemplateAssets.Include(x => x.Asset).Where(x => x.Template.Id == id).ToList();
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 
@@ -37,7 +40,6 @@ namespace Mavo.Assets.Controllers
         {
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
-            ViewBag.Assets = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == id).Assets;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 
@@ -132,7 +134,7 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult Index()
         {
 
-            return View(db.Assets.ToList());
+            return View();
         }
 
         //
@@ -153,8 +155,6 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Create()
         {
-            ViewBag.Assets = db.Assets.ToList();
-            ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
             return View("Edit");
         }
 
@@ -164,8 +164,6 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Edit(int id = 0)
         {
-            ViewBag.Assets = db.Assets.ToList();
-            ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
             ViewBag.AssetItems = db.AssetItems.Where(x => x.Asset.Id == id).ToList();
             Asset asset = db.Assets.Find(id);
             if (asset == null)
