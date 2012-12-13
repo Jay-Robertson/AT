@@ -32,17 +32,30 @@ namespace Mavo.Assets.Migrations
             );
 
             context.Assets.AddOrUpdate(
-             new Asset { Id = 1, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test Ladder Asset (Consumable)", Barcode = "1234", Category = ladder  },
-             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Serialized, Name = "Test Filter Asset (Serialized)", Barcode = "1234", Category = filters  },
-             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.NotSerialized, Name = "Test Lumber Asset (NotSearilized)", Barcode = "1234", Category = lumber  },
-             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test poly Asset", Barcode = "1234", Category = poly  },
-             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test hepa Asset", Barcode = "1234", Category = hepa  }
+             new Asset { Id = 1, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test Ladder Asset (Consumable)", Barcode = "1234", Category = ladder },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Serialized, Name = "Test Filter Asset (Serialized)", Barcode = "1234", Category = filters },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.NotSerialized, Name = "Test Lumber Asset (NotSearilized)", Barcode = "1234", Category = lumber },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test poly Asset", Barcode = "1234", Category = poly },
+             new Asset { Id = 2, Inventory = 1, Kind = AssetKind.Consumable, Name = "Test hepa Asset", Barcode = "1234", Category = hepa }
            );
 
-            Customer target = new Customer { Id = 1, Name = "Target" };
+            Customer target = new Customer
+            {
+                Id = 1,
+                Name = "Target",
+                CustomerNumber = "Cust1243",
+                Address = new Address() { Address1 = "123 anywhere", City = "test", State = "ut", ZipCode = "55406" },
+                ContactName = "Scott",
+                PhoneNumber = "123-123-1234"
+            };
             context.Customers.AddOrUpdate(
                 target,
-                new Customer { Id = 2, Name = "Walmart" }
+                new Customer
+                {
+                    Id = 2,
+                    Name = "Walmart",
+                    Address = new Address() { Address1 = "123 anywhere", City = "test", State = "ut", ZipCode = "55406" }
+                }
             );
 
             context.Jobs.AddOrUpdate(

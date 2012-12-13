@@ -226,6 +226,14 @@ namespace Mavo.Assets.Models
 
         [Required]
         public string Name { get; set; }
+
+        public string CustomerNumber { get; set; }
+
+        public string ContactName { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public Address Address { get; set; }
     }
 }
 
