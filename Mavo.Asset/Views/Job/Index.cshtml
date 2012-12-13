@@ -1,8 +1,80 @@
-﻿@{
+﻿@using Mavo.Assets
+@model Mavo.Assets.Models.ViewModel.SearchResult
+@{
     ViewBag.Title = "List :: Job";
 }
 
 @section LeftNav
 {
-   @{Html.RenderPartial(MVC.Job.Views._JobSidebar, (Mavo.Assets.Models.ViewModel.LeftNavViewModel)ViewBag.JobsReadyToPick);}
+    @{Html.RenderPartial(MVC.Job.Views._JobSidebar, new Mavo.Assets.Models.ViewModel.SearchResult());}
+}
+
+<div class="well">
+    @using (Html.BeginForm(MVC.Job.Index(), FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="control-group">
+            @Html.LabelFor(x => x.JobNumber, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(x => x.JobNumber)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(x => x.JobName, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(x => x.JobName)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(x => x.StartDate, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(x => x.StartDate)
+                -
+                @Html.EditorFor(x => x.EndDate)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(x => x.Customer, new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("CustomerId", ((IList<Mavo.Assets.Models.Customer>)ViewBag.Customers).Select(x => new SelectListItem()
+                           {
+                               Value = x.Id.ToString(),
+                               Text = x.Name,
+                               Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
+                           }), string.Empty)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(x => x.ProjectManagerId, new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("ProjectManagerId", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
+                           {
+                               Value = x.Id.ToString(),
+                               Text = String.Format("{0}, {1}", x.LastName, x.FirstName)
+                               ,
+                               Selected = Model == null || Model.ProjectManagerId == null ? false : x.Id == Model.ProjectManagerId
+                           }), string.Empty)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(x => x.Status, new { @class = "control-label" })
+            <div class="controls">
+                <select id="Status" name="Status">
+                    <option></option>
+                    <option value="0" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.New ? "selected" : "")>New</option>
+                    <option value="1" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.Started ? "selected" : "")>Started</option>
+                    <option value="2" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.Completed ? "selected" : "")>Completed</option>
+                    <option value="3" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "selected" : "")>ReadyToPick</option>
+                </select>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="form-actions">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</div>
+@if (Model != null)
+{
+    Html.RenderPartial(MVC.Job.Views._SearchResult, Model.Results);
 }

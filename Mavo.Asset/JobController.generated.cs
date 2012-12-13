@@ -91,6 +91,17 @@ namespace Mavo.Assets.Controllers
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string status = "status";
+            public readonly string customerId = "customerId";
+            public readonly string projectManagerId = "projectManagerId";
+            public readonly string search = "search";
+        }
         static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
@@ -127,10 +138,14 @@ namespace Mavo.Assets.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _JobSidebar = "_JobSidebar";
+                public readonly string _PickJobModal = "_PickJobModal";
+                public readonly string _SearchResult = "_SearchResult";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
             public readonly string _JobSidebar = "~/Views/Job/_JobSidebar.cshtml";
+            public readonly string _PickJobModal = "~/Views/Job/_PickJobModal.cshtml";
+            public readonly string _SearchResult = "~/Views/Job/_SearchResult.cshtml";
             public readonly string Edit = "~/Views/Job/Edit.cshtml";
             public readonly string Index = "~/Views/Job/Index.cshtml";
         }
@@ -141,9 +156,19 @@ namespace Mavo.Assets.Controllers
     {
         public T4MVC_JobController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult Index(Mavo.Assets.Models.JobStatus? status, int? customerId, int? projectManagerId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "status", status);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "customerId", customerId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectManagerId", projectManagerId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Index(Mavo.Assets.Models.ViewModel.SearchResult search)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "search", search);
             return callInfo;
         }
 

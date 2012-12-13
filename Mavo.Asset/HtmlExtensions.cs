@@ -69,19 +69,23 @@ namespace Mavo.Assets
             return expression.Object.ToString();
         }
 
-        public static MvcHtmlString EnumDropDownListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression) where TModel : class
+        public static MvcHtmlString EnumDropDownListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string firstElement = null) where TModel : class
         {
             string inputName = GetInputName(expression);
             var value = htmlHelper.ViewData.Model == null
                 ? default(TProperty)
                 : expression.Compile()(htmlHelper.ViewData.Model);
 
-            return htmlHelper.DropDownList(inputName, ToSelectList(typeof(TProperty), value.ToString()));
+            return htmlHelper.DropDownList(inputName, ToSelectList(typeof(TProperty), value.ToString(), firstElement));
         }
 
-        public static SelectList ToSelectList(Type enumType, string selectedItem)
+        public static SelectList ToSelectList(Type enumType, string selectedItem, string firstItem)
         {
             List<SelectListItem> items = new List<SelectListItem>();
+            if (!String.IsNullOrEmpty(firstItem))
+            {
+                items.Add(new SelectListItem() {  Text = firstItem });
+            }
             foreach (var item in Enum.GetValues(enumType))
             {
                 FieldInfo fi = enumType.GetField(item.ToString());

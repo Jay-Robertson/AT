@@ -1,20 +1,26 @@
-﻿@model Mavo.Assets.Models.ViewModel.LeftNavViewModel
+﻿@model Mavo.Assets.Models.ViewModel.SearchResult
 <div class="span2">
     <div class="well sidebar-nav">
         <ul class="nav nav-list">
-            <li class="nav-header">Actions</li>
-            <li class='@(Model.Job == null && Url.RequestContext.RouteData.Values["action"].ToString().ToLower() != "index" ? "active" : "")'><a href="/job/create"><i class="icon-plus"></i> Create New Job</a></li>
-            @foreach (var grouping in Model.Jobs)
+            <li class="nav-header">Jobs By Status</li>
+            <li><a href="/job?status=0">New</a></li>
+            <li><a href="/job?status=1">Started</a></li>
+            <li><a href="/job?status=2">Completed</a></li>
+            <li><a href="/job?status=3">Ready To Pick</a></li>
+        </ul>
+        <ul class="nav nav-list">
+            <li class="nav-header">Jobs By Customer</li>
+            @foreach (var item in ViewBag.Customers)
             {
-                <li class="nav-header">@grouping.Key</li>
-                foreach (var job in grouping)
-                {
-                <li class='@(Model.Job != null && Model.Job.Id == job.Id ? "active" : "")'>
-                    <a href="/job/edit/@job.Id"><i class="icon-edit"></i> @job.Name</a>
-                </li>
-                }
+            <li><a href="/job?customerId=@item.Id">@item.Name</a></li>
             }
-
+        </ul>
+        <ul class="nav nav-list">
+            <li class="nav-header">Jobs By Manager</li>
+            @foreach (var item in ViewBag.ProjectManagers)
+            {
+            <li><a href="/job?projectManagerId=@item.Id">@item.FullName</a></li>
+            }
         </ul>
     </div>
 </div>

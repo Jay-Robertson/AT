@@ -42,6 +42,10 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\downloads3\EntityFramework.Profiler-v2.0-Build-2093\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -205,6 +209,10 @@
     <Compile Include="Migrations\201212122046246_NotSureWhatIDid.Designer.cs">
       <DependentUpon>201212122046246_NotSureWhatIDid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201212131830284_ReturnDateAdded.cs" />
+    <Compile Include="Migrations\201212131830284_ReturnDateAdded.Designer.cs">
+      <DependentUpon>201212131830284_ReturnDateAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
@@ -212,6 +220,7 @@
     <Compile Include="Models\ViewModel\AssetPostModel.cs" />
     <Compile Include="Models\ViewModel\AssetsLeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\EditJobPostModel.cs" />
+    <Compile Include="Models\ViewModel\JobSearch.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\PickAJobModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -330,6 +339,8 @@
     <Content Include="Views\JobPicker\Index.cshtml" />
     <Content Include="Views\JobPicker\_JobPickerSidebar.cshtml" />
     <Content Include="Views\JobPicker\Success.cshtml" />
+    <Content Include="Views\Job\_SearchResult.cshtml" />
+    <Content Include="Views\Job\_PickJobModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -349,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212122046246_NotSureWhatIDid.resx">
       <DependentUpon>201212122046246_NotSureWhatIDid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212131830284_ReturnDateAdded.resx">
+      <DependentUpon>201212131830284_ReturnDateAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

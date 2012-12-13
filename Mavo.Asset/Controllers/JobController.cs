@@ -15,10 +15,46 @@ namespace Mavo.Assets.Controllers
 
         public JobController(AssetContext context) { Context = context; }
 
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(JobStatus? status = null, int? customerId = null, int? projectManagerId = null)
         {
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Context.Jobs.GroupBy(x => x.Status).OrderBy(x=>x.Key).ToList() };
-            return View();
+            SetListsForCrud(null);
+            return Index(new SearchResult() { Status = status, CustomerId = customerId, ProjectManagerId = projectManagerId });
+        }
+
+        [HttpPost]
+        public virtual ActionResult Index(SearchResult search)
+        {
+            SetListsForCrud(null);
+            var query = Context.Jobs.AsQueryable();
+            if (!String.IsNullOrEmpty(search.JobName))
+                query = query.Where(x => x.JobSiteName.Contains(search.JobName));
+            if (search.CustomerId.HasValue)
+                query = query.Where(x => x.Customer.Id == search.CustomerId);
+            if (search.StartDate.HasValue)
+                query = query.Where(x => x.PickupTime >= search.StartDate.Value);
+            if (search.EndDate.HasValue)
+                query = query.Where(x => x.PickupTime <= search.EndDate.Value);
+            if (!String.IsNullOrEmpty(search.JobNumber))
+                query = query.Where(x => x.JobNumber.Contains(search.JobNumber));
+            if (search.ProjectManagerId.HasValue)
+                query = query.Where(x => x.ProjectManager.Id == search.ProjectManagerId);
+            if (search.Status.HasValue)
+                query = query.Where(x => x.Status == search.Status.Value);
+            search.Results = query.Select(x => new SearchResult()
+            {
+                JobName = x.JobSiteName,
+                Customer = x.Customer.Name,
+                CustomerId = x.Customer.Id,
+                JobNumber = x.JobNumber,
+                ProjectManagerId = x.ProjectManager.Id,
+                ProjectManager = x.ProjectManager.FirstName + " " + x.ProjectManager.LastName,
+                Status = x.Status,
+                ShipDate = x.PickupTime,
+                ReturnDate = x.ReturnedDate,
+                Id = x.Id
+            }).ToList();
+
+            return View(search);
         }
 
         public virtual ActionResult Create(int? id)
@@ -31,14 +67,14 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Edit(int id)
         {
-            Mavo.Assets.Models.Job job = Context.Jobs.FirstOrDefault(x=>x.Id == id);
+            Mavo.Assets.Models.Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             if (job != null)
             {
                 SetListsForCrud(job);
 
                 ViewBag.Action = "Edit a";
 
-                return View("Edit", AutoMapper.Mapper.Map<Job,EditJobPostModel>(job));
+                return View("Edit", AutoMapper.Mapper.Map<Job, EditJobPostModel>(job));
             }
             else
                 return RedirectToAction(MVC.Job.Create());
@@ -57,17 +93,17 @@ namespace Mavo.Assets.Controllers
                 if (ModelState.IsValid)
                 {
                     if (jobPostModel.CustomerId.HasValue)
-                        job.Customer = Context.Customers.FirstOrDefault(x=>x.Id == jobPostModel.CustomerId.Value);
+                        job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
 
                     if (jobPostModel.ForemanId.HasValue)
-                        job.Foreman = Context.Users.FirstOrDefault(x=>x.Id == jobPostModel.ForemanId.Value);
+                        job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
 
                     if (jobPostModel.ProjectManagerId.HasValue)
-                        job.ProjectManager = Context.Users.FirstOrDefault(x=>x.Id == jobPostModel.ProjectManagerId.Value);
-
+                        job.ProjectManager = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ProjectManagerId.Value);
 
                     if (!jobPostModel.Id.HasValue)
                     {
+                        job.Status = JobStatus.New;
                         if (jobPostModel.TemplateId.HasValue)
                         {
                             var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();

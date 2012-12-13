@@ -198,6 +198,8 @@ namespace Mavo.Assets.Models
         public User Foreman { get; set; }
 
         public IList<AssetWithQuantity> Assets { get; set; }
+
+        public DateTime? ReturnedDate { get; set; }
     }
 
     [ComplexType]

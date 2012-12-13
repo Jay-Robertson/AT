@@ -1,0 +1,1 @@
+2012-12-13 12:09:09,387 [1] DEBUG HibernatingRhinos.Profiler.Client.Host.ClientService [(null)] - Profiler initialized. Build: 2093

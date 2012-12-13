@@ -12,7 +12,7 @@
 
 @section LeftNav
 {
-    @{Html.RenderPartial(MVC.Job.Views._JobSidebar, (Mavo.Assets.Models.ViewModel.LeftNavViewModel)ViewBag.JobsReadyToPick);}
+    @{Html.RenderPartial(MVC.Job.Views._JobSidebar, new Mavo.Assets.Models.ViewModel.SearchResult());}
 }
 
 <script type="text/javascript">
@@ -23,23 +23,7 @@
 
 @if (null != Model)
 {
-    <div class="modal hide fade" id="pickupModal">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Mark @Model.Name ready for pickup?</h3>
-        </div>
-        <div class="modal-body">
-            <p>You are scheduling this job for pickup on <strong>@Model.PickupTime.ToLongDateString()</strong>.  </p>
-            <p>Are you sure?</p>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn btn-danger"><i class="icon-remove-circle icon-white"></i>&nbsp;No</a>
-            @using (Html.BeginForm(MVC.Job.MarkReadyToPick(Model.Id.Value), FormMethod.Post, new { style = "margin: 0; display: inline;" }))
-            {
-                <button type="submit" class="btn btn-success"><i class="icon-ok-sign icon-white"></i>&nbsp;Yes</button>
-            }
-        </div>
-    </div>
+    Html.RenderPartial("_PickJobModal", new Mavo.Assets.Models.Job() { Id = Model.Id.Value, PickupTime = Model.PickupTime, Name = Model.Name });
 }
 <h1>
     <span>@ViewBag.Action Job</span>
@@ -48,7 +32,7 @@
         <span>&gt; @Model.Name</span>
         if (Model.Status == Mavo.Assets.Models.JobStatus.New)
         {
-        <a data-toggle="modal" href="#pickupModal" class="btn btn-primary btn-large"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
+        <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="btn btn-primary btn-large"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
         }
     }
 
@@ -116,7 +100,8 @@
                                 @Html.DropDownList("ProjectManagerId", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
                            {
                                Value = x.Id.ToString(),
-                               Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
+                               Text = String.Format("{0}, {1}", x.LastName, x.FirstName)
+                               ,
                                Selected = Model == null || Model.ProjectManagerId == null ? false : x.Id == Model.ProjectManagerId
                            }), string.Empty)
                             </div>

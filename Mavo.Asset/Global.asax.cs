@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Ninject;
+using HibernatingRhinos.Profiler.Appender.EntityFramework;
 
 namespace Mavo.Assets
 {
@@ -34,6 +35,10 @@ namespace Mavo.Assets
                 .ForMember(dest => dest.ForemanId, opt => opt.MapFrom(src => src.Foreman.Id))
                 .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id));
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
+
+
+            EntityFrameworkProfiler.Initialize();
+
         }
     }
 }
