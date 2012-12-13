@@ -44,10 +44,10 @@ namespace Mavo.Assets.Controllers
                     isNew = true;
                 }
                 customerToSave.Address = customer.Address;
-                customer.ContactName = customer.ContactName;
-                customer.CustomerNumber = id;
-                customer.Name = customer.Name;
-                customer.PhoneNumber = customer.PhoneNumber;
+                customerToSave.ContactName = customer.ContactName;
+                customerToSave.CustomerNumber = id;
+                customerToSave.Name = customer.Name;
+                customerToSave.PhoneNumber = customer.PhoneNumber;
                 if (isNew)
                     db.Customers.Add(customerToSave);
 
@@ -55,7 +55,7 @@ namespace Mavo.Assets.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch(Exception ex)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
