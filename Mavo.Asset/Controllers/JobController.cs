@@ -12,14 +12,12 @@ namespace Mavo.Assets.Controllers
     public partial class JobController : BaseController
     {
         private readonly AssetContext Context;
-        public JobController(AssetContext context)
-        {
-            Context = context;
-        }
+
+        public JobController(AssetContext context) { Context = context; }
 
         public virtual ActionResult Index()
         {
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Context.Jobs.GroupBy(x => x.Status) };
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = null, Jobs = Context.Jobs.GroupBy(x => x.Status).OrderBy(x=>x.Key).ToList() };
             return View();
         }
 
@@ -94,12 +92,21 @@ namespace Mavo.Assets.Controllers
             }
         }
 
+        [HttpPost]
+        public virtual ActionResult MarkReadyToPick(int jobId)
+        {
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == jobId);
+            job.Status = JobStatus.ReadyToPick;
+            Context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         private void SetListsForCrud(Job job)
         {
             ViewBag.Customers = Context.Customers.ToList();
             ViewBag.Foremen = Context.Users.Where(x => (x.Role & UserRole.Foreman) == UserRole.Foreman).ToList();
             ViewBag.ProjectManagers = Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager).ToList();
-            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Context.Jobs.ToList().GroupBy(x => x.Status) };
+            ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Context.Jobs.ToList().GroupBy(x => x.Status).OrderBy(x => x.Key).ToList() };
         }
     }
 }

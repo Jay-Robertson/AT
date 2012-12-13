@@ -3,13 +3,20 @@
 <div class="span2">
     <div class="well sidebar-nav">
         <ul class="nav nav-list">
-            @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
+            @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyToPickForNav).Any())
             {
-                <li class="nav-header">@item.Key.ToShortDateString()</li>
-                foreach (Mavo.Assets.Models.Job job in item)
+                foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
                 {
+                <li class="nav-header">@item.Key.ToShortDateString()</li>
+                    foreach (Mavo.Assets.Models.Job job in item)
+                    {
                 <li class='@(id == job.Id ? "active" : "")'><a href="/jobpicker/index/@job.Id">@job.Name</a></li>
+                    }
                 }
+            }
+            else
+            {
+                <li class="nav-header">No jobs to pick</li>
             }
         </ul>
     </div>

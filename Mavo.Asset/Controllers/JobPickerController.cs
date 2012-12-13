@@ -24,18 +24,24 @@ namespace Mavo.Assets.Controllers
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.Status = JobStatus.Started;
 
-            var pickedAssets = assets.Select(x => new PickedAsset()
+            if (assets != null)
             {
-                Asset = Context.Assets.FirstOrDefault(a => a.Id == x.Id),
-                Job = job,
-                Picked = DateTime.Now,
-                Quantity = x.QuantityTaken.Value
-            });
-            foreach (var item in pickedAssets)
-                Context.PickedAssets.Add(item);
-
+                var pickedAssets = assets.Select(x => new PickedAsset()
+                {
+                    Asset = Context.Assets.FirstOrDefault(a => a.Id == x.Id),
+                    Job = job,
+                    Picked = DateTime.Now,
+                    Quantity = x.QuantityTaken ?? 1
+                });
+                foreach (var item in pickedAssets)
+                    Context.PickedAssets.Add(item);
+            }
             Context.SaveChanges();
 
+            return RedirectToAction(MVC.JobPicker.Success(id));
+        }
+        public virtual ActionResult Success(int id)
+        {
             return View();
         }
         public virtual ActionResult Index(int id)

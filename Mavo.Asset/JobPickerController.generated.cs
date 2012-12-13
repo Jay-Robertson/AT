@@ -47,6 +47,12 @@ namespace Mavo.Assets.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Success()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Success);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public JobPickerController Actions { get { return MVC.JobPicker; } }
@@ -64,12 +70,14 @@ namespace Mavo.Assets.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string Success = "Success";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string Success = "Success";
         }
 
 
@@ -81,6 +89,14 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string assets = "assets";
+        }
+        static readonly ActionParamsClass_Success s_params_Success = new ActionParamsClass_Success();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Success SuccessParams { get { return s_params_Success; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Success
+        {
+            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -94,9 +110,11 @@ namespace Mavo.Assets.Controllers
             {
                 public readonly string _JobPickerSidebar = "_JobPickerSidebar";
                 public readonly string Index = "Index";
+                public readonly string Success = "Success";
             }
             public readonly string _JobPickerSidebar = "~/Views/JobPicker/_JobPickerSidebar.cshtml";
             public readonly string Index = "~/Views/JobPicker/Index.cshtml";
+            public readonly string Success = "~/Views/JobPicker/Success.cshtml";
         }
     }
 
@@ -110,6 +128,13 @@ namespace Mavo.Assets.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "assets", assets);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Success(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Success);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

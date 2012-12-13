@@ -5,7 +5,7 @@
 
     </td>
     <td>
-        <input id="quantity@(Model.Id)" class="input-mini quantity" type="text" value="@Model.Quantity" placeholder="quantity" />
+        <input id="quantity@(Model.Id)" class="input-mini quantity" type="number" value="@Model.Quantity" placeholder="quantity" />
         @if (Model.Asset.Kind != Mavo.Assets.Models.AssetKind.Serialized && !String.IsNullOrEmpty(Model.Asset.UnitOfMeasure))
         {
             <span>@Model.Asset.UnitOfMeasure</span>

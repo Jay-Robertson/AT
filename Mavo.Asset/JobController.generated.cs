@@ -53,6 +53,12 @@ namespace Mavo.Assets.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult MarkReadyToPick()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.MarkReadyToPick);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public JobController Actions { get { return MVC.Job; } }
@@ -72,6 +78,7 @@ namespace Mavo.Assets.Controllers
             public readonly string Index = "Index";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string MarkReadyToPick = "MarkReadyToPick";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -80,6 +87,7 @@ namespace Mavo.Assets.Controllers
             public const string Index = "Index";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string MarkReadyToPick = "MarkReadyToPick";
         }
 
 
@@ -99,6 +107,14 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string jobPostModel = "jobPostModel";
+        }
+        static readonly ActionParamsClass_MarkReadyToPick s_params_MarkReadyToPick = new ActionParamsClass_MarkReadyToPick();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_MarkReadyToPick MarkReadyToPickParams { get { return s_params_MarkReadyToPick; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_MarkReadyToPick
+        {
+            public readonly string jobId = "jobId";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -149,6 +165,13 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobPostModel", jobPostModel);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult MarkReadyToPick(int jobId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.MarkReadyToPick);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
             return callInfo;
         }
 
