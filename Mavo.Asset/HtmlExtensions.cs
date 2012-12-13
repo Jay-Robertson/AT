@@ -12,6 +12,13 @@ namespace Mavo.Assets
 {
     public static class HtmlExtensions
     {
+        public static string GetActive(string request, object target)
+        {
+            if (!String.IsNullOrEmpty(request) && request == target.ToString())
+                return "class=active";
+            else
+                return String.Empty;
+        }
         public static MvcHtmlString TypeaheadFor<TModel, TValue>(
         this HtmlHelper<TModel> htmlHelper,
         Expression<Func<TModel, TValue>> expression,

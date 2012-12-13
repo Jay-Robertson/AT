@@ -29,16 +29,26 @@ namespace Mavo.Assets.Controllers
         {
             SetListsForCrud(null);
             var query = Context.Jobs.AsQueryable();
-            if (!String.IsNullOrEmpty(search.JobName))
-                query = query.Where(x => x.JobSiteName.Contains(search.JobName));
+            if (!String.IsNullOrEmpty(search.SearchString))
+                query = query.Where(x => 
+                    x.JobSiteName.Contains(search.SearchString)
+                    || x.JobNumber.Contains(search.SearchString)
+                    || x.ProjectManager.LastName.Contains(search.SearchString)
+                    || x.ProjectManager.LastName.Contains(search.SearchString)
+                    || x.Customer.Name.Contains(search.SearchString)
+                    || x.Foreman.FirstName.Contains(search.SearchString)
+                    || x.Foreman.LastName.Contains(search.SearchString)
+                    || x.ContractNumber.Contains(search.SearchString)
+                    || x.Description.Contains(search.SearchString)
+                    );
+
             if (search.CustomerId.HasValue)
                 query = query.Where(x => x.Customer.Id == search.CustomerId);
             if (search.StartDate.HasValue)
                 query = query.Where(x => x.PickupTime >= search.StartDate.Value);
             if (search.EndDate.HasValue)
                 query = query.Where(x => x.PickupTime <= search.EndDate.Value);
-            if (!String.IsNullOrEmpty(search.JobNumber))
-                query = query.Where(x => x.JobNumber.Contains(search.JobNumber));
+          
             if (search.ProjectManagerId.HasValue)
                 query = query.Where(x => x.ProjectManager.Id == search.ProjectManagerId);
             if (search.Status.HasValue)

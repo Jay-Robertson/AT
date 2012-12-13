@@ -1,0 +1,15 @@
+﻿@model Mavo.Assets.Models.AssetKind
+@switch (Model)
+{
+    case Mavo.Assets.Models.AssetKind.Consumable:
+        <span class="label label-info"><i class="icon-white icon-fire"></i>&nbsp;@Model.ToString()</span>
+        break;
+    case Mavo.Assets.Models.AssetKind.Serialized:
+        <span class="label label-info"><i class="icon-barcode icon-white"></i>&nbsp;@Model.ToString()</span>
+        break;
+    case Mavo.Assets.Models.AssetKind.NotSerialized:
+        <span class="label label-info"><i class="icon-briefcase icon-white"></i>&nbsp;@Model.ToString()</span>
+        break;
+    default:
+        break;
+}

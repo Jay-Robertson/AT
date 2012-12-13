@@ -195,6 +195,16 @@ namespace Mavo.Assets.Controllers
             public readonly string id = "id";
             public readonly string quantity = "quantity";
         }
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string categoryId = "categoryId";
+            public readonly string kind = "kind";
+            public readonly string search = "search";
+        }
         static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
@@ -234,6 +244,7 @@ namespace Mavo.Assets.Controllers
                 public readonly string _AssetPickerDetail = "_AssetPickerDetail";
                 public readonly string _AssetRow = "_AssetRow";
                 public readonly string _AssetSidebar = "_AssetSidebar";
+                public readonly string _SearchResult = "_SearchResult";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
                 public readonly string Scan = "Scan";
@@ -242,6 +253,7 @@ namespace Mavo.Assets.Controllers
             public readonly string _AssetPickerDetail = "~/Views/Asset/_AssetPickerDetail.cshtml";
             public readonly string _AssetRow = "~/Views/Asset/_AssetRow.cshtml";
             public readonly string _AssetSidebar = "~/Views/Asset/_AssetSidebar.cshtml";
+            public readonly string _SearchResult = "~/Views/Asset/_SearchResult.cshtml";
             public readonly string Edit = "~/Views/Asset/Edit.cshtml";
             public readonly string Index = "~/Views/Asset/Index.cshtml";
             public readonly string Scan = "~/Views/Asset/Scan.cshtml";
@@ -308,9 +320,18 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult Index(int? categoryId, Mavo.Assets.Models.AssetKind? kind)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "categoryId", categoryId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "kind", kind);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Index(Mavo.Assets.Models.ViewModel.AssetSearchResult search)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "search", search);
             return callInfo;
         }
 

@@ -7,6 +7,8 @@ namespace Mavo.Assets.Models.ViewModel
 {
     public class SearchResult
     {
+        public string SearchString { get; set; }
+
         public int? Id { get; set; }
         public string JobNumber { get; set; }
         public string Customer { get; set; }

@@ -1,8 +1,54 @@
-﻿@model IEnumerable<Mavo.Assets.Models.Asset>
+﻿@model Mavo.Assets.Models.ViewModel.AssetSearchResult
 
 @{
     ViewBag.Title = "Index";
 }
 
-@{Html.RenderPartial(MVC.Asset.Views._AssetSidebar);}
+@section LeftNav
+{
+    @{Html.RenderPartial(MVC.Asset.Views._AssetSidebar);}
+}
+<div class="well">
+    @using (Html.BeginForm(MVC.Asset.Index(), FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="control-group">
+            @Html.LabelFor(x => x.SearchString   , new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(x => x.SearchString)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(x => x.Category, new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("CategoryId", ((IList<Mavo.Assets.Models.AssetCategory>)ViewBag.AssetCategories).Select(x => new SelectListItem()
+                   {
+                       Value = x.Id.ToString(),
+                       Text = x.Name,
+                       Selected = Model == null || !Model.CategoryId.HasValue ? false : x.Id == Model.CategoryId
+                   }), string.Empty)
+            </div>
+        </div>
+         <div class="control-group">
+            @Html.LabelFor(x => x.Kind, new { @class = "control-label" })
+            <div class="controls">
+                <select id="Kind" name="Kind">
+                    <option></option>
+                    <option value="0" @(Model != null && Model.Kind.HasValue && Model.Kind == Mavo.Assets.Models.AssetKind.Consumable ? "selected" : "")>Consumable</option>
+                    <option value="1" @(Model != null && Model.Kind.HasValue && Model.Kind == Mavo.Assets.Models.AssetKind.Serialized ? "selected" : "")>Serialized</option>
+                    <option value="2" @(Model != null && Model.Kind.HasValue && Model.Kind == Mavo.Assets.Models.AssetKind.NotSerialized ? "selected" : "")>NotSerialized</option>
+                </select>
+            </div>
+        </div>
+         <div class="row-fluid">
+            <div class="form-actions">
+                <input type="submit" value="Search" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</div>
+
+@if (Model != null)
+{
+    Html.RenderPartial(MVC.Asset.Views._SearchResult, Model.Results);
+}
 

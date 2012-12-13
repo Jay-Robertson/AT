@@ -218,6 +218,7 @@
     <Compile Include="Models\AssetModels.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\ViewModel\AssetPostModel.cs" />
+    <Compile Include="Models\ViewModel\AssetSearchResult.cs" />
     <Compile Include="Models\ViewModel\AssetsLeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\EditJobPostModel.cs" />
     <Compile Include="Models\ViewModel\JobSearch.cs" />
@@ -341,6 +342,9 @@
     <Content Include="Views\JobPicker\Success.cshtml" />
     <Content Include="Views\Job\_SearchResult.cshtml" />
     <Content Include="Views\Job\_PickJobModal.cshtml" />
+    <Content Include="Views\Asset\_SearchResult.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AssetKind.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\JobStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -364,6 +368,9 @@
     <EmbeddedResource Include="Migrations\201212131830284_ReturnDateAdded.resx">
       <DependentUpon>201212131830284_ReturnDateAdded.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Asset\DisplayTemplates\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

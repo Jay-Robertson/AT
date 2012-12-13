@@ -1,0 +1,44 @@
+﻿@model IList<Mavo.Assets.Models.ViewModel.AssetSearchResult>
+
+@{
+    ViewBag.Title = "_SearchResult";
+}
+@if (Model == null || !Model.Any())
+{
+    <div class="hero-unit">
+        <h1>No results found</h1>
+    </div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Kind</th>
+                <th>Manufacturer</th>
+                <th># Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            
+                <tr>
+                    <td>@Html.DisplayFor(x => item.Name)</td>
+                    <td>@Html.DisplayFor(x => item.Category)</td>
+                    <td>@Html.DisplayFor(x => item.Kind)</td>
+                    <td>@Html.DisplayFor(x => item.Manufacturer)</td>
+                    <td>
+                        @if(item.Quantity > 0)
+                        {
+                        <span class="label">@Html.DisplayFor(x => item.Quantity)</span>
+                        }
+                    </td>
+                    <td><a class="btn btn-small" href="/asset/edit/@item.AssetId"><i class="icon-edit"></i>&nbsp;Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

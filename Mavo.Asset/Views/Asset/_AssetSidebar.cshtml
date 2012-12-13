@@ -1,14 +1,36 @@
-﻿<div class="span3">
+﻿@using Mavo.Assets
+<div class="span3">
     <div class="well sidebar-nav">
         <ul class="nav nav-list">
             <li class="nav-header">Actions</li>
-            <li class='@(Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "create" ? "active" : "")'><a href="/asset/create"><i class="icon-plus"></i> Create New Asset</a></li>
-            <li class='@(Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "scan" ? "active" : "")'><a href="/asset/scan"><i class="icon-barcode"></i> Scan new item</a></li>
+            <li class='@(Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "create" ? "active" : "")'><a href="/asset/create"><i class="icon-plus"></i>Create New Asset</a></li>
+            <li class='@(Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "scan" ? "active" : "")'><a href="/asset/scan"><i class="icon-barcode"></i>Scan new item</a></li>
+            <li class="divider"></li>
+            <li>
+                @using (Html.BeginForm(MVC.Asset.Index(), FormMethod.Post, new { @class = "form-search" }))
+                {
+                    <div class="input-append">
+                        @Html.TextBox("SearchString", null, new { @class = "span8 search-query" })
+                        <button type="submit" class="btn">Search</button>
+                    </div>
+                }
+            </li>
+            <li class="nav-header">Assets by Kind</li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.Consumable)>
+                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Consumable)">@Mavo.Assets.Models.AssetKind.Consumable</a>
+            </li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.NotSerialized)>
+                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.NotSerialized)">@Mavo.Assets.Models.AssetKind.NotSerialized</a>
+            </li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.Serialized)>
+                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Serialized)">@Mavo.Assets.Models.AssetKind.Serialized</a>
+            </li>
             <li class="nav-header">Assets by Category</li>
             @foreach (var item in ViewBag.AssetCategories)
             {
-            <li><a href="#">@item.Name</a></li>
+                <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["categoryId"], item.Id)><a href="/asset?categoryId=@item.Id">@item.Name</a></li>
             }
+            
         </ul>
     </div>
 </div>

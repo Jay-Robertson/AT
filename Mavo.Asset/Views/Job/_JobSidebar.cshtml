@@ -1,25 +1,35 @@
 ﻿@model Mavo.Assets.Models.ViewModel.SearchResult
+@using Mavo.Assets
 <div class="span2">
     <div class="well sidebar-nav">
         <ul class="nav nav-list">
+            <li>
+                @using (Html.BeginForm(MVC.Job.Index(), FormMethod.Post, new { @class = "form-search" }))
+                {
+                    <div class="input-append">
+                        @Html.TextBox("SearchString", null, new { @class = "span4 search-query" })
+                        <button type="submit" class="btn">Search</button>
+                    </div>
+                }
+            </li>
             <li class="nav-header">Jobs By Status</li>
-            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "0" ? "active" : "")'><a href="/job?status=0">New</a></li>
-            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "1" ? "active" : "")'><a href="/job?status=1">Started</a></li>
-            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "2" ? "active" : "")'><a href="/job?status=2">Completed</a></li>
-            <li class='@(Url.RequestContext.HttpContext.Request["status"] != null && Url.RequestContext.HttpContext.Request["status"] == "3" ? "active" : "")'><a href="/job?status=3">Ready To Pick</a></li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "0")><a href="/job?status=0">New</a></li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "1")><a href="/job?status=1">Started</a></li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "2")><a href="/job?status=2">Completed</a></li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "3")><a href="/job?status=3">Ready To Pick</a></li>
         </ul>
         <ul class="nav nav-list">
             <li class="nav-header">Jobs By Customer</li>
             @foreach (var item in ViewBag.Customers)
             {
-            <li class='@(Url.RequestContext.HttpContext.Request["customerId"] != null && Url.RequestContext.HttpContext.Request["customerId"] == item.Id.ToString() ? "active" : "")'><a href="/job?customerId=@item.Id">@item.Name</a></li>
+                <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["customerId"], item.Id)><a href="/job?customerId=@item.Id">@item.Name</a></li>
             }
         </ul>
         <ul class="nav nav-list">
             <li class="nav-header">Jobs By Manager</li>
             @foreach (var item in ViewBag.ProjectManagers)
             {
-            <li  class='@(Url.RequestContext.HttpContext.Request["projectManagerId"] != null && Url.RequestContext.HttpContext.Request["projectManagerId"] == item.Id.ToString() ? "active" : "")'><a href="/job?projectManagerId=@item.Id">@item.FullName</a></li>
+                <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["projectManagerId"], item.Id)><a href="/job?projectManagerId=@item.Id">@item.FullName</a></li>
             }
         </ul>
     </div>

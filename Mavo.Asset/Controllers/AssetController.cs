@@ -67,12 +67,12 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult AddAsset(int id, int? jobId = null, int? templateId = null)
         {
-       
+
             Asset asset = db.Assets.FirstOrDefault(x => x.Id == id);
             AssetWithQuantity newAssetWithQuantity = new AssetWithQuantity() { Asset = asset, Quantity = 1 };
             if (jobId.HasValue)
             {
-              
+
                 var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
                 if (job.Assets != null && job.Assets.Any(x => x.Asset.Id == id))
                 {
@@ -131,10 +131,42 @@ namespace Mavo.Assets.Controllers
             db.SaveChanges();
             return null;
         }
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(int? categoryId = null, AssetKind? kind = null)
         {
-
+            if (categoryId.HasValue || kind.HasValue)
+                return Index(new AssetSearchResult() { CategoryId = categoryId, Kind = kind });
             return View();
+        }
+        [HttpPost]
+        public virtual ActionResult Index(AssetSearchResult search)
+        {
+            var query = db.Assets.AsQueryable();
+
+            if (search.Kind.HasValue)
+                query = query.Where(x => x.Kind == search.Kind);
+          
+            if (search.CategoryId.HasValue)
+                query = query.Where(x => x.Category.Id == search.CategoryId);
+            if (!String.IsNullOrEmpty(search.SearchString))
+                query = query.Where(x => x.Barcode.Contains(search.SearchString)
+                    || x.Manufacturer.Contains(search.SearchString)
+                    || x.ModelNumber.Contains(search.SearchString)
+                    || x.UPC.Contains(search.SearchString)
+                    || x.Name.Contains(search.SearchString)
+                    || x.Category.Name.Contains(search.SearchString)
+                    );
+
+            search.Results = query.Select(x => new AssetSearchResult()
+            {
+                Name = x.Name,
+                Category = x.Category.Name,
+                Kind = x.Kind,
+                CategoryId = x.Category.Id,
+                AssetId = x.Id,
+                Manufacturer = x.Manufacturer,
+                Quantity = x.Items.Count()
+            }).ToList();
+            return View(search);
         }
 
         //

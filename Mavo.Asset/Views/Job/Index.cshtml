@@ -13,15 +13,9 @@
     @using (Html.BeginForm(MVC.Job.Index(), FormMethod.Post, new { @class = "form-horizontal" }))
     {
         <div class="control-group">
-            @Html.LabelFor(x => x.JobNumber, new { @class = "control-label" })
+            @Html.LabelFor(x => x.SearchString, new { @class = "control-label" })
             <div class="controls">
-                @Html.EditorFor(x => x.JobNumber)
-            </div>
-        </div>
-        <div class="control-group">
-            @Html.LabelFor(x => x.JobName, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(x => x.JobName)
+                @Html.EditorFor(x => x.SearchString)
             </div>
         </div>
         <div class="control-group">
@@ -49,8 +43,7 @@
                 @Html.DropDownList("ProjectManagerId", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
                            {
                                Value = x.Id.ToString(),
-                               Text = String.Format("{0}, {1}", x.LastName, x.FirstName)
-                               ,
+                               Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
                                Selected = Model == null || Model.ProjectManagerId == null ? false : x.Id == Model.ProjectManagerId
                            }), string.Empty)
             </div>
