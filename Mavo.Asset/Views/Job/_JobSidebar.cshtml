@@ -1,7 +1,21 @@
 ﻿@model Mavo.Assets.Models.ViewModel.SearchResult
 @using Mavo.Assets
-<div class="span2">
+<div class="span3">
     <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">Actions</li>
+            <li><a href="/job/create">Create Job</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Create Job From Template<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    @foreach (var template in ViewBag.Templates)
+                    {
+                        <li><a href="/job/create/@template.Id">@template.Name</a></li>
+                    }
+                </ul>
+            </li>
+
+            <li class="divider"></li>
+        </ul>
         <ul class="nav nav-list">
             <li>
                 @using (Html.BeginForm(MVC.Job.Index(), FormMethod.Post, new { @class = "form-search" }))
