@@ -17,13 +17,13 @@
             </li>
             <li class="nav-header">Assets by Kind</li>
             <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.Consumable)>
-                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Consumable)">@Mavo.Assets.Models.AssetKind.Consumable</a>
+                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Consumable)"><i class="icon-fire"></i>&nbsp;@Mavo.Assets.Models.AssetKind.Consumable</a>
             </li>
             <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.NotSerialized)>
-                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.NotSerialized)">@Mavo.Assets.Models.AssetKind.NotSerialized</a>
+                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.NotSerialized)"><i class="icon-briefcase"></i>&nbsp;@Mavo.Assets.Models.AssetKind.NotSerialized</a>
             </li>
             <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.Serialized)>
-                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Serialized)">@Mavo.Assets.Models.AssetKind.Serialized</a>
+                <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Serialized)"><i class="icon-barcode"></i>&nbsp;@Mavo.Assets.Models.AssetKind.Serialized</a>
             </li>
             <li class="nav-header">Assets by Category</li>
             @foreach (var item in ViewBag.AssetCategories)
