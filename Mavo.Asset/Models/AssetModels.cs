@@ -204,7 +204,11 @@ namespace Mavo.Assets.Models
         public DateTime? ReturnedDate { get; set; }
 
         public User PickedBy { get; set; }
+        public DateTime? PickStarted { get; set; }
+        public DateTime? PickCompleted { get; set; }
         public User ReturnedBy { get; set; }
+        public DateTime? ReturnStarted { get; set; }
+        public DateTime? ReturnCompleted { get; set; }
     }
 
     [ComplexType]
