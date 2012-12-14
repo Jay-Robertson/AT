@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Ninject;
-using HibernatingRhinos.Profiler.Appender.EntityFramework;
 
 namespace Mavo.Assets
 {
@@ -37,7 +36,6 @@ namespace Mavo.Assets
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
 
 
-            EntityFrameworkProfiler.Initialize();
 
         }
     }
