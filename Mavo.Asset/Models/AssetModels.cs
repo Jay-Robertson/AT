@@ -115,6 +115,7 @@ namespace Mavo.Assets.Models
         public AssetAction Action { get; set; }
         public DateTime Date { get; set; }
         public User User { get; set; }
+        public Job Job { get; set; }                // associated job for Pick and Return actions
     }
 
     [Table("Template")]
@@ -163,7 +164,8 @@ namespace Mavo.Assets.Models
         New,
         Started,
         Completed,
-        ReadyToPick
+        ReadyToPick,
+        BeingPicked
     }
 
     [Table("Jobs")]
@@ -200,6 +202,9 @@ namespace Mavo.Assets.Models
         public IList<AssetWithQuantity> Assets { get; set; }
 
         public DateTime? ReturnedDate { get; set; }
+
+        public User PickedBy { get; set; }
+        public User ReturnedBy { get; set; }
     }
 
     [ComplexType]
