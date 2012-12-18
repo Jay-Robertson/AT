@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Mavo.Assets.Models.Job>
+
+@{
+    ViewBag.Title = "LateJobs";
+}
+
+<h2>Jobs that should have returned already</h2>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatedCompletionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PickCompleted)
+            </th>
+            <th>Lateness</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            var totalDaysLate = (DateTime.Today - item.EstimatedCompletionDate).TotalDays;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobNumber)
+                </td>
+                <td>
+                    @item.EstimatedCompletionDate.Date.ToShortDateString()
+                </td>
+                <td>
+                    @item.PickCompleted.Value.Date.ToShortDateString()
+                </td>
+                <td>@totalDaysLate @(totalDaysLate == 1 ? "day" : "days") late</td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <div class="hero-unit">
+        <h1>All jobs are on schedule</h1>
+    </div>
+}

@@ -10,23 +10,11 @@ namespace Mavo.Assets.Controllers
     {
         public virtual ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
+            return RedirectToAction("Jobs", "Reports");
         }
 
-        public virtual ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
 
-            return View();
-        }
 
-        public virtual ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
     }
 }

@@ -22,13 +22,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace Mavo.Assets.Controllers
 {
-    public partial class HomeController
+    public partial class ReportsController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected HomeController(Dummy d) { }
+        protected ReportsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -46,13 +43,13 @@ namespace Mavo.Assets.Controllers
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController Actions { get { return MVC.Home; } }
+        public ReportsController Actions { get { return MVC.Reports; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Home";
+        public readonly string Name = "Reports";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Home";
+        public const string NameConst = "Reports";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -60,13 +57,15 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string Index = "Index";
+            public readonly string LateJobs = "LateJobs";
+            public readonly string Jobs = "Jobs";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string Index = "Index";
+            public const string LateJobs = "LateJobs";
+            public const string Jobs = "Jobs";
         }
 
 
@@ -80,20 +79,28 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string Index = "Index";
+                public readonly string Jobs = "Jobs";
+                public readonly string LateJobs = "LateJobs";
             }
-            public readonly string Index = "~/Views/Home/Index.cshtml";
+            public readonly string Jobs = "~/Views/Reports/Jobs.cshtml";
+            public readonly string LateJobs = "~/Views/Reports/LateJobs.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_HomeController : Mavo.Assets.Controllers.HomeController
+    public class T4MVC_ReportsController : Mavo.Assets.Controllers.ReportsController
     {
-        public T4MVC_HomeController() : base(Dummy.Instance) { }
+        public T4MVC_ReportsController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index()
+        public override System.Web.Mvc.ActionResult LateJobs()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LateJobs);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Jobs()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Jobs);
             return callInfo;
         }
 

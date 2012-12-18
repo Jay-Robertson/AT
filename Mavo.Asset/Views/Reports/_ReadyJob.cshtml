@@ -1,0 +1,32 @@
+﻿@model IList<Mavo.Assets.Models.Job>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Job</th>
+                <th>Job #</th>
+                <th>Customer</th>
+                <th>Employee</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in Model)
+            {
+                <tr>
+                    <td>@job.Name</td>
+                    <td>@job.JobNumber</td>
+                    <td>@(job.Customer != null ? job.Customer.Name : "")</td>
+                    <td>@(job.ProjectManager != null ? job.ProjectManager.FullName : "")</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="well">
+        <h3>Nothing here</h3>
+    </div>   
+}

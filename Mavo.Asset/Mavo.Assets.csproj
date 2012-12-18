@@ -179,6 +179,7 @@
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobPickerController.cs" />
     <Compile Include="Controllers\JobReturnerController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -245,10 +246,14 @@
     <Compile Include="Models\ViewModel\AssetSearchResult.cs" />
     <Compile Include="Models\ViewModel\AssetsLeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\EditJobPostModel.cs" />
+    <Compile Include="Models\ViewModel\JobReportViewModel.cs" />
     <Compile Include="Models\ViewModel\JobSearch.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\PickAJobModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -332,8 +337,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
@@ -372,6 +375,9 @@
     <Content Include="Views\JobReturner\Index.cshtml" />
     <Content Include="Views\JobReturner\_JobReturnerSidebar.cshtml" />
     <Content Include="Views\JobReturner\Success.cshtml" />
+    <Content Include="Views\Reports\LateJobs.cshtml" />
+    <Content Include="Views\Reports\Jobs.cshtml" />
+    <Content Include="Views\Reports\_ReadyJob.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
