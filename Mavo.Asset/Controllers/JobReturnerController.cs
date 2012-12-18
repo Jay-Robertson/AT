@@ -8,7 +8,7 @@ using Mavo.Assets.Models.ViewModel;
 
 namespace Mavo.Assets.Controllers
 {
-    public class JobReturnerController : BaseController
+    public partial class JobReturnerController : BaseController
     {
         //
         private readonly AssetContext Context;
@@ -16,7 +16,34 @@ namespace Mavo.Assets.Controllers
         {
             Context = context;
         }
-        public ActionResult Index(int id)
+
+        [HttpPost]
+        public virtual ActionResult Index(int id, IList<JobAsset> assets)
+        {
+            Job job = Context.Jobs.Include("PickedAssets").Include("PickedAssets.Item").Include("PickedAssets.Asset").FirstOrDefault(x => x.Id == id);
+            job.Status = JobStatus.Completed;
+            job.ReturnCompleted = DateTime.Now;
+
+            foreach (PickedAsset pickedAsset in job.PickedAssets)
+            {
+                Asset asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
+                if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
+                    asset.Inventory += assets.FirstOrDefault(x => x.AssetId == asset.Id).QuantityTaken;
+                else if (asset.Kind == AssetKind.Serialized)
+                {
+                    pickedAsset.Item.Status = InventoryStatus.In;
+                }
+
+            }
+            Context.SaveChanges();
+
+            return RedirectToAction(MVC.JobReturner.Success(id));
+        }
+        public virtual ActionResult Success(int id)
+        {
+            return View();
+        }
+        public virtual ActionResult Index(int id)
         {
             var result = Context.Jobs.Include("Assets").Include("Asset").Where(x => x.Id == id).Select(x =>
                 new
@@ -61,6 +88,5 @@ namespace Mavo.Assets.Controllers
                 }).ToList()
             });
         }
-
     }
 }

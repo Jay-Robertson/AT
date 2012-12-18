@@ -30,6 +30,7 @@ public static class MVC
     public static Mavo.Assets.Controllers.HomeController Home = new Mavo.Assets.Controllers.T4MVC_HomeController();
     public static Mavo.Assets.Controllers.JobController Job = new Mavo.Assets.Controllers.T4MVC_JobController();
     public static Mavo.Assets.Controllers.JobPickerController JobPicker = new Mavo.Assets.Controllers.T4MVC_JobPickerController();
+    public static Mavo.Assets.Controllers.JobReturnerController JobReturner = new Mavo.Assets.Controllers.T4MVC_JobReturnerController();
     public static Mavo.Assets.Controllers.TemplateController Template = new Mavo.Assets.Controllers.T4MVC_TemplateController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
@@ -57,6 +58,19 @@ public class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.ActionResult, IT
     }
      
     public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+public class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
     
     public string Controller { get; set; }
     public string Action { get; set; }

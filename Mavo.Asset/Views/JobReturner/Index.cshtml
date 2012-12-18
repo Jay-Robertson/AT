@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-@using (Html.BeginForm(MVC.JobPicker.Index(Model.JobId, null)))
+@using (Html.BeginForm(MVC.JobReturner.Index(Model.JobId, null)))
 {
     var index = 0;
     <div class="row-fluid">
@@ -71,7 +71,7 @@
                         <td>
                             <div class="input-prepend input-append">
                                 <span class="add-on"><i class="icon-barcode"></i></span>
-                                <input type="text" class="input" name="serializedAssets[@index].SerialNumber" value="@serializedAssets[i].SerialNumber"/>
+                                <input type="text" class="input" name="serializedAssets[@index].Barcode" value="@serializedAssets[i].Barcode"/>
                             </div>
                             <input type="hidden" name="assets[@(index)].Name" value="@serializedAssets[i].Name" />
                             <input type="hidden" name="assets[@(index)].Status" value="@serializedAssets[i].Status" />

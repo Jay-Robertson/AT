@@ -43,6 +43,12 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.JsonResult IsAssetItemAvailable()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsAssetItemAvailable);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult AssetPickerForJob()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
@@ -100,6 +106,7 @@ namespace Mavo.Assets.Controllers
         public class ActionNamesClass
         {
             public readonly string AssetPickerForTemplate = "AssetPickerForTemplate";
+            public readonly string IsAssetItemAvailable = "IsAssetItemAvailable";
             public readonly string AssetPickerForJob = "AssetPickerForJob";
             public readonly string AssetPickerDetail = "AssetPickerDetail";
             public readonly string RemoveAsset = "RemoveAsset";
@@ -118,6 +125,7 @@ namespace Mavo.Assets.Controllers
         public class ActionNameConstants
         {
             public const string AssetPickerForTemplate = "AssetPickerForTemplate";
+            public const string IsAssetItemAvailable = "IsAssetItemAvailable";
             public const string AssetPickerForJob = "AssetPickerForJob";
             public const string AssetPickerDetail = "AssetPickerDetail";
             public const string RemoveAsset = "RemoveAsset";
@@ -140,6 +148,14 @@ namespace Mavo.Assets.Controllers
         public class ActionParamsClass_AssetPickerForTemplate
         {
             public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_IsAssetItemAvailable s_params_IsAssetItemAvailable = new ActionParamsClass_IsAssetItemAvailable();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_IsAssetItemAvailable IsAssetItemAvailableParams { get { return s_params_IsAssetItemAvailable; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_IsAssetItemAvailable
+        {
+            public readonly string assets = "assets";
         }
         static readonly ActionParamsClass_AssetPickerForJob s_params_AssetPickerForJob = new ActionParamsClass_AssetPickerForJob();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -257,6 +273,17 @@ namespace Mavo.Assets.Controllers
             public readonly string Edit = "~/Views/Asset/Edit.cshtml";
             public readonly string Index = "~/Views/Asset/Index.cshtml";
             public readonly string Scan = "~/Views/Asset/Scan.cshtml";
+            static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
+            public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _DisplayTemplatesClass
+            {
+                static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+                public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+                public class _ViewNamesClass
+                {
+                }
+            }
         }
     }
 
@@ -269,6 +296,13 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForTemplate);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.JsonResult IsAssetItemAvailable(System.Collections.Generic.IList<Mavo.Assets.Models.ViewModel.JobAsset> assets)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsAssetItemAvailable);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "assets", assets);
             return callInfo;
         }
 

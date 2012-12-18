@@ -26,5 +26,7 @@ namespace Mavo.Assets.Models.ViewModel
         public string Manufacturer { get; set; }
 
         public int? Quantity { get; set; }
+
+        public IList<AssetItem> AssetItems { get; set; }
     }
 }

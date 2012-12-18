@@ -194,6 +194,9 @@
     <Compile Include="JobPickerController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="JobReturnerController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201212101949141_InitialMigratin.cs" />
     <Compile Include="Migrations\201212101949141_InitialMigratin.Designer.cs">
       <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
@@ -368,6 +371,7 @@
     <Content Include="Views\Shared\DisplayTemplates\JobStatus.cshtml" />
     <Content Include="Views\JobReturner\Index.cshtml" />
     <Content Include="Views\JobReturner\_JobReturnerSidebar.cshtml" />
+    <Content Include="Views\JobReturner\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
