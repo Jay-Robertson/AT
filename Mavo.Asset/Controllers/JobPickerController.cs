@@ -23,18 +23,28 @@ namespace Mavo.Assets.Controllers
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.Status = JobStatus.Started;
-
+            job.PickCompleted = DateTime.Now;
+            job.PickedAssets = new List<PickedAsset>();
+            
             if (assets != null)
             {
                 var pickedAssets = assets.Select(x => new PickedAsset()
                 {
-                    Asset = Context.Assets.FirstOrDefault(a => a.Id == x.Id),
+                    Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId),
                     Job = job,
                     Picked = DateTime.Now,
-                    Quantity = x.QuantityTaken ?? 1
+                    Quantity = Math.Max(x.QuantityTaken ?? 1, 1),
+                    Serial = x.SerialNumber
                 });
                 foreach (var item in pickedAssets)
+                {
                     Context.PickedAssets.Add(item);
+                    Asset asset = Context.Assets.FirstOrDefault(x => x.Id == item.Asset.Id);
+                    if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
+                        asset.Inventory = Convert.ToInt32(Math.Max((decimal)(asset.Inventory - item.Quantity), 0m));
+
+                    job.PickedAssets.Add(item);
+                }
             }
             Context.SaveChanges();
 
@@ -46,7 +56,7 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult Index(int id)
         {
-            var result = Context.Jobs.Where(x=>x.Id == id).Select(x =>
+            var result = Context.Jobs.Include("Assets").Include("Asset").Where(x => x.Id == id).Select(x =>
                 new
                 {
                     JobId = x.Id,
@@ -64,6 +74,9 @@ namespace Mavo.Assets.Controllers
                         Id = a.Id,
                         Quantity = a.Quantity,
                         Kind = a.Asset.Kind,
+                        AssetId = a.Asset.Id,
+                        NotEnoughQuantity = a.Quantity > a.Asset.Inventory,
+                        QuantityAvailable = a.Asset.Inventory
                     })
                 }).First();
             return View(new PickAJobModel()
@@ -79,9 +92,12 @@ namespace Mavo.Assets.Controllers
                 {
                     Name = x.Name,
                     Id = x.Id,
+                    AssetId = x.AssetId,
                     QuantityNeeded = x.Quantity,
                     QuantityTaken = x.Quantity,
-                    Kind = x.Kind
+                    Kind = x.Kind,
+                    NotEnoughQuantity = x.NotEnoughQuantity,
+                    QuantityAvailable = x.QuantityAvailable
                 }).ToList()
             });
         }

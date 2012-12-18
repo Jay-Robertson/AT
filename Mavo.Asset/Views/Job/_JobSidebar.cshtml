@@ -9,7 +9,7 @@
                 <ul class="dropdown-menu">
                     @foreach (var template in ViewBag.Templates)
                     {
-                        <li><a href="/job/create/@template.Id">@template.Name</a></li>
+                        <li><a href="/job/create?templateId=@template.Id">@template.Name</a></li>
                     }
                 </ul>
             </li>

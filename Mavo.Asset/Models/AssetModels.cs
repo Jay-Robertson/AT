@@ -34,7 +34,7 @@ namespace Mavo.Assets.Models
     public enum AssetKind
     {
         Consumable,     // asset is not barcoded and not expected to return from a job
-        Serialized,     // asset is ndividually barcoded
+        Serialized,     // asset is individually barcoded
         NotSerialized,  // asset is durable and expected to return from job, but not individually tracked
     }
 
@@ -143,6 +143,8 @@ namespace Mavo.Assets.Models
         public Job Job { get; set; }
         public DateTime Picked { get; set; }
         public AssetItem Item { get; set; }
+
+        public string Serial { get; set; }
     }
 
     [Table("ReturnedAsset")]
@@ -204,11 +206,12 @@ namespace Mavo.Assets.Models
         public DateTime? ReturnedDate { get; set; }
 
         public User PickedBy { get; set; }
-        public DateTime? PickStarted { get; set; }
         public DateTime? PickCompleted { get; set; }
         public User ReturnedBy { get; set; }
         public DateTime? ReturnStarted { get; set; }
         public DateTime? ReturnCompleted { get; set; }
+
+        public List<PickedAsset> PickedAssets { get; set; }
     }
 
     [ComplexType]

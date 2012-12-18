@@ -33,6 +33,7 @@ namespace Mavo.Assets.Controllers
                 return null;
             ViewBag.IsForJob = false;
             ViewBag.TemplateId = id;
+            ViewBag.Assets = db.TemplateAssets.Where(x => x.Template.Id == id.Value).ToList();
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 
@@ -40,6 +41,7 @@ namespace Mavo.Assets.Controllers
         {
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
+            ViewBag.Assets = db.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id).Assets;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 

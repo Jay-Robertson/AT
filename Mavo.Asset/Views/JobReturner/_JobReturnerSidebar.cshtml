@@ -1,0 +1,23 @@
+﻿@{   var id = int.Parse(Url.RequestContext.RouteData.Values["id"].ToString().ToLower()); }
+
+<div class="span2">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyForReturn).Any())
+            {
+                foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyForReturn)
+                {
+                <li class="nav-header">@item.Key.ToShortDateString()</li>
+                    foreach (Mavo.Assets.Models.Job job in item)
+                    {
+                <li class='@(id == job.Id ? "active" : "")'><a href="/jobreturner/index/@job.Id">@job.Name</a></li>
+                    }
+                }
+            }
+            else
+            {
+                <li class="nav-header">No jobs to return</li>
+            }
+        </ul>
+    </div>
+</div>

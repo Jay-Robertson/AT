@@ -45,5 +45,11 @@ namespace Mavo.Assets.Models.ViewModel
         public AssetKind Kind { get; set; }
 
         public string SerialNumber { get; set; }
+
+        public int AssetId { get; set; }
+
+        public bool NotEnoughQuantity { get; set; }
+
+        public int? QuantityAvailable { get; set; }
     }
 }

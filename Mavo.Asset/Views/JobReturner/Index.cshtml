@@ -1,4 +1,8 @@
-﻿@model Mavo.Assets.Models.ViewModel.PickAJobModel
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@model Mavo.Assets.Models.ViewModel.PickAJobModel
 @{
     ViewBag.Title = "Index";
     var unserializedAssets = Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized).ToList();
@@ -6,7 +10,7 @@
 }
 @section LeftNav
 {
-    @{Html.RenderPartial("_JobPickerSidebar");}
+    @{Html.RenderPartial("_JobReturnerSidebar");}
 }
 <div class="row-fluid">
     <div class="well">
@@ -63,13 +67,12 @@
                     <tr>
                         <td>@serializedAssets[i].Id</td>
                         <td>@serializedAssets[i].Name</td>
-                        <td>@(String.IsNullOrEmpty(serializedAssets[i].Status) ? "" : serializedAssets[i].Status)</td>
+                        <td>@serializedAssets[i].Status</td>
                         <td>
                             <div class="input-prepend input-append">
                                 <span class="add-on"><i class="icon-barcode"></i></span>
-                                <input type="text" class="input" name="assets[@index].SerialNumber" value="@serializedAssets[i].SerialNumber"/>
+                                <input type="text" class="input" name="serializedAssets[@index].SerialNumber" value="@serializedAssets[i].SerialNumber"/>
                             </div>
-                            <input type="hidden" name="assets[@index].AssetId" value="@serializedAssets[i].AssetId" />
                             <input type="hidden" name="assets[@(index)].Name" value="@serializedAssets[i].Name" />
                             <input type="hidden" name="assets[@(index)].Status" value="@serializedAssets[i].Status" />
                             <input type="hidden" name="assets[@(index)].Id" value="@serializedAssets[i].Id" />
@@ -96,13 +99,13 @@
                             <input type="hidden" name="assets[@index].Status" value="@unserializedAssets[i].Status" />
                             <input type="hidden" name="assets[@index].Id" value="@unserializedAssets[i].Id" />
                             <input type="hidden" name="assets[@index].QuantityNeeded" value="@unserializedAssets[i].QuantityNeeded" />
-                            @if(unserializedAssets[i].NotEnoughQuantity)
+                            @if (unserializedAssets[i].NotEnoughQuantity)
                             {
                                 <span class="label label-important">@unserializedAssets[i].QuantityAvailable in inventory</span>
                             }
                         </td>
                     </tr>
-                    index++;
+                            index++;
                 }
             </tbody>
         </table>
@@ -113,3 +116,4 @@
         </div>
     </div>
 }
+

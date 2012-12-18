@@ -178,6 +178,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobPickerController.cs" />
+    <Compile Include="Controllers\JobReturnerController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="HtmlExtensions.cs" />
@@ -221,6 +222,10 @@
     <Compile Include="Migrations\201212132058464_AddedStuffToCustomer2.cs" />
     <Compile Include="Migrations\201212132058464_AddedStuffToCustomer2.Designer.cs">
       <DependentUpon>201212132058464_AddedStuffToCustomer2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201212181704121_whatup.cs" />
+    <Compile Include="Migrations\201212181704121_whatup.Designer.cs">
+      <DependentUpon>201212181704121_whatup.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -354,6 +359,8 @@
     <Content Include="Views\Asset\_SearchResult.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\AssetKind.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\JobStatus.cshtml" />
+    <Content Include="Views\JobReturner\Index.cshtml" />
+    <Content Include="Views\JobReturner\_JobReturnerSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -382,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212132058464_AddedStuffToCustomer2.resx">
       <DependentUpon>201212132058464_AddedStuffToCustomer2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212181704121_whatup.resx">
+      <DependentUpon>201212181704121_whatup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -70,11 +70,11 @@ namespace Mavo.Assets.Controllers
             return View(search);
         }
 
-        public virtual ActionResult Create(int? id)
+        public virtual ActionResult Create(int? templateId)
         {
             SetListsForCrud(null);
             ViewBag.Action = "Create a new";
-            ViewBag.TemplateId = id;
+            ViewBag.TemplateId = templateId;
             return View("Edit");
         }
 

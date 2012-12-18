@@ -15,7 +15,8 @@ namespace Mavo.Assets.Controllers
 
             AssetContext assetContext =  ServiceLocator.Current.GetInstance<AssetContext>();
             ViewBag.Templates = assetContext.Templates.ToList();
-            ViewBag.JobsReadyToPickForNav = assetContext.Jobs.Where(x=>x.Status == JobStatus.ReadyToPick).ToList().GroupBy(x=>x.PickupTime.Date).OrderBy(x=>x.Key);
+            ViewBag.JobsReadyToPickForNav = assetContext.Jobs.Where(x => x.Status == JobStatus.ReadyToPick).ToList().GroupBy(x => x.PickupTime.Date).OrderBy(x => x.Key);
+            ViewBag.JobsReadyForReturn = assetContext.Jobs.Where(x => x.Status == JobStatus.Started && x.PickCompleted.HasValue).ToList().GroupBy(x => x.PickCompleted.Value.Date).OrderBy(x => x.Key);
             base.OnActionExecuting(filterContext);
         }
     }

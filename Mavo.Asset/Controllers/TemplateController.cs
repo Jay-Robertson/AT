@@ -37,8 +37,10 @@ namespace Mavo.Assets.Controllers
         // GET: /Template/Edit/5
         public virtual ActionResult Edit(int id)
         {
-            ViewBag.Templates = ctx.Templates.ToList();
-            return View(ctx.Templates.FirstOrDefault(x=>x.Id == id));
+            ViewBag.Templates = ctx.Templates.Include("Assets").Include("Assets.Asset").ToList();
+            Template template = ctx.Templates.FirstOrDefault(x=>x.Id == id);
+            ViewBag.Assets = template.Assets;
+            return View(template);
         }
 
         //
