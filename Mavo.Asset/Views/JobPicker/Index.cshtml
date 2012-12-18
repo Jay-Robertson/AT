@@ -44,7 +44,9 @@
 @using (Html.BeginForm(MVC.JobPicker.Index(Model.JobId, null), FormMethod.Post, new { @class = "form-inline" }))
 {
     var index = 0;
-    @Html.EditorFor(x => x.Assets[0].Barcode)
+    if (Model.Assets != null && Model.Assets.Count > 0) {
+        @Html.EditorFor(x => x.Assets[0].Barcode)
+    }
     <div class="row-fluid">
         <h4>Assets</h4>
         <table class="table table-striped table-hover">
