@@ -61,7 +61,7 @@ namespace Mavo.Assets.Controllers
 
             ctx.SaveChanges();
 
-            return RedirectToAction(MVC.Template.Edit(id));
+            return RedirectToAction(MVC.Template.Edit(template.Id));
         }
     }
 }
