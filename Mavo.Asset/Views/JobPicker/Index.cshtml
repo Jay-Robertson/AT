@@ -44,7 +44,6 @@
 @using (Html.BeginForm(MVC.JobPicker.Index(Model.JobId, null), FormMethod.Post, new { @class = "form-inline" }))
 {
     var index = 0;
-    @Html.EditorFor(x => x.Assets[0].Barcode)
     <div class="row-fluid">
         <h4>Assets</h4>
         <table class="table table-striped table-hover">
@@ -69,10 +68,14 @@
                             <div class=" control-group">
                                 <div class="input-prepend input-append">
                                     <span class="add-on"><i class="icon-barcode"></i></span>
-                                    <input class="text-box single-line" data-val="true"  data-val-required="Job Name is Required" data-val-remote="Serial number does not exist, or is out of stock" data-val-remote-additionalfields="*.Barcode" data-val-remote-url="/Asset/IsAssetItemAvailable" id="serializedAssets_@(index)__Barcode" name="assets[@i].Barcode" type="text" value="">
+                                    <input class="text-box single-line" 
+                                        data-val="true"  data-val-required="Job Name is Required" data-val-remote="Barcode does not exist, or is out of stock" 
+                                        data-val-remote-additionalfields="*.Barcode" 
+                                        data-val-remote-url="/Asset/IsAssetItemAvailable" 
+                                        name="assets[@(index)].Barcode" type="text" />
                                 </div>
                             </div>
-                            <input type="hidden" name="assets[@index].AssetId" value="@serializedAssets[i].AssetId" />
+                            <input type="hidden" name="assets[@(index)].AssetId" value="@serializedAssets[i].AssetId" />
                             <input type="hidden" name="assets[@(index)].Name" value="@serializedAssets[i].Name" />
                             <input type="hidden" name="assets[@(index)].Status" value="@serializedAssets[i].Status" />
                             <input type="hidden" name="assets[@(index)].Id" value="@serializedAssets[i].Id" />
