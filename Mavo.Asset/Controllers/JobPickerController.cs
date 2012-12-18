@@ -25,13 +25,13 @@ namespace Mavo.Assets.Controllers
             job.Status = JobStatus.Started;
             job.PickCompleted = DateTime.Now;
             job.PickedAssets = new List<PickedAsset>();
-            
+
             if (assets != null)
             {
                 var pickedAssets = assets.Select(x => new PickedAsset()
                 {
                     Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId),
-                    Item = !String.IsNullOrEmpty(x.Barcode) ? Context.AssetItems.FirstOrDefault(ai=>x.Barcode == ai.SerialNumber) : null,
+                    Item = !String.IsNullOrEmpty(x.Barcode) ? Context.AssetItems.FirstOrDefault(ai => x.Barcode == ai.Barcode) : null,
                     Job = job,
                     Picked = DateTime.Now,
                     Quantity = Math.Max(x.QuantityTaken ?? 1, 1),
