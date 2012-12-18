@@ -16,17 +16,21 @@
                 @Html.LabelFor(x => x.AssetId, new { @class = "control-label" })
                 <div class="controls">
                     @Html.DropDownList("AssetId", ((IList<Mavo.Assets.Models.Asset>)ViewBag.Assets).Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).Select(x => new SelectListItem()
-                   {
-                       Value = x.Id.ToString(),
-                       Text = x.Name
-                   }), string.Empty)
+               {
+                   Value = x.Id.ToString(),
+                   Text = x.Name
+               }), string.Empty)
                 </div>
             </div>
 
             <div class="control-group">
+
                 @Html.LabelFor(x => x.Barcode, new { @class = "control-label" })
                 <div class="controls">
-                    @Html.EditorFor(x => x.Barcode)
+                    <div class="input-prepend input-append">
+                        <span class="add-on"><i class="icon-barcode"></i></span>
+                        @Html.EditorFor(x => x.Barcode)
+                    </div>
                 </div>
             </div>
 

@@ -36,7 +36,13 @@ namespace Mavo.Assets.Controllers
             ViewBag.Assets = db.TemplateAssets.Where(x => x.Template.Id == id.Value).ToList();
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
-
+        public JsonResult IsAssetItemAvailable(IList<JobAsset> serializedAssets)
+        {
+            string serial = serializedAssets[0].Barcode;
+            bool serialExists = db.AssetItems.Any(x => x.Barcode == serial);
+            bool isInstock = db.AssetItems.Any(x => x.Barcode == serial && x.Status == InventoryStatus.In);
+            return Json(serialExists, JsonRequestBehavior.AllowGet);
+        }
         public virtual ActionResult AssetPickerForJob(int id)
         {
             ViewBag.IsForJob = true;

@@ -31,6 +31,12 @@ namespace Mavo.Assets.Models
         public DbSet<Customer> Customers { get; set; }
     }
 
+    public enum InventoryStatus
+    {
+        In,
+        Out
+    }
+
     public enum AssetKind
     {
         Consumable,     // asset is not barcoded and not expected to return from a job
@@ -76,6 +82,7 @@ namespace Mavo.Assets.Models
         public string UPC { get; set; }
 
         public List<AssetItem> Items { get; set; }
+
     }
 
     [Table("AssetItems")]
@@ -92,6 +99,9 @@ namespace Mavo.Assets.Models
         public DateTime? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
         public DateTime? WarrantyExpiration { get; set; }
+
+        public InventoryStatus Status { get; set; }
+
     }
 
     public enum AssetAction
@@ -144,7 +154,7 @@ namespace Mavo.Assets.Models
         public DateTime Picked { get; set; }
         public AssetItem Item { get; set; }
 
-        public string Serial { get; set; }
+        public string Barcode { get; set; }
     }
 
     [Table("ReturnedAsset")]

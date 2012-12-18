@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Mavo.Assets.Models.ViewModel
 {
@@ -44,7 +45,8 @@ namespace Mavo.Assets.Models.ViewModel
 
         public AssetKind Kind { get; set; }
 
-        public string SerialNumber { get; set; }
+        [Remote("IsAssetItemAvailable","Asset", ErrorMessage="Serial number does not exist, or is out of stock")]
+        public string Barcode { get; set; }
 
         public int AssetId { get; set; }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Mavo.Assets.Data;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
 using AutoMapper;

@@ -5,7 +5,6 @@ namespace Mavo.Assets.App_Start
 {
     using System;
     using System.Web;
-    using Mavo.Assets.Data;
     using Mavo.Assets.Models;
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;

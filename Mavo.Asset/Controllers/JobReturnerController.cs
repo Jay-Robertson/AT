@@ -37,7 +37,7 @@ namespace Mavo.Assets.Controllers
                         Quantity = a.Quantity,
                         Kind = a.Asset.Kind,
                         AssetId = a.Asset.Id,
-                        Serial = a.Serial
+                        Serial = a.Barcode
                     })
                 }).First();
             return View(new PickAJobModel()
@@ -57,7 +57,7 @@ namespace Mavo.Assets.Controllers
                     QuantityNeeded = x.Quantity,
                     QuantityTaken = x.Quantity,
                     Kind = x.Kind,
-                    SerialNumber = x.Serial
+                    Barcode = x.Serial
                 }).ToList()
             });
         }

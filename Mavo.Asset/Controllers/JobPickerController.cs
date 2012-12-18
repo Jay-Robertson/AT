@@ -31,19 +31,24 @@ namespace Mavo.Assets.Controllers
                 var pickedAssets = assets.Select(x => new PickedAsset()
                 {
                     Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId),
+                    Item = !String.IsNullOrEmpty(x.Barcode) ? Context.AssetItems.FirstOrDefault(ai=>x.Barcode == ai.SerialNumber) : null,
                     Job = job,
                     Picked = DateTime.Now,
                     Quantity = Math.Max(x.QuantityTaken ?? 1, 1),
-                    Serial = x.SerialNumber
+                    Barcode = x.Barcode
                 });
-                foreach (var item in pickedAssets)
+                foreach (var pickedAsset in pickedAssets)
                 {
-                    Context.PickedAssets.Add(item);
-                    Asset asset = Context.Assets.FirstOrDefault(x => x.Id == item.Asset.Id);
+                    Context.PickedAssets.Add(pickedAsset);
+                    Asset asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
                     if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
-                        asset.Inventory = Convert.ToInt32(Math.Max((decimal)(asset.Inventory - item.Quantity), 0m));
+                        asset.Inventory = Convert.ToInt32(Math.Max((decimal)(asset.Inventory - pickedAsset.Quantity), 0m));
+                    else if (asset.Kind == AssetKind.Serialized)
+                    {
+                        pickedAsset.Item.Status = InventoryStatus.Out;
+                    }
 
-                    job.PickedAssets.Add(item);
+                    job.PickedAssets.Add(pickedAsset);
                 }
             }
             Context.SaveChanges();
