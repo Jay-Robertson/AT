@@ -29,7 +29,7 @@
             var totalDaysLate = (DateTime.Today - item.EstimatedCompletionDate).TotalDays;
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    <a href="/job/edit/@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.JobNumber)

@@ -35,7 +35,7 @@ namespace Mavo.Assets
                 .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id));
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
 
-            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+            //HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 
         }
     }
