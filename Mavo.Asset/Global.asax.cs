@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Ninject;
+using Mavo.Assets.Binders;
 
 namespace Mavo.Assets
 {
@@ -28,6 +29,8 @@ namespace Mavo.Assets
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
+
+
             AutoMapper.Mapper.CreateMap<EditJobPostModel, Job>();
             AutoMapper.Mapper.CreateMap<Job, EditJobPostModel>()
                 .ForMember(dest => dest.ProjectManagerId, opt => opt.MapFrom(src => src.ProjectManager.Id))
@@ -37,6 +40,8 @@ namespace Mavo.Assets
 
             //HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 
+            //ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
+            //ModelBinders.Binders.Add(typeof(DateTime?), new DateTimeModelBinder());
         }
     }
 }

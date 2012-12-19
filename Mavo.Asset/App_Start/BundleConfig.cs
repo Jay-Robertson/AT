@@ -11,7 +11,6 @@ namespace Mavo.Assets
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-        
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
@@ -19,6 +18,9 @@ namespace Mavo.Assets
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryplugins").Include(
+                "~/Scripts/jquery-TimePicker-1.0.0.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                   "~/Scripts/bootstrap.js"));
@@ -31,6 +33,7 @@ namespace Mavo.Assets
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/themes/bootstrap/jquery-ui-1.8.16.custom.css",
+                        "~/Content/bootstrap.css",
                         "~/Content/bootstrap.css",
                         "~/Content/bootstrap-responsive.css"));
         }

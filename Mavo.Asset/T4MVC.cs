@@ -93,11 +93,13 @@ namespace Links
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
                       
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
-        public static readonly string jquery_1_7_1_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.7.1.intellisense.min.js") ? Url("jquery-1.7.1.intellisense.min.js") : Url("jquery-1.7.1.intellisense.js");
+        public static readonly string jquery_1_7_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.7.2.intellisense.min.js") ? Url("jquery-1.7.2.intellisense.min.js") : Url("jquery-1.7.2.intellisense.js");
                       
-        public static readonly string jquery_1_7_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.7.1.min.js") ? Url("jquery-1.7.1.min.js") : Url("jquery-1.7.1.js");
+        public static readonly string jquery_1_7_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.7.2.min.js") ? Url("jquery-1.7.2.min.js") : Url("jquery-1.7.2.js");
                       
-        public static readonly string jquery_1_7_1_min_js = Url("jquery-1.7.1.min.js");
+        public static readonly string jquery_1_7_2_min_js = Url("jquery-1.7.2.min.js");
+        public static readonly string jquery_TimePicker_1_0_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-TimePicker-1.0.0.min.js") ? Url("jquery-TimePicker-1.0.0.min.js") : Url("jquery-TimePicker-1.0.0.js");
+                      
         public static readonly string jquery_ui_1_8_20_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.8.20.min.js") ? Url("jquery-ui-1.8.20.min.js") : Url("jquery-ui-1.8.20.js");
                       
         public static readonly string jquery_ui_1_8_20_min_js = Url("jquery-ui-1.8.20.min.js");

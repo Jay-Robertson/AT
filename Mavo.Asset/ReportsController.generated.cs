@@ -79,9 +79,11 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _ReadyJob = "_ReadyJob";
                 public readonly string Jobs = "Jobs";
                 public readonly string LateJobs = "LateJobs";
             }
+            public readonly string _ReadyJob = "~/Views/Reports/_ReadyJob.cshtml";
             public readonly string Jobs = "~/Views/Reports/Jobs.cshtml";
             public readonly string LateJobs = "~/Views/Reports/LateJobs.cshtml";
         }

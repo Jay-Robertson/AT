@@ -1,6 +1,6 @@
 ﻿@model System.DateTime?
 <div class="input-prepend">
     <span class="add-on"><i class="icon-calendar"></i></span>
-    @Html.TextBox("", String.Format("{0:MM/dd/yyyy}", (Model == DateTime.MinValue) ? null : Model), new { @class = "text date input-small" })
+    @Html.TextBox("", !Model.HasValue ? null : (Model.Value.TimeOfDay.Hours > 0 ? Model.ToString() : Model.Value.ToShortDateString()) , new { @class = "text date" })
 </div>
 
