@@ -1,0 +1,13 @@
+﻿@model System.DateTime?
+@if (Model.HasValue)
+{
+    if (Model.Value.TimeOfDay.Hours == 0)
+    {
+    <text>@Model.Value.ToShortDateString()</text>
+    }
+    else
+    {
+    <text>@Model.Value.ToString()</text>
+    }
+}
+

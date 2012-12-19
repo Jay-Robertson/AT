@@ -5,6 +5,7 @@
         <thead>
             <tr>
                 <th>Job</th>
+                <th>Pick Date</th>
                 <th>Job #</th>
                 <th>Customer</th>
                 <th>Employee</th>
@@ -15,6 +16,7 @@
             {
                 <tr>
                     <td>@job.Name</td>
+                    <td>@Html.DisplayFor(x=>job.PickupTime)</td>
                     <td>@job.JobNumber</td>
                     <td>@(job.Customer != null ? job.Customer.Name : "")</td>
                     <td>@(job.ProjectManager != null ? job.ProjectManager.FullName : "")</td>

@@ -8,9 +8,13 @@
                 foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
                 {
                 <li class="nav-header">@item.Key.ToShortDateString()</li>
-                    foreach (Mavo.Assets.Models.Job job in item)
+                    foreach (Mavo.Assets.Models.Job job in item.OrderBy(x => x.PickupTime))
                     {
-                <li class='@(id == job.Id ? "active" : "")'><a href="/jobpicker/index/@job.Id">@job.Name</a></li>
+                <li class='@(id == job.Id ? "active" : "")'><a href="/jobpicker/index/@job.Id">
+                    <span class='label @(job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
+                    @job.Name
+                </a>
+                </li>
                     }
                 }
             }
