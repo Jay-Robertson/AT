@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Mavo Asset Management</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        label.valid {
+            width: 24px;
+            height: 24px;
+            background: url(assets/img/valid.png) center center no-repeat;
+            display: inline-block;
+            text-indent: -9999px;
+        }
+
+        label.error {
+            font-weight: bold;
+            color: red;
+            padding: 2px 8px;
+            margin-top: 2px;
+        }
+
+        .ui-timepicker-div .ui-widget-header {
+            margin-bottom: 8px;
+        }
+
+        .ui-timepicker-div dl {
+            text-align: left;
+        }
+
+            .ui-timepicker-div dl dt {
+                height: 25px;
+                margin-bottom: -25px;
+            }
+
+            .ui-timepicker-div dl dd {
+                margin: 0 10px 10px 65px;
+            }
+
+        .ui-timepicker-div td {
+            font-size: 90%;
+        }
+
+        .ui-tpicker-grid-label {
+            background: none;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ui-timepicker-rtl {
+            direction: rtl;
+        }
+
+            .ui-timepicker-rtl dl {
+                text-align: right;
+            }
+
+                .ui-timepicker-rtl dl dd {
+                    margin: 0 65px 10px 10px;
+                }
+    </style>
+</head>
+<body>
+    <header>
+        @{Html.RenderPartial(MVC.Shared.Views._TopNav);}
+    </header>
+    <div class="container-fluid" id="body">
+        <div class="row-fluid">
+            @RenderSection("LeftNav", false)
+            <div>
+                @RenderBody()
+            </div>
+        </div>
+
+        <hr>
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mavo Asset Management</p>
+        </footer>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryplugins")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        /*
+        * Form Validation
+        * This script will set Bootstrap error classes when form.submit is called.
+        * The errors are produced by the MVC unobtrusive validation.
+        */
+        $(function () {
+            $('form').submit(function () {
+                $(this).find('div.control-group').each(function () {
+                    if ($(this).find('span.field-validation-error').length == 0) {
+                        $(this).removeClass('error');
+                    }
+                });
+
+                if (!$(this).valid()) {
+                    $(this).find('div.control-group').each(function () {
+                        if ($(this).find('span.field-validation-error').length > 0) {
+                            $(this).addClass('error');
+                        }
+                    });
+                }
+            });
+            $('form').each(function () {
+                $(this).find('div.control-group').each(function () {
+                    if ($(this).find('span.field-validation-error').length > 0) {
+                        $(this).addClass('error');
+                    }
+                });
+            });
+        });
+        var page = function () {
+            //Update that validator
+            $.validator.setDefaults({
+                highlight: function (element) {
+                    $(element).closest(".control-group").addClass("error");
+                },
+                unhighlight: function (element) {
+                    $(element).closest(".control-group").removeClass("error");
+                }
+            });
+        }();
+        /* End Form Validation */
+
+
+        $(document).ready(function () {
+            $(".date").datetimepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'mm/dd/yy',
+                showTime: true,
+                gotoCurrent: true
+            });
+        });
+
+    </script>
+
+</body>
+</html>
