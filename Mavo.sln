@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mavo.Assets", "Mavo.Asset\Mavo.Assets.csproj", "{1FAE1941-B0ED-4D7D-A0E0-240C30A665D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateAssetData", "GenerateAssetData\GenerateAssetData.csproj", "{0101D1D1-1959-4CD1-98FB-98001EF64706}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{9762DE6C-4999-48EE-9F7F-E4129AA6ECC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,8 +17,15 @@ Global
 		{1FAE1941-B0ED-4D7D-A0E0-240C30A665D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FAE1941-B0ED-4D7D-A0E0-240C30A665D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FAE1941-B0ED-4D7D-A0E0-240C30A665D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0101D1D1-1959-4CD1-98FB-98001EF64706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0101D1D1-1959-4CD1-98FB-98001EF64706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0101D1D1-1959-4CD1-98FB-98001EF64706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0101D1D1-1959-4CD1-98FB-98001EF64706}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0101D1D1-1959-4CD1-98FB-98001EF64706} = {9762DE6C-4999-48EE-9F7F-E4129AA6ECC9}
 	EndGlobalSection
 EndGlobal
