@@ -13,9 +13,9 @@
     @if (!Model.PickStarted.HasValue)
     {
         <script type="text/javascript">
+            $('#btnSubmit').hide();
             $('#startModal').modal({
-                keyboard: false,
-                backdrop: 'static',
+                keyboard: true,
                 show: false
             });
             $('#btnStartPicking').click(function () {
@@ -23,14 +23,31 @@
                     $('#pickupTime').html(timeStarted);
                     $('#pickupTimeDiv').removeClass('hide');
                     $('#startModal').modal('hide');
+                    $('#btnSubmit').show();
+                    $('#btnSubmitDisabled').hide();
+                    $('#beginPicking').hide();
+                    $('.text-box').removeAttr('disabled');
+                    $('.input-mini').removeAttr('disabled');
+                    $('#jobStatus@(Model.JobId)').removeClass('label-important');
+                    $('#jobStatus@(Model.JobId)').addClass('label-success');
                 });
             });
         </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $('#btnSubmitDisabled').hide();
+        </script>
+        
     }
 
 }
 @if (!Model.PickStarted.HasValue)
 {
+    <div class="well" id="beginPicking">
+        <a href="#startModal" role="button" class="btn btn-large btn-primary" data-toggle="modal">Begin Picking</a>
+    </div>
     <div id="startModal" class="modal show fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-show="true">
         <div class="modal-header">
             <h3 id="myModalLabel">Start Picking?</h3>
@@ -108,7 +125,7 @@
                             <div class="control-group">
                                 <div class="input-prepend input-append">
                                     <span class="add-on"><i class="icon-barcode"></i></span>
-                                    <input class="text-box single-line" 
+                                    <input class="text-box single-line" @(!Model.PickStarted.HasValue ? "disabled" : "") 
                                         data-val="true"  data-val-required="Job Name is Required" data-val-remote="Barcode does not exist, or is out of stock" 
                                         data-val-remote-additionalfields="*.Barcode" 
                                         data-val-remote-url="/Asset/IsAssetItemAvailable" 
@@ -135,7 +152,7 @@
                         <td>@unserializedAssets[i].Name</td>
                         <td>@unserializedAssets[i].Status</td>
                         <td>
-                            <input type="number" class="input-mini" name="assets[@i].QuantityTaken" value="@unserializedAssets[i].QuantityNeeded"/><text>/</text>
+                            <input type="number" class="input-mini" @(!Model.PickStarted.HasValue ? "disabled" : "")  name="assets[@i].QuantityTaken" value="@unserializedAssets[i].QuantityNeeded"/><text>/</text>
                             @unserializedAssets[i].QuantityNeeded
 
                             <input type="hidden" name="assets[@index].AssetId" value="@unserializedAssets[i].AssetId" />
@@ -156,7 +173,8 @@
     </div>
     <div class="row-fluid">
         <div class="form-actions">
-            <input type="submit" class="btn btn-primary" />
+            <input type="submit" class="btn btn-primary" id="btnSubmit" />
+            <span class="btn btn-primary disabled" id="btnSubmitDisabled">Submit</span>
         </div>
     </div>
 }

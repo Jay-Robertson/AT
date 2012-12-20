@@ -2,16 +2,22 @@
 @switch (Model)
 {
     case Mavo.Assets.Models.JobStatus.New:
-        <span class="label label-important">@Model.ToString()</span>
+    <span class="label label-important">@Model.ToString()</span>
         break;
     case Mavo.Assets.Models.JobStatus.Started:
-        <span class="label label-warning">@Model.ToString()</span>
+    <span class="label label-warning">@Model.ToString()</span>
         break;
     case Mavo.Assets.Models.JobStatus.Completed:
-        <span class="label label-success">@Model.ToString()</span>
+    <span class="label label-success">@Model.ToString()</span>
         break;
     case Mavo.Assets.Models.JobStatus.ReadyToPick:
-        <span class="label label-warning">@Model.ToString()</span>
+    <span class="label label-warning">@Model.ToString()</span>
+        break;
+    case Mavo.Assets.Models.JobStatus.BeingPicked:
+    <span class="label label-info">@Model.ToString()</span>
+        break;
+    case Mavo.Assets.Models.JobStatus.BeingReturned:
+    <span class="label label-inverse">@Model.ToString()</span>
         break;
     default:
         break;

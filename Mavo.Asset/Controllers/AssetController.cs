@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
 using AutoMapper;
+using System.Text;
 
 namespace Mavo.Assets.Controllers
 {
@@ -63,7 +64,14 @@ namespace Mavo.Assets.Controllers
             bool serialExists = db.AssetItems.Any(x => x.Barcode == serial);
             bool isInStock = db.AssetItems.Any(x => x.Barcode == serial && x.Status == InventoryStatus.In);
             bool isInGoodCondition = db.AssetItems.Any(x => x.Barcode == serial && x.Condition == AssetCondition.Good);
-            return Json("error", JsonRequestBehavior.AllowGet);
+            IList<string> errors = new List<string>();
+            if (!serialExists)
+                errors.Add("Serial number is not inventoried");
+            else if (!isInStock)
+                errors.Add("Item is out on a job");
+            else if (!isInGoodCondition)
+                errors.Add("Item is retired/damaged");
+            return Json(string.Join(", ", errors), JsonRequestBehavior.AllowGet);
         }
         public virtual ActionResult AssetPickerForJob(int id)
         {
