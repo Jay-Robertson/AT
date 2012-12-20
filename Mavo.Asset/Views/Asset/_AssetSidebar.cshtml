@@ -5,6 +5,7 @@
             <li class="nav-header">Actions</li>
             <li class='@(Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "create" ? "active" : "")'><a href="/asset/create"><i class="icon-plus"></i>Create New Asset</a></li>
             <li class='@(Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "scan" ? "active" : "")'><a href="/asset/scan"><i class="icon-barcode"></i>Scan new item</a></li>
+            <li class='@(Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "itemreview" ? "active" : "")'><a href="/asset/ItemReview"><i class="icon-wrench"></i>Review Damaged Items</a></li>
             <li class="divider"></li>
             <li>
                 @using (Html.BeginForm(MVC.Asset.Index(), FormMethod.Post, new { @class = "form-search" }))
@@ -30,7 +31,7 @@
             {
                 <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["categoryId"], item.Id)><a href="/asset?categoryId=@item.Id">@item.Name</a></li>
             }
-            
+
         </ul>
     </div>
 </div>

@@ -27,6 +27,12 @@ namespace Mavo.Assets.Controllers
             ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
             base.OnActionExecuting(filterContext);
         }
+
+        public ActionResult ItemReview()
+        {
+            return View(db.AssetItems.Include("Asset").Where(x=>x.Condition == AssetCondition.Damaged).ToList());
+        }
+
         public virtual ActionResult AssetPickerForTemplate(int? id = null)
         {
             if (!id.HasValue)

@@ -19,7 +19,7 @@ namespace Mavo.Assets.Controllers
             Context = context;
         }
         [HttpPost]
-        public virtual JsonResult StartReturning(int id)
+        public virtual JsonResult StartPicking(int id)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.PickStarted = DateTime.Now;
