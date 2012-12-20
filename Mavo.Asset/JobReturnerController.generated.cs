@@ -43,6 +43,12 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Cancel()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Cancel);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.JsonResult StartReturning()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartReturning);
@@ -75,6 +81,7 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
+            public readonly string Cancel = "Cancel";
             public readonly string StartReturning = "StartReturning";
             public readonly string Index = "Index";
             public readonly string Success = "Success";
@@ -83,12 +90,21 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
+            public const string Cancel = "Cancel";
             public const string StartReturning = "StartReturning";
             public const string Index = "Index";
             public const string Success = "Success";
         }
 
 
+        static readonly ActionParamsClass_Cancel s_params_Cancel = new ActionParamsClass_Cancel();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Cancel CancelParams { get { return s_params_Cancel; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Cancel
+        {
+            public readonly string id = "id";
+        }
         static readonly ActionParamsClass_StartReturning s_params_StartReturning = new ActionParamsClass_StartReturning();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_StartReturning StartReturningParams { get { return s_params_StartReturning; } }
@@ -138,6 +154,13 @@ namespace Mavo.Assets.Controllers
     public class T4MVC_JobReturnerController : Mavo.Assets.Controllers.JobReturnerController
     {
         public T4MVC_JobReturnerController() : base(Dummy.Instance) { }
+
+        public override System.Web.Mvc.ActionResult Cancel(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Cancel);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.JsonResult StartReturning(int id)
         {
