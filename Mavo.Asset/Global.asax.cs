@@ -35,7 +35,9 @@ namespace Mavo.Assets
             AutoMapper.Mapper.CreateMap<Job, EditJobPostModel>()
                 .ForMember(dest => dest.ProjectManagerId, opt => opt.MapFrom(src => src.ProjectManager.Id))
                 .ForMember(dest => dest.ForemanId, opt => opt.MapFrom(src => src.Foreman.Id))
-                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id));
+                .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id))
+                .ForMember(dest => dest.ReturnedByStr, opt => opt.MapFrom(src => src.ReturnedBy.FullName))
+                .ForMember(dest => dest.PickedUpByStr, opt => opt.MapFrom(src => src.PickedBy.FullName));
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
 
             //HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
