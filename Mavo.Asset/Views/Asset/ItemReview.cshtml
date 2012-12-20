@@ -30,11 +30,30 @@
                     <td>@Html.DisplayFor(x => item.PurchaseDate)</td>
                     <td>@Html.DisplayFor(x => item.WarrantyExpiration)</td>
                     <td>
-                        <a class="btn btn-success" href="#"><i class="icon-wrench"></i>&nbsp;Repaired</a>
+                        <a class="btn btn-success" data-toggle="modal" href="#repair@(item.Id)"><i class="icon-wrench icon-white"></i>&nbsp;Repaired</a>
                         &nbsp;
                         <a class="btn btn-danger" data-toggle="modal" href="#retire@(item.Id)"><i class="icon-trash icon-white"></i>&nbsp;Retire</a>
 
-                        <!-- Modal -->
+                        <!-- repair Modal -->
+                        <div id="repair@(item.Id)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="repair@(item.Id)label"  aria-hidden="true">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h3 id="repair@(item.Id)label">Are you sure?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>You are trying to repair <strong>@item.Asset.Name</strong> with the barcode <strong>@item.Barcode</strong>.</p>
+                                <p>Are you sure?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                                @using (Html.BeginForm(MVC.Asset.RepairItem(item.Id), FormMethod.Post, new { style = "display:inline;margin:0;" }))
+                                {
+                                    <button class="btn btn-success"><i class="icon-wrench icon-white"></i>&nbsp;Repair</button>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Retire Modal -->
                         <div id="retire@(item.Id)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="retire@(item.Id)label"  aria-hidden="true">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -46,9 +65,13 @@
                             </div>
                             <div class="modal-footer">
                                 <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                                <button class="btn btn-danger"><i class="icon-trash icon-white"></i>&nbsp;Retire</button>
+                                @using (Html.BeginForm(MVC.Asset.RetireItem(item.Id), FormMethod.Post, new { style = "display:inline;margin:0;" }))
+                                {
+                                    <button type="submit" class="btn btn-danger"><i class="icon-trash icon-white"></i>&nbsp;Retire</button>
+                                }
                             </div>
                         </div>
+
                     </td>
                 </tr>
             }

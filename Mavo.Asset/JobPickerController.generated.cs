@@ -43,9 +43,9 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.JsonResult StartReturning()
+        public System.Web.Mvc.JsonResult StartPicking()
         {
-            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartReturning);
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartPicking);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -75,7 +75,7 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
-            public readonly string StartReturning = "StartReturning";
+            public readonly string StartPicking = "StartPicking";
             public readonly string Index = "Index";
             public readonly string Success = "Success";
         }
@@ -83,17 +83,17 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
-            public const string StartReturning = "StartReturning";
+            public const string StartPicking = "StartPicking";
             public const string Index = "Index";
             public const string Success = "Success";
         }
 
 
-        static readonly ActionParamsClass_StartReturning s_params_StartReturning = new ActionParamsClass_StartReturning();
+        static readonly ActionParamsClass_StartPicking s_params_StartPicking = new ActionParamsClass_StartPicking();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_StartReturning StartReturningParams { get { return s_params_StartReturning; } }
+        public ActionParamsClass_StartPicking StartPickingParams { get { return s_params_StartPicking; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_StartReturning
+        public class ActionParamsClass_StartPicking
         {
             public readonly string id = "id";
         }
@@ -139,9 +139,9 @@ namespace Mavo.Assets.Controllers
     {
         public T4MVC_JobPickerController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.JsonResult StartReturning(int id)
+        public override System.Web.Mvc.JsonResult StartPicking(int id)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartReturning);
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartPicking);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }

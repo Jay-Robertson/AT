@@ -27,8 +27,23 @@ namespace Mavo.Assets.Controllers
             ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
             base.OnActionExecuting(filterContext);
         }
-
-        public ActionResult ItemReview()
+        [HttpPost]
+        public virtual ActionResult RetireItem(int id)
+        {
+            var item = db.AssetItems.FirstOrDefault(x=>x.Id == id);
+            item.Condition = AssetCondition.Retired;
+            db.SaveChanges();
+            return RedirectToAction(MVC.Asset.ItemReview());
+        }
+        [HttpPost]
+        public virtual ActionResult RepairItem(int id)
+        {
+            var item = db.AssetItems.FirstOrDefault(x => x.Id == id);
+            item.Condition = AssetCondition.Good;
+            db.SaveChanges();
+            return RedirectToAction(MVC.Asset.ItemReview());
+        }
+        public virtual ActionResult ItemReview()
         {
             return View(db.AssetItems.Include("Asset").Where(x=>x.Condition == AssetCondition.Damaged).ToList());
         }

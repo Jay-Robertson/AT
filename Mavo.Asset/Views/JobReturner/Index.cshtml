@@ -95,6 +95,7 @@
                     <th>Item</th>
                     <th>Name</th>
                     <th>Status</th>
+                    <th>Damaged?</th>
                     <th></th>
                 </tr>
             </thead>
@@ -107,6 +108,9 @@
                         <td>@serializedAssets[i].Id</td>
                         <td>@serializedAssets[i].Name</td>
                         <td>@serializedAssets[i].Status</td>
+                        <th>
+                            <input type="checkbox" class="input" name="serializedAssets[@index].IsDamaged" value="@serializedAssets[i].Barcode"/>
+                        </th>
                         <td>
                             <div class="input-prepend input-append">
                                 <span class="add-on"><i class="icon-barcode"></i></span>

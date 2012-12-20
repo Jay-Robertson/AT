@@ -43,6 +43,18 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult RetireItem()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RetireItem);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult RepairItem()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RepairItem);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.JsonResult IsAssetItemAvailable()
         {
             return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsAssetItemAvailable);
@@ -105,6 +117,9 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
+            public readonly string RetireItem = "RetireItem";
+            public readonly string RepairItem = "RepairItem";
+            public readonly string ItemReview = "ItemReview";
             public readonly string AssetPickerForTemplate = "AssetPickerForTemplate";
             public readonly string IsAssetItemAvailable = "IsAssetItemAvailable";
             public readonly string AssetPickerForJob = "AssetPickerForJob";
@@ -124,6 +139,9 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
+            public const string RetireItem = "RetireItem";
+            public const string RepairItem = "RepairItem";
+            public const string ItemReview = "ItemReview";
             public const string AssetPickerForTemplate = "AssetPickerForTemplate";
             public const string IsAssetItemAvailable = "IsAssetItemAvailable";
             public const string AssetPickerForJob = "AssetPickerForJob";
@@ -141,6 +159,22 @@ namespace Mavo.Assets.Controllers
         }
 
 
+        static readonly ActionParamsClass_RetireItem s_params_RetireItem = new ActionParamsClass_RetireItem();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_RetireItem RetireItemParams { get { return s_params_RetireItem; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_RetireItem
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_RepairItem s_params_RepairItem = new ActionParamsClass_RepairItem();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_RepairItem RepairItemParams { get { return s_params_RepairItem; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_RepairItem
+        {
+            public readonly string id = "id";
+        }
         static readonly ActionParamsClass_AssetPickerForTemplate s_params_AssetPickerForTemplate = new ActionParamsClass_AssetPickerForTemplate();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_AssetPickerForTemplate AssetPickerForTemplateParams { get { return s_params_AssetPickerForTemplate; } }
@@ -263,6 +297,7 @@ namespace Mavo.Assets.Controllers
                 public readonly string _SearchResult = "_SearchResult";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
+                public readonly string ItemReview = "ItemReview";
                 public readonly string Scan = "Scan";
             }
             public readonly string _AssetPicker = "~/Views/Asset/_AssetPicker.cshtml";
@@ -272,6 +307,7 @@ namespace Mavo.Assets.Controllers
             public readonly string _SearchResult = "~/Views/Asset/_SearchResult.cshtml";
             public readonly string Edit = "~/Views/Asset/Edit.cshtml";
             public readonly string Index = "~/Views/Asset/Index.cshtml";
+            public readonly string ItemReview = "~/Views/Asset/ItemReview.cshtml";
             public readonly string Scan = "~/Views/Asset/Scan.cshtml";
             static readonly _DisplayTemplatesClass s_DisplayTemplates = new _DisplayTemplatesClass();
             public _DisplayTemplatesClass DisplayTemplates { get { return s_DisplayTemplates; } }
@@ -291,6 +327,26 @@ namespace Mavo.Assets.Controllers
     public class T4MVC_AssetController : Mavo.Assets.Controllers.AssetController
     {
         public T4MVC_AssetController() : base(Dummy.Instance) { }
+
+        public override System.Web.Mvc.ActionResult RetireItem(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RetireItem);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult RepairItem(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.RepairItem);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ItemReview()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ItemReview);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.ActionResult AssetPickerForTemplate(int? id)
         {
