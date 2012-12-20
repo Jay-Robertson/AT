@@ -7,11 +7,36 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Script.Serialization;
+using System.Text;
 
 namespace Mavo.Assets
 {
     public static class HtmlExtensions
     {
+        private enum TimeSpanElement
+        {
+            Millisecond,
+            Second,
+            Minute,
+            Hour,
+            Day
+        }
+
+        public static string ToRelative(this TimeSpan timeSpan, int maxNrOfElements = 5)
+        {
+            maxNrOfElements = Math.Max(Math.Min(maxNrOfElements, 5), 1);
+            var parts = new[]
+                        {
+                            Tuple.Create(TimeSpanElement.Day, timeSpan.Days),
+                            Tuple.Create(TimeSpanElement.Hour, timeSpan.Hours),
+                            Tuple.Create(TimeSpanElement.Minute, timeSpan.Minutes),
+                            Tuple.Create(TimeSpanElement.Second, timeSpan.Seconds)
+                        }
+                                        .SkipWhile(i => i.Item2 <= 0)
+                                        .Take(maxNrOfElements);
+
+            return string.Join(", ", parts.Select(p => string.Format("{0} {1}{2}", p.Item2, p.Item1, p.Item2 > 1 ? "s" : string.Empty)));
+        }
         public static string GetActive(string request, object target)
         {
             if (!String.IsNullOrEmpty(request) && request == target.ToString())
@@ -91,7 +116,7 @@ namespace Mavo.Assets
             List<SelectListItem> items = new List<SelectListItem>();
             if (!String.IsNullOrEmpty(firstItem))
             {
-                items.Add(new SelectListItem() {  Text = firstItem });
+                items.Add(new SelectListItem() { Text = firstItem });
             }
             foreach (var item in Enum.GetValues(enumType))
             {

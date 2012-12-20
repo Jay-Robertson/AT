@@ -1,22 +1,10 @@
 ﻿@model Mavo.Assets.Models.ViewModel.JobReportViewModel
+@{
+    Html.RenderPartial("_ReadyJob", Model.ReadyToPick, new ViewDataDictionary { { "title", "Ready to return today" } });
+    Html.RenderPartial("_ReadyJob", Model.ReadyToReturn, new ViewDataDictionary { { "title", "Ready to return today" } });
+    Html.RenderPartial("_ReadyJob", Model.BeingPicked, new ViewDataDictionary { { "title", "Jobs being picked right now" } });
+    Html.RenderPartial("_ReadyJob", Model.BeingReturned, new ViewDataDictionary { { "title", "Jobs being returned right now" } });
+    Html.RenderPartial("_ReadyJob", Model.AlreadyPicked, new ViewDataDictionary { { "title", "Jobs we already picked today" } });
+    Html.RenderPartial("_ReadyJob", Model.AlreadyReturned, new ViewDataDictionary { { "title", "Jobs we already returned today" } });
+}
 
-<div class="row-fluid">
-    <div class="span6">
-        <h2>Ready to pick today</h2>
-        @{Html.RenderPartial("_ReadyJob", Model.ReadyToPick);}
-    </div>
-    <div class="span6">
-        <h2>Ready to return today</h2>
-        @{Html.RenderPartial("_ReadyJob", Model.ReadyToReturn);}
-    </div>
-</div>
-<div class="row-fluid">
-    <div class="span6">
-        <h2>Jobs we already picked today</h2>
-        @{Html.RenderPartial("_ReadyJob", Model.PickedToday);}
-    </div>
-    <div class="span6">
-        <h2>Jobs we already returned today</h2>
-        @{Html.RenderPartial("_ReadyJob", Model.ReturnedToday);}
-    </div>
-</div>

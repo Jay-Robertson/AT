@@ -1,34 +1,57 @@
-﻿@model IList<Mavo.Assets.Models.Job>
-@if (Model != null && Model.Any())
+﻿@using Mavo.Assets
+@model IList<Mavo.Assets.Models.Job>
+@if (Model.Any())
 {
-    <table class="table table-condensed table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Job</th>
-                <th>Pick Date</th>
-                <th>Job #</th>
-                <th>Customer</th>
-                <th>Employee</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var job in Model)
-            {
+    <div class="row-fluid well">
+        <h3>@ViewData["title"]</h3>
+        <table class="table table-condensed table-striped table-hover">
+            <thead>
                 <tr>
-                    <td>@job.Name</td>
-                    <td>@Html.DisplayFor(x=>job.PickupTime)</td>
-                    <td>@job.JobNumber</td>
-                    <td>@(job.Customer != null ? job.Customer.Name : "")</td>
-                    <td>@(job.ProjectManager != null ? job.ProjectManager.FullName : "")</td>
+                    <th>Job</th>
+                    <th>Pick Date</th>
+                    @if (Model.Any(x => x.PickStarted.HasValue))
+                    {
+                        <th>Pick Started</th>
+                    }
+                    @if (Model.Any(x => x.PickCompleted.HasValue))
+                    {
+                        <th>Pick Completed</th>
+                    }
+                    @if (Model.Any(x => x.PickCompleted.HasValue && x.PickStarted.HasValue))
+                    {
+                        <th>Total Picking Time</th>
+                    }
+                    <th>Job #</th>
+                    <th>Customer</th>
+                    <th>Employee</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var job in Model)
+                {
+                    <tr>
+                        <td>@job.Name</td>
+                        <td>@Html.DisplayFor(x => job.PickupTime)</td>
+                        @if (Model.Any(x => x.PickStarted.HasValue))
+                        {
+                            <td>@Html.DisplayFor(x => job.PickStarted)</td>
+                        }
+                        @if (Model.Any(x => x.PickCompleted.HasValue))
+                        {
+                            <td>@Html.DisplayFor(x => job.PickCompleted)</td>
+                        }
+                        @if (Model.Any(x => x.PickCompleted.HasValue && x.PickStarted.HasValue))
+                        {
+                            <td>@((job.PickCompleted.Value - job.PickStarted.Value).ToRelative())</td>
+                        }
+                        <td>@job.JobNumber</td>
+                        <td>@(job.Customer != null ? job.Customer.Name : "")</td>
+                        <td>@(job.ProjectManager != null ? job.ProjectManager.FullName : "")</td>
+                    </tr>
+                }
 
-        </tbody>
-    </table>
-}
-else
-{
-    <div class="well">
-        <h3>Nothing here</h3>
-    </div>   
+            </tbody>
+        </table>
+
+    </div>
 }

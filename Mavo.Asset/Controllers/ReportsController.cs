@@ -26,8 +26,10 @@ namespace Mavo.Assets.Controllers
                 {
                     ReadyToPick = Context.Jobs.Where(x => x.Status == JobStatus.ReadyToPick).ToList().Where(x => x.PickupTime.Date == DateTime.Today).ToList(),
                     ReadyToReturn = startedJobs.Where(x => x.EstimatedCompletionDate.Date == DateTime.Today).ToList(),
-                    PickedToday = Context.Jobs.Where(x => x.PickupTime >= DateTime.Today).ToList(),
-                    ReturnedToday = Context.Jobs.Where(x => x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList(),
+                    AlreadyPicked = startedJobs.Where(x => x.PickupTime >= DateTime.Today).ToList(),
+                    AlreadyReturned = Context.Jobs.Where(x => x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList(),
+                    BeingPicked = Context.Jobs.Where(x => x.Status == JobStatus.BeingPicked).OrderBy(x => x.PickStarted).ToList(),
+                    BeingReturned = Context.Jobs.Where(x=>x.Status == JobStatus.BeingReturned).OrderBy(x=>x.ReturnStarted).ToList()
                 };
             return View(result);
         }

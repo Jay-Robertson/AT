@@ -177,7 +177,8 @@ namespace Mavo.Assets.Models
         Started,
         Completed,
         ReadyToPick,
-        BeingPicked
+        BeingPicked,
+        BeingReturned
     }
 
     [Table("Jobs")]

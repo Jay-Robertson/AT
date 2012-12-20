@@ -23,6 +23,7 @@ namespace Mavo.Assets.Controllers
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.PickStarted = DateTime.Now;
+            job.Status = JobStatus.BeingPicked;
             Context.SaveChanges();
             return Json(job.PickStarted.ToString());
         }

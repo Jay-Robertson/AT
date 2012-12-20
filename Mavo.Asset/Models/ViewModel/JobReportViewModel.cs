@@ -15,14 +15,14 @@ namespace Mavo.Assets.Models.ViewModel
             ReadyToReturn = new List<Job>();
             BeingPicked = new List<Job>();
             BeingReturned = new List<Job>();
-            PickedToday = new List<Job>();
-            ReturnedToday = new List<Job>();
+            AlreadyPicked = new List<Job>();
+            AlreadyReturned = new List<Job>();
         }
         public List<Job> ReadyToPick { get; set; }
         public List<Job> ReadyToReturn { get; set; }
         public List<Job> BeingPicked { get; set; }
         public List<Job> BeingReturned { get; set; }
-        public List<Job> PickedToday { get; set; }
-        public List<Job> ReturnedToday { get; set; }
+        public List<Job> AlreadyPicked { get; set; }
+        public List<Job> AlreadyReturned { get; set; }
     }
 }
