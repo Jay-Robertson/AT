@@ -16,7 +16,7 @@
             $('#startModal').modal({
                 keyboard: false,
                 backdrop: 'static',
-                show: true
+                show: false
             });
             $('#btnStartPicking').click(function () {
                 $.post('/jobpicker/startpicking/@Model.JobId', function (timeStarted) {
