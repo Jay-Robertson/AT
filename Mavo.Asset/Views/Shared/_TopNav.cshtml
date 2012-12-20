@@ -12,98 +12,103 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="/">Mavo Asset Management</a>
-            <div class="nav-collapse collapse">
-                <p class="navbar-text pull-right">
-                    Logged in as <a href="#" class="navbar-link">User</a>
-                </p>
-                <ul class="nav">
-                    <li class="dropdown @(controller == "job" ? "active" : "")">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Jobs <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/job"><i class="icon-list"></i>List</a></li>
-                            <li class="dropdown-submenu"><a href="/job/create">
-                                <i class="icon-plus"></i>Create</a>
+            @if (Request.IsAuthenticated)
+            {
+                <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                        Logged in as <a href="#" class="navbar-link">@User.Identity.Name</a> | 
+                    <a href="/account/LogOff">Log Off</a>
+                    </p>
+                    <ul class="nav">
+                        <li class="dropdown @(controller == "job" ? "active" : "")">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Jobs <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/job"><i class="icon-list"></i>List</a></li>
+                                <li class="dropdown-submenu"><a href="/job/create">
+                                    <i class="icon-plus"></i>Create</a>
+                                    <ul class="dropdown-menu">
+                                        @foreach (var template in templates)
+                                        {
+                                            <li><a href="/job/create?templateId=@template.Id">@template.Name</a></li>
+                                        }
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="dropdown @(controller == "asset" ? "active" : "")">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assets <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/asset"><i class="icon-list"></i>List</a></li>
+                                <li><a href="/asset/create"><i class="icon-plus"></i>Create</a></li>
+                                <li><a href="/asset/scan"><i class="icon-barcode"></i>Scan new item</a></li>
+                                <li><a href="/asset/ItemReview"><i class="icon-wrench"></i>Review Damaged Items</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="dropdown @(controller == "template" ? "active" : "")">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Templates <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/template"><i class="icon-list"></i>List</a></li>
+                                <li><a href="/template/create"><i class="icon-plus"></i>Create</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyToPickForNav).Any())
+                    {
+                        <ul class="nav">
+                            <li class="dropdown @(controller == "jobpicker" ? "active" : "")">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pick a Job <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    @foreach (var template in templates)
+                                    @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
                                     {
-                                        <li><a href="/job/create?templateId=@template.Id">@template.Name</a></li>
+                                        <li class="nav-header">@item.Key.ToShortDateString()</li>
+                                        foreach (Mavo.Assets.Models.Job job in item.OrderBy(x => x.PickupTime))
+                                        {
+                                        <li><a href="/jobpicker/index/@job.Id">
+                                            <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
+                                            @job.Name
+                                        </a>
+                                        </li>
+                                        }
                                     }
                                 </ul>
                             </li>
-
                         </ul>
-                    </li>
-                </ul>
-                <ul class="nav">
-                    <li class="dropdown @(controller == "asset" ? "active" : "")">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assets <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/asset"><i class="icon-list"></i>List</a></li>
-                            <li><a href="/asset/create"><i class="icon-plus"></i>Create</a></li>
-                            <li><a href="/asset/scan"><i class="icon-barcode"></i>Scan new item</a></li>
-                            <li><a href="/asset/ItemReview"><i class="icon-wrench"></i>Review Damaged Items</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav">
-                    <li class="dropdown @(controller == "template" ? "active" : "")">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Templates <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/template"><i class="icon-list"></i>List</a></li>
-                            <li><a href="/template/create"><i class="icon-plus"></i>Create</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyToPickForNav).Any())
-                {
-                    <ul class="nav">
-                        <li class="dropdown @(controller == "jobpicker" ? "active" : "")">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pick a Job <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
-                                {
-                                    <li class="nav-header">@item.Key.ToShortDateString()</li>
-                                    foreach (Mavo.Assets.Models.Job job in item.OrderBy(x => x.PickupTime))
+                    }
+                    @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyForReturn).Any())
+                    {
+                        <ul class="nav">
+                            <li class="dropdown @(controller == "returnjob" ? "active" : "")">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Return a Job <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyForReturn)
                                     {
-                                    <li><a href="/jobpicker/index/@job.Id">
-                                        <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
-                                        @job.Name
-                                    </a>
-                                    </li>
+                                        <li class="nav-header">@item.Key.ToShortDateString()</li>
+                                        foreach (Mavo.Assets.Models.Job job in item)
+                                        {
+                                        <li><a href="/jobreturner/index/@job.Id">@job.Name</a></li>
+                                        }
                                     }
-                                }
+                                </ul>
+                            </li>
+                        </ul>
+                    }
+                    <ul class="nav">
+                        <li class="dropdown @(controller == "reports" ? "active" : "")">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/reports/latejobs"><i class="icon-calendar"></i>Late Jobs</a></li>
+                                <li><a href="/reports/jobs">Jobs</a></li>
                             </ul>
                         </li>
                     </ul>
-                }
-                @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyForReturn).Any())
-                {
-                    <ul class="nav">
-                        <li class="dropdown @(controller == "returnjob" ? "active" : "")">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Return a Job <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyForReturn)
-                                {
-                                    <li class="nav-header">@item.Key.ToShortDateString()</li>
-                                    foreach (Mavo.Assets.Models.Job job in item)
-                                    {
-                                    <li><a href="/jobreturner/index/@job.Id">@job.Name</a></li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-                }
-                <ul class="nav">
-                    <li class="dropdown @(controller == "reports" ? "active" : "")">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/reports/latejobs"><i class="icon-calendar"></i>Late Jobs</a></li>
-                            <li><a href="/reports/jobs">Jobs</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+                </div>
+            }
+           
         </div>
     </div>
 </div>

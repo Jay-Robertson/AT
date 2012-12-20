@@ -45,8 +45,6 @@ namespace Mavo.Assets.Controllers
         //
         // POST: /Account/LogOff
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public virtual ActionResult LogOff()
         {
             WebSecurity.Logout();
