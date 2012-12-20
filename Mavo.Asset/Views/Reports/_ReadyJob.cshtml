@@ -54,7 +54,12 @@
                         }
                         @if (Model.Any(x => x.PickCompleted.HasValue && x.PickStarted.HasValue))
                         {
-                            <td>@((job.PickCompleted.Value - job.PickStarted.Value).ToRelative())</td>
+                            <td>
+                                @if (job.PickCompleted.HasValue && job.PickStarted.HasValue)
+                                {
+                                    @((job.PickCompleted.Value - job.PickStarted.Value).ToRelative())
+                                }
+                            </td>
                         }
 
                         @if (Model.Any(x => x.ReturnStarted.HasValue))
@@ -68,9 +73,9 @@
                         @if (Model.Any(x => x.ReturnStarted.HasValue && x.ReturnCompleted.HasValue))
                         {
                             <td>
-                                @if(job.ReturnCompleted.HasValue && job.ReturnStarted.HasValue)
+                                @if (job.ReturnCompleted.HasValue && job.ReturnStarted.HasValue)
                                 {
-                                @((job.ReturnCompleted.Value - job.ReturnStarted.Value).ToRelative())
+                                    @((job.ReturnCompleted.Value - job.ReturnStarted.Value).ToRelative())
                                 }
                             </td>
                         }

@@ -43,6 +43,12 @@
     <p><strong>Job is being picked!</strong> This job is <a href="/jobpicker/index/@Model.Id">currently being picked</a> by <strong>@Model.PickedUpBy</strong>.  They started picking it up at <strong>@Model.PickStarted</strong></p>
 </div>
 }
+@if(Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
+{
+<div class="alert alert-info">
+    <p><strong>Job is being returned!</strong> This job is <a href="/jobreturner/index/@Model.Id">currently being returned</a> by <strong>@Model.ReturnedBy</strong>.  They started returning it at <strong>@Model.ReturnStarted</strong></p>
+</div>
+}
 @if (null != Model)
 {
     <ul id="job-tabs" class="nav nav-tabs">

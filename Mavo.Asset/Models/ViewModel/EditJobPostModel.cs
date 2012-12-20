@@ -41,5 +41,9 @@ namespace Mavo.Assets.Models.ViewModel
         public string PickedUpBy { get { return "so and so"; } }
 
         public DateTime? PickStarted { get; set; }
+
+        public DateTime? ReturnStarted { get; set; }
+
+        public string ReturnedBy { get { return "so and so"; } }
     }
 }

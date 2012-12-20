@@ -31,7 +31,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult RetireItem(int id)
         {
-            var item = db.AssetItems.FirstOrDefault(x=>x.Id == id);
+            var item = db.AssetItems.FirstOrDefault(x => x.Id == id);
             item.Condition = AssetCondition.Retired;
             db.SaveChanges();
             return RedirectToAction(MVC.Asset.ItemReview());
@@ -46,7 +46,7 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult ItemReview()
         {
-            return View(db.AssetItems.Include("Asset").Where(x=>x.Condition == AssetCondition.Damaged).ToList());
+            return View(db.AssetItems.Include("Asset").Where(x => x.Condition == AssetCondition.Damaged).ToList());
         }
 
         public virtual ActionResult AssetPickerForTemplate(int? id = null)
@@ -71,7 +71,10 @@ namespace Mavo.Assets.Controllers
                 errors.Add("Item is out on a job");
             else if (!isInGoodCondition)
                 errors.Add("Item is retired/damaged");
-            return Json(string.Join(", ", errors), JsonRequestBehavior.AllowGet);
+            if (errors.Count == 0)
+                return Json(true);
+            else
+                return Json(string.Join(", ", errors), JsonRequestBehavior.AllowGet);
         }
         public virtual ActionResult AssetPickerForJob(int id)
         {
@@ -182,7 +185,7 @@ namespace Mavo.Assets.Controllers
 
             if (search.Kind.HasValue)
                 query = query.Where(x => x.Kind == search.Kind);
-          
+
             if (search.CategoryId.HasValue)
                 query = query.Where(x => x.Category.Id == search.CategoryId);
             if (!String.IsNullOrEmpty(search.SearchString))
