@@ -129,7 +129,7 @@
                     <th>Job Number</th>
                     <th>Pick Started</th>
                     <th>Pick Ended</th>
-                    <th>Pick Completed</th>
+                    <th>Elapsed</th>
                     <th>Picked By</th>
                 </tr>
             </thead>
@@ -155,8 +155,9 @@
                 <tr>
                     <th>Job</th>
                     <th>Job Number</th>
-                    <th>Pick Started</th>
-                    <th>Pick Elapsed</th>
+                    <th>Return Started</th>
+                    <th>Return Completed</th>
+                    <th>Elapsed</th>
                     <th>Picked By</th>
                 </tr>
             </thead>
@@ -170,7 +171,7 @@
                             @job.ReturnStarted.Value.ToShortTimeString()
                         </td>
                         <td>@job.ReturnCompleted.Value.ToShortTimeString()</td>
-                        <td>@((job.ReturnCompleted.Value - job.ReturnCompleted.Value).ToRelative())</td>
+                        <td>@((job.ReturnCompleted.Value - job.ReturnStarted.Value).ToRelative())</td>
                         <td>@(job.ReturnedBy != null ? job.ReturnedBy.FullName : "so and so")</td>
                     </tr>
                 }

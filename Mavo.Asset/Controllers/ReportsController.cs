@@ -20,17 +20,41 @@ namespace Mavo.Assets.Controllers
         {
             return View(Context.Jobs.Where(x => x.EstimatedCompletionDate < DateTime.Today && x.Status == JobStatus.Started).ToList());
         }
-        public virtual ActionResult Jobs()
+        private List<Job> GetReadyToPick()
+        {
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.Status == JobStatus.ReadyToPick).ToList().Where(x => x.PickupTime.Date == DateTime.Today).ToList();
+        }
+        private List<Job> GetReadyToReturn()
         {
             var tomorrow = DateTime.Today.AddDays(1).AddSeconds(-1);
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.Status == JobStatus.Started && x.EstimatedCompletionDate >= DateTime.Today && x.EstimatedCompletionDate < tomorrow).ToList();
+        }
+        private List<Job> GetAlreadyPicked()
+        {
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.PickCompleted.HasValue && x.PickCompleted >= DateTime.Today).ToList();
+        }
+        private List<Job> GetAlreadyReturned()
+        {
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList();
+        }
+        private List<Job> GetBeingPicked()
+        {
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.Status == JobStatus.BeingPicked).OrderBy(x => x.PickStarted).ToList();
+        }
+        private List<Job> GetBeingReturned()
+        {
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.Status == JobStatus.BeingReturned).OrderBy(x => x.ReturnStarted).ToList();
+        }
+        public virtual ActionResult Jobs()
+        {
             JobReportViewModel result = new JobReportViewModel()
                 {
-                    ReadyToPick = Context.Jobs.Include("ProjectManager").Where(x => x.Status == JobStatus.ReadyToPick).ToList().Where(x => x.PickupTime.Date == DateTime.Today).ToList(),
-                    ReadyToReturn = Context.Jobs.Where(x => x.Status == JobStatus.Started && x.EstimatedCompletionDate >= DateTime.Today && x.EstimatedCompletionDate < tomorrow).ToList(),
-                    AlreadyPicked = Context.Jobs.Where(x => x.PickCompleted.HasValue && x.PickCompleted >= DateTime.Today).ToList(),
-                    AlreadyReturned = Context.Jobs.Where(x => x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList(),
-                    BeingPicked = Context.Jobs.Where(x => x.Status == JobStatus.BeingPicked).OrderBy(x => x.PickStarted).ToList(),
-                    BeingReturned = Context.Jobs.Where(x=>x.Status == JobStatus.BeingReturned).OrderBy(x=>x.ReturnStarted).ToList()
+                    ReadyToPick = GetReadyToPick(),
+                    ReadyToReturn = GetReadyToReturn(),
+                    AlreadyPicked = GetAlreadyPicked(),
+                    AlreadyReturned = GetAlreadyReturned(),
+                    BeingPicked = GetBeingPicked(),
+                    BeingReturned = GetBeingReturned()
                 };
             return View(result);
         }

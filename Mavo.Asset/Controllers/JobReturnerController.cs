@@ -23,6 +23,7 @@ namespace Mavo.Assets.Controllers
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.ReturnStarted = null;
             job.Status = JobStatus.Started;
+            job.ReturnedBy = null;
             Context.SaveChanges();
             return PartialView("~/Views/Shared/DisplayTemplates/JobStatus.cshtml", job.Status);
         }
@@ -32,6 +33,7 @@ namespace Mavo.Assets.Controllers
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.ReturnStarted = DateTime.Now;
             job.Status = JobStatus.BeingReturned;
+            job.ReturnedBy = Context.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
             Context.SaveChanges();
             return Json(job.ReturnStarted.ToString());
         }
