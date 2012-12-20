@@ -19,6 +19,15 @@ namespace Mavo.Assets.Controllers
             Context = context;
         }
         [HttpPost]
+        public ActionResult Cancel(int id)
+        {
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            job.PickStarted = null;
+            job.Status = JobStatus.ReadyToPick;
+            Context.SaveChanges();
+            return PartialView("~/Views/Shared/DisplayTemplates/JobStatus.cshtml", job.Status);
+        }
+        [HttpPost]
         public virtual JsonResult StartPicking(int id)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);

@@ -14,12 +14,39 @@
 {
     @{Html.RenderPartial(MVC.Job.Views._JobSidebar, new Mavo.Assets.Models.ViewModel.SearchResult());}
 }
+@section scripts
+{
 
-<script type="text/javascript">
-    jQuery(function ($) {
-        $('#job-tabs').tab();
-    });
-</script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('#job-tabs').tab();
+        });
+        @if (Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
+        {
+            <text>
+        $('#btnCancelPick').click(function ()
+        {
+            $.post('/jobpicker/cancel/@Model.Id', function (status) {
+                $('.alert-info').hide();
+                $('#status').html(status);
+            });
+        });
+            </text>
+        }
+        @if (Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
+        {
+            <text>
+        $('#btnCancelReturn').click(function () {
+            $.post('/jobreturner/cancel/@Model.Id', function (status) {
+                $('.alert-info').hide();
+                $('#status').html(status);
+            });
+        });
+            </text>
+        }
+    </script>
+
+}
 
 @if (null != Model)
 {
@@ -37,17 +64,21 @@
     }
 
 </h1>
-@if(Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
+@if (Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
 {
-<div class="alert alert-info">
-    <p><strong>Job is being picked!</strong> This job is <a href="/jobpicker/index/@Model.Id">currently being picked</a> by <strong>@Model.PickedUpBy</strong>.  They started picking it up at <strong>@Model.PickStarted</strong></p>
-</div>
+    <div class="alert alert-info">
+        <p>
+            <strong>Job is being picked!</strong> This job is <a href="/jobpicker/index/@Model.Id">currently being picked</a> by <strong>@Model.PickedUpBy</strong>.  They started picking it up at <strong>@Model.PickStarted</strong>
+        </p>
+        <button type="button" id="btnCancelPick" class="btn btn-danger">Cancel</button>
+    </div>
 }
-@if(Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
+@if (Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
 {
-<div class="alert alert-info">
-    <p><strong>Job is being returned!</strong> This job is <a href="/jobreturner/index/@Model.Id">currently being returned</a> by <strong>@Model.ReturnedBy</strong>.  They started returning it at <strong>@Model.ReturnStarted</strong></p>
-</div>
+    <div class="alert alert-info">
+        <p><strong>Job is being returned!</strong> This job is <a href="/jobreturner/index/@Model.Id">currently being returned</a> by <strong>@Model.ReturnedBy</strong>.  They started returning it at <strong>@Model.ReturnStarted</strong></p>
+        <button type="button" id="btnCancelReturn" class="btn btn-danger">Cancel</button>
+    </div>
 }
 @if (null != Model)
 {
@@ -127,7 +158,7 @@
                         {
                             <div class="control-group">
                                 @Html.LabelFor(x => x.Status, new { @class = "control-label" })
-                                <div class="controls">
+                                <div class="controls" id="status">
                                     @Html.DisplayFor(model => model.Status)
                                 </div>
                             </div>
