@@ -21,7 +21,7 @@
         jQuery(function ($) {
             $('#job-tabs').tab();
         });
-        @if (Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
+        @if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
         {
             <text>
         $('#btnCancelPick').click(function ()
@@ -33,7 +33,7 @@
         });
             </text>
         }
-        @if (Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
+        @if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
         {
             <text>
         $('#btnCancelReturn').click(function () {
@@ -64,7 +64,7 @@
     }
 
 </h1>
-@if (Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
+@if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
 {
     <div class="alert alert-info">
         <p>
@@ -73,7 +73,7 @@
         <button type="button" id="btnCancelPick" class="btn btn-danger">Cancel</button>
     </div>
 }
-@if (Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
+@if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
 {
     <div class="alert alert-info">
         <p><strong>Job is being returned!</strong> This job is <a href="/jobreturner/index/@Model.Id">currently being returned</a> by <strong>@Model.ReturnedByStr</strong>.  They started returning it at <strong>@Model.ReturnStarted</strong></p>
