@@ -55,6 +55,11 @@ namespace Mavo.Assets.Models.ViewModel
 
         public bool NotEnoughQuantity { get; set; }
 
+        public int? AssetItemId { get; set; }
+
         public int? QuantityAvailable { get; set; }
+
+
+        public bool IsDamaged { get; set; }
     }
 }

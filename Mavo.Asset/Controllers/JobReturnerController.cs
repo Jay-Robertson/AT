@@ -40,6 +40,9 @@ namespace Mavo.Assets.Controllers
                 else if (asset.Kind == AssetKind.Serialized)
                 {
                     pickedAsset.Item.Status = InventoryStatus.In;
+                    var incomingItem = assets.FirstOrDefault(x => x.AssetItemId == pickedAsset.Item.Id);
+                    if (incomingItem.IsDamaged)
+                        pickedAsset.Item.Condition = AssetCondition.Damaged;
                 }
 
             }
@@ -53,7 +56,7 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult Index(int id)
         {
-            var result = Context.Jobs.Include("Assets").Include("Asset").Where(x => x.Id == id).Select(x =>
+            var result = Context.Jobs.Include("Assets").Include("Asset").Include("Item").Where(x => x.Id == id).Select(x =>
                 new
                 {
                     JobId = x.Id,
@@ -73,7 +76,8 @@ namespace Mavo.Assets.Controllers
                         Quantity = a.Quantity,
                         Kind = a.Asset.Kind,
                         AssetId = a.Asset.Id,
-                        Serial = a.Barcode
+                        Serial = a.Barcode,
+                        AssetItemId = (a.Item != null ? a.Item.Id : default(int))
                     })
                 }).First();
             return View(new PickAJobModel()
@@ -91,6 +95,7 @@ namespace Mavo.Assets.Controllers
                     Name = x.Name,
                     Id = x.Id,
                     AssetId = x.AssetId,
+                    AssetItemId = x.AssetItemId,
                     QuantityNeeded = x.Quantity,
                     QuantityTaken = x.Quantity,
                     Kind = x.Kind,

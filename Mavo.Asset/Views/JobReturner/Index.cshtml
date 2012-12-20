@@ -105,17 +105,19 @@
                     for (int y = 0; y < serializedAssets[i].QuantityNeeded; y++)
                     {
                     <tr>
-                        <td>@serializedAssets[i].Id</td>
+                        <td>@serializedAssets[i].AssetItemId</td>
                         <td>@serializedAssets[i].Name</td>
                         <td>@serializedAssets[i].Status</td>
                         <th>
-                            <input type="checkbox" class="input" name="serializedAssets[@index].IsDamaged" value="@serializedAssets[i].Barcode"/>
+                            @Html.CheckBox("assets[" + i.ToString() + "].IsDamaged")
                         </th>
                         <td>
                             <div class="input-prepend input-append">
                                 <span class="add-on"><i class="icon-barcode"></i></span>
-                                <input type="text" class="input" name="serializedAssets[@index].Barcode" value="@serializedAssets[i].Barcode"/>
+                                <input type="text" class="input" name="assets[@(index)].Barcode" value="@serializedAssets[i].Barcode"/>
                             </div>
+                            <input type="hidden" name="assets[@(index)].AssetId" value="@serializedAssets[i].AssetId" />
+                            <input type="hidden" name="assets[@(index)].AssetItemId" value="@serializedAssets[i].AssetItemId" />
                             <input type="hidden" name="assets[@(index)].Name" value="@serializedAssets[i].Name" />
                             <input type="hidden" name="assets[@(index)].Status" value="@serializedAssets[i].Status" />
                             <input type="hidden" name="assets[@(index)].Id" value="@serializedAssets[i].Id" />
@@ -133,6 +135,7 @@
                         <td>@unserializedAssets[i].Id</td>
                         <td>@unserializedAssets[i].Name</td>
                         <td>@unserializedAssets[i].Status</td>
+                        <td></td>
                         <td>
                             <input type="number" class="input-mini" name="assets[@i].QuantityTaken" value="@unserializedAssets[i].QuantityNeeded"/><text>/</text>
                             @unserializedAssets[i].QuantityNeeded
@@ -142,13 +145,9 @@
                             <input type="hidden" name="assets[@index].Status" value="@unserializedAssets[i].Status" />
                             <input type="hidden" name="assets[@index].Id" value="@unserializedAssets[i].Id" />
                             <input type="hidden" name="assets[@index].QuantityNeeded" value="@unserializedAssets[i].QuantityNeeded" />
-                            @if (unserializedAssets[i].NotEnoughQuantity)
-                            {
-                                <span class="label label-important">@unserializedAssets[i].QuantityAvailable in inventory</span>
-                            }
                         </td>
                     </tr>
-                            index++;
+                    index++;
                 }
             </tbody>
         </table>
