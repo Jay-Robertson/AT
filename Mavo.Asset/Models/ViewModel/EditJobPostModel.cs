@@ -37,5 +37,9 @@ namespace Mavo.Assets.Models.ViewModel
         public int? TemplateId { get; set; }
 
         public IList<Template> Templates { get; set; }
+
+        public string PickedUpBy { get { return "so and so"; } }
+
+        public DateTime? PickStarted { get; set; }
     }
 }

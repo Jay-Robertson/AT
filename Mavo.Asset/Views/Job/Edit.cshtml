@@ -37,7 +37,12 @@
     }
 
 </h1>
-
+@if(Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
+{
+<div class="alert alert-info">
+    <p><strong>Job is being picked!</strong> This job is <a href="/jobpicker/index/@Model.Id">currently being picked</a> by <strong>@Model.PickedUpBy</strong>.  They started picking it up at <strong>@Model.PickStarted</strong></p>
+</div>
+}
 @if (null != Model)
 {
     <ul id="job-tabs" class="nav nav-tabs">
@@ -112,14 +117,14 @@
                                 @Html.EditorFor(x => x.JobSiteName)
                             </div>
                         </div>
-                        @if(Model != null)
+                        @if (Model != null)
                         {
-                        <div class="control-group">
-                            @Html.LabelFor(x => x.Status, new { @class = "control-label" })
-                            <div class="controls">
-                                @Html.DisplayFor(model => model.Status)
+                            <div class="control-group">
+                                @Html.LabelFor(x => x.Status, new { @class = "control-label" })
+                                <div class="controls">
+                                    @Html.DisplayFor(model => model.Status)
+                                </div>
                             </div>
-                        </div>
                         }
                     </div>
                     <div class="well">
