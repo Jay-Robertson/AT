@@ -61,8 +61,9 @@ namespace Mavo.Assets.Controllers
         {
             string serial = assets[0].Barcode;
             bool serialExists = db.AssetItems.Any(x => x.Barcode == serial);
-            bool isInstock = db.AssetItems.Any(x => x.Barcode == serial && x.Status == InventoryStatus.In);
-            return Json(serialExists && isInstock, JsonRequestBehavior.AllowGet);
+            bool isInStock = db.AssetItems.Any(x => x.Barcode == serial && x.Status == InventoryStatus.In);
+            bool isInGoodCondition = db.AssetItems.Any(x => x.Barcode == serial && x.Condition == AssetCondition.Good);
+            return Json("error", JsonRequestBehavior.AllowGet);
         }
         public virtual ActionResult AssetPickerForJob(int id)
         {
