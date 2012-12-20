@@ -68,7 +68,7 @@
 {
     <div class="alert alert-info">
         <p>
-            <strong>Job is being picked!</strong> This job is <a href="/jobpicker/index/@Model.Id">currently being picked</a> by <strong>@Model.PickedUpBy</strong>.  They started picking it up at <strong>@Model.PickStarted</strong>
+            <strong>Job is being picked!</strong> This job is <a href="/jobpicker/index/@Model.Id">currently being picked</a> by <strong>@Model.PickedUpByStr</strong>.  They started picking it up at <strong>@Model.PickStarted</strong>
         </p>
         <button type="button" id="btnCancelPick" class="btn btn-danger">Cancel</button>
     </div>
@@ -76,7 +76,7 @@
 @if (Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
 {
     <div class="alert alert-info">
-        <p><strong>Job is being returned!</strong> This job is <a href="/jobreturner/index/@Model.Id">currently being returned</a> by <strong>@Model.ReturnedBy</strong>.  They started returning it at <strong>@Model.ReturnStarted</strong></p>
+        <p><strong>Job is being returned!</strong> This job is <a href="/jobreturner/index/@Model.Id">currently being returned</a> by <strong>@Model.ReturnedByStr</strong>.  They started returning it at <strong>@Model.ReturnStarted</strong></p>
         <button type="button" id="btnCancelReturn" class="btn btn-danger">Cancel</button>
     </div>
 }
@@ -91,6 +91,7 @@
 @using (Html.BeginForm(MVC.Job.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id)
+    @Html.HiddenFor(x => x.Status)
    
     if (Model == null)
     {

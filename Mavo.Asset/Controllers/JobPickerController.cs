@@ -19,7 +19,7 @@ namespace Mavo.Assets.Controllers
             Context = context;
         }
         [HttpPost]
-        public ActionResult Cancel(int id)
+        public virtual ActionResult Cancel(int id)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.PickStarted = null;

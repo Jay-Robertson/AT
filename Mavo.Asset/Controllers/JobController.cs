@@ -29,7 +29,7 @@ namespace Mavo.Assets.Controllers
             SetListsForCrud(null);
             var query = Context.Jobs.AsQueryable();
             if (!String.IsNullOrEmpty(search.SearchString))
-                query = query.Where(x => 
+                query = query.Where(x =>
                     x.JobSiteName.Contains(search.SearchString)
                     || x.JobNumber.Contains(search.SearchString)
                     || x.ProjectManager.LastName.Contains(search.SearchString)
@@ -47,7 +47,7 @@ namespace Mavo.Assets.Controllers
                 query = query.Where(x => x.PickupTime >= search.StartDate.Value);
             if (search.EndDate.HasValue)
                 query = query.Where(x => x.PickupTime <= search.EndDate.Value);
-          
+
             if (search.ProjectManagerId.HasValue)
                 query = query.Where(x => x.ProjectManager.Id == search.ProjectManagerId);
             if (search.Status.HasValue)
@@ -98,45 +98,38 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult Edit(EditJobPostModel jobPostModel)
         {
-            try
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == (jobPostModel.Id ?? 0));
+            job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
+            if (ModelState.IsValid)
             {
-                Job job = Context.Jobs.FirstOrDefault(x => x.Id == (jobPostModel.Id ?? 0));
-                job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
-                if (ModelState.IsValid)
+                if (jobPostModel.CustomerId.HasValue)
+                    job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
+
+                if (jobPostModel.ForemanId.HasValue)
+                    job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
+
+                if (jobPostModel.ProjectManagerId.HasValue)
+                    job.ProjectManager = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ProjectManagerId.Value);
+
+                if (!jobPostModel.Id.HasValue)
                 {
-                    if (jobPostModel.CustomerId.HasValue)
-                        job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
-
-                    if (jobPostModel.ForemanId.HasValue)
-                        job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
-
-                    if (jobPostModel.ProjectManagerId.HasValue)
-                        job.ProjectManager = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ProjectManagerId.Value);
-
-                    if (!jobPostModel.Id.HasValue)
+                    job.Status = JobStatus.New;
+                    if (jobPostModel.TemplateId.HasValue)
                     {
-                        job.Status = JobStatus.New;
-                        if (jobPostModel.TemplateId.HasValue)
-                        {
-                            var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
-                            job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
-                        }
-                        Context.Jobs.Add(job);
+                        var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
+                        job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
                     }
-
-                    Context.SaveChanges();
-
-                    return RedirectToAction("Edit", new { id = job.Id });
+                    Context.Jobs.Add(job);
                 }
-                else
-                {
-                    SetListsForCrud(job);
-                    return View(job);
-                }
+
+                Context.SaveChanges();
+
+                return RedirectToAction("Edit", new { id = job.Id });
             }
-            catch
+            else
             {
-                return View();
+                SetListsForCrud(job);
+                return View(job);
             }
         }
 

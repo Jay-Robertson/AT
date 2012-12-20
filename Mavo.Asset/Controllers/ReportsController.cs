@@ -24,7 +24,7 @@ namespace Mavo.Assets.Controllers
             List<Job> startedJobs = Context.Jobs.Where(x => x.Status == JobStatus.Started).ToList();
             JobReportViewModel result = new JobReportViewModel()
                 {
-                    ReadyToPick = Context.Jobs.Where(x => x.Status == JobStatus.ReadyToPick).ToList().Where(x => x.PickupTime.Date == DateTime.Today).ToList(),
+                    ReadyToPick = Context.Jobs.Include("ProjectManager").Where(x => x.Status == JobStatus.ReadyToPick).ToList().Where(x => x.PickupTime.Date == DateTime.Today).ToList(),
                     ReadyToReturn = startedJobs.Where(x => x.EstimatedCompletionDate.Date == DateTime.Today).ToList(),
                     AlreadyPicked = startedJobs.Where(x => x.PickupTime >= DateTime.Today).ToList(),
                     AlreadyReturned = Context.Jobs.Where(x => x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList(),
