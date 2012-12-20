@@ -93,7 +93,7 @@ namespace Mavo.Assets.Controllers
                         Quantity = a.Quantity,
                         Kind = a.Asset.Kind,
                         AssetId = a.Asset.Id,
-                        NotEnoughQuantity = a.Quantity > a.Asset.Inventory,
+                        NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
                         QuantityAvailable = a.Asset.Inventory
                     })
                 }).First();
