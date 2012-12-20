@@ -7,6 +7,7 @@ using Mavo.Assets.Models;
 
 namespace Mavo.Assets.Controllers
 {
+    [Authorize]
     public partial class TemplateController : BaseController
     {
         AssetContext ctx;

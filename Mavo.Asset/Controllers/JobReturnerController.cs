@@ -8,6 +8,7 @@ using Mavo.Assets.Models.ViewModel;
 
 namespace Mavo.Assets.Controllers
 {
+    [Authorize]
     public partial class JobReturnerController : BaseController
     {
         //

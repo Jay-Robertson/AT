@@ -12,6 +12,7 @@ using System.Text;
 
 namespace Mavo.Assets.Controllers
 {
+    [Authorize]
     public partial class AssetController : BaseController
     {
         private AssetContext db;
