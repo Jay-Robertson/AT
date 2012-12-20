@@ -38,12 +38,12 @@ namespace Mavo.Assets.Models.ViewModel
 
         public IList<Template> Templates { get; set; }
 
-        public string PickedUpBy { get { return "so and so"; } }
+        public string PickedUpByStr { get { return "so and so"; } }
 
         public DateTime? PickStarted { get; set; }
 
         public DateTime? ReturnStarted { get; set; }
 
-        public string ReturnedBy { get { return "so and so"; } }
+        public string ReturnedByStr { get { return "so and so"; } }
     }
 }
