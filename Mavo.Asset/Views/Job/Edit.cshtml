@@ -91,7 +91,14 @@
 @using (Html.BeginForm(MVC.Job.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.HiddenFor(x => x.Id)
+    if (null == Model)
+    {
+    @Html.Hidden("Status", Mavo.Assets.Models.JobStatus.New)
+    }
+    else
+    {
     @Html.HiddenFor(x => x.Status)
+    }
    
     if (Model == null)
     {

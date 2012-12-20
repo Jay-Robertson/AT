@@ -129,7 +129,7 @@ namespace Mavo.Assets.Controllers
             else
             {
                 SetListsForCrud(job);
-                return View(job);
+                return View(jobPostModel);
             }
         }
 

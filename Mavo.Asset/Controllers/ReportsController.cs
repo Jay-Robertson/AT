@@ -21,12 +21,12 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult Jobs()
         {
-            List<Job> startedJobs = Context.Jobs.Where(x => x.Status == JobStatus.Started).ToList();
+            var tomorrow = DateTime.Today.AddDays(1).AddSeconds(-1);
             JobReportViewModel result = new JobReportViewModel()
                 {
                     ReadyToPick = Context.Jobs.Include("ProjectManager").Where(x => x.Status == JobStatus.ReadyToPick).ToList().Where(x => x.PickupTime.Date == DateTime.Today).ToList(),
-                    ReadyToReturn = startedJobs.Where(x => x.EstimatedCompletionDate.Date == DateTime.Today).ToList(),
-                    AlreadyPicked = startedJobs.Where(x => x.PickupTime >= DateTime.Today).ToList(),
+                    ReadyToReturn = Context.Jobs.Where(x => x.Status == JobStatus.Started && x.EstimatedCompletionDate >= DateTime.Today && x.EstimatedCompletionDate < tomorrow).ToList(),
+                    AlreadyPicked = Context.Jobs.Where(x => x.PickCompleted.HasValue && x.PickCompleted >= DateTime.Today).ToList(),
                     AlreadyReturned = Context.Jobs.Where(x => x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList(),
                     BeingPicked = Context.Jobs.Where(x => x.Status == JobStatus.BeingPicked).OrderBy(x => x.PickStarted).ToList(),
                     BeingReturned = Context.Jobs.Where(x=>x.Status == JobStatus.BeingReturned).OrderBy(x=>x.ReturnStarted).ToList()
