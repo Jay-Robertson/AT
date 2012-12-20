@@ -19,13 +19,21 @@ namespace Mavo.Assets.Controllers
             Context = context;
         }
         [HttpPost]
+        public JsonResult StartPicking(int id)
+        {
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            job.PickStarted = DateTime.Now;
+            Context.SaveChanges();
+            return Json(job.PickStarted.ToString());
+        }
+        [HttpPost]
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.Status = JobStatus.Started;
             job.PickCompleted = DateTime.Now;
             job.PickedAssets = new List<PickedAsset>();
-
+            job.PickCompleted = DateTime.Now;
             if (assets != null)
             {
                 var pickedAssets = assets.Select(x => new PickedAsset()
@@ -73,6 +81,8 @@ namespace Mavo.Assets.Controllers
                     JobSite = x.JobSiteName,
                     ForemanFirstName = x.Foreman.FirstName,
                     ForemanLastName = x.Foreman.LastName,
+                    PickStarted = x.PickStarted,
+                    PickCompleted = x.PickCompleted,
                     Assets = x.Assets.Select(a => new
                     {
                         Name = a.Asset.Name,
@@ -84,6 +94,9 @@ namespace Mavo.Assets.Controllers
                         QuantityAvailable = a.Asset.Inventory
                     })
                 }).First();
+            if (result.PickCompleted.HasValue)
+                return RedirectToAction(MVC.Reports.Jobs());
+
             return View(new PickAJobModel()
             {
                 JobId = result.JobId,
@@ -93,6 +106,7 @@ namespace Mavo.Assets.Controllers
                 JobSite = result.JobSite,
                 Foreman = String.Format("{0} {1}", result.ForemanFirstName, result.ForemanLastName),
                 Customer = result.Customer,
+                PickStarted = result.PickStarted,
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
                     Name = x.Name,

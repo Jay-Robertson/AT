@@ -8,6 +8,41 @@
 {
     @{Html.RenderPartial("_JobPickerSidebar");}
 }
+@section scripts
+{
+    @if (!Model.PickStarted.HasValue)
+    {
+        <script type="text/javascript">
+            $('#startModal').modal({
+                keyboard: false,
+                backdrop: 'static',
+                show: true
+            });
+            $('#btnStartPicking').click(function () {
+                $.post('/jobpicker/startpicking/@Model.JobId', function (timeStarted) {
+                    $('#pickupTime').html(timeStarted);
+                    $('#pickupTimeDiv').removeClass('hide');
+                    $('#startModal').modal('hide');
+                });
+            });
+        </script>
+    }
+
+}
+@if (!Model.PickStarted.HasValue)
+{
+    <div id="startModal" class="modal show fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-show="true">
+        <div class="modal-header">
+            <h3 id="myModalLabel">Start Picking?</h3>
+        </div>
+        <div class="modal-body">
+            <p>Would you like to start picking this job?</p>
+        </div>
+        <div class="modal-footer">
+            <button id="btnStartPicking" class="btn btn-primary">Start Picking</button>
+        </div>
+    </div>
+}
 <div class="row-fluid">
     <div class="well">
         <h4>Job Details</h4>
@@ -39,7 +74,12 @@
                 <span class="label label-info">@Model.Foreman</span>
             </div>
         </div>
+        
     </div>
+</div>
+<div class="alert alert-info @(!Model.PickStarted.HasValue ? "hide" : "")" id="pickupTimeDiv">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Job Picking!</strong> This job started being picked up at <span id="pickupTime">@(Model.PickStarted.HasValue ? Model.PickStarted.Value.ToString() : "")</span>
 </div>
 @using (Html.BeginForm(MVC.JobPicker.Index(Model.JobId, null), FormMethod.Post, new { @class = "form-inline" }))
 {

@@ -203,6 +203,7 @@ namespace Mavo.Assets.Models
         public string ForemanNote { get; set; }
 
         public Customer Customer { get; set; }
+        public DateTime? PickStarted { get; set; }
         public User ProjectManager { get; set; }
         public JobStatus Status { get; set; }
         public DateTime PickupTime { get; set; }

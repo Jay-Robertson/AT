@@ -30,6 +30,8 @@ namespace Mavo.Assets.Models.ViewModel
         public IList<JobAsset> Assets { get; set; }
 
         public int JobId { get; set; }
+
+        public DateTime? PickStarted { get; set; }
     }
     public class JobAsset
     {
