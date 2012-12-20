@@ -21,6 +21,18 @@
                     {
                         <th>Total Picking Time</th>
                     }
+                    @if (Model.Any(x => x.ReturnStarted.HasValue))
+                    {
+                        <th>Return Started</th>
+                    }
+                    @if (Model.Any(x => x.ReturnCompleted.HasValue))
+                    {
+                        <th>Return Completed</th>
+                    }
+                    @if (Model.Any(x => x.ReturnStarted.HasValue && x.ReturnCompleted.HasValue))
+                    {
+                        <th>Total Return Time</th>
+                    }
                     <th>Job #</th>
                     <th>Customer</th>
                     <th>Employee</th>
@@ -30,7 +42,7 @@
                 @foreach (var job in Model)
                 {
                     <tr>
-                        <td>@job.Name</td>
+                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
                         <td>@Html.DisplayFor(x => job.PickupTime)</td>
                         @if (Model.Any(x => x.PickStarted.HasValue))
                         {
@@ -43,6 +55,19 @@
                         @if (Model.Any(x => x.PickCompleted.HasValue && x.PickStarted.HasValue))
                         {
                             <td>@((job.PickCompleted.Value - job.PickStarted.Value).ToRelative())</td>
+                        }
+
+                        @if (Model.Any(x => x.ReturnStarted.HasValue))
+                        {
+                            <td>@Html.DisplayFor(x => job.ReturnStarted)</td>
+                        }
+                        @if (Model.Any(x => x.ReturnCompleted.HasValue))
+                        {
+                            <td>@Html.DisplayFor(x => job.ReturnCompleted)</td>
+                        }
+                        @if (Model.Any(x => x.ReturnStarted.HasValue && x.ReturnCompleted.HasValue))
+                        {
+                            <td>@((job.ReturnCompleted.Value - job.ReturnStarted.Value).ToRelative())</td>
                         }
                         <td>@job.JobNumber</td>
                         <td>@(job.Customer != null ? job.Customer.Name : "")</td>

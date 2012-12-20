@@ -43,6 +43,12 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.JsonResult StartReturning()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartReturning);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Index()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
@@ -69,6 +75,7 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
+            public readonly string StartReturning = "StartReturning";
             public readonly string Index = "Index";
             public readonly string Success = "Success";
         }
@@ -76,11 +83,20 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
+            public const string StartReturning = "StartReturning";
             public const string Index = "Index";
             public const string Success = "Success";
         }
 
 
+        static readonly ActionParamsClass_StartReturning s_params_StartReturning = new ActionParamsClass_StartReturning();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_StartReturning StartReturningParams { get { return s_params_StartReturning; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_StartReturning
+        {
+            public readonly string id = "id";
+        }
         static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
@@ -122,6 +138,13 @@ namespace Mavo.Assets.Controllers
     public class T4MVC_JobPickerController : Mavo.Assets.Controllers.JobPickerController
     {
         public T4MVC_JobPickerController() : base(Dummy.Instance) { }
+
+        public override System.Web.Mvc.JsonResult StartReturning(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartReturning);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.ActionResult Index(int id, System.Collections.Generic.IList<Mavo.Assets.Models.ViewModel.JobAsset> assets)
         {

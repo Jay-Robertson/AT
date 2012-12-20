@@ -50,6 +50,7 @@ namespace T4MVC
             public partial class _DisplayTemplatesClass
             {
                 public readonly string AssetKind = "AssetKind";
+                public readonly string DateTime = "DateTime";
                 public readonly string JobStatus = "JobStatus";
             }
             static readonly _EditorTemplatesClass s_EditorTemplates = new _EditorTemplatesClass();

@@ -16,7 +16,15 @@ namespace Mavo.Assets.Controllers
         {
             Context = context;
         }
-
+        [HttpPost]
+        public virtual JsonResult StartReturning(int id)
+        {
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            job.ReturnStarted = DateTime.Now;
+            job.Status = JobStatus.BeingReturned;
+            Context.SaveChanges();
+            return Json(job.ReturnStarted.ToString());
+        }
         [HttpPost]
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
         {
@@ -57,6 +65,7 @@ namespace Mavo.Assets.Controllers
                     JobSite = x.JobSiteName,
                     ForemanFirstName = x.Foreman.FirstName,
                     ForemanLastName = x.Foreman.LastName,
+                    ReturnStarted = x.ReturnStarted,
                     Assets = x.PickedAssets.Select(a => new
                     {
                         Name = a.Asset.Name,
@@ -76,6 +85,7 @@ namespace Mavo.Assets.Controllers
                 JobSite = result.JobSite,
                 Foreman = String.Format("{0} {1}", result.ForemanFirstName, result.ForemanLastName),
                 Customer = result.Customer,
+                ReturnStarted = result.ReturnStarted,
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
                     Name = x.Name,

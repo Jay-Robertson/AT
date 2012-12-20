@@ -19,7 +19,7 @@ namespace Mavo.Assets.Controllers
             Context = context;
         }
         [HttpPost]
-        public JsonResult StartPicking(int id)
+        public virtual JsonResult StartReturning(int id)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.PickStarted = DateTime.Now;
@@ -84,6 +84,8 @@ namespace Mavo.Assets.Controllers
                     ForemanLastName = x.Foreman.LastName,
                     PickStarted = x.PickStarted,
                     PickCompleted = x.PickCompleted,
+                    ReturnStarted = x.ReturnStarted,
+                    ReturnCompleted = x.ReturnCompleted,
                     Assets = x.Assets.Select(a => new
                     {
                         Name = a.Asset.Name,
@@ -108,6 +110,7 @@ namespace Mavo.Assets.Controllers
                 Foreman = String.Format("{0} {1}", result.ForemanFirstName, result.ForemanLastName),
                 Customer = result.Customer,
                 PickStarted = result.PickStarted,
+                ReturnStarted = result.ReturnStarted,
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
                     Name = x.Name,
