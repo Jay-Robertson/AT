@@ -8,6 +8,7 @@ using Mavo.Assets.Models.ViewModel;
 
 namespace Mavo.Assets.Controllers
 {
+    [Authorize]
     public partial class JobPickerController : BaseController
     {
         private readonly AssetContext Context;
@@ -24,6 +25,7 @@ namespace Mavo.Assets.Controllers
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.PickStarted = null;
             job.Status = JobStatus.ReadyToPick;
+            job.PickedBy = null;
             Context.SaveChanges();
             return PartialView("~/Views/Shared/DisplayTemplates/JobStatus.cshtml", job.Status);
         }
@@ -33,6 +35,7 @@ namespace Mavo.Assets.Controllers
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.PickStarted = DateTime.Now;
             job.Status = JobStatus.BeingPicked;
+            job.PickedBy = Context.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
             Context.SaveChanges();
             return Json(job.PickStarted.ToString());
         }

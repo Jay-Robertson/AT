@@ -45,8 +45,6 @@ namespace Mavo.Assets.Controllers
         //
         // POST: /Account/LogOff
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public virtual ActionResult LogOff()
         {
             WebSecurity.Logout();
@@ -83,6 +81,7 @@ namespace Mavo.Assets.Controllers
                             EmployeeId = model.EmployeeId,
                             FirstName = model.FirstName,
                             LastName = model.LastName,
+                            Role = UserRole.Administrator
                         });
                     WebSecurity.Login(model.Email, model.Password);
                     return RedirectToAction("Index", "Home");

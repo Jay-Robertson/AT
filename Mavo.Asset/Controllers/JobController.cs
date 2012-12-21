@@ -8,6 +8,7 @@ using Mavo.Assets.Models.ViewModel;
 using AutoMapper;
 namespace Mavo.Assets.Controllers
 {
+    [Authorize]
     public partial class JobController : BaseController
     {
         private readonly AssetContext Context;

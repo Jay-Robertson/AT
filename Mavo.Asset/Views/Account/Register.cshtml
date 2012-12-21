@@ -8,39 +8,48 @@
     <h2>Create a new account.</h2>
 </hgroup>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm(MVC.Account.Register(), FormMethod.Post, new { @class = "form form-horizontal" }))
+{
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
     <fieldset>
         <legend>Registration Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.EmployeeId)
-                @Html.TextBoxFor(m => m.EmployeeId)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.FirstName)
-                @Html.TextBoxFor(m => m.FirstName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.LastName)
-                @Html.TextBoxFor(m => m.LastName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Email)
-                @Html.TextBoxFor(m => m.Email)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
+        <div class="control-group">
+            @Html.LabelFor(m => m.EmployeeId, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(m => m.EmployeeId)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(m => m.FirstName)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(m => m.LastName)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(m => m.Email)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(m => m.Password)
+            </div>
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EditorFor(m => m.ConfirmPassword)
+            </div>
+        </div>
+        <input type="submit" class="btn" value="Log in" />
     </fieldset>
 }
 
