@@ -4,11 +4,7 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title - Mavo Asset Management</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width" />
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style type="text/css">
         body {
             padding-top: 60px;
@@ -74,11 +70,12 @@
                     margin: 0 65px 10px 10px;
                 }
     </style>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 </head>
 <body>
-    <header>
-        @{Html.RenderPartial(MVC.Shared.Views._TopNav);}
-    </header>
+    @{Html.RenderPartial(MVC.Shared.Views._TopNav);}
     <div class="container-fluid" id="body">
         <div class="row-fluid">
             @RenderSection("LeftNav", false)
@@ -154,6 +151,7 @@
                 showTime: true,
                 gotoCurrent: true
             });
+            $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
         });
 
     </script>
