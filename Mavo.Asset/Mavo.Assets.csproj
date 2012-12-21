@@ -199,45 +199,9 @@
     <Compile Include="JobReturnerController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201212101949141_InitialMigratin.cs" />
-    <Compile Include="Migrations\201212101949141_InitialMigratin.Designer.cs">
-      <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212111648092_Asset-UnitOfMeasure.cs" />
-    <Compile Include="Migrations\201212111648092_Asset-UnitOfMeasure.Designer.cs">
-      <DependentUpon>201212111648092_Asset-UnitOfMeasure.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.cs" />
-    <Compile Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.Designer.cs">
-      <DependentUpon>201212121908580_addedRequiredAttributeOnTemplateName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212122046246_NotSureWhatIDid.cs" />
-    <Compile Include="Migrations\201212122046246_NotSureWhatIDid.Designer.cs">
-      <DependentUpon>201212122046246_NotSureWhatIDid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212131830284_ReturnDateAdded.cs" />
-    <Compile Include="Migrations\201212131830284_ReturnDateAdded.Designer.cs">
-      <DependentUpon>201212131830284_ReturnDateAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212132057429_AddedStuffToCustomer.cs" />
-    <Compile Include="Migrations\201212132057429_AddedStuffToCustomer.Designer.cs">
-      <DependentUpon>201212132057429_AddedStuffToCustomer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212132058464_AddedStuffToCustomer2.cs" />
-    <Compile Include="Migrations\201212132058464_AddedStuffToCustomer2.Designer.cs">
-      <DependentUpon>201212132058464_AddedStuffToCustomer2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212181704121_whatup.cs" />
-    <Compile Include="Migrations\201212181704121_whatup.Designer.cs">
-      <DependentUpon>201212181704121_whatup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212181918552_whatup2.cs" />
-    <Compile Include="Migrations\201212181918552_whatup2.Designer.cs">
-      <DependentUpon>201212181918552_whatup2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212181949137_renamedSerial.cs" />
-    <Compile Include="Migrations\201212181949137_renamedSerial.Designer.cs">
-      <DependentUpon>201212181949137_renamedSerial.cs</DependentUpon>
+    <Compile Include="Migrations\201212210012507_InitialMigration.cs" />
+    <Compile Include="Migrations\201212210012507_InitialMigration.Designer.cs">
+      <DependentUpon>201212210012507_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -390,39 +354,12 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201212101949141_InitialMigratin.resx">
-      <DependentUpon>201212101949141_InitialMigratin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212111648092_Asset-UnitOfMeasure.resx">
-      <DependentUpon>201212111648092_Asset-UnitOfMeasure.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212121908580_addedRequiredAttributeOnTemplateName.resx">
-      <DependentUpon>201212121908580_addedRequiredAttributeOnTemplateName.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212122046246_NotSureWhatIDid.resx">
-      <DependentUpon>201212122046246_NotSureWhatIDid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212131830284_ReturnDateAdded.resx">
-      <DependentUpon>201212131830284_ReturnDateAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212132057429_AddedStuffToCustomer.resx">
-      <DependentUpon>201212132057429_AddedStuffToCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212132058464_AddedStuffToCustomer2.resx">
-      <DependentUpon>201212132058464_AddedStuffToCustomer2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212181704121_whatup.resx">
-      <DependentUpon>201212181704121_whatup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212181918552_whatup2.resx">
-      <DependentUpon>201212181918552_whatup2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212181949137_renamedSerial.resx">
-      <DependentUpon>201212181949137_renamedSerial.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Views\Asset\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Asset\DisplayTemplates\" />
+    <EmbeddedResource Include="Migrations\201212210012507_InitialMigration.resx">
+      <DependentUpon>201212210012507_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

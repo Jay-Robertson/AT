@@ -39,7 +39,7 @@ else
                     {
                         <td>@Html.DisplayFor(x => item.Manufacturer)</td>
                     }
-                    @if (item.Quantity > 0)
+                    @if (item.Quantity.HasValue)
                     {
                         <td>
                             @if(item.Kind == Mavo.Assets.Models.AssetKind.Serialized)

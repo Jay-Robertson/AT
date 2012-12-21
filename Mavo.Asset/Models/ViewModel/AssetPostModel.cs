@@ -17,11 +17,6 @@ namespace Mavo.Assets.Models.ViewModel
         // warehousing data
         public AssetKind Kind { get; set; }
         public int? Inventory { get; set; }          // only valid for Consumable and NotSerialized assets
-
-        // manufactuer/model/vendor data
-        public string Manufacturer { get; set; }
-        public string ModelNumber { get; set; }
-        public string UPC { get; set; }
     }
 
     public class AssetScanPostModel
@@ -32,6 +27,10 @@ namespace Mavo.Assets.Models.ViewModel
         public string Barcode { get; set; }                 // mavo barcode value
         public AssetCondition Condition { get; set; }
 
+        // manufactuer/model/vendor data
+        public string Manufacturer { get; set; }
+        public string ModelNumber { get; set; }
+        
         // purchasing/warranty data
         public string SerialNumber { get; set; }            // manufacturer's serial number
         public DateTime? PurchaseDate { get; set; }

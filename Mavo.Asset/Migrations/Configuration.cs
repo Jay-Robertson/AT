@@ -10,7 +10,7 @@ namespace Mavo.Assets.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(Mavo.Assets.Models.AssetContext context)

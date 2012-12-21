@@ -90,35 +90,7 @@
             </div>
         </fieldset>
     </div>
-    <div class="well">
-        <fieldset>
-            <legend>Manufactuer, Model and Vendor data</legend>
-
-
-            <div class="control-group">
-                @Html.LabelFor(x => x.Manufacturer, new { @class = "control-label" })
-                <div class="controls">
-                    @Html.EditorFor(x => x.Manufacturer)
-                </div>
-            </div>
-
-            <div class="control-group">
-                @Html.LabelFor(x => x.ModelNumber, new { @class = "control-label" })
-                <div class="controls">
-                    @Html.EditorFor(x => x.ModelNumber)
-                </div>
-            </div>
-
-            <div class="control-group">
-                @Html.LabelFor(x => x.UPC, new { @class = "control-label" })
-                <div class="controls">
-                    @Html.EditorFor(x => x.UPC)
-                </div>
-            </div>
-        </fieldset>
-    </div>
-   
-         
+     
     if (ViewBag.AssetItems != null)
     {
     <div id="AssetItems" class="well">
@@ -128,6 +100,8 @@
                 <thead>
                     <tr>
                         <th>Barcode</th>
+                        <th>Manufacturer</th>
+                        <th>Model</th>
                         <th>Inventory Status</th>
                         <th>Condtion</th>
                     </tr>
@@ -139,6 +113,8 @@
                         {
                         <tr>
                             <td>@item.Barcode</td>
+                            <th>@item.Manufacturer</th>
+                            <th>@item.ModelNumber</th>
                             <td><span class="label label-@(item.Status == Mavo.Assets.Models.InventoryStatus.In ? "success" : "important")"><i class="icon-white icon-@(item.Status == Mavo.Assets.Models.InventoryStatus.In ? "ok-sign" : "remove-circle")"></i>&nbsp;@item.Status</span></td>
                             <td>@item.Condition</td>
                         </tr>

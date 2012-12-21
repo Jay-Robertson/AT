@@ -5,13 +5,13 @@ namespace Mavo.Assets.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class AssetUnitOfMeasure : IMigrationMetadata
+    public sealed partial class InitialMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AssetUnitOfMeasure));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201212111648092_Asset-UnitOfMeasure"; }
+            get { return "201212210012507_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source

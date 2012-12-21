@@ -190,9 +190,6 @@ namespace Mavo.Assets.Controllers
                 query = query.Where(x => x.Category.Id == search.CategoryId);
             if (!String.IsNullOrEmpty(search.SearchString))
                 query = query.Where(x => x.Barcode.Contains(search.SearchString)
-                    || x.Manufacturer.Contains(search.SearchString)
-                    || x.ModelNumber.Contains(search.SearchString)
-                    || x.UPC.Contains(search.SearchString)
                     || x.Name.Contains(search.SearchString)
                     || x.Category.Name.Contains(search.SearchString)
                     );
@@ -204,7 +201,6 @@ namespace Mavo.Assets.Controllers
                 Kind = x.Kind,
                 CategoryId = x.Category.Id,
                 AssetId = x.Id,
-                Manufacturer = x.Manufacturer,
                 Quantity = x.Kind == AssetKind.Serialized ? x.Items.Count() : x.Inventory,
                 AssetItems = x.Items
             }).ToList();
@@ -269,7 +265,9 @@ namespace Mavo.Assets.Controllers
                     PurchaseDate = scan.PurchaseDate,
                     WarrantyExpiration = scan.WarrantyExpiration,
                     SerialNumber = scan.SerialNumber,
-                    PurchasePrice = scan.PurchasePrice
+                    PurchasePrice = scan.PurchasePrice,
+                    ModelNumber = scan.ModelNumber,
+                    Manufacturer = scan.Manufacturer,
                 };
                 db.AssetItems.Add(assetItem);
                 db.SaveChanges();

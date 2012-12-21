@@ -67,6 +67,7 @@ namespace Mavo.Assets.Models
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        public string MavoItemNumber { get; set; }
         public string Barcode { get; set; }          // mavo barcode value
         public AssetCategory Category { get; set; }
         public string Name { get; set; }            
@@ -75,11 +76,6 @@ namespace Mavo.Assets.Models
         // warehousing data
         public AssetKind Kind { get; set; }
         public int? Inventory { get; set; }          // valid on Consumable and NotSerialized assets
-
-        // manufactuer/model/vendor data
-        public string Manufacturer { get; set; }
-        public string ModelNumber { get; set; }
-        public string UPC { get; set; }
 
         public List<AssetItem> Items { get; set; }
 
@@ -95,13 +91,14 @@ namespace Mavo.Assets.Models
         public AssetCondition Condition { get; set; }
 
         // purchasing/warranty data
+        public string Manufacturer { get; set; }
+        public string ModelNumber { get; set; }
         public string SerialNumber { get; set; }            // manufacturer's serial number
         public DateTime? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
         public DateTime? WarrantyExpiration { get; set; }
-
+        
         public InventoryStatus Status { get; set; }
-
     }
 
     public enum AssetAction
