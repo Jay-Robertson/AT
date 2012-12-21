@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="FORMS32K_MavoDataSet" targetNamespace="http://tempuri.org/FORMS32K_MavoDataSet.xsd" xmlns:mstns="http://tempuri.org/FORMS32K_MavoDataSet.xsd" xmlns="http://tempuri.org/FORMS32K_MavoDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="FORMS32K_MavoConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="FORMS32K_MavoConnectionString (Settings)" PropertyReference="ApplicationSettings.GenerateAssetData.Properties.Settings.GlobalReference.Default.FORMS32K_MavoConnectionString" Provider="System.Data.OleDb" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AssetItemsTableAdapter" GeneratorDataComponentClassName="AssetItemsTableAdapter" Name="AssetItems" UserDataComponentName="AssetItemsTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="FORMS32K_MavoConnectionString (Settings)" DbObjectName="FORM_ID_535716711" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        ItemNumber, ItemName, ItemCategory, ItemCount, AssetTag, SerialNumber, AssetType, Manufacture, Model, [TimeStamp]
+FROM            FORM_ID_535716711
+UNION
+SELECT        ItemNumber, ItemName, ItemCategory, ItemCount, AeeetTag, SerialNumber, AssetType, Manufacture, Model, [TimeStamp]
+FROM            FORM_ID_535717120</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ItemNumber" DataSetColumn="ItemNumber" />
+              <Mapping SourceColumn="ItemName" DataSetColumn="ItemName" />
+              <Mapping SourceColumn="ItemCategory" DataSetColumn="ItemCategory" />
+              <Mapping SourceColumn="ItemCount" DataSetColumn="ItemCount" />
+              <Mapping SourceColumn="AssetTag" DataSetColumn="AssetTag" />
+              <Mapping SourceColumn="SerialNumber" DataSetColumn="SerialNumber" />
+              <Mapping SourceColumn="AssetType" DataSetColumn="AssetType" />
+              <Mapping SourceColumn="Manufacture" DataSetColumn="Manufacture" />
+              <Mapping SourceColumn="Model" DataSetColumn="Model" />
+              <Mapping SourceColumn="TimeStamp" DataSetColumn="TimeStamp" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ConsumablesTableAdapter" GeneratorDataComponentClassName="ConsumablesTableAdapter" Name="Consumables" UserDataComponentName="ConsumablesTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="FORMS32K_MavoConnectionString (Settings)" DbObjectName="FORM_ID_535549078" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        ItemNumber, ItemName, ItemCategory, ItemCount, [TimeStamp]
+FROM            FORM_ID_535549078
+UNION
+SELECT        ItemNumber, ItemName, ItemCategory, ItemCount, [TimeStamp]
+FROM            FORM_ID_535549109
+UNION
+SELECT        ItemNumber, ItemName, ItemCategory, ItemCount, [TimeStamp]
+FROM            FORM_ID_535549122
+UNION
+SELECT        ItemNumber, ItemName, ItemCategory, ItemCount, [TimeStamp]
+FROM            FORM_ID_535549136</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="ItemNumber" DataSetColumn="ItemNumber" />
+              <Mapping SourceColumn="ItemName" DataSetColumn="ItemName" />
+              <Mapping SourceColumn="ItemCategory" DataSetColumn="ItemCategory" />
+              <Mapping SourceColumn="ItemCount" DataSetColumn="ItemCount" />
+              <Mapping SourceColumn="TimeStamp" DataSetColumn="TimeStamp" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="FORMS32K_MavoDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="FORMS32K_MavoDataSet" msprop:Generator_UserDSName="FORMS32K_MavoDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="AssetItems" msprop:Generator_TableClassName="AssetItemsDataTable" msprop:Generator_TableVarName="tableAssetItems" msprop:Generator_TablePropName="AssetItems" msprop:Generator_RowDeletingName="AssetItemsRowDeleting" msprop:Generator_RowChangingName="AssetItemsRowChanging" msprop:Generator_RowEvHandlerName="AssetItemsRowChangeEventHandler" msprop:Generator_RowDeletedName="AssetItemsRowDeleted" msprop:Generator_UserTableName="AssetItems" msprop:Generator_RowChangedName="AssetItemsRowChanged" msprop:Generator_RowEvArgName="AssetItemsRowChangeEvent" msprop:Generator_RowClassName="AssetItemsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ItemNumber" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="ItemNumber" msprop:Generator_ColumnVarNameInTable="columnItemNumber" msprop:Generator_ColumnPropNameInTable="ItemNumberColumn" msprop:Generator_UserColumnName="ItemNumber" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemName" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="ItemName" msprop:Generator_ColumnVarNameInTable="columnItemName" msprop:Generator_ColumnPropNameInTable="ItemNameColumn" msprop:Generator_UserColumnName="ItemName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemCategory" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="ItemCategory" msprop:Generator_ColumnVarNameInTable="columnItemCategory" msprop:Generator_ColumnPropNameInTable="ItemCategoryColumn" msprop:Generator_UserColumnName="ItemCategory" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemCount" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="ItemCount" msprop:Generator_ColumnVarNameInTable="columnItemCount" msprop:Generator_ColumnPropNameInTable="ItemCountColumn" msprop:Generator_UserColumnName="ItemCount" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssetTag" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="AssetTag" msprop:Generator_ColumnVarNameInTable="columnAssetTag" msprop:Generator_ColumnPropNameInTable="AssetTagColumn" msprop:Generator_UserColumnName="AssetTag" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SerialNumber" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="SerialNumber" msprop:Generator_ColumnVarNameInTable="columnSerialNumber" msprop:Generator_ColumnPropNameInTable="SerialNumberColumn" msprop:Generator_UserColumnName="SerialNumber" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="AssetType" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="AssetType" msprop:Generator_ColumnVarNameInTable="columnAssetType" msprop:Generator_ColumnPropNameInTable="AssetTypeColumn" msprop:Generator_UserColumnName="AssetType" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Manufacture" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Manufacture" msprop:Generator_ColumnVarNameInTable="columnManufacture" msprop:Generator_ColumnPropNameInTable="ManufactureColumn" msprop:Generator_UserColumnName="Manufacture" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="64" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Model" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Model" msprop:Generator_ColumnVarNameInTable="columnModel" msprop:Generator_ColumnPropNameInTable="ModelColumn" msprop:Generator_UserColumnName="Model" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TimeStamp" msprop:Generator_ColumnVarNameInTable="columnTimeStamp" msprop:Generator_ColumnPropNameInRow="TimeStamp" msprop:Generator_ColumnPropNameInTable="TimeStampColumn" msprop:Generator_UserColumnName="TimeStamp" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Consumables" msprop:Generator_TableClassName="ConsumablesDataTable" msprop:Generator_TableVarName="tableConsumables" msprop:Generator_TablePropName="Consumables" msprop:Generator_RowDeletingName="ConsumablesRowDeleting" msprop:Generator_RowChangingName="ConsumablesRowChanging" msprop:Generator_RowEvHandlerName="ConsumablesRowChangeEventHandler" msprop:Generator_RowDeletedName="ConsumablesRowDeleted" msprop:Generator_UserTableName="Consumables" msprop:Generator_RowChangedName="ConsumablesRowChanged" msprop:Generator_RowEvArgName="ConsumablesRowChangeEvent" msprop:Generator_RowClassName="ConsumablesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ItemNumber" msprop:Generator_ColumnVarNameInTable="columnItemNumber" msprop:Generator_ColumnPropNameInRow="ItemNumber" msprop:Generator_ColumnPropNameInTable="ItemNumberColumn" msprop:Generator_UserColumnName="ItemNumber" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemName" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="ItemName" msprop:Generator_ColumnVarNameInTable="columnItemName" msprop:Generator_ColumnPropNameInTable="ItemNameColumn" msprop:Generator_UserColumnName="ItemName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemCategory" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="ItemCategory" msprop:Generator_ColumnVarNameInTable="columnItemCategory" msprop:Generator_ColumnPropNameInTable="ItemCategoryColumn" msprop:Generator_UserColumnName="ItemCategory" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItemCount" msprop:Generator_ColumnVarNameInTable="columnItemCount" msprop:Generator_ColumnPropNameInRow="ItemCount" msprop:Generator_ColumnPropNameInTable="ItemCountColumn" msprop:Generator_UserColumnName="ItemCount" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TimeStamp" msprop:Generator_ColumnVarNameInTable="columnTimeStamp" msprop:Generator_ColumnPropNameInRow="TimeStamp" msprop:Generator_ColumnPropNameInTable="TimeStampColumn" msprop:Generator_UserColumnName="TimeStamp" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
