@@ -4,7 +4,11 @@
 @section scripts
 {
     <script type="text/javascript">
-        setTimeout(60 * 1000 * 5, function () { window.location.reload(true); });
+        var interval = 30 * 1000 * 1;
+        var refresh = function () {
+            window.location.reload(true)
+        };
+        setTimeout(refresh, interval);
     </script>
 }
 
