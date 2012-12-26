@@ -6,14 +6,21 @@ using System.Web.Mvc;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
 using AutoMapper;
+using Mavo.Assets.Services;
+using System.Data.Entity;
 namespace Mavo.Assets.Controllers
 {
     [Authorize]
     public partial class JobController : BaseController
     {
         private readonly AssetContext Context;
+        private readonly IAssetPicker AssetPicker;
 
-        public JobController(AssetContext context) { Context = context; }
+        public JobController(AssetContext context, IAssetPicker assetPicker) 
+        {
+            AssetPicker = assetPicker;
+            Context = context;
+        }
 
         public virtual ActionResult Index(JobStatus? status = null, int? customerId = null, int? projectManagerId = null)
         {
@@ -23,6 +30,15 @@ namespace Mavo.Assets.Controllers
             else
                 return View();
         }
+
+        [HttpPost]
+        public virtual ActionResult AddAssetsFromTemplate(int id, int templateId)
+        {
+            AssetPicker.AddFromTemplate(id, templateId);
+            ViewBag.Assets = Context.Jobs.Include(x => x.Assets).Include("Assets.Asset").First(x => x.Id == id).Assets;
+            return PartialView(MVC.Asset.Views._AssetTable);
+        }
+      
 
         [HttpPost]
         public virtual ActionResult Index(SearchResult search)

@@ -43,6 +43,12 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AddAssetsFromTemplate()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddAssetsFromTemplate);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Create()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
@@ -76,6 +82,7 @@ namespace Mavo.Assets.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
             public readonly string MarkReadyToPick = "MarkReadyToPick";
@@ -85,6 +92,7 @@ namespace Mavo.Assets.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public const string Create = "Create";
             public const string Edit = "Edit";
             public const string MarkReadyToPick = "MarkReadyToPick";
@@ -101,6 +109,15 @@ namespace Mavo.Assets.Controllers
             public readonly string customerId = "customerId";
             public readonly string projectManagerId = "projectManagerId";
             public readonly string search = "search";
+        }
+        static readonly ActionParamsClass_AddAssetsFromTemplate s_params_AddAssetsFromTemplate = new ActionParamsClass_AddAssetsFromTemplate();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddAssetsFromTemplate AddAssetsFromTemplateParams { get { return s_params_AddAssetsFromTemplate; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddAssetsFromTemplate
+        {
+            public readonly string id = "id";
+            public readonly string templateId = "templateId";
         }
         static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -162,6 +179,14 @@ namespace Mavo.Assets.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "status", status);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "customerId", customerId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "projectManagerId", projectManagerId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AddAssetsFromTemplate(int id, int templateId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddAssetsFromTemplate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "templateId", templateId);
             return callInfo;
         }
 

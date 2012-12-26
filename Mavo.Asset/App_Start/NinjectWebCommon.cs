@@ -6,6 +6,7 @@ namespace Mavo.Assets.App_Start
     using System;
     using System.Web;
     using Mavo.Assets.Models;
+    using Mavo.Assets.Services;
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
@@ -41,8 +42,6 @@ namespace Mavo.Assets.App_Start
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
-            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             
             RegisterServices(kernel);
 
@@ -59,6 +58,9 @@ namespace Mavo.Assets.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<AssetContext>().ToSelf().InRequestScope();
+            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+            kernel.Bind<IAssetPicker>().To<AssetPicker>();
         }        
     }
 }

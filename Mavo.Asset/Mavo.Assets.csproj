@@ -219,6 +219,7 @@
     <Compile Include="ReportsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\IAssetPicker.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -347,6 +348,7 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Asset\ItemReview.cshtml" />
     <Content Include="Views\Shared\_LayoutWithNoConstraints.cshtml" />
+    <Content Include="Views\Asset\_AssetTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

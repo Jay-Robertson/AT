@@ -20,18 +20,18 @@
     <script type="text/javascript">
         jQuery(function ($) {
             $('#job-tabs').tab();
+            $('#btnAddFromTemplate').hide();
         });
         @if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
         {
             <text>
-        $('#btnCancelPick').click(function ()
-        {
+        $('#btnCancelPick').click(function () {
             $.post('/jobpicker/cancel/@Model.Id', function (status) {
                 $('.alert-info').hide();
                 $('#status').html(status);
             });
         });
-            </text>
+        </text>
         }
         @if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
         {
@@ -42,7 +42,26 @@
                 $('#status').html(status);
             });
         });
-            </text>
+        </text>
+        }
+        @if (Model != null)
+        {
+            <text>
+        $('#TemplateId').change(function () {
+            if ($(this).val() != '') {
+                $('#btnAddFromTemplate').show();
+            }
+            else {
+                $('#btnAddFromTemplate').hide();
+            }
+        });
+        $('#btnAddFromTemplate').click(function () {
+            $.post('/job/AddAssetsFromTemplate/' + @Model.Id + '?templateId=' + $('#TemplateId').val(), function (assetsHtml) {
+                $('#asset-container').html(assetsHtml);
+            });
+        });
+
+        </text>
         }
     </script>
 
@@ -100,20 +119,22 @@
     @Html.HiddenFor(x => x.Status)
     }
    
-    if (Model == null)
-    {
+   
     <div class="row-fluid">
         <div class="well">
             <h4>Template</h4>
             @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
-       {
-           Value = x.Id.ToString(),
-           Text = x.Name,
-           Selected = Model == null || ViewBag.TemplateId.HasValue ? false : x.Id == ViewBag.TemplateId
-       }), string.Empty)
+               {
+                   Value = x.Id.ToString(),
+                   Text = x.Name,
+                   Selected = Model == null || (ViewBag.TemplateId != null && ViewBag.TemplateId.HasValue) ? false : x.Id == ViewBag.TemplateId
+               }), string.Empty)
+            @if (Model != null)
+            {
+                <a href="#" id="btnAddFromTemplate" class="btn btn-success">Add Items from Template</a>
+            }
         </div>
     </div>
-    }
 
     <div class="tab-content">
         <div class="tab-pane @(null == Model ? "active" : "")" id="details">

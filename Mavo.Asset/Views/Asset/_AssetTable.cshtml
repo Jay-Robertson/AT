@@ -1,0 +1,18 @@
+﻿<table id="asset-table" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Asset</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.Assets != null)
+        {
+            foreach (Mavo.Assets.Models.AssetWithQuantity asset in ViewBag.Assets)
+            {
+                Html.RenderPartial(MVC.Asset.Views._AssetRow, asset);
+            }
+        }
+    </tbody>
+</table>

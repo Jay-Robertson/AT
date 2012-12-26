@@ -294,6 +294,7 @@ namespace Mavo.Assets.Controllers
                 public readonly string _AssetPickerDetail = "_AssetPickerDetail";
                 public readonly string _AssetRow = "_AssetRow";
                 public readonly string _AssetSidebar = "_AssetSidebar";
+                public readonly string _AssetTable = "_AssetTable";
                 public readonly string _SearchResult = "_SearchResult";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
@@ -304,6 +305,7 @@ namespace Mavo.Assets.Controllers
             public readonly string _AssetPickerDetail = "~/Views/Asset/_AssetPickerDetail.cshtml";
             public readonly string _AssetRow = "~/Views/Asset/_AssetRow.cshtml";
             public readonly string _AssetSidebar = "~/Views/Asset/_AssetSidebar.cshtml";
+            public readonly string _AssetTable = "~/Views/Asset/_AssetTable.cshtml";
             public readonly string _SearchResult = "~/Views/Asset/_SearchResult.cshtml";
             public readonly string Edit = "~/Views/Asset/Edit.cshtml";
             public readonly string Index = "~/Views/Asset/Index.cshtml";

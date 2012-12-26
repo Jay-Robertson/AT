@@ -9,19 +9,22 @@ using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
 using AutoMapper;
 using System.Text;
+using Mavo.Assets.Services;
 
 namespace Mavo.Assets.Controllers
 {
     [Authorize]
     public partial class AssetController : BaseController
     {
+        private readonly IAssetPicker AssetPicker;
         private AssetContext db;
 
         /// <summary>
         /// Initializes a new instance of the AssetController class.
         /// </summary>
-        public AssetController(AssetContext db)
+        public AssetController(AssetContext db, IAssetPicker assetPicker)
         {
+            AssetPicker = assetPicker;
             this.db = db;
         }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -106,62 +109,18 @@ namespace Mavo.Assets.Controllers
             db.SaveChanges();
             return null;
         }
+
         [HttpPost]
         public virtual ActionResult AddAsset(int id, int? jobId = null, int? templateId = null)
         {
 
-            Asset asset = db.Assets.FirstOrDefault(x => x.Id == id);
-            AssetWithQuantity newAssetWithQuantity = new AssetWithQuantity() { Asset = asset, Quantity = 1 };
-            if (jobId.HasValue)
-            {
-
-                var job = db.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == jobId);
-                if (job.Assets != null && job.Assets.Any(x => x.Asset.Id == id))
-                {
-                    var assetToIncrease = job.Assets.FirstOrDefault(x => x.Asset.Id == id);
-                    assetToIncrease.Quantity++;
-                    newAssetWithQuantity.Quantity = assetToIncrease.Quantity;
-                }
-                else
-                {
-                    if (job.Assets == null)
-                        job.Assets = new List<AssetWithQuantity>();
-
-                    job.Assets.Add(newAssetWithQuantity);
-                }
-            }
-            else if (templateId.HasValue)
-            {
-                newAssetWithQuantity = new TemplateAsset() { Asset = asset, Quantity = 1 }; ;
-
-                var template = db.Templates.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == templateId);
-                if (template.Assets != null && template.Assets.Any(x => x.Asset.Id == id))
-                {
-                    var assetToIncrease = template.Assets.FirstOrDefault(x => x.Asset.Id == id);
-                    assetToIncrease.Quantity++;
-                    newAssetWithQuantity.Quantity = assetToIncrease.Quantity;
-                }
-                else
-                {
-                    if (template.Assets == null)
-                        template.Assets = new List<TemplateAsset>();
-
-                    template.Assets.Add((TemplateAsset)newAssetWithQuantity);
-                }
-            }
-
-
-            db.SaveChanges();
-
-            return PartialView("_AssetRow", newAssetWithQuantity);
+            return PartialView("_AssetRow", AssetPicker.Add(id, jobId, templateId));
         }
 
         [HttpPost]
         public virtual ActionResult UpdateQuantity(int id, int quantity)
         {
-            var asset = db.JobAssets.FirstOrDefault(x => x.Id == id);
-            asset.Quantity = quantity;
-            db.SaveChanges();
+            AssetPicker.IncreaseQuantity(id, quantity);
             return null;
         }
 

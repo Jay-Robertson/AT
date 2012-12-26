@@ -9,25 +9,9 @@
     @{Html.RenderAction("AssetPickerDetail", new { id = Model.First().Id });}
 </span>
 <button class="btn" id="add-asset">Add</button>
-
-<table id="asset-table" class="table table-striped">
-    <thead>
-        <tr>
-            <th>Asset</th>
-            <th>Quantity</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (ViewBag.Assets != null)
-        {
-            foreach (Mavo.Assets.Models.AssetWithQuantity asset in ViewBag.Assets)
-            {
-                Html.RenderPartial("_AssetRow", asset);
-            }
-        }
-    </tbody>
-</table>
+<div id="asset-container">
+    @{Html.RenderPartial("_AssetTable");}
+</div>
 
 <script>
     var idSpecifier = '@(ViewBag.IsForJob ? String.Format("jobId={0}", ViewBag.JobId ?? 0) : String.Format("templateId={0}", ViewBag.TemplateId))';
