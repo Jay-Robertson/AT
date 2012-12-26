@@ -211,6 +211,7 @@
     <Compile Include="Models\ViewModel\AssetSearchResult.cs" />
     <Compile Include="Models\ViewModel\AssetsLeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\EditJobPostModel.cs" />
+    <Compile Include="Models\ViewModel\FellOffTruck.cs" />
     <Compile Include="Models\ViewModel\JobReportViewModel.cs" />
     <Compile Include="Models\ViewModel\JobSearch.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
@@ -353,6 +354,7 @@
     <Content Include="Views\Asset\_AssetTable.cshtml" />
     <Content Include="Views\Reports\AssetHistory.cshtml" />
     <Content Include="Views\Reports\TomorrowsPicks.cshtml" />
+    <Content Include="Views\Reports\FellOffTruck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

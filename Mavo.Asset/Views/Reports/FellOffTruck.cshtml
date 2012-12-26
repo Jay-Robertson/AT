@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Mavo.Assets.Models.ViewModel.AssetsWithoutReturn>
+
+@{
+    ViewBag.Title = "FellOffTruck";
+}
+
+<h2>FellOffTruck</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        <span class="input-prepend">
+            <span class="add-on"><i class="icon-calendar"></i></span>
+            @Html.TextBox("startDate", null, new { @class = "text date" })
+        </span>
+        <span>-</span>
+        <span class="input-prepend">
+            <span class="add-on"><i class="icon-calendar"></i></span>
+            @Html.TextBox("endDate", null, new { @class = "text date" })
+        </span>
+    </div>
+    <input type="submit" value="filter" />
+}
+<table class="table table-striped table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Asset)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Barcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Job)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnedBy)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="/asset/edit/@(item.Id)">@Html.DisplayFor(modelItem => item.Asset)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barcode)
+            </td>
+            <td>
+                <a href="/job/edit/@(item.jobId)">@Html.DisplayFor(modelItem => item.Job)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnedBy)
+            </td>
+        </tr>
+    }
+</table>

@@ -40,10 +40,8 @@ namespace Mavo.Assets
                 .ForMember(dest => dest.PickedUpByStr, opt => opt.MapFrom(src => src.PickedBy.FullName));
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
 
-            //HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 
-            //ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
-            //ModelBinders.Binders.Add(typeof(DateTime?), new DateTimeModelBinder());
         }
     }
 }

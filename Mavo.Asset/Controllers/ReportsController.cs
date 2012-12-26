@@ -78,6 +78,26 @@ namespace Mavo.Assets.Controllers
 
             return View();
         }
+
+        public ActionResult FellOffTruck(DateTime? startDate = null, DateTime? endDate = null)
+        {
+            if (!startDate.HasValue)
+                startDate = DateTime.Today.AddDays(-7);
+            if (!endDate.HasValue)
+                endDate = DateTime.Today;
+
+            endDate = endDate.Value.AddDays(1).AddSeconds(-1);
+
+            var returnedJobsquery = Context.Jobs.Where(job => job.ReturnCompleted > startDate && job.ReturnCompleted <= endDate).ToList();
+            var returnedJobIds = returnedJobsquery.Select(x => x.Id).ToArray();
+            var assetsWithoutReturn = Context.AssetActivity.Where(ai => ai.Asset.Kind != AssetKind.Consumable && returnedJobIds.Contains(ai.Job.Id) && ai.Action == AssetAction.Return)
+                .Select(x => new { Id = x.Asset.Id, JobId = x.Job.Id, Asset = x.Asset.Name, Barcode = x.Item.Barcode, Job = x.Job.Name, ReturnedOn = x.Job.ReturnCompleted, ReturnedBy = x.Job.ReturnedBy.FirstName + " " + x.Job.ReturnedBy.LastName })
+                .Distinct()
+                .ToList();
+
+            return View(assetsWithoutReturn.Select(x=> new AssetsWithoutReturn(x.Id, x.Asset,x.Barcode,x.Job,x.ReturnedOn, x.ReturnedBy,x.JobId)).OrderBy(x=>x.ReturnedOn).ToList());
+        }
+
         public ActionResult TomorrowsPicks()
         {
             var endDate = DateTime.Today.AddDays(2).AddSeconds(-1);
