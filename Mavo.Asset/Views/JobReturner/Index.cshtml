@@ -97,12 +97,12 @@
         </div>
     </div>
 </div>
-@if(Model.ReturnStarted.HasValue)
+@if (Model.ReturnStarted.HasValue)
 {
-<div class="alert alert-info @(!Model.ReturnStarted.HasValue ? "hide" : "")" id="returnTimeDiv">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Job Returning!</strong> This job started being returned up at <span id="returnTime">@(Model.ReturnStarted.HasValue ? Model.ReturnStarted.Value.ToString() : "")</span>
-</div>
+    <div class="alert alert-info @(!Model.ReturnStarted.HasValue ? "hide" : "")" id="returnTimeDiv">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Job Returning!</strong> This job started being returned up at <span id="returnTime">@(Model.ReturnStarted.HasValue ? Model.ReturnStarted.Value.ToString() : "")</span>
+    </div>
 }
 @using (Html.BeginForm(MVC.JobReturner.Index(Model.JobId, null)))
 {

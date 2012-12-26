@@ -352,6 +352,7 @@
     <Content Include="Views\Shared\_LayoutWithNoConstraints.cshtml" />
     <Content Include="Views\Asset\_AssetTable.cshtml" />
     <Content Include="Views\Reports\AssetHistory.cshtml" />
+    <Content Include="Views\Reports\TomorrowsPicks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

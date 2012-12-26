@@ -69,7 +69,7 @@ namespace Mavo.Assets.Controllers
                                     .Include(x => x.Asset)
                                     .Include(x => x.Item)
                                     .Include(x => x.Job)
-                                    .Include(x=>x.User)
+                                    .Include(x => x.User)
                                     .Where(x => x.Item.Barcode == id)
                                     .OrderBy(x => x.Date)
                                     .ToList();
@@ -77,6 +77,69 @@ namespace Mavo.Assets.Controllers
             }
 
             return View();
+        }
+        public ActionResult TomorrowsPicks()
+        {
+            var endDate = DateTime.Today.AddDays(2).AddSeconds(-1);
+            var startDate = DateTime.Today.AddDays(1);
+            var list = Context.Jobs.Include("Assets").Include("Asset")
+                 .Where(x => x.PickupTime > startDate && x.PickupTime <= endDate)
+                 .Select(x =>
+                 new
+                 {
+                     JobId = x.Id,
+                     JobName = x.Name,
+                     JobNumber = x.JobNumber,
+                     ManagerFirstName = x.ProjectManager.FirstName,
+                     ManagerLastName = x.ProjectManager.LastName,
+                     Customer = x.Customer.Name,
+                     JobSite = x.JobSiteName,
+                     ForemanFirstName = x.Foreman.FirstName,
+                     ForemanLastName = x.Foreman.LastName,
+                     PickStarted = x.PickStarted,
+                     PickCompleted = x.PickCompleted,
+                     ReturnStarted = x.ReturnStarted,
+                     ReturnCompleted = x.ReturnCompleted,
+                     PickupTime = x.PickupTime,
+                     Assets = x.Assets.Select(a => new
+                     {
+                         Name = a.Asset.Name,
+                         Id = a.Id,
+                         Quantity = a.Quantity,
+                         Kind = a.Asset.Kind,
+                         AssetId = a.Asset.Id,
+                         NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
+                         QuantityAvailable = a.Asset.Inventory
+                     })
+                 }).ToList();
+
+
+            return View(list.Select(result =>
+                new PickAJobModel()
+                {
+                    JobId = result.JobId,
+                    JobName = result.JobName,
+                    JobNumber = result.JobNumber,
+                    Manager = String.Format("{0} {1}", result.ManagerFirstName, result.ManagerLastName),
+                    JobSite = result.JobSite,
+                    Foreman = String.Format("{0} {1}", result.ForemanFirstName, result.ForemanLastName),
+                    Customer = result.Customer,
+                    PickStarted = result.PickStarted,
+                    ReturnStarted = result.ReturnStarted,
+                    PickupTime = result.PickupTime,
+                    Assets = result.Assets.Select(x => new JobAsset()
+                    {
+                        Name = x.Name,
+                        Id = x.Id,
+                        AssetId = x.AssetId,
+                        QuantityNeeded = x.Quantity,
+                        QuantityTaken = x.Quantity,
+                        Kind = x.Kind,
+                        NotEnoughQuantity = x.NotEnoughQuantity,
+                        QuantityAvailable = x.QuantityAvailable
+                    }).ToList()
+                }));
+
         }
     }
 }

@@ -33,6 +33,8 @@ namespace Mavo.Assets.Models.ViewModel
 
         public DateTime? PickStarted { get; set; }
         public DateTime? ReturnStarted { get; set; }
+
+        public DateTime PickupTime { get; set; }
     }
     public class JobAsset
     {
