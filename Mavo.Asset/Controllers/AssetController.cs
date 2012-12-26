@@ -16,14 +16,16 @@ namespace Mavo.Assets.Controllers
     [Authorize]
     public partial class AssetController : BaseController
     {
+        private readonly IAssetActivityManager AssetActivity;
         private readonly IAssetPicker AssetPicker;
         private AssetContext db;
 
         /// <summary>
         /// Initializes a new instance of the AssetController class.
         /// </summary>
-        public AssetController(AssetContext db, IAssetPicker assetPicker)
+        public AssetController(AssetContext db, IAssetPicker assetPicker, IAssetActivityManager activityManager)
         {
+            AssetActivity = activityManager;
             AssetPicker = assetPicker;
             this.db = db;
         }
@@ -35,16 +37,22 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult RetireItem(int id)
         {
-            var item = db.AssetItems.FirstOrDefault(x => x.Id == id);
+            var item = db.AssetItems.Include(x=>x.Asset).FirstOrDefault(x => x.Id == id);
             item.Condition = AssetCondition.Retired;
+
+            AssetActivity.Add(AssetAction.Retire, item.Asset, item);
+
             db.SaveChanges();
             return RedirectToAction(MVC.Asset.ItemReview());
         }
         [HttpPost]
         public virtual ActionResult RepairItem(int id)
         {
-            var item = db.AssetItems.FirstOrDefault(x => x.Id == id);
+            var item = db.AssetItems.Include(x => x.Asset).FirstOrDefault(x => x.Id == id);
             item.Condition = AssetCondition.Good;
+
+            AssetActivity.Add(AssetAction.Repair, item.Asset, item);
+
             db.SaveChanges();
             return RedirectToAction(MVC.Asset.ItemReview());
         }
@@ -217,9 +225,10 @@ namespace Mavo.Assets.Controllers
         {
             if (ModelState.IsValid)
             {
+                Asset asset = db.Assets.FirstOrDefault(x => x.Id == scan.AssetId);
                 AssetItem assetItem = new AssetItem()
                 {
-                    Asset = db.Assets.FirstOrDefault(x => x.Id == scan.AssetId),
+                    Asset = asset,
                     Barcode = scan.Barcode,
                     Condition = scan.Condition,
                     PurchaseDate = scan.PurchaseDate,
@@ -229,8 +238,12 @@ namespace Mavo.Assets.Controllers
                     ModelNumber = scan.ModelNumber,
                     Manufacturer = scan.Manufacturer,
                 };
+
                 db.AssetItems.Add(assetItem);
                 db.SaveChanges();
+
+                AssetActivity.Add(AssetAction.Scanned, asset, assetItem);
+
             }
             return RedirectToAction("Scan");
         }
@@ -247,7 +260,12 @@ namespace Mavo.Assets.Controllers
                     assetToSave.Category = context.AssetCategories.FirstOrDefault(x => x.Id == asset.CategoryId.Value);
 
                 if (!asset.Id.HasValue)
+                {
                     context.Assets.Add(assetToSave);
+                    AssetActivity.Add(AssetAction.Create, assetToSave);
+                }
+                else
+                    AssetActivity.Add(AssetAction.Edit, assetToSave);
 
                 context.SaveChanges();
                 return RedirectToAction("Index");

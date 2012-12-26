@@ -109,7 +109,9 @@ namespace Mavo.Assets.Models
         Transfer,
         Return,
         Repair,
-        Retire
+        Retire,
+        Scanned,
+        Damaged
     }
 
     [Table("AssetActivity")]

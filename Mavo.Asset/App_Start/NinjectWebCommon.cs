@@ -61,6 +61,8 @@ namespace Mavo.Assets.App_Start
             kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             kernel.Bind<IAssetPicker>().To<AssetPicker>();
+            kernel.Bind<IAssetActivityManager>().To<AssetActivityMananger>();
+            kernel.Bind<ICurrentUserService>().To<CurrentUserService>();
         }        
     }
 }

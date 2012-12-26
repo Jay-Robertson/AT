@@ -12,12 +12,14 @@ namespace Mavo.Assets.Controllers
     [Authorize]
     public partial class JobPickerController : BaseController
     {
+        private readonly IAssetActivityManager AssetActivity;
         private readonly AssetContext Context;
         /// <summary>
         /// Initializes a new instance of the JobPickerController class.
         /// </summary>
-        public JobPickerController(AssetContext context)
+        public JobPickerController(AssetContext context, IAssetActivityManager assetActivity)
         {
+            AssetActivity = assetActivity;
             Context = context;
         }
 
@@ -49,17 +51,10 @@ namespace Mavo.Assets.Controllers
             job.PickCompleted = DateTime.Now;
             job.PickedAssets = new List<PickedAsset>();
             job.PickCompleted = DateTime.Now;
+            IEnumerable<PickedAsset> pickedAssets = null;
             if (assets != null)
             {
-                var pickedAssets = assets.Select(x => new PickedAsset()
-                {
-                    Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId),
-                    Item = !String.IsNullOrEmpty(x.Barcode) ? Context.AssetItems.FirstOrDefault(ai => x.Barcode == ai.Barcode) : null,
-                    Job = job,
-                    Picked = DateTime.Now,
-                    Quantity = Math.Max(x.QuantityTaken ?? 1, 1),
-                    Barcode = x.Barcode
-                });
+                pickedAssets = assets.Select(x => new PickedAsset() { Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId), Item = !String.IsNullOrEmpty(x.Barcode) ? Context.AssetItems.FirstOrDefault(ai => x.Barcode == ai.Barcode) : null, Job = job, Picked = DateTime.Now, Quantity = Math.Max(x.QuantityTaken ?? 1, 1), Barcode = x.Barcode });
                 foreach (var pickedAsset in pickedAssets)
                 {
                     Context.PickedAssets.Add(pickedAsset);
@@ -72,9 +67,11 @@ namespace Mavo.Assets.Controllers
                     }
 
                     job.PickedAssets.Add(pickedAsset);
+                    AssetActivity.Add(AssetAction.Pick, pickedAsset.Asset, pickedAsset.Item, job);
                 }
             }
             Context.SaveChanges();
+
 
             return RedirectToAction(MVC.JobPicker.Success(id));
         }

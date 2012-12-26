@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
+using Mavo.Assets.Services;
 
 namespace Mavo.Assets.Controllers
 {
@@ -12,9 +13,11 @@ namespace Mavo.Assets.Controllers
     public partial class JobReturnerController : BaseController
     {
         //
+        private readonly IAssetActivityManager AssetActivity;
         private readonly AssetContext Context;
-        public JobReturnerController(AssetContext context)
+        public JobReturnerController(AssetContext context, IAssetActivityManager assetActivity)
         {
+            AssetActivity = assetActivity;
             Context = context;
         }
         [HttpPost]
@@ -48,17 +51,24 @@ namespace Mavo.Assets.Controllers
             {
                 Asset asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
                 if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
+                {
                     asset.Inventory += assets.FirstOrDefault(x => x.AssetId == asset.Id).QuantityTaken;
+                }
                 else if (asset.Kind == AssetKind.Serialized)
                 {
                     pickedAsset.Item.Status = InventoryStatus.In;
                     var incomingItem = assets.FirstOrDefault(x => x.AssetItemId == pickedAsset.Item.Id);
                     if (incomingItem.IsDamaged)
+                    {
+                        AssetActivity.Add(AssetAction.Damaged, pickedAsset.Asset, pickedAsset.Item, job);
                         pickedAsset.Item.Condition = AssetCondition.Damaged;
+                    }
                 }
 
+                AssetActivity.Add(AssetAction.Return, pickedAsset.Asset, pickedAsset.Item, job);
             }
             Context.SaveChanges();
+          
 
             return RedirectToAction(MVC.JobReturner.Success(id));
         }

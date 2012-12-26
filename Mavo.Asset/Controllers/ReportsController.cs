@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
@@ -57,6 +58,25 @@ namespace Mavo.Assets.Controllers
                     BeingReturned = GetBeingReturned()
                 };
             return View(result);
+        }
+
+        public ActionResult AssetHistory(string id = null)
+        {
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                var result = Context.AssetActivity
+                                    .Include(x => x.Asset)
+                                    .Include(x => x.Item)
+                                    .Include(x => x.Job)
+                                    .Include(x=>x.User)
+                                    .Where(x => x.Item.Barcode == id)
+                                    .OrderBy(x => x.Date)
+                                    .ToList();
+                return View(result);
+            }
+
+            return View();
         }
     }
 }
