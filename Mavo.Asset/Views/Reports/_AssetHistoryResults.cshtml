@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Mavo.Assets.Models.AssetActivity>
+@if (Model != null)
+{
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Asset</th>
+            <th>Action</th>
+            <th>Job</th>
+            <th>User</th>
+            <th>Date</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Asset.Name</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Action)
+                </td>
+                <td>
+                    @if (item.Job != null)
+                    {
+                        if (item.Job is Mavo.Assets.Models.JobAddon)
+                        {
+                        <span class="label label-info"><i class="icon-white icon-plus-sign"></i></span>
+                        }
+
+                        @Html.DisplayFor(modelItem => item.Job.Name)
+                    }
+                </td>
+                <td>
+                    @if(item.User != null)
+                    {
+                        @Html.ActionLink(item.User.FullName, MVC.Reports.AssetHistoryFilter(userId: item.User.Id, startDate: item.Date.Date, endDate: item.Date.Date.AddDays(1)))
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+            </tr>
+        }
+
+    </table>
+}

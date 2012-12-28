@@ -22,7 +22,7 @@ namespace Mavo.Assets.Controllers
             AssetPicker = assetPicker;
             Context = context;
         }
-        public ActionResult AddOnModal(int id)
+        public virtual ActionResult AddOnModal(int id)
         {
             Job job = Context.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
             ViewBag.IsForJob = true;
@@ -33,7 +33,7 @@ namespace Mavo.Assets.Controllers
             return PartialView("_AddOnModal", id);
         }
         [HttpPost]
-        public ActionResult CreateAddon(int id)
+        public virtual ActionResult CreateAddon(int id)
         {
             JobAddon newAddon = new JobAddon();
             Job job = Context.Jobs.Include(x=>x.Customer).Include(x=>x.Foreman).Include(x=>x.ProjectManager).FirstOrDefault(x => x.Id == id);
@@ -44,7 +44,7 @@ namespace Mavo.Assets.Controllers
             Context.SaveChanges();
             return Json(newAddon.Id);
         }
-        public ActionResult TransferAssetsModal(int id)
+        public virtual ActionResult TransferAssetsModal(int id)
         {
             List<Job> jobs = Context.Jobs.Include(x => x.Foreman).Include(x => x.Customer).Where(x => x.Status == JobStatus.Started && x.Id != id).OrderBy(x => x.JobNumber).ToList();
             return PartialView("_TransferAssetModal", new TransferAssetsViewModel()
@@ -54,7 +54,7 @@ namespace Mavo.Assets.Controllers
                 Assets = Context.PickedAssets.Where(x => x.Job.Id == id).Include(x => x.Asset).ToList()
             });
         }
-        public ActionResult TransferAssets(TransferAssetsViewModel model)
+        public virtual ActionResult TransferAssets(TransferAssetsViewModel model)
         {
             var assetsToTranfer = model.TransferredAssets.Where(x => x.IsSelected || (x.Quantity.HasValue && x.Quantity.Value > 0));
             Job jobToTransferTo = Context.Jobs.Include(x => x.PickedAssets).FirstOrDefault(x => x.Id == model.JobToTransferTo);

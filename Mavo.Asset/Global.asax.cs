@@ -42,6 +42,7 @@ namespace Mavo.Assets
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
             AutoMapper.Mapper.CreateMap<Job, JobAddon>()
                 .ForMember(x => x.ParentJob, opt => opt.MapFrom(src => src))
+                .ForMember(x => x.Name, opt => opt.MapFrom(src => src.Name + " [Add On]"))
                 .ForMember(x => x.Status, opt => opt.MapFrom(src => JobStatus.New))
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.PickupTime, opt => opt.MapFrom(src => DateTime.Now))

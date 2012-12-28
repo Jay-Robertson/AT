@@ -370,6 +370,7 @@
     <Content Include="Views\Reports\FellOffTruck.cshtml" />
     <Content Include="Views\Job\_TransferAssetModal.cshtml" />
     <Content Include="Views\Job\_AddOnModal.cshtml" />
+    <Content Include="Views\Reports\_AssetHistoryResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

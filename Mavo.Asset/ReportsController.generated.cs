@@ -59,6 +59,10 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string LateJobs = "LateJobs";
             public readonly string Jobs = "Jobs";
+            public readonly string AssetHistory = "AssetHistory";
+            public readonly string AssetHistoryFilter = "AssetHistoryFilter";
+            public readonly string FellOffTruck = "FellOffTruck";
+            public readonly string TomorrowsPicks = "TomorrowsPicks";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -66,9 +70,34 @@ namespace Mavo.Assets.Controllers
         {
             public const string LateJobs = "LateJobs";
             public const string Jobs = "Jobs";
+            public const string AssetHistory = "AssetHistory";
+            public const string AssetHistoryFilter = "AssetHistoryFilter";
+            public const string FellOffTruck = "FellOffTruck";
+            public const string TomorrowsPicks = "TomorrowsPicks";
         }
 
 
+        static readonly ActionParamsClass_AssetHistoryFilter s_params_AssetHistoryFilter = new ActionParamsClass_AssetHistoryFilter();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AssetHistoryFilter AssetHistoryFilterParams { get { return s_params_AssetHistoryFilter; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AssetHistoryFilter
+        {
+            public readonly string id = "id";
+            public readonly string userId = "userId";
+            public readonly string date = "date";
+            public readonly string startDate = "startDate";
+            public readonly string endDate = "endDate";
+        }
+        static readonly ActionParamsClass_FellOffTruck s_params_FellOffTruck = new ActionParamsClass_FellOffTruck();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_FellOffTruck FellOffTruckParams { get { return s_params_FellOffTruck; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_FellOffTruck
+        {
+            public readonly string startDate = "startDate";
+            public readonly string endDate = "endDate";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -79,13 +108,21 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _AssetHistoryResults = "_AssetHistoryResults";
                 public readonly string _ReadyJob = "_ReadyJob";
+                public readonly string AssetHistory = "AssetHistory";
+                public readonly string FellOffTruck = "FellOffTruck";
                 public readonly string Jobs = "Jobs";
                 public readonly string LateJobs = "LateJobs";
+                public readonly string TomorrowsPicks = "TomorrowsPicks";
             }
+            public readonly string _AssetHistoryResults = "~/Views/Reports/_AssetHistoryResults.cshtml";
             public readonly string _ReadyJob = "~/Views/Reports/_ReadyJob.cshtml";
+            public readonly string AssetHistory = "~/Views/Reports/AssetHistory.cshtml";
+            public readonly string FellOffTruck = "~/Views/Reports/FellOffTruck.cshtml";
             public readonly string Jobs = "~/Views/Reports/Jobs.cshtml";
             public readonly string LateJobs = "~/Views/Reports/LateJobs.cshtml";
+            public readonly string TomorrowsPicks = "~/Views/Reports/TomorrowsPicks.cshtml";
         }
     }
 
@@ -103,6 +140,37 @@ namespace Mavo.Assets.Controllers
         public override System.Web.Mvc.ActionResult Jobs()
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Jobs);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AssetHistory()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetHistory);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AssetHistoryFilter(string id, int? userId, System.DateTime? date, System.DateTime? startDate, System.DateTime? endDate)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetHistoryFilter);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userId", userId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "date", date);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "startDate", startDate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "endDate", endDate);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult FellOffTruck(System.DateTime? startDate, System.DateTime? endDate)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.FellOffTruck);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "startDate", startDate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "endDate", endDate);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult TomorrowsPicks()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TomorrowsPicks);
             return callInfo;
         }
 

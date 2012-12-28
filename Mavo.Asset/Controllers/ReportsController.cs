@@ -60,26 +60,41 @@ namespace Mavo.Assets.Controllers
             return View(result);
         }
 
-        public ActionResult AssetHistory(string id = null)
+        public virtual ActionResult AssetHistory()
         {
-
-            if (!String.IsNullOrEmpty(id))
-            {
-                var result = Context.AssetActivity
-                                    .Include(x => x.Asset)
-                                    .Include(x => x.Item)
-                                    .Include(x => x.Job)
-                                    .Include(x => x.User)
-                                    .Where(x => x.Item.Barcode == id)
-                                    .OrderBy(x => x.Date)
-                                    .ToList();
-                return View(result);
-            }
-
+            ViewBag.Users = Context.Users.ToList();
             return View();
         }
 
-        public ActionResult FellOffTruck(DateTime? startDate = null, DateTime? endDate = null)
+        public virtual ActionResult AssetHistoryFilter(string id = null, int? userId = null, DateTime? date = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            if (date.HasValue)
+            {
+                startDate = date.Value;
+                endDate = date.Value.AddDays(1);
+            }
+
+
+            var result = Context.AssetActivity
+                                .Include(x => x.Asset)
+                                .Include(x => x.Item)
+                                .Include(x => x.Job)
+                                .Include(x => x.User);
+
+            if (!String.IsNullOrEmpty(id))
+                result = result.Where(x => x.Asset.Barcode == id);
+            if (userId.HasValue)
+                result = result.Where(x => x.User.Id == userId.Value);
+            if (startDate.HasValue)
+                result = result.Where(x => x.Date >= startDate);
+            if (endDate.HasValue)
+                result = result.Where(x => x.Date < endDate);
+            ViewBag.Users = Context.Users.ToList();
+
+            return View("AssetHistory", result.OrderBy(x => x.Date).ToList());
+        }
+
+        public virtual ActionResult FellOffTruck(DateTime? startDate = null, DateTime? endDate = null)
         {
             if (!startDate.HasValue)
                 startDate = DateTime.Today.AddDays(-7);
@@ -95,10 +110,10 @@ namespace Mavo.Assets.Controllers
                 .Distinct()
                 .ToList();
 
-            return View(assetsWithoutReturn.Select(x=> new AssetsWithoutReturn(x.Id, x.Asset,x.Barcode,x.Job,x.ReturnedOn, x.ReturnedBy,x.JobId)).OrderBy(x=>x.ReturnedOn).ToList());
+            return View(assetsWithoutReturn.Select(x => new AssetsWithoutReturn(x.Id, x.Asset, x.Barcode, x.Job, x.ReturnedOn, x.ReturnedBy, x.JobId)).OrderBy(x => x.ReturnedOn).ToList());
         }
 
-        public ActionResult TomorrowsPicks()
+        public virtual ActionResult TomorrowsPicks()
         {
             var endDate = DateTime.Today.AddDays(2).AddSeconds(-1);
             var startDate = DateTime.Today.AddDays(1);

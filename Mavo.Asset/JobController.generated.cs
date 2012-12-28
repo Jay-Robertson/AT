@@ -43,6 +43,30 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AddOnModal()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddOnModal);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult CreateAddon()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateAddon);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult TransferAssetsModal()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TransferAssetsModal);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult TransferAssets()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TransferAssets);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult AddAssetsFromTemplate()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddAssetsFromTemplate);
@@ -81,6 +105,10 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass
         {
+            public readonly string AddOnModal = "AddOnModal";
+            public readonly string CreateAddon = "CreateAddon";
+            public readonly string TransferAssetsModal = "TransferAssetsModal";
+            public readonly string TransferAssets = "TransferAssets";
             public readonly string Index = "Index";
             public readonly string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public readonly string Create = "Create";
@@ -91,6 +119,10 @@ namespace Mavo.Assets.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
+            public const string AddOnModal = "AddOnModal";
+            public const string CreateAddon = "CreateAddon";
+            public const string TransferAssetsModal = "TransferAssetsModal";
+            public const string TransferAssets = "TransferAssets";
             public const string Index = "Index";
             public const string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public const string Create = "Create";
@@ -99,6 +131,38 @@ namespace Mavo.Assets.Controllers
         }
 
 
+        static readonly ActionParamsClass_AddOnModal s_params_AddOnModal = new ActionParamsClass_AddOnModal();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddOnModal AddOnModalParams { get { return s_params_AddOnModal; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddOnModal
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_CreateAddon s_params_CreateAddon = new ActionParamsClass_CreateAddon();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_CreateAddon CreateAddonParams { get { return s_params_CreateAddon; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_CreateAddon
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_TransferAssetsModal s_params_TransferAssetsModal = new ActionParamsClass_TransferAssetsModal();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_TransferAssetsModal TransferAssetsModalParams { get { return s_params_TransferAssetsModal; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_TransferAssetsModal
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_TransferAssets s_params_TransferAssets = new ActionParamsClass_TransferAssets();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_TransferAssets TransferAssetsParams { get { return s_params_TransferAssets; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_TransferAssets
+        {
+            public readonly string model = "model";
+        }
         static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
@@ -154,15 +218,19 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _AddOnModal = "_AddOnModal";
                 public readonly string _JobSidebar = "_JobSidebar";
                 public readonly string _PickJobModal = "_PickJobModal";
                 public readonly string _SearchResult = "_SearchResult";
+                public readonly string _TransferAssetModal = "_TransferAssetModal";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
+            public readonly string _AddOnModal = "~/Views/Job/_AddOnModal.cshtml";
             public readonly string _JobSidebar = "~/Views/Job/_JobSidebar.cshtml";
             public readonly string _PickJobModal = "~/Views/Job/_PickJobModal.cshtml";
             public readonly string _SearchResult = "~/Views/Job/_SearchResult.cshtml";
+            public readonly string _TransferAssetModal = "~/Views/Job/_TransferAssetModal.cshtml";
             public readonly string Edit = "~/Views/Job/Edit.cshtml";
             public readonly string Index = "~/Views/Job/Index.cshtml";
         }
@@ -172,6 +240,34 @@ namespace Mavo.Assets.Controllers
     public class T4MVC_JobController : Mavo.Assets.Controllers.JobController
     {
         public T4MVC_JobController() : base(Dummy.Instance) { }
+
+        public override System.Web.Mvc.ActionResult AddOnModal(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddOnModal);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult CreateAddon(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateAddon);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult TransferAssetsModal(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TransferAssetsModal);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult TransferAssets(Mavo.Assets.Models.ViewModel.TransferAssetsViewModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TransferAssets);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.ActionResult Index(Mavo.Assets.Models.JobStatus? status, int? customerId, int? projectManagerId)
         {
