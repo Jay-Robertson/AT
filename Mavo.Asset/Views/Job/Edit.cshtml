@@ -64,12 +64,15 @@
         </text>
         }
     </script>
-
 }
 
 @if (null != Model)
 {
     Html.RenderPartial("_PickJobModal", new Mavo.Assets.Models.Job() { Id = Model.Id.Value, PickupTime = Model.PickupTime, Name = Model.Name });
+    if (Model.Status == Mavo.Assets.Models.JobStatus.Started)
+    {
+        Html.RenderAction("TransferAssetsModal", new { id = Model.Id });
+    }
 }
 <h1>
     <span>@ViewBag.Action Job</span>
@@ -79,6 +82,10 @@
         if (Model.Status == Mavo.Assets.Models.JobStatus.New)
         {
         <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="pull-right btn btn-primary btn-large"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
+        }
+        else if (Model.Status == Mavo.Assets.Models.JobStatus.Started)
+        {
+        <a data-toggle="modal" href="#transferAssetModel@(Model.Id.Value)" class="pull-right btn btn-primary btn-large"><i class="icon-random icon-white"></i>&nbsp;Transfer Assets</a>
         }
     }
 

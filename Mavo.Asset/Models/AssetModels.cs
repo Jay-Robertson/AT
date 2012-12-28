@@ -106,12 +106,13 @@ namespace Mavo.Assets.Models
         Create,
         Edit,
         Pick,
-        Transfer,
         Return,
         Repair,
         Retire,
         Scanned,
-        Damaged
+        Damaged,
+        TransferTo,
+        TransferFrom
     }
 
     [Table("AssetActivity")]

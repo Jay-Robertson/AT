@@ -1,30 +1,36 @@
 ﻿@model IList<Mavo.Assets.Models.AssetCategory>
-<select id="asset-category">
-    @foreach (var category in Model)
-    {
-        <option value="@category.Id">@category.Name</option>
-    }
-</select>
-<span id="asset-detail">
-    @{Html.RenderAction("AssetPickerDetail", new { id = Model.First().Id });}
-</span>
-<button class="btn" id="add-asset">Add</button>
+@if (!ViewBag.Lock)
+{
+    <select id="asset-category">
+        @foreach (var category in Model)
+        {
+            <option disabled value="@category.Id">@category.Name</option>
+        }
+    </select>
+
+    <span id="asset-detail">
+        @{Html.RenderAction("AssetPickerDetail", new { id = Model.First().Id });}
+    </span>
+    <button class="btn" id="add-asset">Add</button>
+}
+
 <div id="asset-container">
     @{Html.RenderPartial("_AssetTable");}
 </div>
-
-<script>
-    var idSpecifier = '@(ViewBag.IsForJob ? String.Format("jobId={0}", ViewBag.JobId ?? 0) : String.Format("templateId={0}", ViewBag.TemplateId))';
-    function removeRow(assetId) {
-        $('#row-' + assetId).remove();
-        $.post('/asset/removeasset/' + assetId + '?' + idSpecifier);
-        return false;
-    }
-    function updateQuantity(assetId, quantity) {
-        if (0 == quantity || !quantity) {
-            return removeRow(assetId);
+@if (!ViewBag.Lock)
+{
+    <script>
+        var idSpecifier = '@(ViewBag.IsForJob ? String.Format("jobId={0}", ViewBag.JobId ?? 0) : String.Format("templateId={0}", ViewBag.TemplateId))';
+        function removeRow(assetId) {
+            $('#row-' + assetId).remove();
+            $.post('/asset/removeasset/' + assetId + '?' + idSpecifier);
+            return false;
         }
-        $.post('/asset/updatequantity@(ViewBag.IsForJob ? "" : "fortemplate")/' + assetId + '?quantity=' + quantity);
+        function updateQuantity(assetId, quantity) {
+            if (0 == quantity || !quantity) {
+                return removeRow(assetId);
+            }
+            $.post('/asset/updatequantity@(ViewBag.IsForJob ? "" : "fortemplate")/' + assetId + '?quantity=' + quantity);
         $('#asset-table #row-' + assetId + ' .btn-primary').css('visibility', 'hidden');
     }
     jQuery(function ($) {
@@ -53,5 +59,6 @@
         });
     });
 
-</script>
+    </script>
+}
 

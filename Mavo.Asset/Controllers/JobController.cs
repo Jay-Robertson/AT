@@ -12,15 +12,68 @@ namespace Mavo.Assets.Controllers
     [Authorize]
     public partial class JobController : BaseController
     {
+        private readonly IAssetActivityManager AssetActivity;
         private readonly AssetContext Context;
         private readonly IAssetPicker AssetPicker;
 
-        public JobController(AssetContext context, IAssetPicker assetPicker) 
+        public JobController(AssetContext context, IAssetPicker assetPicker, IAssetActivityManager assetActivity)
         {
+            AssetActivity = assetActivity;
             AssetPicker = assetPicker;
             Context = context;
         }
 
+        public ActionResult TransferAssetsModal(int id)
+        {
+            List<Job> jobs = Context.Jobs.Include(x => x.Foreman).Include(x => x.Customer).Where(x => x.Status == JobStatus.Started && x.Id != id).OrderBy(x => x.JobNumber).ToList();
+            return PartialView("_TransferAssetModal", new TransferAssetsViewModel()
+            {
+                JobToTransferFrom = id,
+                Jobs = jobs,
+                Assets = Context.PickedAssets.Where(x => x.Job.Id == id).Include(x => x.Asset).ToList()
+            });
+        }
+        public ActionResult TransferAssets(TransferAssetsViewModel model)
+        {
+            var assetsToTranfer = model.TransferredAssets.Where(x => x.IsSelected || (x.Quantity.HasValue && x.Quantity.Value > 0));
+            Job jobToTransferTo = Context.Jobs.Include(x => x.PickedAssets).FirstOrDefault(x => x.Id == model.JobToTransferTo);
+            Job jobToTransferFrom = Context.Jobs.Include(x => x.PickedAssets).FirstOrDefault(x => x.Id == model.JobToTransferFrom);
+            foreach (var assetToTransfer in assetsToTranfer)
+            {
+                var pickedAsset = Context.PickedAssets.Include(x => x.Asset).Include(x=>x.Item).Include(x=>x.Job).FirstOrDefault(x => x.Id == assetToTransfer.PickedAssetId);
+
+                if (pickedAsset.Asset.Kind == AssetKind.Serialized || assetToTransfer.Quantity == pickedAsset.Quantity)
+                {
+                    int index = jobToTransferFrom.PickedAssets.FindIndex(x => x.Id == assetToTransfer.PickedAssetId);
+                    jobToTransferFrom.PickedAssets.RemoveAt(index);
+
+                    pickedAsset.Job = jobToTransferTo;
+
+                    jobToTransferTo.PickedAssets.Add(pickedAsset);
+                }
+                else if (assetToTransfer.Quantity < pickedAsset.Quantity)
+                {
+                    var newPickedAsset = new PickedAsset()
+                    {
+                        Asset = pickedAsset.Asset,
+                        Picked = pickedAsset.Picked,
+                        Quantity = assetToTransfer.Quantity.Value,
+                        Item = pickedAsset.Item,
+                        Job = jobToTransferTo
+                    };
+                    Context.PickedAssets.Add(newPickedAsset);
+
+                    pickedAsset.Quantity -= newPickedAsset.Quantity;
+                }
+
+                AssetActivity.Add(AssetAction.TransferFrom, pickedAsset.Asset, pickedAsset.Item, jobToTransferFrom);
+                AssetActivity.Add(AssetAction.TransferTo, pickedAsset.Asset, pickedAsset.Item, jobToTransferTo);
+
+                Context.SaveChanges();
+            }
+
+            return RedirectToAction("Edit", new { id = model.JobToTransferFrom });
+        }
         public virtual ActionResult Index(JobStatus? status = null, int? customerId = null, int? projectManagerId = null)
         {
             SetListsForCrud(null);
@@ -37,7 +90,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.Assets = Context.Jobs.Include(x => x.Assets).Include("Assets.Asset").First(x => x.Id == id).Assets;
             return PartialView(MVC.Asset.Views._AssetTable);
         }
-      
+
 
         [HttpPost]
         public virtual ActionResult Index(SearchResult search)

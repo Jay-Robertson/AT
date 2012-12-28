@@ -37,7 +37,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult RetireItem(int id)
         {
-            var item = db.AssetItems.Include(x=>x.Asset).FirstOrDefault(x => x.Id == id);
+            var item = db.AssetItems.Include(x => x.Asset).FirstOrDefault(x => x.Id == id);
             item.Condition = AssetCondition.Retired;
 
             AssetActivity.Add(AssetAction.Retire, item.Asset, item);
@@ -90,9 +90,11 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult AssetPickerForJob(int id)
         {
+            Job job = db.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
-            ViewBag.Assets = db.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id).Assets;
+            ViewBag.Assets = job.Status == JobStatus.New ? job.Assets : job.PickedAssets == null ? new List<AssetWithQuantity>() :  job.PickedAssets.Select(x => (AssetWithQuantity)x).ToList();
+            ViewBag.Lock = job.Status != JobStatus.New;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
 

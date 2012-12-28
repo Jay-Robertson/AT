@@ -2,19 +2,21 @@
 <tr id="row-@Model.Id" data-asset-id="@Model.Asset.Id">
     <td>@Model.Asset.Name
         @Html.HiddenFor(model => Model.Asset.Id)
-
     </td>
     <td>
-        <input id="quantity@(Model.Id)" class="input-mini quantity" type="number" value="@Model.Quantity" placeholder="quantity" />
+        <input id="quantity@(Model.Id)" @(ViewBag.Lock ? "disabled" : "") class="input-mini quantity" type="number" value="@Model.Quantity" placeholder="quantity" />
         @if (Model.Asset.Kind != Mavo.Assets.Models.AssetKind.Serialized && !String.IsNullOrEmpty(Model.Asset.UnitOfMeasure))
         {
             <span>@Model.Asset.UnitOfMeasure</span>
         }
     </td>
     <td>
-        <div class="">
+        @if(!ViewBag.Lock)
+        {
+        <div>
             <a href="#" onclick="removeRow(@Model.Id); return false;" class="btn btn-danger remove">Remove</a>
             <a href="#" onclick="updateQuantity(@Model.Id, $('#quantity@(Model.Id)').val()); return false;" class="btn btn-primary" style="visibility: hidden;">Update</a>
         </div>
+        }
     </td>
 </tr>

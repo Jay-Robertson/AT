@@ -1,0 +1,63 @@
+﻿@model Mavo.Assets.Models.ViewModel.TransferAssetsViewModel
+<div id="transferAssetModel@(Model.JobToTransferFrom)" class="modal  fade" tabindex="-1" role="dialog" aria-labelledby="transferAssetModelLabel@(Model.JobToTransferFrom)" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="transferAssetModelLabel@(Model.JobToTransferFrom)">Transfer Assets</h3>
+    </div>
+    @using (Html.BeginForm("TransferAssets", "Job", FormMethod.Post, new { @class = "form form-horizontal" }))
+    {
+        <div class="modal-body">
+
+            @Html.HiddenFor(x => x.JobToTransferFrom)
+            <div class="control-group">
+                <label class="control-label" for="inputEmail">Jobs</label>
+                <div class="controls">
+                    @Html.DropDownList("JobToTransferTo", Model.Jobs.Select(x => new SelectListItem()
+               {
+                   Text = String.Format("[{0}] {1}, {2}, {3}", x.JobNumber, x.Customer != null ? x.Customer.Name : "", x.Foreman != null ? x.Foreman.FirstName : "", x.Name),
+                   Value = x.Id.ToString()
+               }))
+                </div>
+            </div>
+            <div class="control-group">
+                <table class="table table-compressed">
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Transfer?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Assets.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <label for="TransferredAssets_@(i)__Quantity">@Model.Assets[i].Asset.Name</label>
+                                </td>
+                                <td>
+                                    <input type="hidden" value="@Model.Assets[i].Id" name="TransferredAssets[@i].PickedAssetId" />
+                                    @if (Model.Assets[i].Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
+                                    {
+                                        <input type="textbox"  value="@Model.Assets[i].Barcode" disabled />
+                                        <input class="checkbox" id="TransferredAssets_@(i)__IsSelected" name="TransferredAssets[@i].IsSelected" type="checkbox" value="true">
+                                        <input name="TransferredAssets[@i].IsSelected" type="hidden" value="false">
+                                    }
+                                    else
+                                    {
+                                        <input type="number" id="TransferredAssets_@(i)__Quantity" min="0" max="@Model.Assets[i].Quantity" name='TransferredAssets[@i].Quantity'  />
+                                    }
+                                </td>
+                            </tr>   
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Transfer Assets</button>
+        </div>
+    }
+
+</div>
+

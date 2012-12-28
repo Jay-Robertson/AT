@@ -216,6 +216,7 @@
     <Compile Include="Models\ViewModel\JobSearch.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\PickAJobModel.cs" />
+    <Compile Include="Models\ViewModel\TransferAssetsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -355,6 +356,7 @@
     <Content Include="Views\Reports\AssetHistory.cshtml" />
     <Content Include="Views\Reports\TomorrowsPicks.cshtml" />
     <Content Include="Views\Reports\FellOffTruck.cshtml" />
+    <Content Include="Views\Job\_TransferAssetModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
