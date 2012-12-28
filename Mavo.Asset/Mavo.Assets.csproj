@@ -29,6 +29,14 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
+    <PrecompileBeforePublish>true</PrecompileBeforePublish>
+    <UseMerge>true</UseMerge>
+    <WDPMergeOption>MergeAllOutputsToASingleAssembly</WDPMergeOption>
+    <SingleAssemblyName>Mavo.Assets.Outputs</SingleAssemblyName>
+    <PublishDatabases>false</PublishDatabases>
+    <DeployIisAppPath>Mavo</DeployIisAppPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -276,6 +284,7 @@
     <Content Include="Images\logo.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\Package.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
