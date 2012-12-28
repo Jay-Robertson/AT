@@ -3,6 +3,7 @@
 @model Mavo.Assets.Models.ViewModel.JobReportViewModel
 @section scripts
 {
+
     <script type="text/javascript">
         var interval = 30 * 1000 * 1;
         var refresh = function () {
@@ -10,6 +11,7 @@
         };
         setTimeout(refresh, interval);
     </script>
+
 }
 
 <div class="row-fluid">
@@ -28,7 +30,14 @@
                 @foreach (var job in Model.ReadyToPick)
                 {
                     <tr>
-                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
+                        <td>
+                             @if (job is Mavo.Assets.Models.JobAddon)
+                            {
+                                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                            }
+                            <a href="/job/edit/@job.Id">@job.Name</a>
+                           
+                        </td>
                         <td>@job.JobNumber</td>
                         <td>
                             <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
@@ -54,7 +63,14 @@
                 @foreach (var job in Model.ReadyToReturn)
                 {
                     <tr>
-                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
+                        <td>
+                             @if (job is Mavo.Assets.Models.JobAddon)
+                            {
+                                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                            }
+                            <a href="/job/edit/@job.Id">@job.Name</a>
+                           
+                        </td>
                         <td>@job.JobNumber</td>
                         <td>
                             @job.EstimatedCompletionDate
@@ -84,7 +100,14 @@
                 @foreach (var job in Model.BeingPicked)
                 {
                     <tr>
-                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
+                        <td>
+                            @if (job is Mavo.Assets.Models.JobAddon)
+                            {
+                                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                            }
+                            <a href="/job/edit/@job.Id">@job.Name</a>
+                            
+                        </td>
                         <td>@job.JobNumber</td>
                         <td>
                             <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
@@ -111,7 +134,14 @@
                 @foreach (var job in Model.BeingReturned)
                 {
                     <tr>
-                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
+                        <td>
+                            @if (job is Mavo.Assets.Models.JobAddon)
+                            {
+                                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                            }
+                            <a href="/job/edit/@job.Id">@job.Name</a>
+                            
+                        </td>
                         <td>@job.JobNumber</td>
                         <td>
                             @job.ReturnStarted.Value.ToShortTimeString()
@@ -142,7 +172,14 @@
                 @foreach (var job in Model.AlreadyPicked)
                 {
                     <tr>
-                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
+                        <td>
+                            @if (job is Mavo.Assets.Models.JobAddon)
+                            {
+                                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                            }
+                            <a href="/job/edit/@job.Id">@job.Name</a>
+                            
+                        </td>
                         <td>@job.JobNumber</td>
                         <td>@job.PickStarted.Value.ToShortTimeString()</td>
                         <td>@job.PickCompleted.Value.ToShortTimeString()</td>
@@ -170,7 +207,14 @@
                 @foreach (var job in Model.AlreadyReturned)
                 {
                     <tr>
-                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
+                        <td>
+                            @if (job is Mavo.Assets.Models.JobAddon)
+                            {
+                                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                            }
+                            <a href="/job/edit/@job.Id">@job.Name</a>
+                            
+                        </td>
                         <td>@job.JobNumber</td>
                         <td>
                             @job.ReturnStarted.Value.ToShortTimeString()

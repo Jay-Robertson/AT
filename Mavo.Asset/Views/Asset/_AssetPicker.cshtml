@@ -1,23 +1,23 @@
 ﻿@model IList<Mavo.Assets.Models.AssetCategory>
-@if (!ViewBag.Lock)
+@if (!(ViewBag.Lock != null && ViewBag.Lock))
 {
     <select id="asset-category">
         @foreach (var category in Model)
         {
-            <option disabled value="@category.Id">@category.Name</option>
+            <option  value="@category.Id">@category.Name</option>
         }
     </select>
 
     <span id="asset-detail">
-        @{Html.RenderAction("AssetPickerDetail", new { id = Model.First().Id });}
+        @{Html.RenderAction("AssetPickerDetail","Asset", new { id = Model.First().Id });}
     </span>
     <button class="btn" id="add-asset">Add</button>
 }
 
 <div id="asset-container">
-    @{Html.RenderPartial("_AssetTable");}
+    @{Html.RenderPartial(MVC.Asset.Views._AssetTable);}
 </div>
-@if (!ViewBag.Lock)
+@if (!(ViewBag.Lock != null && ViewBag.Lock))
 {
     <script>
         var idSpecifier = '@(ViewBag.IsForJob ? String.Format("jobId={0}", ViewBag.JobId ?? 0) : String.Format("templateId={0}", ViewBag.TemplateId))';

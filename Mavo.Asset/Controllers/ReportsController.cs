@@ -19,7 +19,7 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult LateJobs()
         {
-            return View(Context.Jobs.Where(x => x.EstimatedCompletionDate < DateTime.Today && x.Status == JobStatus.Started).ToList());
+            return View(Context.Jobs.Where(x => !(x is JobAddon) && x.EstimatedCompletionDate < DateTime.Today && x.Status == JobStatus.Started).ToList());
         }
         private List<Job> GetReadyToPick()
         {
@@ -28,7 +28,7 @@ namespace Mavo.Assets.Controllers
         private List<Job> GetReadyToReturn()
         {
             var tomorrow = DateTime.Today.AddDays(1).AddSeconds(-1);
-            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.Status == JobStatus.Started && x.EstimatedCompletionDate >= DateTime.Today && x.EstimatedCompletionDate < tomorrow).ToList();
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => !(x is JobAddon) && x.Status == JobStatus.Started && x.EstimatedCompletionDate >= DateTime.Today && x.EstimatedCompletionDate < tomorrow).ToList();
         }
         private List<Job> GetAlreadyPicked()
         {
@@ -36,7 +36,7 @@ namespace Mavo.Assets.Controllers
         }
         private List<Job> GetAlreadyReturned()
         {
-            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList();
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => !(x is JobAddon) && x.ReturnCompleted.HasValue && x.ReturnCompleted.Value >= DateTime.Today).ToList();
         }
         private List<Job> GetBeingPicked()
         {
@@ -44,7 +44,7 @@ namespace Mavo.Assets.Controllers
         }
         private List<Job> GetBeingReturned()
         {
-            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.Status == JobStatus.BeingReturned).OrderBy(x => x.ReturnStarted).ToList();
+            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => !(x is JobAddon) && x.Status == JobStatus.BeingReturned).OrderBy(x => x.ReturnStarted).ToList();
         }
         public virtual ActionResult Jobs()
         {
@@ -121,6 +121,7 @@ namespace Mavo.Assets.Controllers
                      ReturnStarted = x.ReturnStarted,
                      ReturnCompleted = x.ReturnCompleted,
                      PickupTime = x.PickupTime,
+                     IsAddon = x is JobAddon,
                      Assets = x.Assets.Select(a => new
                      {
                          Name = a.Asset.Name,
@@ -147,6 +148,7 @@ namespace Mavo.Assets.Controllers
                     PickStarted = result.PickStarted,
                     ReturnStarted = result.ReturnStarted,
                     PickupTime = result.PickupTime,
+                    IsAddon = result.IsAddon,
                     Assets = result.Assets.Select(x => new JobAsset()
                     {
                         Name = x.Name,

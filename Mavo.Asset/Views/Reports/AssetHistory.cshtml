@@ -27,6 +27,10 @@
                     @Html.DisplayFor(modelItem => item.Action)
                 </td>
                 <td>
+                    @if (item.Job is Mavo.Assets.Models.JobAddon)
+                    {
+                        <span class="label label-info"><i class="icon-white icon-plus-sign"></i></span>
+                    }
                     @Html.DisplayFor(modelItem => item.Job.Name)
                 </td>
                 <td>

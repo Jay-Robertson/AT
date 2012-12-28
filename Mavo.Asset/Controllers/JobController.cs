@@ -22,7 +22,28 @@ namespace Mavo.Assets.Controllers
             AssetPicker = assetPicker;
             Context = context;
         }
+        public ActionResult AddOnModal(int id)
+        {
+            Job job = Context.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
+            ViewBag.IsForJob = true;
+            ViewBag.JobId = id;
+            ViewBag.Assets = new List<AssetWithQuantity>();
+            ViewBag.AssetCategories = Context.AssetCategories.ToList();
+            ViewBag.Lock = false;
+            return PartialView("_AddOnModal", id);
+        }
+        [HttpPost]
+        public ActionResult CreateAddon(int id)
+        {
+            JobAddon newAddon = new JobAddon();
+            Job job = Context.Jobs.Include(x=>x.Customer).Include(x=>x.Foreman).Include(x=>x.ProjectManager).FirstOrDefault(x => x.Id == id);
 
+            newAddon = AutoMapper.Mapper.Map<Job, JobAddon>(job);
+            
+            Context.JobAddons.Add(newAddon);
+            Context.SaveChanges();
+            return Json(newAddon.Id);
+        }
         public ActionResult TransferAssetsModal(int id)
         {
             List<Job> jobs = Context.Jobs.Include(x => x.Foreman).Include(x => x.Customer).Where(x => x.Status == JobStatus.Started && x.Id != id).OrderBy(x => x.JobNumber).ToList();
@@ -123,6 +144,7 @@ namespace Mavo.Assets.Controllers
                 query = query.Where(x => x.Status == search.Status.Value);
             search.Results = query.Select(x => new SearchResult()
             {
+                Name = x.Name,
                 JobName = x.JobSiteName,
                 Customer = x.Customer.Name,
                 CustomerId = x.Customer.Id,
@@ -132,7 +154,8 @@ namespace Mavo.Assets.Controllers
                 Status = x.Status,
                 ShipDate = x.PickupTime,
                 ReturnDate = x.ReturnedDate,
-                Id = x.Id
+                Id = x.Id,
+                IsAddon = x is JobAddon
             }).ToList();
 
             return View(search);

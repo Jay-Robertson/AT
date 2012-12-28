@@ -62,7 +62,13 @@
 }
 <div class="row-fluid">
     <div class="well">
-        <h4>Job Details</h4>
+        <h4>
+            Job Details 
+            @if (Model.IsAddon)
+            {
+                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+            }
+        </h4>
         <div class="row-fluid">
             <div class="span4">
                 <span>Job Name:</span>

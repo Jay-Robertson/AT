@@ -1,0 +1,44 @@
+﻿@model int
+<div id="addOnModal@(Model)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addOnModalLabel@(Model)" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="addOnModalLabel@(Model)">Add items to this job?</h3>
+    </div>
+    <div class="modal-body">
+        Are you sure you would like to add items to this job?
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" id="btnYes" data-dismiss="modal">Yes</button>
+    </div>
+</div>
+
+
+<div id="addOnModalItems@(Model)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addOnModalItemsLabel@(Model)" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="addOnModalItemsLabel@(Model)">Select which assets you would like added</h3>
+    </div>
+    <div class="modal-body" id="addOnModalBody@(Model)"></div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <a href="#" id="done@(Model)" class="btn btn-primary">Done</a>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $('#btnYes').click(function ()
+    {
+        $.post('/job/createaddon/@Model', function(jobId) {
+            $('#addOnModalBody@(Model)').load('/asset/assetpickerforjob/' + jobId, null, function () {
+                $('#addOnModalItems@(Model)').modal('show');
+                $('#done@(Model)').attr('href', '/job/edit/' + jobId);
+             });
+        });
+       
+    });
+</script>
+

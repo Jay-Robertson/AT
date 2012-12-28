@@ -36,9 +36,17 @@ namespace Mavo.Assets
                 .ForMember(dest => dest.ProjectManagerId, opt => opt.MapFrom(src => src.ProjectManager.Id))
                 .ForMember(dest => dest.ForemanId, opt => opt.MapFrom(src => src.Foreman.Id))
                 .ForMember(dest => dest.CustomerId, opt => opt.MapFrom(src => src.Customer.Id))
+                .ForMember(dest => dest.IsAddon, opt => opt.MapFrom(src => src is JobAddon))
                 .ForMember(dest => dest.ReturnedByStr, opt => opt.MapFrom(src => src.ReturnedBy.FullName))
                 .ForMember(dest => dest.PickedUpByStr, opt => opt.MapFrom(src => src.PickedBy.FullName));
             AutoMapper.Mapper.CreateMap<AssetPostModel, Asset>();
+            AutoMapper.Mapper.CreateMap<Job, JobAddon>()
+                .ForMember(x => x.ParentJob, opt => opt.MapFrom(src => src))
+                .ForMember(x => x.Status, opt => opt.MapFrom(src => JobStatus.New))
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ForMember(x => x.PickupTime, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(x => x.PickStarted, opt => opt.Ignore())
+                .ForMember(x => x.PickCompleted, opt => opt.Ignore());
 
             HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 

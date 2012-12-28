@@ -22,8 +22,11 @@ namespace Mavo.Assets.Models.ViewModel
         public DateTime? EndDate { get; set; }
 
 
+        public string Name { get; set; }
         public string JobName { get; set; }
 
         public IList<SearchResult> Results { get; set; }
+
+        public bool IsAddon { get; set; }
     }
 }

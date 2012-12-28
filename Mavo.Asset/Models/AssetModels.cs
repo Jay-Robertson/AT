@@ -15,6 +15,7 @@ namespace Mavo.Assets.Models
         {
         }
 
+        public DbSet<JobAddon> JobAddons { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AssetCategory> AssetCategories { get; set; }
 
@@ -180,7 +181,11 @@ namespace Mavo.Assets.Models
         BeingPicked,
         BeingReturned
     }
-
+    public class JobAddon : Job
+    {
+        public Job ParentJob { get; set; }
+        public bool? IsPicked { get; set; }
+    }
     [Table("Jobs")]
     public class Job
     {

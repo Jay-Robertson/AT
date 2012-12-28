@@ -64,14 +64,16 @@
         </text>
         }
     </script>
+
 }
 
 @if (null != Model)
 {
     Html.RenderPartial("_PickJobModal", new Mavo.Assets.Models.Job() { Id = Model.Id.Value, PickupTime = Model.PickupTime, Name = Model.Name });
-    if (Model.Status == Mavo.Assets.Models.JobStatus.Started)
+    if (Model.Status == Mavo.Assets.Models.JobStatus.Started && !Model.IsAddon)
     {
         Html.RenderAction("TransferAssetsModal", new { id = Model.Id });
+        Html.RenderAction("AddOnModal", new { id = Model.Id });
     }
 }
 <h1>
@@ -79,13 +81,20 @@
     @if (null != Model)
     {
         <span>&gt; @Model.Name</span>
+        if (Model.IsAddon)
+        {
+        <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+        }
         if (Model.Status == Mavo.Assets.Models.JobStatus.New)
         {
-        <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="pull-right btn btn-primary btn-large"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
+        <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="pull-right btn btn-primary"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
         }
-        else if (Model.Status == Mavo.Assets.Models.JobStatus.Started)
+        else if (Model.Status == Mavo.Assets.Models.JobStatus.Started && !Model.IsAddon)
         {
-        <a data-toggle="modal" href="#transferAssetModel@(Model.Id.Value)" class="pull-right btn btn-primary btn-large"><i class="icon-random icon-white"></i>&nbsp;Transfer Assets</a>
+        <span class="pull-right">
+            <a data-toggle="modal" href="#transferAssetModel@(Model.Id.Value)" class="btn btn-primary"><i class="icon-random icon-white"></i>&nbsp;Transfer Assets</a>
+            <a data-toggle="modal" href="#addOnModal@(Model.Id.Value)" class="btn btn-success"><i class="icon-plus icon-white"></i>&nbsp;Add On</a>
+        </span>
         }
     }
 

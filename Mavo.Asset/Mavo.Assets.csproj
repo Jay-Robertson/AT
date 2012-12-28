@@ -203,6 +203,18 @@
     <Compile Include="Migrations\201212210012507_InitialMigration.Designer.cs">
       <DependentUpon>201212210012507_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201212281951117_addons.cs" />
+    <Compile Include="Migrations\201212281951117_addons.Designer.cs">
+      <DependentUpon>201212281951117_addons.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201212282047101_addons-2.cs" />
+    <Compile Include="Migrations\201212282047101_addons-2.Designer.cs">
+      <DependentUpon>201212282047101_addons-2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201212282047450_addons-3.cs" />
+    <Compile Include="Migrations\201212282047450_addons-3.Designer.cs">
+      <DependentUpon>201212282047450_addons-3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
@@ -357,6 +369,7 @@
     <Content Include="Views\Reports\TomorrowsPicks.cshtml" />
     <Content Include="Views\Reports\FellOffTruck.cshtml" />
     <Content Include="Views\Job\_TransferAssetModal.cshtml" />
+    <Content Include="Views\Job\_AddOnModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -370,6 +383,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201212210012507_InitialMigration.resx">
       <DependentUpon>201212210012507_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212281951117_addons.resx">
+      <DependentUpon>201212281951117_addons.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212282047101_addons-2.resx">
+      <DependentUpon>201212282047101_addons-2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201212282047450_addons-3.resx">
+      <DependentUpon>201212282047450_addons-3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

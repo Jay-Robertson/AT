@@ -46,11 +46,23 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
         {
-            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
-            job.Status = JobStatus.Started;
-            job.PickCompleted = DateTime.Now;
-            job.PickedAssets = new List<PickedAsset>();
-            job.PickCompleted = DateTime.Now;
+            JobAddon tempJob = Context.JobAddons.Include("ParentJob").FirstOrDefault(x => x.Id == id);
+            Job job = null;
+            if (tempJob != null)
+            {
+                tempJob.IsPicked = true;
+                tempJob.Status = JobStatus.Started;
+                tempJob.PickCompleted = DateTime.Now;
+
+                job = tempJob.ParentJob;
+            }
+            else
+            {
+                job = Context.Jobs.FirstOrDefault(x=>x.Id == id);
+                job.Status = JobStatus.Started;
+                job.PickedAssets = new List<PickedAsset>();
+                job.PickCompleted = DateTime.Now;
+            }
             IEnumerable<PickedAsset> pickedAssets = null;
             if (assets != null)
             {

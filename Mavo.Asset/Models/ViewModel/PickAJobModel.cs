@@ -35,6 +35,8 @@ namespace Mavo.Assets.Models.ViewModel
         public DateTime? ReturnStarted { get; set; }
 
         public DateTime PickupTime { get; set; }
+
+        public bool IsAddon { get; set; }
     }
     public class JobAsset
     {

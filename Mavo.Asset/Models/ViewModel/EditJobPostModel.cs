@@ -38,6 +38,8 @@ namespace Mavo.Assets.Models.ViewModel
 
         public IList<Template> Templates { get; set; }
 
+        public bool IsAddon { get; set; }
+
         public string PickedUpByStr { get; set; }
 
         public DateTime? PickStarted { get; set; }

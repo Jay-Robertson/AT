@@ -31,7 +31,7 @@ namespace Mavo.Assets.Controllers
         }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
+            ViewBag.AssetCategories = new AssetContext().AssetCategories.OrderBy(x => x.Name).ToList();
             base.OnActionExecuting(filterContext);
         }
         [HttpPost]
@@ -68,6 +68,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.IsForJob = false;
             ViewBag.TemplateId = id;
             ViewBag.Assets = db.TemplateAssets.Where(x => x.Template.Id == id.Value).ToList();
+            ViewBag.Lock = false;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
         public virtual JsonResult IsAssetItemAvailable(IList<JobAsset> assets)
@@ -90,12 +91,13 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult AssetPickerForJob(int id)
         {
-            Job job = db.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
+            AssetContext outOfRequestDb = new AssetContext();
+            Job job = outOfRequestDb.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
-            ViewBag.Assets = job.Status == JobStatus.New ? job.Assets : job.PickedAssets == null ? new List<AssetWithQuantity>() :  job.PickedAssets.Select(x => (AssetWithQuantity)x).ToList();
+            ViewBag.Assets = job.Status == JobStatus.New ? job.Assets : job.PickedAssets == null ? new List<AssetWithQuantity>() : job.PickedAssets.Select(x => (AssetWithQuantity)x).ToList();
             ViewBag.Lock = job.Status != JobStatus.New;
-            return PartialView("_AssetPicker", db.AssetCategories.ToList());
+            return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.ToList());
         }
 
         public virtual ActionResult AssetPickerDetail(int id)
