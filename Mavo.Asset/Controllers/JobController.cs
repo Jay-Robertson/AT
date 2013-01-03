@@ -194,24 +194,31 @@ namespace Mavo.Assets.Controllers
             job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
             if (ModelState.IsValid)
             {
-                if (jobPostModel.CustomerId.HasValue)
-                    job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
-
-                if (jobPostModel.ForemanId.HasValue)
-                    job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
-
-                if (jobPostModel.ProjectManagerId.HasValue)
-                    job.ProjectManager = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ProjectManagerId.Value);
-
-                if (!jobPostModel.Id.HasValue)
+                if (job is JobAddon)
                 {
-                    job.Status = JobStatus.New;
-                    if (jobPostModel.TemplateId.HasValue)
+                    job.PickupTime = jobPostModel.PickupTime;
+                }
+                else
+                {
+                    if (jobPostModel.CustomerId.HasValue)
+                        job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
+
+                    if (jobPostModel.ForemanId.HasValue)
+                        job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
+
+                    if (jobPostModel.ProjectManagerId.HasValue)
+                        job.ProjectManager = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ProjectManagerId.Value);
+
+                    if (!jobPostModel.Id.HasValue)
                     {
-                        var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
-                        job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
+                        job.Status = JobStatus.New;
+                        if (jobPostModel.TemplateId.HasValue)
+                        {
+                            var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
+                            job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
+                        }
+                        Context.Jobs.Add(job);
                     }
-                    Context.Jobs.Add(job);
                 }
 
                 Context.SaveChanges();

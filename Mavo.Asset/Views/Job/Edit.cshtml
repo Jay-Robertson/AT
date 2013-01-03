@@ -46,7 +46,16 @@
         }
         @if (Model != null)
         {
-            <text>
+            if (Model.IsAddon)
+            {
+                <text>
+        $(":input").attr("disabled", "disabled");
+        $("#PickupTime, #btnSubmit").removeAttr('disabled');
+                </text>
+            }
+            else
+            {
+                <text>
         $('#TemplateId').change(function () {
             if ($(this).val() != '') {
                 $('#btnAddFromTemplate').show();
@@ -57,11 +66,12 @@
         });
         $('#btnAddFromTemplate').click(function () {
             $.post('/job/AddAssetsFromTemplate/' + @Model.Id + '?templateId=' + $('#TemplateId').val(), function (assetsHtml) {
-                $('#asset-container').html(assetsHtml);
-            });
-        });
-
+                        $('#asset-container').html(assetsHtml);
+                    });
+                });
         </text>
+            }
+
         }
     </script>
 
@@ -301,7 +311,7 @@
             </div>
             <div class="row-fluid">
                 <div class="form-actions">
-                    <input type="submit" class="btn btn-primary" />
+                    <input type="submit" id="btnSubmit" class="btn btn-primary" />
                 </div>
             </div>
         </div>
