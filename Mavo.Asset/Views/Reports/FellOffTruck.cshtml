@@ -29,6 +29,9 @@
             @Html.DisplayNameFor(model => model.Barcode)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.QuantityLost)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Job)
         </th>
         <th>
@@ -47,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Barcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityLost)
             </td>
             <td>
                 <a href="/job/edit/@(item.jobId)">@Html.DisplayFor(modelItem => item.Job)</a>

@@ -46,13 +46,15 @@ namespace Mavo.Assets.Controllers
             Job job = Context.Jobs.Include("PickedAssets").Include("PickedAssets.Item").Include("PickedAssets.Asset").FirstOrDefault(x => x.Id == id);
             job.Status = JobStatus.Completed;
             job.ReturnCompleted = DateTime.Now;
+            job.ReturnedAssets = new List<ReturnedAsset>();
 
             foreach (PickedAsset pickedAsset in job.PickedAssets)
             {
                 Asset asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
+                int? quantityUsed = assets.FirstOrDefault(x => x.AssetId == asset.Id).QuantityTaken;
                 if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
                 {
-                    asset.Inventory += assets.FirstOrDefault(x => x.AssetId == asset.Id).QuantityTaken;
+                    asset.Inventory += quantityUsed;
                 }
                 else if (asset.Kind == AssetKind.Serialized)
                 {
@@ -65,10 +67,19 @@ namespace Mavo.Assets.Controllers
                     }
                 }
 
+                job.ReturnedAssets.Add(new ReturnedAsset()
+                {
+                    Asset = asset,
+                    Item = pickedAsset.Item,
+                    Quantity = quantityUsed ?? 0,
+                    Job = job,
+                    Returned = job.ReturnCompleted.Value
+                });
+
                 AssetActivity.Add(AssetAction.Return, pickedAsset.Asset, pickedAsset.Item, job);
             }
             Context.SaveChanges();
-          
+
 
             return RedirectToAction(MVC.JobReturner.Success(id));
         }

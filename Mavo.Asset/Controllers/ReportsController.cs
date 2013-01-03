@@ -103,14 +103,61 @@ namespace Mavo.Assets.Controllers
 
             endDate = endDate.Value.AddDays(1).AddSeconds(-1);
 
-            var returnedJobsquery = Context.Jobs.Where(job => job.ReturnCompleted > startDate && job.ReturnCompleted <= endDate).ToList();
-            var returnedJobIds = returnedJobsquery.Select(x => x.Id).ToArray();
-            var assetsWithoutReturn = Context.AssetActivity.Where(ai => ai.Asset.Kind != AssetKind.Consumable && returnedJobIds.Contains(ai.Job.Id) && ai.Action == AssetAction.Return)
-                .Select(x => new { Id = x.Asset.Id, JobId = x.Job.Id, Asset = x.Asset.Name, Barcode = x.Item.Barcode, Job = x.Job.Name, ReturnedOn = x.Job.ReturnCompleted, ReturnedBy = x.Job.ReturnedBy.FirstName + " " + x.Job.ReturnedBy.LastName })
-                .Distinct()
-                .ToList();
+            var pickedAssets = Context.PickedAssets
+                .Include(x => x.Job).Include(x => x.Job.ReturnedBy).Include(x => x.Item).Include(x => x.Asset)
+                .Where(x => x.Job.ReturnCompleted >= startDate && x.Job.ReturnCompleted < endDate)
+                .ToList()
+                .Where(x=>x.Job != null)
+                .GroupBy(x => x.Job);
 
-            return View(assetsWithoutReturn.Select(x => new AssetsWithoutReturn(x.Id, x.Asset, x.Barcode, x.Job, x.ReturnedOn, x.ReturnedBy, x.JobId)).OrderBy(x => x.ReturnedOn).ToList());
+            var jobIds = pickedAssets.Select(x=>x.Key.Id);
+
+            var returnedAssets = Context.ReturnedAssets
+                   .Include(x => x.Job).Include(x => x.Job.ReturnedBy).Include(x => x.Item).Include(x => x.Asset)
+                   .Where(x=> jobIds.Contains(x.Job.Id))
+                   .ToList()
+                   .GroupBy(x => x.Job);
+
+            IList<AssetsWithoutReturn> result = new List<AssetsWithoutReturn>();
+            foreach (var pickedAssetsForJob in pickedAssets)
+            {
+                if (pickedAssetsForJob.Key == null)
+                    continue;
+                var returnedAssetsForJob = returnedAssets.FirstOrDefault(x => x.Key == pickedAssetsForJob.Key);
+                foreach (var pickedAsset in pickedAssetsForJob)
+                {
+                    bool fellOfTruck = false;
+                    int? quantityLost = null;
+
+                    if (returnedAssetsForJob == null || !returnedAssetsForJob.Any())
+                    {
+                        fellOfTruck = true;
+                        quantityLost = pickedAsset.Quantity;
+                    }
+                    else if (pickedAsset.Asset.Kind == AssetKind.Serialized)
+                    {
+                        fellOfTruck = returnedAssetsForJob.Any(x => x.Item.Barcode == pickedAsset.Item.Barcode);
+                    }
+                    else
+                    {
+                        foreach (var returnedAsset in returnedAssetsForJob.Where(x => x.Asset.Kind == AssetKind.NotSerialized && x.Id == pickedAsset.Id))
+                        {
+                            if (returnedAsset.Quantity < pickedAsset.Quantity)
+                            {
+                                fellOfTruck = true;
+                                quantityLost = pickedAsset.Quantity - returnedAsset.Quantity;
+                            }
+                        }
+                    }
+
+                    if (fellOfTruck)
+                    {
+                        result.Add(new AssetsWithoutReturn(pickedAsset.Id, pickedAsset.Asset.Name, pickedAsset.Item, pickedAssetsForJob.Key, quantityLost));
+                    }
+                }
+            }
+
+            return View(result);
         }
 
         public virtual ActionResult TomorrowsPicks()

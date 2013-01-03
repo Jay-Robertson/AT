@@ -17,15 +17,19 @@ namespace Mavo.Assets.Models.ViewModel
         private readonly DateTime? _ReturnedOn;
         private readonly string _ReturnedBy;
 
-        public AssetsWithoutReturn(int id, string asset, string barcode, string job, DateTime? returnedOn, string returnedBy, int jobId)
+        public int? QuantityLost { get; set; }
+        public AssetsWithoutReturn(int id, string asset, AssetItem assetItem, Models.Job job, int? quantityLost)
         {
-            _JobId = jobId;
+            _JobId = job.Id;
             _Asset = asset;
-            _Barcode = barcode;
-            _Job = job;
-            _ReturnedOn = returnedOn;
-            _ReturnedBy = returnedBy;
+            if (assetItem != null)
+                _Barcode = assetItem.Barcode;
+            _Job = job.Name;
+            _ReturnedOn = job.ReturnedDate;
+            if (job.ReturnedBy != null)
+                _ReturnedBy = job.ReturnedBy.FullName;
             _Id = id;
+            QuantityLost = quantityLost;
         }
 
         public override bool Equals(object obj)
@@ -92,7 +96,7 @@ namespace Mavo.Assets.Models.ViewModel
                 return _Id;
             }
         }
-        
+
         public string Job
         {
             get

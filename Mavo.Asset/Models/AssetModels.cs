@@ -16,6 +16,7 @@ namespace Mavo.Assets.Models
         }
 
         public DbSet<JobAddon> JobAddons { get; set; }
+        public DbSet<ReturnedAsset> ReturnedAssets { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AssetCategory> AssetCategories { get; set; }
 
@@ -229,6 +230,8 @@ namespace Mavo.Assets.Models
         public DateTime? ReturnCompleted { get; set; }
 
         public List<PickedAsset> PickedAssets { get; set; }
+
+        public List<ReturnedAsset> ReturnedAssets { get; set; }
     }
 
     [ComplexType]
