@@ -2,7 +2,7 @@
 
 <h2>AssetHistory</h2>
 
-@using (Html.BeginForm("AssetHistoryFilter", "Reports"))
+@using (Html.BeginForm("AssetHistoryFilter", "Reporting"))
 {
     @Html.TextBox("Id",null, new { placeholder = "barcode" })
     @Html.DropDownList("userId", ((IList<Mavo.Assets.Models.User>)ViewBag.Users).Select(x => new SelectListItem() { Text = x.FullName, Value = x.Id.ToString() }), "User")

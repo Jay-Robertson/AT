@@ -31,7 +31,7 @@
                 <td>
                     @if(item.User != null)
                     {
-                        @Html.ActionLink(item.User.FullName, MVC.Reports.AssetHistoryFilter(userId: item.User.Id, startDate: item.Date.Date, endDate: item.Date.Date.AddDays(1)))
+                        @Html.ActionLink(item.User.FullName, MVC.Reporting.AssetHistoryFilter(userId: item.User.Id, startDate: item.Date.Date, endDate: item.Date.Date.AddDays(1)))
                     }
                 </td>
                 <td>

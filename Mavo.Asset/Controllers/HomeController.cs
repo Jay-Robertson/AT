@@ -10,7 +10,7 @@ namespace Mavo.Assets.Controllers
     {
         public virtual ActionResult Index()
         {
-            return RedirectToAction("Jobs", "Reports");
+            return RedirectToAction("Jobs", "Reporting");
         }
 
 

@@ -22,10 +22,10 @@ using System.Web.Routing;
 using T4MVC;
 namespace Mavo.Assets.Controllers
 {
-    public partial class ReportsController
+    public partial class ReportingController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ReportsController(Dummy d) { }
+        protected ReportingController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -43,13 +43,13 @@ namespace Mavo.Assets.Controllers
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ReportsController Actions { get { return MVC.Reports; } }
+        public ReportingController Actions { get { return MVC.Reporting; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Reports";
+        public readonly string Name = "Reporting";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Reports";
+        public const string NameConst = "Reporting";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -116,20 +116,20 @@ namespace Mavo.Assets.Controllers
                 public readonly string LateJobs = "LateJobs";
                 public readonly string TomorrowsPicks = "TomorrowsPicks";
             }
-            public readonly string _AssetHistoryResults = "~/Views/Reports/_AssetHistoryResults.cshtml";
-            public readonly string _ReadyJob = "~/Views/Reports/_ReadyJob.cshtml";
-            public readonly string AssetHistory = "~/Views/Reports/AssetHistory.cshtml";
-            public readonly string FellOffTruck = "~/Views/Reports/FellOffTruck.cshtml";
-            public readonly string Jobs = "~/Views/Reports/Jobs.cshtml";
-            public readonly string LateJobs = "~/Views/Reports/LateJobs.cshtml";
-            public readonly string TomorrowsPicks = "~/Views/Reports/TomorrowsPicks.cshtml";
+            public readonly string _AssetHistoryResults = "~/Views/Reporting/_AssetHistoryResults.cshtml";
+            public readonly string _ReadyJob = "~/Views/Reporting/_ReadyJob.cshtml";
+            public readonly string AssetHistory = "~/Views/Reporting/AssetHistory.cshtml";
+            public readonly string FellOffTruck = "~/Views/Reporting/FellOffTruck.cshtml";
+            public readonly string Jobs = "~/Views/Reporting/Jobs.cshtml";
+            public readonly string LateJobs = "~/Views/Reporting/LateJobs.cshtml";
+            public readonly string TomorrowsPicks = "~/Views/Reporting/TomorrowsPicks.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_ReportsController : Mavo.Assets.Controllers.ReportsController
+    public class T4MVC_ReportingController : Mavo.Assets.Controllers.ReportingController
     {
-        public T4MVC_ReportsController() : base(Dummy.Instance) { }
+        public T4MVC_ReportingController() : base(Dummy.Instance) { }
 
         public override System.Web.Mvc.ActionResult LateJobs()
         {

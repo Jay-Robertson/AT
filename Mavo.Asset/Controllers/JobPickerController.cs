@@ -121,7 +121,7 @@ namespace Mavo.Assets.Controllers
                     })
                 }).First();
             if (result.PickCompleted.HasValue)
-                return RedirectToAction(MVC.Reports.Jobs());
+                return RedirectToAction(MVC.Reporting.Jobs());
 
             return View(new PickAJobModel()
             {

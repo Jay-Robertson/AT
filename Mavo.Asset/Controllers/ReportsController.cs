@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data.Entity;
-using System.Web.Mvc;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
+using System.Web.Mvc;
 
 namespace Mavo.Assets.Controllers
 {
-    [Authorize]
-    public partial class ReportsController : BaseController
+    [System.Web.Mvc.Authorize]
+    public partial class ReportingController : BaseController
     {
         private readonly AssetContext Context;
-        public ReportsController(AssetContext context)
+        public ReportingController(AssetContext context)
         {
             Context = context;
         }

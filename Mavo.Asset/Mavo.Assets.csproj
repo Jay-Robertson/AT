@@ -238,7 +238,7 @@
     <Compile Include="Models\ViewModel\PickAJobModel.cs" />
     <Compile Include="Models\ViewModel\TransferAssetsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportsController.generated.cs">
+    <Compile Include="ReportingController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\IAssetActivityManager.cs" />
@@ -284,6 +284,7 @@
     <Content Include="Images\logo.jpeg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Package.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js" />
@@ -367,19 +368,19 @@
     <Content Include="Views\JobReturner\Index.cshtml" />
     <Content Include="Views\JobReturner\_JobReturnerSidebar.cshtml" />
     <Content Include="Views\JobReturner\Success.cshtml" />
-    <Content Include="Views\Reports\LateJobs.cshtml" />
-    <Content Include="Views\Reports\Jobs.cshtml" />
-    <Content Include="Views\Reports\_ReadyJob.cshtml" />
+    <Content Include="Views\Reporting\LateJobs.cshtml" />
+    <Content Include="Views\Reporting\Jobs.cshtml" />
+    <Content Include="Views\Reporting\_ReadyJob.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Asset\ItemReview.cshtml" />
     <Content Include="Views\Shared\_LayoutWithNoConstraints.cshtml" />
     <Content Include="Views\Asset\_AssetTable.cshtml" />
-    <Content Include="Views\Reports\AssetHistory.cshtml" />
-    <Content Include="Views\Reports\TomorrowsPicks.cshtml" />
-    <Content Include="Views\Reports\FellOffTruck.cshtml" />
+    <Content Include="Views\Reporting\AssetHistory.cshtml" />
+    <Content Include="Views\Reporting\TomorrowsPicks.cshtml" />
+    <Content Include="Views\Reporting\FellOffTruck.cshtml" />
     <Content Include="Views\Job\_TransferAssetModal.cshtml" />
     <Content Include="Views\Job\_AddOnModal.cshtml" />
-    <Content Include="Views\Reports\_AssetHistoryResults.cshtml" />
+    <Content Include="Views\Reporting\_AssetHistoryResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
