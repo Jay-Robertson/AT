@@ -1,4 +1,5 @@
-﻿@model Mavo.Assets.Models.RegisterModel
+﻿@using Mavo.Assets;
+@model Mavo.Assets.Models.RegisterModel
 @{
     ViewBag.Title = "Register";
 }
@@ -47,6 +48,12 @@
             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
             <div class="controls">
                 @Html.EditorFor(m => m.ConfirmPassword)
+            </div>
+        </div>
+          <div class="control-group">
+            @Html.LabelFor(m => m.Role, new { @class = "control-label" })
+            <div class="controls">
+                @Html.EnumDropDownListFor(m => m.Role)
             </div>
         </div>
         <input type="submit" class="btn" value="Log in" />

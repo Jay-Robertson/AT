@@ -47,6 +47,12 @@ namespace Mavo.Assets.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Clone()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Clone);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public TemplateController Actions { get { return MVC.Template; } }
@@ -66,6 +72,7 @@ namespace Mavo.Assets.Controllers
             public readonly string Index = "Index";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string Clone = "Clone";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -74,6 +81,7 @@ namespace Mavo.Assets.Controllers
             public const string Index = "Index";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string Clone = "Clone";
         }
 
 
@@ -85,6 +93,14 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string template = "template";
+        }
+        static readonly ActionParamsClass_Clone s_params_Clone = new ActionParamsClass_Clone();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Clone CloneParams { get { return s_params_Clone; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Clone
+        {
+            public readonly string id = "id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -126,6 +142,13 @@ namespace Mavo.Assets.Controllers
         public override System.Web.Mvc.ActionResult Edit(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Clone(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Clone);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }

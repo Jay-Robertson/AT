@@ -11,7 +11,6 @@ using Mavo.Assets.Models;
 
 namespace Mavo.Assets.Controllers
 {
-    [Authorize]
     [InitializeSimpleMembership]
     public partial class AccountController : BaseController
     {
@@ -81,7 +80,7 @@ namespace Mavo.Assets.Controllers
                             EmployeeId = model.EmployeeId,
                             FirstName = model.FirstName,
                             LastName = model.LastName,
-                            Role = UserRole.Administrator
+                            Role = model.Role
                         });
                     WebSecurity.Login(model.Email, model.Password);
                     return RedirectToAction("Index", "Home");

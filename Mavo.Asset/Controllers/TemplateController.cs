@@ -30,7 +30,6 @@ namespace Mavo.Assets.Controllers
         // GET: /Template/Create
         public virtual ActionResult Create()
         {
-            ViewBag.Templates = ctx.Templates.ToList();
             return View("Edit");
         }
 
@@ -38,10 +37,22 @@ namespace Mavo.Assets.Controllers
         // GET: /Template/Edit/5
         public virtual ActionResult Edit(int id)
         {
-            ViewBag.Templates = ctx.Templates.Include("Assets").Include("Assets.Asset").ToList();
             Template template = ctx.Templates.FirstOrDefault(x=>x.Id == id);
             ViewBag.Assets = template.Assets;
             return View(template);
+        }
+
+        [HttpPost]
+        public virtual ActionResult Clone(int id)
+        {
+            var clone = new Template();
+            var source = ctx.Templates.Include("Assets").Include("Assets.Asset").First(x => x.Id == id);
+            clone.Name = source.Name + " [Clone]";
+            clone.Assets = source.Assets.Select(x => new TemplateAsset() { Asset = x.Asset, Quantity = x.Quantity, Template = clone }).ToList();
+            ctx.Templates.Add(clone);
+            ctx.SaveChanges();
+
+            return RedirectToAction(MVC.Template.Edit(clone.Id));
         }
 
         //

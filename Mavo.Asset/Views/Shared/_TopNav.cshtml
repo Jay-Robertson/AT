@@ -54,6 +54,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/template"><i class="icon-list"></i>List</a></li>
                                 <li><a href="/template/create"><i class="icon-plus"></i>Create</a></li>
+                                <li><a href="#templateModal"  data-toggle="modal"><i class="icon-plus"></i>Clone</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -118,4 +119,25 @@
            
         </div>
     </div>
+</div>
+
+
+
+<div id="templateModal" class="modal hide fade">
+    @using (Html.BeginForm(MVC.Template.Clone(), FormMethod.Post, new { @class = "form-inline" }))
+    {
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Clone a Template</h3>
+        </div>
+        <div class="modal-body">
+
+            <text>Template:</text>@Html.DropDownList("id", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(y => new SelectListItem() { Text = y.Name, Value = y.Id.ToString() }))
+        </div>
+        <div class="modal-footer">
+            <a href="#" data-dismiss="modal" class="btn">Close</a>
+            <input type="submit" class="btn btn-primary"  value="Clone"/>
+        </div>
+    }
+
 </div>
