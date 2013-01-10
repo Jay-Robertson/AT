@@ -10,10 +10,12 @@ using Mavo.Assets.Models.ViewModel;
 using AutoMapper;
 using System.Text;
 using Mavo.Assets.Services;
+using System.Web.UI;
 
 namespace Mavo.Assets.Controllers
 {
     [Authorize]
+    [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
     public partial class AssetController : BaseController
     {
         private readonly IAssetActivityManager AssetActivity;
@@ -71,12 +73,15 @@ namespace Mavo.Assets.Controllers
             ViewBag.Lock = false;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
-        public virtual JsonResult IsAssetItemAvailable(IList<JobAsset> assets)
+
+        [HttpGet]
+        public virtual JsonResult IsAssetItemAvailable()
         {
-            string serial = assets[0].Barcode;
-            bool serialExists = db.AssetItems.Any(x => x.Barcode == serial);
-            bool isInStock = db.AssetItems.Any(x => x.Barcode == serial && x.Status == InventoryStatus.In);
-            bool isInGoodCondition = db.AssetItems.Any(x => x.Barcode == serial && x.Condition == AssetCondition.Good);
+            string barcode = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("barcode"))];
+        
+            bool serialExists = db.AssetItems.Any(x => x.Barcode == barcode);
+            bool isInStock = db.AssetItems.Any(x => x.Barcode == barcode && x.Status == InventoryStatus.In);
+            bool isInGoodCondition = db.AssetItems.Any(x => x.Barcode == barcode && x.Condition == AssetCondition.Good);
             IList<string> errors = new List<string>();
             if (!serialExists)
                 errors.Add("Serial number is not inventoried");
@@ -85,7 +90,7 @@ namespace Mavo.Assets.Controllers
             else if (!isInGoodCondition)
                 errors.Add("Item is retired/damaged");
             if (errors.Count == 0)
-                return Json(true);
+                return Json(true, JsonRequestBehavior.AllowGet);
             else
                 return Json(string.Join(", ", errors), JsonRequestBehavior.AllowGet);
         }

@@ -12,6 +12,7 @@
 {
     @if (!Model.PickStarted.HasValue)
     {
+        
         <script type="text/javascript">
             $('#btnSubmit').hide();
             $('#startModal').modal({
@@ -132,10 +133,12 @@
                             <div class="control-group">
                                 <div class="input-prepend input-append">
                                     <span class="add-on"><i class="icon-barcode"></i></span>
-                                    <input class="text-box single-line" @(!Model.PickStarted.HasValue ? "disabled" : "") 
-                                        data-val="true"  data-val-remote-additionalfields="*.Barcode" 
+                                   <input class="text-box single-line" @(!Model.PickStarted.HasValue ? "disabled" : "") 
+                                        data-val="true"   data-val-remote="Barcode does not exist, or is out of stock" 
+                                        data-val-remote-additionalfields="*.Barcode" 
                                         data-val-remote-url="/Asset/IsAssetItemAvailable" 
-                                        name="assets[@(index)].Barcode" type="text" />
+                                        name="assets[@(index)].Barcode" id="assets_@(index)__Barcode" type="text" />
+                             
                                 </div>
                                 @Html.ValidationMessage("assets[" + index.ToString() + "].Barcode")
                             </div>

@@ -55,12 +55,6 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.JsonResult IsAssetItemAvailable()
-        {
-            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsAssetItemAvailable);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult AssetPickerForJob()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
@@ -182,14 +176,6 @@ namespace Mavo.Assets.Controllers
         public class ActionParamsClass_AssetPickerForTemplate
         {
             public readonly string id = "id";
-        }
-        static readonly ActionParamsClass_IsAssetItemAvailable s_params_IsAssetItemAvailable = new ActionParamsClass_IsAssetItemAvailable();
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_IsAssetItemAvailable IsAssetItemAvailableParams { get { return s_params_IsAssetItemAvailable; } }
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_IsAssetItemAvailable
-        {
-            public readonly string assets = "assets";
         }
         static readonly ActionParamsClass_AssetPickerForJob s_params_AssetPickerForJob = new ActionParamsClass_AssetPickerForJob();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -357,10 +343,9 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.JsonResult IsAssetItemAvailable(System.Collections.Generic.IList<Mavo.Assets.Models.ViewModel.JobAsset> assets)
+        public override System.Web.Mvc.JsonResult IsAssetItemAvailable()
         {
             var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.IsAssetItemAvailable);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "assets", assets);
             return callInfo;
         }
 
