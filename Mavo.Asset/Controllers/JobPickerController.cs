@@ -58,7 +58,7 @@ namespace Mavo.Assets.Controllers
             }
             else
             {
-                job = Context.Jobs.FirstOrDefault(x=>x.Id == id);
+                job = Context.Jobs.FirstOrDefault(x => x.Id == id);
                 job.Status = JobStatus.Started;
                 job.PickedAssets = new List<PickedAsset>();
                 job.PickCompleted = DateTime.Now;
@@ -66,7 +66,17 @@ namespace Mavo.Assets.Controllers
             IEnumerable<PickedAsset> pickedAssets = null;
             if (assets != null)
             {
-                pickedAssets = assets.Select(x => new PickedAsset() { Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId), Item = !String.IsNullOrEmpty(x.Barcode) ? Context.AssetItems.FirstOrDefault(ai => x.Barcode == ai.Barcode) : null, Job = job, Picked = DateTime.Now, Quantity = Math.Max(x.QuantityTaken ?? 1, 1), Barcode = x.Barcode });
+                pickedAssets = assets.Where(x=>(x.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(x.Barcode))
+                    || ((x.Kind == AssetKind.NotSerialized || x.Kind == AssetKind.Consumable) && (x.QuantityTaken.HasValue && x.QuantityTaken.Value > 0)))
+                    .Select(x => new PickedAsset()
+                    {
+                        Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId),
+                        Item = !String.IsNullOrEmpty(x.Barcode) ? Context.AssetItems.FirstOrDefault(ai => x.Barcode == ai.Barcode) : null,
+                        Job = job,
+                        Picked = DateTime.Now,
+                        Quantity = Math.Max(x.QuantityTaken ?? 1, 1),
+                        Barcode = x.Barcode
+                    });
                 foreach (var pickedAsset in pickedAssets)
                 {
                     Context.PickedAssets.Add(pickedAsset);

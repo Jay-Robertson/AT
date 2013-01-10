@@ -141,6 +141,7 @@
                             </div>
                             <input type="hidden" name="assets[@(index)].AssetId" value="@serializedAssets[i].AssetId" />
                             <input type="hidden" name="assets[@(index)].Name" value="@serializedAssets[i].Name" />
+                            <input type="hidden" name="assets[@(index)].Kind" value="@serializedAssets[i].Kind" />
                             <input type="hidden" name="assets[@(index)].Status" value="@serializedAssets[i].Status" />
                             <input type="hidden" name="assets[@(index)].Id" value="@serializedAssets[i].Id" />
                             <input type="hidden" name="assets[@(index)].QuantityNeeded" value="@serializedAssets[i].QuantityNeeded" />
@@ -158,7 +159,7 @@
                         <td>@unserializedAssets[i].Name</td>
                         <td>@unserializedAssets[i].Status</td>
                         <td>
-                            <input type="number" class="input-mini" @(!Model.PickStarted.HasValue ? "disabled" : "")  name="assets[@i].QuantityTaken" value="@unserializedAssets[i].QuantityNeeded"/><text>/</text>
+                            <input type="number" class="input-mini" @(!Model.PickStarted.HasValue ? "disabled" : "")  name="assets[@index].QuantityTaken" value="@unserializedAssets[i].QuantityNeeded"/><text>/</text>
                             @unserializedAssets[i].QuantityNeeded
 
                             <input type="hidden" name="assets[@index].AssetId" value="@unserializedAssets[i].AssetId" />
