@@ -6,16 +6,19 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style type="text/css">
-        body {
+        body
+        {
             padding-top: 60px;
             padding-bottom: 40px;
         }
 
-        .sidebar-nav {
+        .sidebar-nav
+        {
             padding: 9px 0;
         }
 
-        label.valid {
+        label.valid
+        {
             width: 24px;
             height: 24px;
             background: url(assets/img/valid.png) center center no-repeat;
@@ -23,56 +26,67 @@
             text-indent: -9999px;
         }
 
-        label.error {
+        label.error
+        {
             font-weight: bold;
             color: red;
             padding: 2px 8px;
             margin-top: 2px;
         }
 
-        .ui-timepicker-div .ui-widget-header {
+        .ui-timepicker-div .ui-widget-header
+        {
             margin-bottom: 8px;
         }
 
-        .ui-timepicker-div dl {
+        .ui-timepicker-div dl
+        {
             text-align: left;
         }
 
-            .ui-timepicker-div dl dt {
+            .ui-timepicker-div dl dt
+            {
                 height: 25px;
                 margin-bottom: -25px;
             }
 
-            .ui-timepicker-div dl dd {
+            .ui-timepicker-div dl dd
+            {
                 margin: 0 10px 10px 65px;
             }
 
-        .ui-timepicker-div td {
+        .ui-timepicker-div td
+        {
             font-size: 90%;
         }
 
-        .ui-tpicker-grid-label {
+        .ui-tpicker-grid-label
+        {
             background: none;
             border: none;
             margin: 0;
             padding: 0;
         }
 
-        .ui-timepicker-rtl {
+        .ui-timepicker-rtl
+        {
             direction: rtl;
         }
 
-            .ui-timepicker-rtl dl {
+            .ui-timepicker-rtl dl
+            {
                 text-align: right;
             }
 
-                .ui-timepicker-rtl dl dd {
+                .ui-timepicker-rtl dl dd
+                {
                     margin: 0 65px 10px 10px;
                 }
     </style>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <link rel="stylesheet" href="@Links.Content.print_css" type="text/css" media="screen" />
 </head>
 <body>
     <header>
@@ -80,7 +94,9 @@
     </header>
     <div class="container-fluid" id="body">
         <div class="row-fluid">
-            @RenderSection("LeftNav", false)
+            <div class="span3 leftNav">
+                @RenderSection("LeftNav", false)
+            </div>
             <div>
                 @RenderBody()
             </div>

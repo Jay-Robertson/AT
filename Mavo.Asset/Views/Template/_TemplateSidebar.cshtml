@@ -1,21 +1,19 @@
 ﻿@model Mavo.Assets.Models.ViewModel.TemplatesLeftNavViewModel
 
-<div class="span3">
-    <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-            <li class="nav-header">Actions</li>
-            <li class='@(Model.Template == null && Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "create" ? "active" : "")'><a href="/template/create"><i class="icon-plus"></i>Create New Template</a></li>
-            <li><a href="#templateModal" data-toggle="modal"><i class="icon-plus"></i>Clone a Template</a></li>
-            <li class="nav-header">Templates</li>
-            @foreach (var template in Model.Templates)
-            {
-                <li class='@(Model.Template != null && Model.Template.Id == template.Id ? "active" : "")'>
-                    <a href="/template/edit/@template.Id"><i class="icon-edit"></i>@template.Name</a>
-                </li>
-            }
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">Actions</li>
+        <li class='@(Model.Template == null && Url.RequestContext.RouteData.Values["action"].ToString().ToLower() == "create" ? "active" : "")'><a href="/template/create"><i class="icon-plus"></i>Create New Template</a></li>
+        <li><a href="#templateModal" data-toggle="modal"><i class="icon-plus"></i>Clone a Template</a></li>
+        <li class="nav-header">Templates</li>
+        @foreach (var template in Model.Templates)
+        {
+            <li class='@(Model.Template != null && Model.Template.Id == template.Id ? "active" : "")'>
+                <a href="/template/edit/@template.Id"><i class="icon-edit"></i>@template.Name</a>
+            </li>
+        }
 
-        </ul>
-    </div>
+    </ul>
 </div>
 
 

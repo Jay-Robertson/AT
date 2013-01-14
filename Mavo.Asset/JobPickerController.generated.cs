@@ -141,10 +141,12 @@ namespace Mavo.Assets.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _JobPickerSidebar = "_JobPickerSidebar";
+                public readonly string _Print = "_Print";
                 public readonly string Index = "Index";
                 public readonly string Success = "Success";
             }
             public readonly string _JobPickerSidebar = "~/Views/JobPicker/_JobPickerSidebar.cshtml";
+            public readonly string _Print = "~/Views/JobPicker/_Print.cshtml";
             public readonly string Index = "~/Views/JobPicker/Index.cshtml";
             public readonly string Success = "~/Views/JobPicker/Success.cshtml";
         }

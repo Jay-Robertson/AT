@@ -1,31 +1,28 @@
 ﻿@{   var id = int.Parse(Url.RequestContext.RouteData.Values["id"].ToString().ToLower()); }
-
-<div class="span2">
-    <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-            @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyToPickForNav).Any())
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyToPickForNav).Any())
+        {
+            foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
             {
-                foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyToPickForNav)
+            <li class="nav-header">@item.Key.ToShortDateString()</li>
+                foreach (Mavo.Assets.Models.Job job in item.OrderBy(x => x.PickupTime))
                 {
-                <li class="nav-header">@item.Key.ToShortDateString()</li>
-                    foreach (Mavo.Assets.Models.Job job in item.OrderBy(x => x.PickupTime))
-                    {
-                <li class='@(id == job.Id ? "active" : "")'><a href="/jobpicker/index/@job.Id">
-                    <span id="jobStatus@(job.Id)" class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
-                    @if (job is Mavo.Assets.Models.JobAddon)
-                    {
-                        <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
-                    }
-                    @job.Name
-                </a>
-                </li>
-                    }
+            <li class='@(id == job.Id ? "active" : "")'><a href="/jobpicker/index/@job.Id">
+                <span id="jobStatus@(job.Id)" class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
+                @if (job is Mavo.Assets.Models.JobAddon)
+                {
+                    <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                }
+                @job.Name
+            </a>
+            </li>
                 }
             }
-            else
-            {
-                <li class="nav-header">No jobs to pick</li>
-            }
-        </ul>
-    </div>
+        }
+        else
+        {
+            <li class="nav-header">No jobs to pick</li>
+        }
+    </ul>
 </div>

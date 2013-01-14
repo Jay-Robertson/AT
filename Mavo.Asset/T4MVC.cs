@@ -142,6 +142,8 @@ namespace Links
             public static readonly string glyphicons_halflings_png = Url("glyphicons-halflings.png");
         }
     
+        public static readonly string print_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/print.min.css") ? Url("print.min.css") : Url("print.css");
+             
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class themes {
             private const string URLPATH = "~/Content/themes";
