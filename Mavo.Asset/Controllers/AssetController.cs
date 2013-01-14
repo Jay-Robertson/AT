@@ -15,7 +15,6 @@ using System.Web.UI;
 namespace Mavo.Assets.Controllers
 {
     [Authorize]
-    [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
     public partial class AssetController : BaseController
     {
         private readonly IAssetActivityManager AssetActivity;
@@ -33,7 +32,7 @@ namespace Mavo.Assets.Controllers
         }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.AssetCategories = new AssetContext().AssetCategories.OrderBy(x => x.Name).ToList();
+            ViewBag.AssetCategories = db.AssetCategories.OrderBy(x => x.Name).ToList();
             base.OnActionExecuting(filterContext);
         }
         [HttpPost]

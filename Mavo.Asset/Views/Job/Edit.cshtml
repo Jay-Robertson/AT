@@ -316,13 +316,13 @@
             </div>
         </div>
 
-        @if (null != Model)
+        @if (null != Model && Model.Id.HasValue)
         {
             <div class="tab-pane active" id="assets">
                 <div class="row-fluid">
                     <div class="span12 well">
                         <h4>Job Assets</h4>
-                        @{Html.RenderAction("AssetPickerForJob", "Asset", new { id = Model.Id });}
+                        @{Html.RenderAction(MVC.Asset.AssetPickerForJob(Model.Id.Value));}
                     </div>
                 </div>
             </div>
