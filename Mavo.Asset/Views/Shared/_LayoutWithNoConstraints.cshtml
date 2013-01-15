@@ -86,7 +86,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    <link rel="stylesheet" href="@Links.Content.print_css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Links.Content.print_css" type="text/css" media="print" />
 </head>
 <body>
     <header>
@@ -94,7 +94,7 @@
     </header>
     <div class="container-fluid" id="body">
         <div class="row-fluid">
-            <div class="span3 leftNav">
+            <div class="leftNav">
                 @RenderSection("LeftNav", false)
             </div>
             <div>

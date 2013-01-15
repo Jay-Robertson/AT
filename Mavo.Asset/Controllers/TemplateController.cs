@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
 using Mavo.Assets.Models;
 
@@ -37,7 +38,7 @@ namespace Mavo.Assets.Controllers
         // GET: /Template/Edit/5
         public virtual ActionResult Edit(int id)
         {
-            Template template = ctx.Templates.FirstOrDefault(x=>x.Id == id);
+            Template template = ctx.Templates.Include(x=>x.Assets).FirstOrDefault(x=>x.Id == id);
             ViewBag.Assets = template.Assets;
             return View(template);
         }
