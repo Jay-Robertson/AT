@@ -8,6 +8,7 @@ using Microsoft.Practices.ServiceLocation;
 
 namespace Mavo.Assets.Controllers
 {
+    [ValidateInput(false)]
     public partial class BaseController : Controller
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

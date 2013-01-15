@@ -50,14 +50,17 @@ namespace Mavo.Assets.Controllers
 
             foreach (PickedAsset pickedAsset in job.PickedAssets)
             {
+                bool hasReturned = false;
                 Asset asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
                 int? quantityUsed = assets.FirstOrDefault(x => x.AssetId == asset.Id).QuantityTaken;
                 if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
                 {
+                    hasReturned = true;
                     asset.Inventory += quantityUsed;
                 }
-                else if (asset.Kind == AssetKind.Serialized)
+                else if (asset.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(asset.Barcode))
                 {
+                    hasReturned = true;
                     pickedAsset.Item.Status = InventoryStatus.In;
                     var incomingItem = assets.FirstOrDefault(x => x.AssetItemId == pickedAsset.Item.Id);
                     if (incomingItem.IsDamaged)
@@ -66,17 +69,19 @@ namespace Mavo.Assets.Controllers
                         pickedAsset.Item.Condition = AssetCondition.Damaged;
                     }
                 }
-
-                job.ReturnedAssets.Add(new ReturnedAsset()
+                if (hasReturned)
                 {
-                    Asset = asset,
-                    Item = pickedAsset.Item,
-                    Quantity = quantityUsed ?? 0,
-                    Job = job,
-                    Returned = job.ReturnCompleted.Value
-                });
+                    job.ReturnedAssets.Add(new ReturnedAsset()
+                    {
+                        Asset = asset,
+                        Item = pickedAsset.Item,
+                        Quantity = quantityUsed ?? 0,
+                        Job = job,
+                        Returned = job.ReturnCompleted.Value
+                    });
 
-                AssetActivity.Add(AssetAction.Return, pickedAsset.Asset, pickedAsset.Item, job);
+                    AssetActivity.Add(AssetAction.Return, pickedAsset.Asset, pickedAsset.Item, job);
+                }
             }
             Context.SaveChanges();
 

@@ -4,6 +4,7 @@
     <table class="table table-striped table-hover">
         <tr>
             <th>Asset</th>
+            <th>Barcode</th>
             <th>Action</th>
             <th>Job</th>
             <th>User</th>
@@ -13,7 +14,29 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Asset.Name</td>
+                <td>
+                    @{
+            switch (item.Asset.Kind)
+            {
+                case Mavo.Assets.Models.AssetKind.Consumable:
+                        <i class="icon-fire"></i> @item.Asset.Name
+                    break;
+                case Mavo.Assets.Models.AssetKind.Serialized:
+                        <i class="icon-barcode"></i> @item.Asset.Name
+                    break;
+                case Mavo.Assets.Models.AssetKind.NotSerialized:
+                        <i class="icon-briefcase"></i> @item.Asset.Name
+                    break;
+                default:
+                    break;
+            }
+                    }
+
+
+
+
+                </td>
+                <td>@(item.Item != null ? item.Item.Barcode : "")</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Action)
                 </td>
@@ -29,7 +52,7 @@
                     }
                 </td>
                 <td>
-                    @if(item.User != null)
+                    @if (item.User != null)
                     {
                         @Html.ActionLink(item.User.FullName, MVC.Reporting.AssetHistoryFilter(userId: item.User.Id, startDate: item.Date.Date, endDate: item.Date.Date.AddDays(1)))
                     }

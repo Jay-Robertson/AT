@@ -68,7 +68,7 @@ namespace Mavo.Assets.Controllers
                 return null;
             ViewBag.IsForJob = false;
             ViewBag.TemplateId = id;
-            ViewBag.Assets = db.TemplateAssets.Where(x => x.Template.Id == id.Value).ToList();
+            ViewBag.Assets = db.TemplateAssets.Include(x=>x.Asset).Include(x=>x.Asset.Items).Where(x => x.Template.Id == id.Value).ToList();
             ViewBag.Lock = false;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
