@@ -25,9 +25,6 @@ namespace Mavo.Assets.Controllers
     public partial class AccountController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AccountController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected AccountController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -52,6 +49,18 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.PartialViewResult AddForeman()
+        {
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.AddForeman);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult CreateAccount()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateAccount);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Manage()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Manage);
@@ -73,8 +82,10 @@ namespace Mavo.Assets.Controllers
         public class ActionNamesClass
         {
             public readonly string Login = "Login";
+            public readonly string AddForeman = "AddForeman";
             public readonly string LogOff = "LogOff";
             public readonly string Register = "Register";
+            public readonly string CreateAccount = "CreateAccount";
             public readonly string Manage = "Manage";
         }
 
@@ -82,8 +93,10 @@ namespace Mavo.Assets.Controllers
         public class ActionNameConstants
         {
             public const string Login = "Login";
+            public const string AddForeman = "AddForeman";
             public const string LogOff = "LogOff";
             public const string Register = "Register";
+            public const string CreateAccount = "CreateAccount";
             public const string Manage = "Manage";
         }
 
@@ -97,11 +110,28 @@ namespace Mavo.Assets.Controllers
             public readonly string returnUrl = "returnUrl";
             public readonly string model = "model";
         }
+        static readonly ActionParamsClass_AddForeman s_params_AddForeman = new ActionParamsClass_AddForeman();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddForeman AddForemanParams { get { return s_params_AddForeman; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddForeman
+        {
+            public readonly string model = "model";
+        }
         static readonly ActionParamsClass_Register s_params_Register = new ActionParamsClass_Register();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Register RegisterParams { get { return s_params_Register; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Register
+        {
+            public readonly string role = "role";
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_CreateAccount s_params_CreateAccount = new ActionParamsClass_CreateAccount();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_CreateAccount CreateAccountParams { get { return s_params_CreateAccount; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_CreateAccount
         {
             public readonly string model = "model";
         }
@@ -125,12 +155,14 @@ namespace Mavo.Assets.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _ChangePasswordPartial = "_ChangePasswordPartial";
+                public readonly string _RegistrationForm = "_RegistrationForm";
                 public readonly string _SetPasswordPartial = "_SetPasswordPartial";
                 public readonly string Login = "Login";
                 public readonly string Manage = "Manage";
                 public readonly string Register = "Register";
             }
             public readonly string _ChangePasswordPartial = "~/Views/Account/_ChangePasswordPartial.cshtml";
+            public readonly string _RegistrationForm = "~/Views/Account/_RegistrationForm.cshtml";
             public readonly string _SetPasswordPartial = "~/Views/Account/_SetPasswordPartial.cshtml";
             public readonly string Login = "~/Views/Account/Login.cshtml";
             public readonly string Manage = "~/Views/Account/Manage.cshtml";
@@ -150,6 +182,13 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
+        public override System.Web.Mvc.PartialViewResult AddForeman(Mavo.Assets.Models.RegisterModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.AddForeman);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Login(Mavo.Assets.Models.LoginModel model, string returnUrl)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Login);
@@ -164,9 +203,17 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Register()
+        public override System.Web.Mvc.ActionResult Register(Mavo.Assets.Models.UserRole? role)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Register);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "role", role);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult CreateAccount(Mavo.Assets.Models.RegisterModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateAccount);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             return callInfo;
         }
 

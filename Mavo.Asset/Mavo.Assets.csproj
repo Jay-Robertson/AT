@@ -381,8 +381,8 @@
     <Content Include="Views\Job\_TransferAssetModal.cshtml" />
     <Content Include="Views\Job\_AddOnModal.cshtml" />
     <Content Include="Views\Reporting\_AssetHistoryResults.cshtml" />
-    <Content Include="Views\JobPicker\_Print.cshtml" />
     <Content Include="Views\JobPicker\_JobPickerSidebar.cshtml" />
+    <Content Include="Views\Account\_RegistrationForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

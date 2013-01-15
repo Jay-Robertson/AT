@@ -14,6 +14,14 @@ namespace Mavo.Assets.Controllers
     [InitializeSimpleMembership]
     public partial class AccountController : BaseController
     {
+        private readonly AssetContext Ctx;
+        /// <summary>
+        /// Initializes a new instance of the AccountController class.
+        /// </summary>
+        public AccountController(AssetContext ctx)
+        {
+            Ctx = ctx;
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -25,6 +33,13 @@ namespace Mavo.Assets.Controllers
 
         //
         // POST: /Account/Login
+
+        [HttpPost]
+        public virtual PartialViewResult AddForeman(RegisterModel model)
+        {
+            Register(model);
+            return PartialView("ForemanDropDown");
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -54,14 +69,36 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Account/Register
 
+        
+
         [AllowAnonymous]
-        public virtual ActionResult Register()
+        public virtual ActionResult Register(UserRole? role = null)
         {
+            if (role.HasValue)
+                return PartialView("_RegistrationForm", new RegisterModel() { Role = role.Value });
+
             return View();
         }
 
         //
         // POST: /Account/Register
+
+        [HttpPost]
+        public virtual ActionResult CreateAccount(RegisterModel model)
+        {
+            WebSecurity.CreateUserAndAccount(
+                model.Email,
+                model.Password,
+                new
+                {
+                    EmployeeId = model.EmployeeId,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Role = model.Role
+                });
+            User user = Ctx.Users.FirstOrDefault(x => x.Email == model.Email);
+            return Json(new { value = user.Id, text = user.FullName });
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -76,7 +113,8 @@ namespace Mavo.Assets.Controllers
                     WebSecurity.CreateUserAndAccount(
                         model.Email,
                         model.Password,
-                        new {
+                        new
+                        {
                             EmployeeId = model.EmployeeId,
                             FirstName = model.FirstName,
                             LastName = model.LastName,

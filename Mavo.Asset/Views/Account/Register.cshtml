@@ -8,58 +8,15 @@
     <h1>@ViewBag.Title.</h1>
     <h2>Create a new account.</h2>
 </hgroup>
-
 @using (Html.BeginForm(MVC.Account.Register(), FormMethod.Post, new { @class = "form form-horizontal" }))
 {
     @Html.AntiForgeryToken()
     <fieldset>
         <legend>Registration Form</legend>
-        <div class="control-group">
-            @Html.LabelFor(m => m.EmployeeId, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(m => m.EmployeeId)
-            </div>
-        </div>
-        <div class="control-group">
-            @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(m => m.FirstName)
-            </div>
-        </div>
-        <div class="control-group">
-            @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(m => m.LastName)
-            </div>
-        </div>
-        <div class="control-group">
-            @Html.LabelFor(m => m.Email, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(m => m.Email)
-            </div>
-        </div>
-        <div class="control-group">
-            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(m => m.Password)
-            </div>
-        </div>
-        <div class="control-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EditorFor(m => m.ConfirmPassword)
-            </div>
-        </div>
-          <div class="control-group">
-            @Html.LabelFor(m => m.Role, new { @class = "control-label" })
-            <div class="controls">
-                @Html.EnumDropDownListFor(m => m.Role)
-            </div>
-        </div>
-        <input type="submit" class="btn" value="Log in" />
+        @{Html.RenderPartial("_RegistrationForm");}
+        <input type="submit" class="btn" value="Register" />
     </fieldset>
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

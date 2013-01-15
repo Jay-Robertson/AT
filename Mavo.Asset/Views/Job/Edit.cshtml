@@ -19,6 +19,18 @@
 
     <script type="text/javascript">
         jQuery(function ($) {
+            $('#Role').val(8);
+            $('#addForeman').submit(function () {
+                var req = $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() });
+                req.done(function (data) {
+                    $('#ForemanId').append($('<option></option>').val(data.value).html(data.text));
+                    $('#ForemanId').val(data.value);
+                    $('#addForemanModal').hide();
+                });
+                return false;
+            }
+           );
+
             $('#job-tabs').tab();
             $('#btnAddFromTemplate').hide();
         });
@@ -66,9 +78,9 @@
         });
         $('#btnAddFromTemplate').click(function () {
             $.post('/job/AddAssetsFromTemplate/' + @Model.Id + '?templateId=' + $('#TemplateId').val(), function (assetsHtml) {
-                        $('#asset-container').html(assetsHtml);
-                    });
-                });
+                $('#asset-container').html(assetsHtml);
+            });
+        });
         </text>
             }
 
@@ -267,6 +279,7 @@
                            Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
                            Selected = Model == null || Model.ForemanId == null ? false : x.Id == Model.ForemanId
                        }), string.Empty)
+                            <a class="btn btn-small btn-success" href="#addForemanModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
                         </div>
                     </div>
 
@@ -329,3 +342,22 @@
         }
     </div>
 }
+
+
+<!-- Modal -->
+<div id="addForemanModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addFormanModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="addFormanModalLabel">Add Foreman</h3>
+    </div>
+    @using (Html.BeginForm(MVC.Account.CreateAccount(), FormMethod.Post, new { id = "addForeman", @class = "form form-horizontal" }))
+    {
+        <div class="modal-body">
+            @{Html.RenderAction(MVC.Account.Register(Mavo.Assets.Models.UserRole.Foreman));}
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Add Foreman</button>
+        </div>
+    }
+</div>
