@@ -82,7 +82,7 @@ namespace Mavo.Assets.Controllers
                     Context.PickedAssets.Add(pickedAsset);
                     Asset asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
                     if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
-                        asset.Inventory = Convert.ToInt32(Math.Max((decimal)(asset.Inventory - pickedAsset.Quantity), 0m));
+                        asset.Inventory = Convert.ToInt32(Math.Max((decimal)((asset.Inventory ?? 0) - pickedAsset.Quantity), 0m));
                     else if (asset.Kind == AssetKind.Serialized)
                     {
                         pickedAsset.Item.Status = InventoryStatus.Out;
