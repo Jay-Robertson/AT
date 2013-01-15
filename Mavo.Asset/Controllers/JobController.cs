@@ -36,10 +36,10 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult CreateAddon(int id)
         {
             JobAddon newAddon = new JobAddon();
-            Job job = Context.Jobs.Include(x=>x.Customer).Include(x=>x.Foreman).Include(x=>x.ProjectManager).FirstOrDefault(x => x.Id == id);
+            Job job = Context.Jobs.Include(x => x.Customer).Include(x => x.Foreman).Include(x => x.ProjectManager).FirstOrDefault(x => x.Id == id);
 
             newAddon = AutoMapper.Mapper.Map<Job, JobAddon>(job);
-            
+
             Context.JobAddons.Add(newAddon);
             Context.SaveChanges();
             return Json(newAddon.Id);
@@ -61,7 +61,7 @@ namespace Mavo.Assets.Controllers
             Job jobToTransferFrom = Context.Jobs.Include(x => x.PickedAssets).FirstOrDefault(x => x.Id == model.JobToTransferFrom);
             foreach (var assetToTransfer in assetsToTranfer)
             {
-                var pickedAsset = Context.PickedAssets.Include(x => x.Asset).Include(x=>x.Item).Include(x=>x.Job).FirstOrDefault(x => x.Id == assetToTransfer.PickedAssetId);
+                var pickedAsset = Context.PickedAssets.Include(x => x.Asset).Include(x => x.Item).Include(x => x.Job).FirstOrDefault(x => x.Id == assetToTransfer.PickedAssetId);
 
                 if (pickedAsset.Asset.Kind == AssetKind.Serialized || assetToTransfer.Quantity == pickedAsset.Quantity)
                 {

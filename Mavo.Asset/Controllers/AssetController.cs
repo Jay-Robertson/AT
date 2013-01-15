@@ -99,7 +99,7 @@ namespace Mavo.Assets.Controllers
             Job job = outOfRequestDb.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
-            ViewBag.Assets = job.Status == JobStatus.New ? job.Assets : job.PickedAssets == null ? new List<AssetWithQuantity>() : job.PickedAssets.Select(x => (AssetWithQuantity)x).ToList();
+            ViewBag.Assets = job.Assets;
             ViewBag.Lock = job.Status != JobStatus.New;
             return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.ToList());
         }
