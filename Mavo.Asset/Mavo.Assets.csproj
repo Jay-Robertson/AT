@@ -335,7 +335,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Asset\Index.cshtml" />
     <Content Include="Views\Asset\Edit.cshtml" />
     <Content Include="T4MVC.tt.hooks.t4" />
