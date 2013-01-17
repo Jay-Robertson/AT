@@ -11,8 +11,13 @@ namespace MaxwellSync
 {
     public class MaxwellCustomer
     {
-        public string Number { get; set; }
-        public string Name { get; set; }
+        public string CustomerNumber { get; set; }
+        public string CustomerName { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string Address3 { get; set; }
+        public string PhoneNumber { get; set; }
+        public string ContactName { get; set; }
     }
 
     /// <summary>
@@ -110,7 +115,14 @@ namespace MaxwellSync
 
         */
 
-        public IList<MaxwellCustomer> ImportCustomers()
+        string ConvertMaxwellString(object input)
+        {
+            var a = input as string;
+            if (String.IsNullOrWhiteSpace(a)) return null;
+            return a.Trim();
+        }
+
+        public IList<MaxwellCustomer> FindCustomers()
         {
             var customers = new List<MaxwellCustomer>();
             using (var cmd = new OdbcCommand("select * from CCSMS", _cx))
@@ -121,8 +133,13 @@ namespace MaxwellSync
                     {
                         customers.Add(new MaxwellCustomer
                         {
-                            Number = dr["CUST_NO"] as string,
-                            Name = dr["CUST_NAME"] as string
+                            CustomerNumber = ConvertMaxwellString(dr["CUST_NO"]),
+                            CustomerName = ConvertMaxwellString(dr["CUST_NAME"]),
+                            Address1 = ConvertMaxwellString(dr["CUST_ADDR_1"]),
+                            Address2 = ConvertMaxwellString(dr["CUST_ADDR_2"]),
+                            Address3 = ConvertMaxwellString(dr["CUST_ADDR_3"]),
+                            ContactName = ConvertMaxwellString(dr["CUST_CONTACT"]),
+                            PhoneNumber = ConvertMaxwellString(dr["CUST_PHONE_1"])
                         });
                     }
                 }

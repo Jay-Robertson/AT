@@ -21,9 +21,9 @@ namespace Mavo.Assets.Controllers
             return db.Customers.AsEnumerable();
         }
 
-        public Customer GetCustomer(int id)
+        public Customer GetCustomer(string id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = db.Customers.FirstOrDefault(x => x.CustomerNumber == id);
             if (customer == null)
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
@@ -34,77 +34,38 @@ namespace Mavo.Assets.Controllers
 
         public HttpResponseMessage PutCustomer(string id, Customer customer)
         {
-            if (ModelState.IsValid && id == customer.CustomerNumber)
-            {
-                var isNew = false;
-                var customerToSave = db.Customers.FirstOrDefault(x => x.CustomerNumber == id);
-                if (customerToSave == null)
-                {
-                    customerToSave = new Customer();
-                    isNew = true;
-                }
-                customerToSave.Address = customer.Address;
-                customerToSave.ContactName = customer.ContactName;
-                customerToSave.CustomerNumber = id;
-                customerToSave.Name = customer.Name;
-                customerToSave.PhoneNumber = customer.PhoneNumber;
-                if (isNew)
-                    db.Customers.Add(customerToSave);
-
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch(Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-        }
-
-        public HttpResponseMessage PostCustomer(Customer customer)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Customers.Add(customer);
-                db.SaveChanges();
-
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, customer);
-                response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = customer.Id }));
-                return response;
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-        }
-
-        public HttpResponseMessage DeleteCustomer(int id)
-        {
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-
-            db.Customers.Remove(customer);
-
             try
             {
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    var isNew = false;
+                    var customerToSave = db.Customers.FirstOrDefault(x => x.CustomerNumber == id);
+                    if (customerToSave == null)
+                    {
+                        customerToSave = new Customer();
+                        customerToSave.CustomerNumber = id;
+                        isNew = true;
+                    }
+                    customerToSave.Address = customer.Address;
+                    customerToSave.ContactName = customer.ContactName;
+                    customerToSave.Name = customer.Name;
+                    customerToSave.PhoneNumber = customer.PhoneNumber;
+                    if (isNew)
+                    {
+                        db.Customers.Add(customerToSave);
+                    }
+                    db.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
-
-            return Request.CreateResponse(HttpStatusCode.OK, customer);
         }
 
         protected override void Dispose(bool disposing)

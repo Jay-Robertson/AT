@@ -223,6 +223,10 @@
     <Compile Include="Migrations\201212282047450_addons-3.Designer.cs">
       <DependentUpon>201212282047450_addons-3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301170300028_remove-address-constraints.cs" />
+    <Compile Include="Migrations\201301170300028_remove-address-constraints.Designer.cs">
+      <DependentUpon>201301170300028_remove-address-constraints.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
@@ -407,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201212282047450_addons-3.resx">
       <DependentUpon>201212282047450_addons-3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301170300028_remove-address-constraints.resx">
+      <DependentUpon>201301170300028_remove-address-constraints.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
