@@ -100,7 +100,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
             ViewBag.Assets = job.Assets;
-            ViewBag.Lock = job.Status != JobStatus.New;
+            ViewBag.Lock = job.Status != JobStatus.New && job.Status != JobStatus.ReadyToPick;
             return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.ToList());
         }
 
