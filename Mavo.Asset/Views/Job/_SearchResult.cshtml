@@ -40,7 +40,18 @@
                 <td>@Html.DisplayFor(x => item.Customer)</td>
                 <td>@Html.DisplayFor(x => item.ShipDate)</td>
                 <td>@Html.DisplayFor(x => item.ReturnDate)</td>
-                <td>@Html.DisplayFor(x => item.Status)</td>
+                <td>
+                    @if (item.Status == Mavo.Assets.Models.JobStatus.ReadyToPick)
+                    {
+                        <a href="/jobpicker/index/@item.Id">
+                            @Html.DisplayFor(x => item.Status)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(x => item.Status)
+                    }
+                </td>
                 <td>@Html.DisplayFor(x => item.ProjectManager)</td>
                 <td>
                     <a href="/job/edit/@item.Id" class="btn btn-small"><i class="icon-edit"></i>&nbsp;Edit</a>
