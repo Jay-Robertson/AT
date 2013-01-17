@@ -7,7 +7,6 @@
     @using (Html.BeginForm("TransferAssets", "Job", FormMethod.Post, new { @class = "form form-horizontal" }))
     {
         <div class="modal-body">
-
             @Html.HiddenFor(x => x.JobToTransferFrom)
             <div class="control-group">
                 <label class="control-label" for="inputEmail">Jobs</label>
@@ -19,6 +18,8 @@
                }))
                 </div>
             </div>
+            <div class="alert alert-info">Select the number of each asset you’re transferring From: <strong>@Model.JobToTransferFromName</strong> – To: <strong id="to"></strong></div>
+
             <div class="control-group">
                 <table class="table table-compressed">
                     <thead>
@@ -61,3 +62,9 @@
 
 </div>
 
+<script type="text/javascript">
+    $('#to').html($('#JobToTransferTo option:selected').html());
+    $('#JobToTransferTo').change(function () {
+        $('#to').html($('#JobToTransferTo option:selected').html());
+    });
+</script>

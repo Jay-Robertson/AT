@@ -12,6 +12,8 @@ namespace Mavo.Assets.Models.ViewModel
         public List<PickedAsset> Assets { get; set; }
         public List<TranferredAsset> TransferredAssets { get; set; }
         public List<Job> Jobs { get; set; }
+
+        public string JobToTransferFromName { get; set; }
     }
     public class TranferredAsset
     {

@@ -50,6 +50,7 @@ namespace Mavo.Assets.Controllers
             return PartialView("_TransferAssetModal", new TransferAssetsViewModel()
             {
                 JobToTransferFrom = id,
+                JobToTransferFromName = Context.Jobs.FirstOrDefault(x=>x.Id == id).Name,
                 Jobs = jobs,
                 Assets = Context.PickedAssets.Where(x => x.Job.Id == id).Include(x => x.Asset).ToList()
             });
