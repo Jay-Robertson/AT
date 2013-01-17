@@ -63,6 +63,7 @@ namespace Mavo.Assets.Controllers
             public readonly string AssetHistoryFilter = "AssetHistoryFilter";
             public readonly string FellOffTruck = "FellOffTruck";
             public readonly string TomorrowsPicks = "TomorrowsPicks";
+            public readonly string ItemsNotPicked = "ItemsNotPicked";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -74,6 +75,7 @@ namespace Mavo.Assets.Controllers
             public const string AssetHistoryFilter = "AssetHistoryFilter";
             public const string FellOffTruck = "FellOffTruck";
             public const string TomorrowsPicks = "TomorrowsPicks";
+            public const string ItemsNotPicked = "ItemsNotPicked";
         }
 
 
@@ -88,12 +90,22 @@ namespace Mavo.Assets.Controllers
             public readonly string date = "date";
             public readonly string startDate = "startDate";
             public readonly string endDate = "endDate";
+            public readonly string job = "job";
         }
         static readonly ActionParamsClass_FellOffTruck s_params_FellOffTruck = new ActionParamsClass_FellOffTruck();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_FellOffTruck FellOffTruckParams { get { return s_params_FellOffTruck; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_FellOffTruck
+        {
+            public readonly string startDate = "startDate";
+            public readonly string endDate = "endDate";
+        }
+        static readonly ActionParamsClass_ItemsNotPicked s_params_ItemsNotPicked = new ActionParamsClass_ItemsNotPicked();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ItemsNotPicked ItemsNotPickedParams { get { return s_params_ItemsNotPicked; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ItemsNotPicked
         {
             public readonly string startDate = "startDate";
             public readonly string endDate = "endDate";
@@ -112,6 +124,7 @@ namespace Mavo.Assets.Controllers
                 public readonly string _ReadyJob = "_ReadyJob";
                 public readonly string AssetHistory = "AssetHistory";
                 public readonly string FellOffTruck = "FellOffTruck";
+                public readonly string ItemsNotPicked = "ItemsNotPicked";
                 public readonly string Jobs = "Jobs";
                 public readonly string LateJobs = "LateJobs";
                 public readonly string TomorrowsPicks = "TomorrowsPicks";
@@ -120,6 +133,7 @@ namespace Mavo.Assets.Controllers
             public readonly string _ReadyJob = "~/Views/Reporting/_ReadyJob.cshtml";
             public readonly string AssetHistory = "~/Views/Reporting/AssetHistory.cshtml";
             public readonly string FellOffTruck = "~/Views/Reporting/FellOffTruck.cshtml";
+            public readonly string ItemsNotPicked = "~/Views/Reporting/ItemsNotPicked.cshtml";
             public readonly string Jobs = "~/Views/Reporting/Jobs.cshtml";
             public readonly string LateJobs = "~/Views/Reporting/LateJobs.cshtml";
             public readonly string TomorrowsPicks = "~/Views/Reporting/TomorrowsPicks.cshtml";
@@ -149,7 +163,7 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult AssetHistoryFilter(string id, int? userId, System.DateTime? date, System.DateTime? startDate, System.DateTime? endDate)
+        public override System.Web.Mvc.ActionResult AssetHistoryFilter(string id, int? userId, System.DateTime? date, System.DateTime? startDate, System.DateTime? endDate, int? job)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetHistoryFilter);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -157,6 +171,7 @@ namespace Mavo.Assets.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "date", date);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "startDate", startDate);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "endDate", endDate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "job", job);
             return callInfo;
         }
 
@@ -171,6 +186,14 @@ namespace Mavo.Assets.Controllers
         public override System.Web.Mvc.ActionResult TomorrowsPicks()
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.TomorrowsPicks);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ItemsNotPicked(System.DateTime? startDate, System.DateTime? endDate)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ItemsNotPicked);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "startDate", startDate);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "endDate", endDate);
             return callInfo;
         }
 

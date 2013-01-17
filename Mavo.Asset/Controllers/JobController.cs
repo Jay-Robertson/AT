@@ -171,7 +171,7 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Edit(int id)
         {
-            Mavo.Assets.Models.Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            Mavo.Assets.Models.Job job = Context.Jobs.Include(x => x.PickedAssets).Include("PickedAssets.Asset").Include("PickedAssets.Item").FirstOrDefault(x => x.Id == id);
             if (job != null)
             {
                 SetListsForCrud(job);

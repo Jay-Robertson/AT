@@ -141,7 +141,11 @@
 {
     <ul id="job-tabs" class="nav nav-tabs">
         <li><a href="#details" data-toggle="tab">Details</a></li>
-        <li class="active"><a href="#assets" data-toggle="tab">Assets</a></li>
+        <li class="@(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")"><a href="#assets" data-toggle="tab">Assets</a></li>
+        @if (Model.Status >= Mavo.Assets.Models.JobStatus.BeingPicked)
+        {
+            <li class="active"><a href="#jobstatus"  data-toggle="tab">Status</a></li>
+        }
     </ul>
 }
 
@@ -157,8 +161,9 @@
     @Html.HiddenFor(x => x.Status)
     }
    
-   
-    <div class="row-fluid">
+   if (Model != null && Model.Status <= Mavo.Assets.Models.JobStatus.ReadyToPick)
+   {
+        <div class="row-fluid">
         <div class="well">
             <h4>Template</h4>
             @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
@@ -173,6 +178,8 @@
             }
         </div>
     </div>
+   }
+   
 
     <div class="tab-content">
         <div class="tab-pane @(null == Model ? "active" : "")" id="details">
@@ -331,11 +338,60 @@
 
         @if (null != Model && Model.Id.HasValue)
         {
-            <div class="tab-pane active" id="assets">
+            <div class="tab-pane @(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")" id="assets">
                 <div class="row-fluid">
                     <div class="span12 well">
                         <h4>Job Assets</h4>
                         @{Html.RenderAction(MVC.Asset.AssetPickerForJob(Model.Id.Value));}
+                    </div>
+                </div>
+            </div>
+        }
+        @if (null != Model && Model.Status >= Mavo.Assets.Models.JobStatus.Started)
+        {
+            <div class="tab-pane active" id="jobstatus">
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <h4>Job Status</h4>
+                        <div id="asset-container">
+                            <table id="asset-table" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Asset</th>
+                                        <th>Quantity/Barcode</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.PickedAssets)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
+                                                {
+                                                    <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(item.Barcode))">@item.Asset.Name</a>
+                                                }
+                                                else
+                                                {
+                                                    @item.Asset.Name
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
+                                                {
+                                                    @item.Item.Barcode
+                                                }
+                                                else
+                                                {
+                                                    @item.Quantity
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(job:Model.Id))">View detailed Asset History for this job</a>
                     </div>
                 </div>
             </div>

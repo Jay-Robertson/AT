@@ -82,7 +82,7 @@ namespace Mavo.Assets.Controllers
             if (job.HasValue)
                 result = result.Where(x => x.Job.Id == job.Value);
             if (!String.IsNullOrEmpty(id))
-                result = result.Where(x => x.Asset.Barcode == id);
+                result = result.Where(x => x.Item.Barcode == id);
             if (userId.HasValue)
                 result = result.Where(x => x.User.Id == userId.Value);
             if (startDate.HasValue)
@@ -226,7 +226,7 @@ namespace Mavo.Assets.Controllers
 
         }
 
-        public ActionResult ItemsNotPicked(DateTime? startDate = null, DateTime? endDate = null)
+        public virtual ActionResult ItemsNotPicked(DateTime? startDate = null, DateTime? endDate = null)
         {
             if (!startDate.HasValue)
                 startDate = DateTime.Today.AddDays(-7);

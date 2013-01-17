@@ -176,11 +176,11 @@ namespace Mavo.Assets.Models
     public enum JobStatus
     {
         New,
-        Started,
-        Completed,
         ReadyToPick,
         BeingPicked,
-        BeingReturned
+        Started,
+        BeingReturned,
+        Completed
     }
     public class JobAddon : Job
     {

@@ -26,10 +26,10 @@
             }
         </li>
         <li class="nav-header">Jobs By Status</li>
-        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "0")><a href="/job?status=0">New</a></li>
-        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "1")><a href="/job?status=1">Started</a></li>
-        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "2")><a href="/job?status=2">Completed</a></li>
-        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], "3")><a href="/job?status=3">Ready To Pick</a></li>
+        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], ((int)Mavo.Assets.Models.JobStatus.New).ToString())><a href="/job?status=@((int)Mavo.Assets.Models.JobStatus.New)">New</a></li>
+        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], ((int)Mavo.Assets.Models.JobStatus.Started).ToString())><a href="/job?status=@((int)Mavo.Assets.Models.JobStatus.Started)">Started</a></li>
+        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], ((int)Mavo.Assets.Models.JobStatus.ReadyToPick).ToString())><a href="/job?status=@((int)Mavo.Assets.Models.JobStatus.ReadyToPick)">Ready To Pick</a></li>
+        <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], ((int)Mavo.Assets.Models.JobStatus.Completed).ToString())><a href="/job?status=@((int)Mavo.Assets.Models.JobStatus.Completed)">Completed</a></li>
     </ul>
     <ul class="nav nav-list">
         <li class="nav-header">Jobs By Customer</li>

@@ -46,5 +46,7 @@ namespace Mavo.Assets.Models.ViewModel
 
         public DateTime? ReturnStarted { get; set; }
         public string ReturnedByStr { get; set; }
+
+        public IList<PickedAsset> PickedAssets { get; set; }
     }
 }
