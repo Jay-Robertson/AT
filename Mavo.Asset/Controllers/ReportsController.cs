@@ -65,7 +65,7 @@ namespace Mavo.Assets.Controllers
             return View();
         }
 
-        public virtual ActionResult AssetHistoryFilter(string id = null, int? userId = null, DateTime? date = null, DateTime? startDate = null, DateTime? endDate = null)
+        public virtual ActionResult AssetHistoryFilter(string id = null, int? userId = null, DateTime? date = null, DateTime? startDate = null, DateTime? endDate = null, int? job = null)
         {
             if (date.HasValue)
             {
@@ -79,7 +79,8 @@ namespace Mavo.Assets.Controllers
                                 .Include(x => x.Item)
                                 .Include(x => x.Job)
                                 .Include(x => x.User);
-
+            if (job.HasValue)
+                result = result.Where(x => x.Job.Id == job.Value);
             if (!String.IsNullOrEmpty(id))
                 result = result.Where(x => x.Asset.Barcode == id);
             if (userId.HasValue)
@@ -135,7 +136,7 @@ namespace Mavo.Assets.Controllers
                     }
                     else if (pickedAsset.Asset.Kind == AssetKind.Serialized)
                     {
-                        fellOfTruck = returnedAssetsForJob.Any(x => x.Item.Barcode == pickedAsset.Item.Barcode);
+                        fellOfTruck = returnedAssetsForJob.Any(x => x.Item != null && x.Item.Barcode == pickedAsset.Item.Barcode);
                     }
                     else
                     {
