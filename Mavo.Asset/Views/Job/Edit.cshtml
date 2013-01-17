@@ -62,7 +62,7 @@
             {
                 <text>
         $(":input").attr("disabled", "disabled");
-        $("#PickupTime, #btnSubmit").removeAttr('disabled');
+        $("#PickupTime, #btnSubmit", '#btnPickYes').removeAttr('disabled');
                 </text>
             }
             else
@@ -144,7 +144,7 @@
         <li class="@(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")"><a href="#assets" data-toggle="tab">Assets</a></li>
         @if (Model.Status >= Mavo.Assets.Models.JobStatus.BeingPicked)
         {
-            <li class="active"><a href="#jobstatus"  data-toggle="tab">Status</a></li>
+            <li class="active"><a href="#jobstatus" data-toggle="tab">Status</a></li>
         }
     </ul>
 }
@@ -160,10 +160,10 @@
     {
     @Html.HiddenFor(x => x.Status)
     }
-   
-   if (Model != null && Model.Status <= Mavo.Assets.Models.JobStatus.ReadyToPick)
-   {
-        <div class="row-fluid">
+
+    if (Model != null && Model.Status <= Mavo.Assets.Models.JobStatus.ReadyToPick)
+    {
+    <div class="row-fluid">
         <div class="well">
             <h4>Template</h4>
             @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
@@ -178,7 +178,7 @@
             }
         </div>
     </div>
-   }
+    }
    
 
     <div class="tab-content">
@@ -391,7 +391,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(job:Model.Id))">View detailed Asset History for this job</a>
+                        <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(job: Model.Id))">View detailed Asset History for this job</a>
                     </div>
                 </div>
             </div>

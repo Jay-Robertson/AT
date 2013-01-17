@@ -9,10 +9,10 @@
         <p>Are you sure?</p>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn btn-danger"><i class="icon-remove-circle icon-white"></i>&nbsp;No</a>
+        <a href="#" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove-circle icon-white"></i>&nbsp;No</a>
         @using (Html.BeginForm(MVC.Job.MarkReadyToPick(Model.Id), FormMethod.Post, new { style = "margin: 0; display: inline;" }))
         {
-            <button type="submit" class="btn btn-success"><i class="icon-ok-sign icon-white"></i>&nbsp;Yes</button>
+            <button type="submit" id="btnPickYes" class="btn btn-success"><i class="icon-ok-sign icon-white"></i>&nbsp;Yes</button>
         }
     </div>
 </div>
