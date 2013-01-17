@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Mavo.Assets.Models.ItemNotPicked>
+
+@{
+    ViewBag.Title = "Items Not Picked";
+}
+
+<h2>Items Not Picked</h2>
+
+@foreach (var item in Model)
+{
+    <div class="well">
+        <a href="/job/edit/@item.Job.Id">@item.Job.Name</a> @if(item.Job.Customer != null){ <text>at </text>  <span class="label label-info">@item.Job.Customer.Name</span> } (Picked <span class="label label-info">@item.Job.PickupTime</span>) by <span class="label label-info">@item.Job.PickedBy</span>
+        <table class="table table-condensed table-striped table-hover">
+            <tr>
+                <th>Asset</th>
+                <th>Requested</th>
+                <th>Picked</th>
+            </tr>
+
+            @foreach (var asset in item.NotPicked)
+            {
+                <tr>
+                    <td><a href="/asset/edit/@asset.AssetId">@asset.AssetName</a></td>
+                    <td>@asset.Requested</td>
+                    <td>@asset.Picked</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+}

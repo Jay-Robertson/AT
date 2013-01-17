@@ -63,6 +63,7 @@ namespace Mavo.Assets.Controllers
                 job.PickedAssets = new List<PickedAsset>();
                 job.PickCompleted = DateTime.Now;
             }
+            job.PickedBy = Context.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
             IEnumerable<PickedAsset> pickedAssets = null;
             if (assets != null)
             {

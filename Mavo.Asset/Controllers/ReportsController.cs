@@ -106,14 +106,14 @@ namespace Mavo.Assets.Controllers
                 .Include(x => x.Job).Include(x => x.Job.ReturnedBy).Include(x => x.Item).Include(x => x.Asset)
                 .Where(x => x.Job.ReturnCompleted >= startDate && x.Job.ReturnCompleted < endDate)
                 .ToList()
-                .Where(x=>x.Job != null)
+                .Where(x => x.Job != null)
                 .GroupBy(x => x.Job);
 
-            var jobIds = pickedAssets.Select(x=>x.Key.Id);
+            var jobIds = pickedAssets.Select(x => x.Key.Id);
 
             var returnedAssets = Context.ReturnedAssets
                    .Include(x => x.Job).Include(x => x.Job.ReturnedBy).Include(x => x.Item).Include(x => x.Asset)
-                   .Where(x=> jobIds.Contains(x.Job.Id))
+                   .Where(x => jobIds.Contains(x.Job.Id))
                    .ToList()
                    .GroupBy(x => x.Job);
 
@@ -223,6 +223,48 @@ namespace Mavo.Assets.Controllers
                     }).ToList()
                 }));
 
+        }
+
+        public ActionResult ItemsNotPicked(DateTime? startDate = null, DateTime? endDate = null)
+        {
+            if (!startDate.HasValue)
+                startDate = DateTime.Today.AddDays(-7);
+            if (!endDate.HasValue)
+                endDate = DateTime.Today;
+
+            var list = Context.Jobs.Include(x => x.PickedAssets).Include("PickedAssets.Asset").Include("Assets").Include("Assets.Asset")
+                 .Where(x => x.PickupTime > startDate && x.PickupTime <= endDate && x.PickedAssets.Count != x.Assets.Count);
+
+            List<ItemNotPicked> result = new List<ItemNotPicked>();
+
+            foreach (var item in list)
+            {
+                ItemNotPicked newItemNotPicked = new ItemNotPicked() { Job = item, NotPicked = new List<NotPickedItem>() };
+                foreach (var requestedAsset in item.Assets)
+                {
+                    int picked = 0;
+                    int requested = requestedAsset.Quantity;
+                    if (requestedAsset.Asset.Kind == AssetKind.Serialized)
+                        picked = item.PickedAssets.Count(x => x.Asset.Id == requestedAsset.Asset.Id);
+                    else
+                    {
+                        PickedAsset pickedAsset = item.PickedAssets.FirstOrDefault(x => x.Asset.Id == requestedAsset.Asset.Id);
+                        if (pickedAsset != null)
+                            picked = pickedAsset.Quantity;
+                    }
+                    if (requested != picked)
+                        newItemNotPicked.NotPicked.Add(new NotPickedItem()
+                        {
+                            AssetId = requestedAsset.Asset.Id,
+                            AssetName = requestedAsset.Asset.Name,
+                            Picked = picked,
+                            Requested = requested
+                        });
+                }
+                result.Add(newItemNotPicked);
+            }
+
+            return View(result);
         }
     }
 }

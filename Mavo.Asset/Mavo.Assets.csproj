@@ -185,6 +185,8 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ItemNotPicked.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobPickerController.cs" />
     <Compile Include="Controllers\JobReturnerController.cs" />
@@ -230,6 +232,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
+    <Compile Include="Models\NotPickedItem.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\ViewModel\AssetPostModel.cs" />
     <Compile Include="Models\ViewModel\AssetSearchResult.cs" />
@@ -389,6 +392,7 @@
     <Content Include="Views\Reporting\_AssetHistoryResults.cshtml" />
     <Content Include="Views\JobPicker\_JobPickerSidebar.cshtml" />
     <Content Include="Views\Account\_RegistrationForm.cshtml" />
+    <Content Include="Views\Reporting\ItemsNotPicked.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
