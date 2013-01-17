@@ -52,18 +52,18 @@ namespace Mavo.Assets.Controllers
             {
                 bool hasReturned = false;
                 Asset asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
-                int? quantityUsed = assets.FirstOrDefault(x => x.AssetId == asset.Id).QuantityTaken;
+                JobAsset incomingAsset = assets.FirstOrDefault(x => x.AssetId == asset.Id);
+                int? quantityUsed = incomingAsset.QuantityTaken;
                 if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
                 {
                     hasReturned = true;
                     asset.Inventory += quantityUsed;
                 }
-                else if (asset.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(asset.Barcode))
+                else if (asset.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(incomingAsset.Barcode))
                 {
                     hasReturned = true;
                     pickedAsset.Item.Status = InventoryStatus.In;
-                    var incomingItem = assets.FirstOrDefault(x => x.AssetItemId == pickedAsset.Item.Id);
-                    if (incomingItem.IsDamaged)
+                    if (incomingAsset.IsDamaged)
                     {
                         AssetActivity.Add(AssetAction.Damaged, pickedAsset.Asset, pickedAsset.Item, job);
                         pickedAsset.Item.Condition = AssetCondition.Damaged;
