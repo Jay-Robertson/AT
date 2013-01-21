@@ -1,0 +1,71 @@
+﻿@model Mavo.Assets.Models.Customer
+<!-- Modal -->
+<div id="addCustomerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="addCustomerModalLabel">Add Customer</h3>
+    </div>
+    @using (Html.BeginForm("", "", FormMethod.Post, new { id = "addCustomer", @class = "form form-horizontal" }))
+    {
+        <div class="modal-body">
+            <div class="control-group">
+                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Name)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.ContactName, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.ContactName)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.CustomerNumber, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.CustomerNumber)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.PhoneNumber, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.PhoneNumber)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.Address1, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.Address1)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.Address2, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.Address2)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.City, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.City)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.State, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.State)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(x => x.Address.ZipCode, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(x => x.Address.ZipCode)
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Add Customer</button>
+        </div>
+    }
+</div>

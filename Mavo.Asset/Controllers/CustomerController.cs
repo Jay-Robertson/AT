@@ -32,6 +32,19 @@ namespace Mavo.Assets.Controllers
             return customer;
         }
 
+        public Customer PostCustomer(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Customers.Add(customer);
+                db.SaveChanges();
+            }
+            else
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.BadGateway));
+
+            return customer;
+        }
+
         public HttpResponseMessage PutCustomer(string id, Customer customer)
         {
             try

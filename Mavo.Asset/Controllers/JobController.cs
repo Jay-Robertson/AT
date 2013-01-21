@@ -15,9 +15,11 @@ namespace Mavo.Assets.Controllers
         private readonly IAssetActivityManager AssetActivity;
         private readonly AssetContext Context;
         private readonly IAssetPicker AssetPicker;
-
-        public JobController(AssetContext context, IAssetPicker assetPicker, IAssetActivityManager assetActivity)
+        private readonly ICurrentUserService CurrentUserService;
+        
+        public JobController(AssetContext context, IAssetPicker assetPicker, IAssetActivityManager assetActivity, ICurrentUserService currentUserService)
         {
+            CurrentUserService = currentUserService;
             AssetActivity = assetActivity;
             AssetPicker = assetPicker;
             Context = context;
@@ -30,7 +32,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.Assets = new List<AssetWithQuantity>();
             ViewBag.AssetCategories = Context.AssetCategories.ToList();
             ViewBag.Lock = false;
-            return PartialView("_AddOnModal", id);
+            return PartialView("Modals\\_AddOnModal", id);
         }
         [HttpPost]
         public virtual ActionResult CreateAddon(int id)
@@ -47,7 +49,7 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult TransferAssetsModal(int id)
         {
             List<Job> jobs = Context.Jobs.Include(x => x.Foreman).Include(x => x.Customer).Where(x => x.Status == JobStatus.Started && x.Id != id).OrderBy(x => x.JobNumber).ToList();
-            return PartialView("_TransferAssetModal", new TransferAssetsViewModel()
+            return PartialView("Modals\\_TransferAssetModal", new TransferAssetsViewModel()
             {
                 JobToTransferFrom = id,
                 JobToTransferFromName = Context.Jobs.FirstOrDefault(x=>x.Id == id).Name,
@@ -213,6 +215,8 @@ namespace Mavo.Assets.Controllers
                     if (!jobPostModel.Id.HasValue)
                     {
                         job.Status = JobStatus.New;
+                        job.CreatedDate = DateTime.Now;
+                        job.SubmittedBy = CurrentUserService.GetCurrent();
                         if (jobPostModel.TemplateId.HasValue)
                         {
                             var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();

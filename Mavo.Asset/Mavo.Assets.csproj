@@ -185,6 +185,14 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Migrations\201301211646576_AddedCreatedByUser.cs" />
+    <Compile Include="Migrations\201301211646576_AddedCreatedByUser.Designer.cs">
+      <DependentUpon>201301211646576_AddedCreatedByUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301211716490_AddRequiredCustomerFields.cs" />
+    <Compile Include="Migrations\201301211716490_AddRequiredCustomerFields.Designer.cs">
+      <DependentUpon>201301211716490_AddRequiredCustomerFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -370,7 +378,7 @@
     <Content Include="Views\JobPicker\Index.cshtml" />
     <Content Include="Views\JobPicker\Success.cshtml" />
     <Content Include="Views\Job\_SearchResult.cshtml" />
-    <Content Include="Views\Job\_PickJobModal.cshtml" />
+    <Content Include="Views\Job\Modals\_PickJobModal.cshtml" />
     <Content Include="Views\Asset\_SearchResult.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\AssetKind.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\JobStatus.cshtml" />
@@ -387,17 +395,19 @@
     <Content Include="Views\Reporting\AssetHistory.cshtml" />
     <Content Include="Views\Reporting\TomorrowsPicks.cshtml" />
     <Content Include="Views\Reporting\FellOffTruck.cshtml" />
-    <Content Include="Views\Job\_TransferAssetModal.cshtml" />
-    <Content Include="Views\Job\_AddOnModal.cshtml" />
+    <Content Include="Views\Job\Modals\_TransferAssetModal.cshtml" />
+    <Content Include="Views\Job\Modals\_AddOnModal.cshtml" />
     <Content Include="Views\Reporting\_AssetHistoryResults.cshtml" />
     <Content Include="Views\JobPicker\_JobPickerSidebar.cshtml" />
     <Content Include="Views\Account\_RegistrationForm.cshtml" />
     <Content Include="Views\Reporting\ItemsNotPicked.cshtml" />
     <Content Include="Views\Job\_JobAlerts.cshtml" />
-    <Content Include="Views\Job\_AddForemanModal.cshtml" />
+    <Content Include="Views\Job\Modals\_AddForemanModal.cshtml" />
     <Content Include="Views\Job\Tabs\_AssetHistory.cshtml" />
     <Content Include="Views\Job\Tabs\_PickList.cshtml" />
     <Content Include="Views\Job\Tabs\_DataSheet.cshtml" />
+    <Content Include="Views\Job\Tabs\_BillingRequestForm.cshtml" />
+    <Content Include="Views\Job\Modals\_AddCustomerModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -423,6 +433,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301170300028_remove-address-constraints.resx">
       <DependentUpon>201301170300028_remove-address-constraints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301211646576_AddedCreatedByUser.resx">
+      <DependentUpon>201301211646576_AddedCreatedByUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301211716490_AddRequiredCustomerFields.resx">
+      <DependentUpon>201301211716490_AddRequiredCustomerFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

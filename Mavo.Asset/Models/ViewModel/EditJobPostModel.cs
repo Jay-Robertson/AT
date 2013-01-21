@@ -48,5 +48,9 @@ namespace Mavo.Assets.Models.ViewModel
         public string ReturnedByStr { get; set; }
 
         public IList<PickedAsset> PickedAssets { get; set; }
+
+        public User SubmittedBy { get; set; }
+
+        public DateTime CreatedDate { get; set; }
     }
 }

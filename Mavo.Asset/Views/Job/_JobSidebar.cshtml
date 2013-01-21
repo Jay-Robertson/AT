@@ -20,7 +20,7 @@
             @using (Html.BeginForm(MVC.Job.Index(), FormMethod.Post, new { @class = "form-search" }))
             {
                 <div class="input-append">
-                    @Html.TextBox("SearchString", null, new { @class = "span8 search-query" })
+                    @Html.TextBox("SearchString", null, new { @class = "span5 search-query" })
                     <button type="submit" class="btn">Search</button>
                 </div>
             }

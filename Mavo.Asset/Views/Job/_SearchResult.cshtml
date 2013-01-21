@@ -58,7 +58,7 @@
                     @if (item.Status == Mavo.Assets.Models.JobStatus.New)
                     {
                         <a data-toggle="modal" href="#pickupModal@(item.Id.Value)"class="btn btn-small btn-info"><i class="icon-lock"></i>&nbsp;Pick Job</a>
-                        Html.RenderPartial("_PickJobModal", new Mavo.Assets.Models.Job() { Id = item.Id.Value, PickupTime = item.ShipDate.Value, Name = item.JobName });
+                        Html.RenderPartial("Modals\\_PickJobModal", new Mavo.Assets.Models.Job() { Id = item.Id.Value, PickupTime = item.ShipDate.Value, Name = item.JobName });
                     }
                 </td>
             </tr>

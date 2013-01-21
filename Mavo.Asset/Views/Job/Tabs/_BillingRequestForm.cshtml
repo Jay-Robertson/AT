@@ -6,6 +6,14 @@
         <div class="row-fluid">
             <div class="span12 well">
                 <h4>Billing Request Form</h4>
+                <form class="form-horizontal">
+                <div class="control-group">
+                    @Html.LabelFor(x => x.SubmittedBy, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(x => x.SubmittedBy.FullName, new { disabled = "disabled" })
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
     </div>

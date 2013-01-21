@@ -232,15 +232,22 @@ namespace Mavo.Assets.Models
         public List<PickedAsset> PickedAssets { get; set; }
 
         public List<ReturnedAsset> ReturnedAssets { get; set; }
+
+        public User SubmittedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 
     [ComplexType]
     public class Address
     {
+        [Required]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
+        [Required]
         public string City { get; set; }
+        [Required]
         public string State { get; set; }
+        [Required]
         public string ZipCode { get; set; }
 
     }
@@ -259,7 +266,7 @@ namespace Mavo.Assets.Models
         public string ContactName { get; set; }
 
         public string PhoneNumber { get; set; }
-
+        [Required]
         public Address Address { get; set; }
     }
 }
