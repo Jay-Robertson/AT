@@ -31,7 +31,7 @@
                                Text = x.Name,
                                Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
                            }), string.Empty)
-                        <a class="btn btn-small btn-success" href="#addCustomerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
+                            <a class="btn btn-small btn-success" href="#addCustomerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
 
                         </div>
                     </div>
@@ -51,6 +51,7 @@
                                ,
                                Selected = Model == null || Model.ProjectManagerId == null ? false : x.Id == Model.ProjectManagerId
                            }), string.Empty)
+                            <a class="btn btn-small btn-success" href="#addProjectManagerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
                         </div>
                     </div>
                     <div class="control-group">

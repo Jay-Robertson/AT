@@ -1,0 +1,17 @@
+﻿<!-- Modal -->
+<div id="addProjectManagerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addProjectManagerModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="addProjectManagerModalLabel">Add Project Manager</h3>
+    </div>
+    @using (Html.BeginForm(MVC.Account.CreateAccount(), FormMethod.Post, new { id = "addProjectManager", @class = "form form-horizontal" }))
+    {
+        <div class="modal-body">
+            @{Html.RenderAction(MVC.Account.Register(Mavo.Assets.Models.UserRole.ProjectManager));}
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary">Add Project Manager</button>
+        </div>
+    }
+</div>

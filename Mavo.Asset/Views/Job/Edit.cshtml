@@ -30,6 +30,16 @@
                 return false;
             }
            );
+            $('#addProjectManager').submit(function () {
+                var req = $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() });
+                req.success(function (data) {
+                    $('#ProjectManagerId').append($('<option></option>').val(data.value).html(data.text));
+                    $('#ProjectManagerId').val(data.value);
+                    $('#addProjectManagerModal').hide();
+                });
+                return false;
+            }
+           );
             $('#addCustomer').submit(function () {
                 var req = $.ajax({ url: '/api/customer', type: 'POST', data: $(this).serialize() });
                 req.success(function (data) {
@@ -179,4 +189,5 @@
 </div>
 
 @{Html.RenderPartial("Modals\\_AddForemanModal");}
+@{Html.RenderPartial("Modals\\_AddProjectManagerModal");}
 @{Html.RenderPartial("Modals\\_AddCustomerModal", new Mavo.Assets.Models.Customer());}
