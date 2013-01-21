@@ -1,0 +1,18 @@
+﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
+
+@if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked)
+{
+    <div class="alert alert-info">
+        <p>
+            <strong>Job is being picked!</strong> This job is <a href="/jobpicker/index/@Model.Id">currently being picked</a> by <strong>@Model.PickedUpByStr</strong>.  They started picking it up at <strong>@Model.PickStarted</strong>
+        </p>
+        <button type="button" id="btnCancelPick" class="btn btn-danger">Cancel</button>
+    </div>
+}
+@if (Model != null && Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned)
+{
+    <div class="alert alert-info">
+        <p><strong>Job is being returned!</strong> This job is <a href="/jobreturner/index/@Model.Id">currently being returned</a> by <strong>@Model.ReturnedByStr</strong>.  They started returning it at <strong>@Model.ReturnStarted</strong></p>
+        <button type="button" id="btnCancelReturn" class="btn btn-danger">Cancel</button>
+    </div>
+}

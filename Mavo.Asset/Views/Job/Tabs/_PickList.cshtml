@@ -1,0 +1,13 @@
+﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
+
+@if (null != Model && Model.Id.HasValue)
+{
+    <div class="tab-pane @(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")" id="assets">
+        <div class="row-fluid">
+            <div class="span12 well">
+                <h4>Job Assets</h4>
+                @{Html.RenderAction(MVC.Asset.AssetPickerForJob(Model.Id.Value));}
+            </div>
+        </div>
+    </div>
+}

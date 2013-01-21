@@ -393,6 +393,11 @@
     <Content Include="Views\JobPicker\_JobPickerSidebar.cshtml" />
     <Content Include="Views\Account\_RegistrationForm.cshtml" />
     <Content Include="Views\Reporting\ItemsNotPicked.cshtml" />
+    <Content Include="Views\Job\_JobAlerts.cshtml" />
+    <Content Include="Views\Job\_AddForemanModal.cshtml" />
+    <Content Include="Views\Job\Tabs\_AssetHistory.cshtml" />
+    <Content Include="Views\Job\Tabs\_PickList.cshtml" />
+    <Content Include="Views\Job\Tabs\_DataSheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
