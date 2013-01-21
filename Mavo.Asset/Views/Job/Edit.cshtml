@@ -124,6 +124,7 @@
 
 @{Html.RenderPartial("_JobAlerts", Model);}
 
+@*Tabs*@
 @if (null != Model)
 {
     <ul id="job-tabs" class="nav nav-tabs">
@@ -133,6 +134,7 @@
         {
             <li class="active"><a href="#jobstatus" data-toggle="tab">Status</a></li>
         }
+        <li><a href="#billingRequestForm" data-toggle="tab">Billing Request Form</a></li>
     </ul>
 }
 
@@ -142,11 +144,11 @@
         <div class="well">
             <h4>Template</h4>
             @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
-               {
-                   Value = x.Id.ToString(),
-                   Text = x.Name,
-                   Selected = Model == null || (ViewBag.TemplateId != null && ViewBag.TemplateId.HasValue) ? false : x.Id == ViewBag.TemplateId
-               }), string.Empty)
+       {
+           Value = x.Id.ToString(),
+           Text = x.Name,
+           Selected = Model == null || (ViewBag.TemplateId != null && ViewBag.TemplateId.HasValue) ? false : x.Id == ViewBag.TemplateId
+       }), string.Empty)
             @if (Model != null)
             {
                 <a href="#" id="btnAddFromTemplate" class="btn btn-success">Add Items from Template</a>
@@ -161,6 +163,9 @@
         Html.RenderPartial("Tabs\\_PickList", Model);
 
         Html.RenderPartial("Tabs\\_AssetHistory", Model);
+
+        Html.RenderPartial("Tabs\\_BillingRequestForm", Model);
+        
     }
 </div>
 
