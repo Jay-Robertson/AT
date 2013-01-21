@@ -31,7 +31,9 @@ namespace Mavo.Assets
 
 
 
-            AutoMapper.Mapper.CreateMap<EditJobPostModel, Job>();
+            AutoMapper.Mapper.CreateMap<EditJobPostModel, Job>()
+                .ForMember(x => x.CreatedDate, opt => opt.Ignore())
+                .ForMember(x => x.SubmittedBy, opt => opt.Ignore());
             AutoMapper.Mapper.CreateMap<Job, EditJobPostModel>()
                 .ForMember(dest => dest.ProjectManagerId, opt => opt.MapFrom(src => src.ProjectManager.Id))
                 .ForMember(dest => dest.ForemanId, opt => opt.MapFrom(src => src.Foreman.Id))
