@@ -97,7 +97,7 @@ namespace Mavo.Assets.Controllers
                     Role = model.Role
                 });
             User user = Ctx.Users.FirstOrDefault(x => x.Email == model.Email);
-            return Json(new { value = user.Id, text = user.FullName });
+            return Json(new { value = user.Id, text = String.Format("{0}, {1}", user.LastName, user.FirstName) });
         }
 
         [HttpPost]

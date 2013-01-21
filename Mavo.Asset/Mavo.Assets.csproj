@@ -408,6 +408,7 @@
     <Content Include="Views\Job\Tabs\_DataSheet.cshtml" />
     <Content Include="Views\Job\Tabs\_BillingRequestForm.cshtml" />
     <Content Include="Views\Job\Modals\_AddCustomerModal.cshtml" />
+    <Content Include="Views\Job\Modals\_AddProjectManagerModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
