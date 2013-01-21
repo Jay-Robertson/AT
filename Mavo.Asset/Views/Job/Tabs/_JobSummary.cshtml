@@ -1,0 +1,114 @@
+﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
+
+@if (null != Model && Model.Id.HasValue)
+{
+    <div class="tab-pane" id="jobSummary">
+        <div class="row-fluid">
+            <div class="span12 well">
+
+                <h4>Summary</h4>
+                <form class="form-horizontal">
+                <table class="table table-condensed table-striped table-hover">
+                    <tr>
+                        <th>Submitted By:</th>
+                        <td>@Html.DisplayFor(x => x.SubmittedBy.FullName)</td>
+                    </tr>
+                    <tr>
+                        <th>Filled out by:</th>
+                        <td>
+                            <input type="text" value="Brandon" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Scope of Work:</th>
+                        <td>
+                            <input type="text" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Notifiable:</th>
+                        <td>
+                            <select>
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Job Name:</th>
+                        <td>@Html.DisplayFor(x => x.Name)</td>
+                    </tr>
+                    <tr>
+                        <th>Job Number:</th>
+                        <td>@Html.DisplayFor(x => x.JobNumber)</td>
+                    </tr>
+                    <tr>
+                        <th>Start Date/Time:</th>
+                        <td>@Html.DisplayFor(x => x.ContractDate)</td>
+                    </tr>
+                    <tr>
+                        <th>Completion Date:</th>
+                        <td>@Html.DisplayFor(x => x.EstimatedCompletionDate)</td>
+                    </tr>
+                    <tr>
+                        <th>Job Address:</th>
+                        <td>
+                            @Html.DisplayFor(x => x.Address)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Billing Type:</th>
+                        <td>
+                            <select>
+                                <option>Contract</option>
+                                <option>Time and Materials</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Shift Hours:</th>
+                        <td>
+                            <input type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Foreman:</th>
+                        <td>
+
+                            @Html.DropDownList("ForemanId", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
+                       {
+                           Value = x.Id.ToString(),
+                           Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
+                           Selected = Model == null || Model.ForemanId == null ? false : x.Id == Model.ForemanId
+                       }), string.Empty)
+                            <a class="btn btn-small btn-success" href="#addForemanModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Supervisors Needed:</th>
+                        <td>
+                            <input type="number" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Workers Needed:</th>
+                        <td>
+                            <input type="number" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Comments:</th>
+                        <td>
+                            <textarea style="width:518px; height:84px"></textarea>
+                        </td>
+                    </tr>
+
+                </table>
+                </form>
+            </div>
+        </div>
+        <div id="map" style="width: 640px; height: 480px;"></div>
+        <table id="steps" class="table table-condensed table-striped table-hover">
+        </table>
+    </div>
+}

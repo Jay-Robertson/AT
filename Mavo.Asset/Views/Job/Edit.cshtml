@@ -16,7 +16,6 @@
 }
 @section scripts
 {
-
     <script type="text/javascript">
         jQuery(function ($) {
             $('#Role').val(8);
@@ -77,6 +76,59 @@
         }
         @if (Model != null)
         {
+            <text>
+        var map;
+        $('#jobSummary_link').on('show', function (e) {
+            if (map == undefined) {
+                var directionsService = new google.maps.DirectionsService();
+                var directionsDisplay = new google.maps.DirectionsRenderer();
+
+                var mapOptions = {
+                    zoom: 7,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+
+                map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                directionsDisplay.setMap(map);
+
+                var request = {
+                    origin: '4330 Centerville Road White Bear Lake, MN 55127',
+                    destination: '@Model.Address.Address1 @Model.Address.Address2 @Model.Address.City @Model.Address.State @Model.Address.ZipCode',
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+                };
+
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        // Give the response to the directions display
+                        directionsDisplay.setDirections(response);
+
+                        // Display the route on the map
+                        directionsDisplay.setMap(map);
+
+                        // Grab the result from the routes
+                        var routeResult = response.routes[0];
+
+                        // Iterate over each leg of the route
+                        routeResult.legs.forEach(function (leg) {
+                            // Build HTML for each step
+                            var stepHTML = '';
+                            leg.steps.forEach(function (step) {
+                                stepHTML += '<tr>' +
+                                          '<td>' + step.instructions + '</td>' +
+                                          '<td>' + step.distance.text + ' (' + step.duration.text + ')' + '</td>' +
+                                        '</tr>';
+                            });
+
+                            // Put the step HTML somewhere
+                            $('#steps').append(stepHTML);
+                        });
+                    }
+                });
+            }
+        });
+
+           
+        </text>
             if (Model.IsAddon)
             {
                 <text>
@@ -118,7 +170,7 @@
     }
 }
 <h1>
-    <span>@ViewBag.Action Job</span>
+    <span class="noprint">@ViewBag.Action Job</span>
     @if (null != Model)
     {
         <span>&gt; @Model.Name</span>
@@ -128,7 +180,7 @@
         }
         if (Model.Status == Mavo.Assets.Models.JobStatus.New)
         {
-        <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="pull-right btn btn-primary"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
+        <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="pull-right btn btn-primary noprint"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
         }
         else if (Model.Status == Mavo.Assets.Models.JobStatus.Started && !Model.IsAddon)
         {
@@ -153,28 +205,10 @@
         {
             <li class="active"><a href="#jobstatus" data-toggle="tab">Status</a></li>
         }
-        <li><a href="#billingRequestForm" data-toggle="tab">Billing Request Form</a></li>
+        <li><a href="#jobSummary" id="jobSummary_link" data-toggle="tab">Job Summary</a></li>
     </ul>
 }
 
-@if (Model != null && Model.Status <= Mavo.Assets.Models.JobStatus.ReadyToPick)
-{
-    <div class="row-fluid">
-        <div class="well">
-            <h4>Template</h4>
-            @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
-       {
-           Value = x.Id.ToString(),
-           Text = x.Name,
-           Selected = Model == null || (ViewBag.TemplateId != null && ViewBag.TemplateId.HasValue) ? false : x.Id == ViewBag.TemplateId
-       }), string.Empty)
-            @if (Model != null)
-            {
-                <a href="#" id="btnAddFromTemplate" class="btn btn-success">Add Items from Template</a>
-            }
-        </div>
-    </div>
-}
 <div class="tab-content">
     @{
         Html.RenderPartial("Tabs\\_DataSheet", Model);
@@ -183,7 +217,7 @@
 
         Html.RenderPartial("Tabs\\_AssetHistory", Model);
 
-        Html.RenderPartial("Tabs\\_BillingRequestForm", Model);
+        Html.RenderPartial("Tabs\\_JobSummary", Model);
         
     }
 </div>

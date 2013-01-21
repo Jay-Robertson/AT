@@ -1,4 +1,4 @@
-﻿.navbar, .leftNav, .h1, .alert, .sidebar-nav, .add-on
+﻿.navbar, .leftNav, .h1, .alert, .sidebar-nav, .add-on, .noprint, #job-tabs, .btn
 {
 	display:none;
 }

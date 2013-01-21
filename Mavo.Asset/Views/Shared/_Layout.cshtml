@@ -87,12 +87,14 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     <link rel="stylesheet" href="@Links.Content.print_css" type="text/css" media="print" />
+
+
 </head>
 <body>
     @{Html.RenderPartial(MVC.Shared.Views._TopNav);}
     <div class="container-fluid" id="body">
         <div class="row-fluid">
-            <div class="span3 leftNav" >
+            <div class="span3 leftNav">
                 @RenderSection("LeftNav", false)
             </div>
             <div class="span9">
@@ -112,6 +114,7 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryplugins")
     @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
     @RenderSection("scripts", required: false)
 

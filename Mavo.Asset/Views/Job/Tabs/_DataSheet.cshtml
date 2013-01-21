@@ -109,18 +109,7 @@
                     </div>
                 </div>
 
-                <div class="control-group">
-                    @Html.LabelFor(x => x.ForemanId, new { @class = "control-label" })
-                    <div class="controls">
-                        @Html.DropDownList("ForemanId", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
-                       {
-                           Value = x.Id.ToString(),
-                           Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
-                           Selected = Model == null || Model.ForemanId == null ? false : x.Id == Model.ForemanId
-                       }), string.Empty)
-                        <a class="btn btn-small btn-success" href="#addForemanModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
-                    </div>
-                </div>
+             
 
                 <div class="control-group">
                     @Html.LabelFor(x => x.ContractDate, new { @class = "control-label" })

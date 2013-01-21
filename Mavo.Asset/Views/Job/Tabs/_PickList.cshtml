@@ -2,7 +2,23 @@
 
 @if (null != Model && Model.Id.HasValue)
 {
+    
     <div class="tab-pane @(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")" id="assets">
+        <div class="row-fluid noprint">
+            <div class="well">
+                <h4>Template</h4>
+                @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
+       {
+           Value = x.Id.ToString(),
+           Text = x.Name,
+           Selected = Model == null || (ViewBag.TemplateId != null && ViewBag.TemplateId.HasValue) ? false : x.Id == ViewBag.TemplateId
+       }), string.Empty)
+                @if (Model != null)
+                {
+                    <a href="#" id="btnAddFromTemplate" class="btn btn-success">Add Items from Template</a>
+                }
+            </div>
+        </div>
         <div class="row-fluid">
             <div class="span12 well">
                 <h4>Job Assets</h4>
