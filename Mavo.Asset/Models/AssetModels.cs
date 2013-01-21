@@ -255,14 +255,10 @@ namespace Mavo.Assets.Models
     [ComplexType]
     public class Address
     {
-        [Required]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
-        [Required]
         public string City { get; set; }
-        [Required]
         public string State { get; set; }
-        [Required]
         public string ZipCode { get; set; }
 
     }
@@ -272,16 +268,10 @@ namespace Mavo.Assets.Models
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
-
         public string CustomerNumber { get; set; }
-
         public string ContactName { get; set; }
-
         public string PhoneNumber { get; set; }
-        [Required]
         public Address Address { get; set; }
     }
 }
