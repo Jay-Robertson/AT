@@ -107,6 +107,8 @@ namespace Mavo.Assets.Controllers
                     ForemanFirstName = x.Foreman.FirstName,
                     ForemanLastName = x.Foreman.LastName,
                     ReturnStarted = x.ReturnStarted,
+                    Address = x.Address,
+                    CompletionDate = x.EstimatedCompletionDate,
                     Assets = x.PickedAssets.Select(a => new
                     {
                         Name = a.Asset.Name,
@@ -128,6 +130,8 @@ namespace Mavo.Assets.Controllers
                 Foreman = String.Format("{0} {1}", result.ForemanFirstName, result.ForemanLastName),
                 Customer = result.Customer,
                 ReturnStarted = result.ReturnStarted,
+                Address = result.Address,
+                CompletionDate = result.CompletionDate,
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
                     Name = x.Name,

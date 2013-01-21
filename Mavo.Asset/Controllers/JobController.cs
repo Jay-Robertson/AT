@@ -16,7 +16,7 @@ namespace Mavo.Assets.Controllers
         private readonly AssetContext Context;
         private readonly IAssetPicker AssetPicker;
         private readonly ICurrentUserService CurrentUserService;
-        
+
         public JobController(AssetContext context, IAssetPicker assetPicker, IAssetActivityManager assetActivity, ICurrentUserService currentUserService)
         {
             CurrentUserService = currentUserService;
@@ -52,7 +52,7 @@ namespace Mavo.Assets.Controllers
             return PartialView("Modals\\_TransferAssetModal", new TransferAssetsViewModel()
             {
                 JobToTransferFrom = id,
-                JobToTransferFromName = Context.Jobs.FirstOrDefault(x=>x.Id == id).Name,
+                JobToTransferFromName = Context.Jobs.FirstOrDefault(x => x.Id == id).Name,
                 Jobs = jobs,
                 Assets = Context.PickedAssets.Where(x => x.Job.Id == id).Include(x => x.Asset).ToList()
             });
@@ -189,6 +189,18 @@ namespace Mavo.Assets.Controllers
 
         //
         // POST: /Jobs/Edit/5
+
+        [HttpPost]
+        public virtual ActionResult SaveSummary(int id, EditJobPostModel jobPostModel)
+        {
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            job.Summary = jobPostModel.Summary;
+            if (jobPostModel.ForemanId.HasValue)
+                job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
+
+            Context.SaveChanges();
+            return RedirectToAction("Edit", new { id = id });
+        }
 
         [HttpPost]
         public virtual ActionResult Edit(EditJobPostModel jobPostModel)

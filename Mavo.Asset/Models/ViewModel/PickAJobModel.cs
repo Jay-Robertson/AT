@@ -17,6 +17,8 @@ namespace Mavo.Assets.Models.ViewModel
         }
         public string JobName { get; set; }
 
+        public Address Address { get; set; }
+
         public string JobNumber { get; set; }
 
         public string Manager { get; set; }
@@ -37,6 +39,8 @@ namespace Mavo.Assets.Models.ViewModel
         public DateTime PickupTime { get; set; }
 
         public bool IsAddon { get; set; }
+
+        public DateTime CompletionDate { get; set; }
     }
     public class JobAsset
     {

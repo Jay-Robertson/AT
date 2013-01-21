@@ -64,42 +64,8 @@
         </div>
     </div>
 }
-<div class="row-fluid">
-    <div class="well">
-        <h4>
-            Job Details
-            <a class="btn" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
-        </h4>
-        <div class="row-fluid">
-            <div class="span4">
-                <span>Job Name:</span>
-                <span class="label label-info">@Model.JobName</span>
-            </div>
-            <div class="span4">
-                <span>Job Number:</span>
-                <span class="label label-info">@Model.JobNumber</span>
-            </div>
-            <div class="span4">
-                <span>Manager:</span>
-                <span class="label label-info">@Model.Manager</span>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span4">
-                <span>Customer:</span>
-                <span class="label label-info">@Model.Customer</span>
-            </div>
-            <div class="span4">
-                <span>Job Site:</span>
-                <span class="label label-info">@Model.JobSite</span>
-            </div>
-            <div class="span4">
-                <span>Foreman:</span>
-                <span class="label label-info">@Model.Foreman</span>
-            </div>
-        </div>
-    </div>
-</div>
+@{Html.RenderPartial("_JobHeader", Model);}
+
 @if (Model.ReturnStarted.HasValue)
 {
     <div class="alert alert-info @(!Model.ReturnStarted.HasValue ? "hide" : "")" id="returnTimeDiv">

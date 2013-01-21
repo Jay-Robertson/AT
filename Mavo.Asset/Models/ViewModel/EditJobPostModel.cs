@@ -8,6 +8,13 @@ namespace Mavo.Assets.Models.ViewModel
 {
     public class EditJobPostModel
     {
+        /// <summary>
+        /// Initializes a new instance of the EditJobPostModel class.
+        /// </summary>
+        public EditJobPostModel()
+        {
+            Summary = new Summary();
+        }
         public int? Id { get; set; }
 
         [Required(ErrorMessage = "Job Name is Required")]
@@ -52,5 +59,9 @@ namespace Mavo.Assets.Models.ViewModel
         public User SubmittedBy { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public Summary Summary { get; set; }
     }
+
+
 }

@@ -120,6 +120,8 @@ namespace Mavo.Assets.Controllers
                     PickCompleted = x.PickCompleted,
                     ReturnStarted = x.ReturnStarted,
                     ReturnCompleted = x.ReturnCompleted,
+                    Address = x.Address,
+                    CompletionDate = x.EstimatedCompletionDate,
                     Assets = x.Assets.Select(a => new
                     {
                         Name = a.Asset.Name,
@@ -145,6 +147,8 @@ namespace Mavo.Assets.Controllers
                 Customer = result.Customer,
                 PickStarted = result.PickStarted,
                 ReturnStarted = result.ReturnStarted,
+                Address = result.Address,
+                CompletionDate = result.CompletionDate,
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
                     Name = x.Name,

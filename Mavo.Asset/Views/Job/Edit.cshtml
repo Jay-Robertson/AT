@@ -169,8 +169,8 @@
         Html.RenderAction("AddOnModal", new { id = Model.Id });
     }
 }
-<h1>
-    <span class="noprint">@ViewBag.Action Job</span>
+<h1 class="noprint">
+    <span>@ViewBag.Action Job</span>
     @if (null != Model)
     {
         <span>&gt; @Model.Name</span>

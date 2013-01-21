@@ -85,6 +85,12 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult SaveSummary()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SaveSummary);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult MarkReadyToPick()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.MarkReadyToPick);
@@ -113,6 +119,7 @@ namespace Mavo.Assets.Controllers
             public readonly string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string SaveSummary = "SaveSummary";
             public readonly string MarkReadyToPick = "MarkReadyToPick";
         }
 
@@ -127,6 +134,7 @@ namespace Mavo.Assets.Controllers
             public const string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string SaveSummary = "SaveSummary";
             public const string MarkReadyToPick = "MarkReadyToPick";
         }
 
@@ -200,6 +208,15 @@ namespace Mavo.Assets.Controllers
             public readonly string id = "id";
             public readonly string jobPostModel = "jobPostModel";
         }
+        static readonly ActionParamsClass_SaveSummary s_params_SaveSummary = new ActionParamsClass_SaveSummary();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_SaveSummary SaveSummaryParams { get { return s_params_SaveSummary; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_SaveSummary
+        {
+            public readonly string id = "id";
+            public readonly string jobPostModel = "jobPostModel";
+        }
         static readonly ActionParamsClass_MarkReadyToPick s_params_MarkReadyToPick = new ActionParamsClass_MarkReadyToPick();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_MarkReadyToPick MarkReadyToPickParams { get { return s_params_MarkReadyToPick; } }
@@ -218,21 +235,59 @@ namespace Mavo.Assets.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string _AddOnModal = "_AddOnModal";
+                public readonly string _JobAlerts = "_JobAlerts";
                 public readonly string _JobSidebar = "_JobSidebar";
-                public readonly string _PickJobModal = "_PickJobModal";
                 public readonly string _SearchResult = "_SearchResult";
-                public readonly string _TransferAssetModal = "_TransferAssetModal";
                 public readonly string Edit = "Edit";
                 public readonly string Index = "Index";
             }
-            public readonly string _AddOnModal = "~/Views/Job/_AddOnModal.cshtml";
+            public readonly string _JobAlerts = "~/Views/Job/_JobAlerts.cshtml";
             public readonly string _JobSidebar = "~/Views/Job/_JobSidebar.cshtml";
-            public readonly string _PickJobModal = "~/Views/Job/_PickJobModal.cshtml";
             public readonly string _SearchResult = "~/Views/Job/_SearchResult.cshtml";
-            public readonly string _TransferAssetModal = "~/Views/Job/_TransferAssetModal.cshtml";
             public readonly string Edit = "~/Views/Job/Edit.cshtml";
             public readonly string Index = "~/Views/Job/Index.cshtml";
+            static readonly _ModalsClass s_Modals = new _ModalsClass();
+            public _ModalsClass Modals { get { return s_Modals; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _ModalsClass
+            {
+                static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+                public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+                public class _ViewNamesClass
+                {
+                    public readonly string _AddCustomerModal = "_AddCustomerModal";
+                    public readonly string _AddForemanModal = "_AddForemanModal";
+                    public readonly string _AddOnModal = "_AddOnModal";
+                    public readonly string _AddProjectManagerModal = "_AddProjectManagerModal";
+                    public readonly string _PickJobModal = "_PickJobModal";
+                    public readonly string _TransferAssetModal = "_TransferAssetModal";
+                }
+                public readonly string _AddCustomerModal = "~/Views/Job/Modals/_AddCustomerModal.cshtml";
+                public readonly string _AddForemanModal = "~/Views/Job/Modals/_AddForemanModal.cshtml";
+                public readonly string _AddOnModal = "~/Views/Job/Modals/_AddOnModal.cshtml";
+                public readonly string _AddProjectManagerModal = "~/Views/Job/Modals/_AddProjectManagerModal.cshtml";
+                public readonly string _PickJobModal = "~/Views/Job/Modals/_PickJobModal.cshtml";
+                public readonly string _TransferAssetModal = "~/Views/Job/Modals/_TransferAssetModal.cshtml";
+            }
+            static readonly _TabsClass s_Tabs = new _TabsClass();
+            public _TabsClass Tabs { get { return s_Tabs; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _TabsClass
+            {
+                static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+                public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+                public class _ViewNamesClass
+                {
+                    public readonly string _AssetHistory = "_AssetHistory";
+                    public readonly string _DataSheet = "_DataSheet";
+                    public readonly string _JobSummary = "_JobSummary";
+                    public readonly string _PickList = "_PickList";
+                }
+                public readonly string _AssetHistory = "~/Views/Job/Tabs/_AssetHistory.cshtml";
+                public readonly string _DataSheet = "~/Views/Job/Tabs/_DataSheet.cshtml";
+                public readonly string _JobSummary = "~/Views/Job/Tabs/_JobSummary.cshtml";
+                public readonly string _PickList = "~/Views/Job/Tabs/_PickList.cshtml";
+            }
         }
     }
 
@@ -304,6 +359,14 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult SaveSummary(int id, Mavo.Assets.Models.ViewModel.EditJobPostModel jobPostModel)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SaveSummary);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobPostModel", jobPostModel);
             return callInfo;
         }
 

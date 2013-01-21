@@ -193,6 +193,10 @@
     <Compile Include="Migrations\201301211716490_AddRequiredCustomerFields.Designer.cs">
       <DependentUpon>201301211716490_AddRequiredCustomerFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301212131496_AddedSummary.cs" />
+    <Compile Include="Migrations\201301212131496_AddedSummary.Designer.cs">
+      <DependentUpon>201301212131496_AddedSummary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -245,13 +249,16 @@
     <Compile Include="Models\ViewModel\AssetPostModel.cs" />
     <Compile Include="Models\ViewModel\AssetSearchResult.cs" />
     <Compile Include="Models\ViewModel\AssetsLeftNavViewModel.cs" />
+    <Compile Include="Models\ViewModel\BillingType.cs" />
     <Compile Include="Models\ViewModel\EditJobPostModel.cs" />
     <Compile Include="Models\ViewModel\FellOffTruck.cs" />
     <Compile Include="Models\ViewModel\JobReportViewModel.cs" />
     <Compile Include="Models\ViewModel\JobSearch.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\PickAJobModel.cs" />
+    <Compile Include="Models\ViewModel\Summary.cs" />
     <Compile Include="Models\ViewModel\TransferAssetsViewModel.cs" />
+    <Compile Include="Models\ViewModel\YesNo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportingController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -406,9 +413,11 @@
     <Content Include="Views\Job\Tabs\_AssetHistory.cshtml" />
     <Content Include="Views\Job\Tabs\_PickList.cshtml" />
     <Content Include="Views\Job\Tabs\_DataSheet.cshtml" />
-    <Content Include="Views\Job\Tabs\_BillingRequestForm.cshtml" />
+    <Content Include="Views\Job\Tabs\_JobSummary.cshtml" />
     <Content Include="Views\Job\Modals\_AddCustomerModal.cshtml" />
     <Content Include="Views\Job\Modals\_AddProjectManagerModal.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
+    <Content Include="Views\Shared\_JobHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -440,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301211716490_AddRequiredCustomerFields.resx">
       <DependentUpon>201301211716490_AddRequiredCustomerFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301212131496_AddedSummary.resx">
+      <DependentUpon>201301212131496_AddedSummary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

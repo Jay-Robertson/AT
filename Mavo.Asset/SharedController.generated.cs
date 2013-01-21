@@ -35,12 +35,14 @@ namespace T4MVC
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string _JobHeader = "_JobHeader";
                 public readonly string _Layout = "_Layout";
                 public readonly string _LayoutWithNoConstraints = "_LayoutWithNoConstraints";
                 public readonly string _LoginPartial = "_LoginPartial";
                 public readonly string _TopNav = "_TopNav";
                 public readonly string Error = "Error";
             }
+            public readonly string _JobHeader = "~/Views/Shared/_JobHeader.cshtml";
             public readonly string _Layout = "~/Views/Shared/_Layout.cshtml";
             public readonly string _LayoutWithNoConstraints = "~/Views/Shared/_LayoutWithNoConstraints.cshtml";
             public readonly string _LoginPartial = "~/Views/Shared/_LoginPartial.cshtml";
@@ -51,6 +53,7 @@ namespace T4MVC
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public partial class _DisplayTemplatesClass
             {
+                public readonly string Address = "Address";
                 public readonly string AssetKind = "AssetKind";
                 public readonly string DateTime = "DateTime";
                 public readonly string JobStatus = "JobStatus";

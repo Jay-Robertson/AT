@@ -40,7 +40,7 @@
             </td>
             <td>
                 <a data-toggle="modal" href="#pickupModal@(item.JobId)"class="btn btn-small btn-info"><i class="icon-lock"></i>&nbsp;Pick Job</a>
-                @{Html.RenderPartial(MVC.Job.Views._PickJobModal, new Mavo.Assets.Models.Job() { Id = item.JobId, PickupTime = item.PickupTime, Name = item.JobName });}
+                @{Html.RenderPartial(MVC.Job.Views.Modals._PickJobModal, new Mavo.Assets.Models.Job() { Id = item.JobId, PickupTime = item.PickupTime, Name = item.JobName });}
             </td>
         </tr>
     }

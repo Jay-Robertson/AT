@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using Mavo.Assets.Models.ViewModel;
 
 namespace Mavo.Assets.Models
 {
@@ -235,8 +236,22 @@ namespace Mavo.Assets.Models
 
         public User SubmittedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-    }
 
+        public Summary Summary { get; set; }
+    }
+    [ComplexType]
+    public class Summary
+    {
+        public string FilledOutBy { get; set; }
+        public YesNo Notifiable { get; set; }
+        public BillingType BillingType { get; set; }
+        public string ShiftHours { get; set; }
+        public int? SupervisorsNeeded { get; set; }
+        public int? WorkersNeeded { get; set; }
+        public string Comments { get; set; }
+
+        public string ScopeOfWork { get; set; }
+    }
     [ComplexType]
     public class Address
     {
