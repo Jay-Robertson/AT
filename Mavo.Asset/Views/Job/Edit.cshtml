@@ -33,8 +33,8 @@
             $('#addCustomer').submit(function () {
                 var req = $.ajax({ url: '/api/customer', type: 'POST', data: $(this).serialize() });
                 req.success(function (data) {
-                    $('#CustomerId').append($('<option></option>').val(data.value).html(data.text));
-                    $('#CustomerId').val(data.value);
+                    $('#CustomerId').append($('<option></option>').val(data.Id).html(data.Name));
+                    $('#CustomerId').val(data.Id);
                     $('#addCustomerModal').hide();
                 });
                 return false;
