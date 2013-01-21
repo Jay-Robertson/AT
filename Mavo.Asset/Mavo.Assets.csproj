@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201301212131496_AddedSummary.Designer.cs">
       <DependentUpon>201301212131496_AddedSummary.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301212222155_removed-required-attributes.cs" />
+    <Compile Include="Migrations\201301212222155_removed-required-attributes.Designer.cs">
+      <DependentUpon>201301212222155_removed-required-attributes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -452,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301212131496_AddedSummary.resx">
       <DependentUpon>201301212131496_AddedSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301212222155_removed-required-attributes.resx">
+      <DependentUpon>201301212222155_removed-required-attributes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
