@@ -49,6 +49,12 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult GetCustomerAddress()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.GetCustomerAddress);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult CreateAddon()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CreateAddon);
@@ -112,6 +118,7 @@ namespace Mavo.Assets.Controllers
         public class ActionNamesClass
         {
             public readonly string AddOnModal = "AddOnModal";
+            public readonly string GetCustomerAddress = "GetCustomerAddress";
             public readonly string CreateAddon = "CreateAddon";
             public readonly string TransferAssetsModal = "TransferAssetsModal";
             public readonly string TransferAssets = "TransferAssets";
@@ -127,6 +134,7 @@ namespace Mavo.Assets.Controllers
         public class ActionNameConstants
         {
             public const string AddOnModal = "AddOnModal";
+            public const string GetCustomerAddress = "GetCustomerAddress";
             public const string CreateAddon = "CreateAddon";
             public const string TransferAssetsModal = "TransferAssetsModal";
             public const string TransferAssets = "TransferAssets";
@@ -144,6 +152,14 @@ namespace Mavo.Assets.Controllers
         public ActionParamsClass_AddOnModal AddOnModalParams { get { return s_params_AddOnModal; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_AddOnModal
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_GetCustomerAddress s_params_GetCustomerAddress = new ActionParamsClass_GetCustomerAddress();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_GetCustomerAddress GetCustomerAddressParams { get { return s_params_GetCustomerAddress; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_GetCustomerAddress
         {
             public readonly string id = "id";
         }
@@ -299,6 +315,13 @@ namespace Mavo.Assets.Controllers
         public override System.Web.Mvc.ActionResult AddOnModal(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddOnModal);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult GetCustomerAddress(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.GetCustomerAddress);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }

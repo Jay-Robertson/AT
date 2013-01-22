@@ -16,8 +16,39 @@
 }
 @section scripts
 {
+
     <script type="text/javascript">
         jQuery(function ($) {
+
+            $('#CustomerId').change(function () {
+                var customerId = $(this).val();
+                if (customerId) {
+                    $.get('/job/GetCustomerAddress/' + customerId, function (data) {
+                        var addressString = data.Address1 + '<br />';
+                        if (data.Address2)
+                            addressString += data.Address2 + '<br />';
+                        addressString += data.City + ',' + data.State + ' ' + data.ZipCode;
+
+                        $('#customerAddress').html(addressString);
+
+                        @if (Model == null || Model.Address == null)
+                        {
+                            <text>
+                        $('#Address_Address1').val(data.Address1);
+                        $('#Address_Address2').val(data.Address2);
+                        $('#Address_City').val(data.City);
+                        $('#Address_State').val(data.State);
+                        $('#Address_ZipCode').val(data.ZipCode);
+                            </text>
+                        }
+
+                    });
+                }
+                else
+                    $('#customerAddress').html('');
+
+            });
+
             $('#Role').val(8);
             $('#addForeman').submit(function () {
                 var req = $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() });
@@ -127,7 +158,7 @@
             }
         });
 
-           
+
         </text>
             if (Model.IsAddon)
             {

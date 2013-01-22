@@ -73,7 +73,7 @@ namespace Mavo.Assets.Models
         public string MavoItemNumber { get; set; }
         public string Barcode { get; set; }          // mavo barcode value
         public AssetCategory Category { get; set; }
-        public string Name { get; set; }            
+        public string Name { get; set; }
         public string UnitOfMeasure { get; set; }    // valid on Consumable and NonSerialized assets
 
         // warehousing data
@@ -100,7 +100,7 @@ namespace Mavo.Assets.Models
         public DateTime? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
         public DateTime? WarrantyExpiration { get; set; }
-        
+
         public InventoryStatus Status { get; set; }
     }
 
@@ -238,7 +238,9 @@ namespace Mavo.Assets.Models
         public DateTime CreatedDate { get; set; }
 
         public Summary Summary { get; set; }
+        
     }
+
     [ComplexType]
     public class Summary
     {
@@ -272,6 +274,7 @@ namespace Mavo.Assets.Models
         public string CustomerNumber { get; set; }
         public string ContactName { get; set; }
         public string PhoneNumber { get; set; }
+        [Display(Name = "Customer Address")]
         public Address Address { get; set; }
     }
 }

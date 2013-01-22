@@ -33,6 +33,10 @@ namespace Mavo.Assets.Models.ViewModel
         public string Description { get; set; }
         public string ForemanNote { get; set; }
 
+
+
+        public Customer Customer { get; set; }
+
         public int? CustomerId { get; set; }
         public int? ForemanId { get; set; }
         public int? ProjectManagerId { get; set; }

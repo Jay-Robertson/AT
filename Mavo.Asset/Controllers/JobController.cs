@@ -34,6 +34,10 @@ namespace Mavo.Assets.Controllers
             ViewBag.Lock = false;
             return PartialView("Modals\\_AddOnModal", id);
         }
+        public virtual ActionResult GetCustomerAddress(int id)
+        {
+            return Json(Context.Customers.FirstOrDefault(x=>x.Id == id).Address, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public virtual ActionResult CreateAddon(int id)
         {
