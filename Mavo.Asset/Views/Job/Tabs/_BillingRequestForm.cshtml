@@ -9,6 +9,7 @@
                 <a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
                 @using (Html.BeginForm(MVC.Job.SaveInvoice(Model.Id.Value, null)))
                 {
+                    <h4>Job Details</h4>
                     <table class="table table-condensed table-striped table-hover">
                         <tr>
                             <th>Submitted By:</th>
@@ -51,7 +52,42 @@
                             <td>@Html.DisplayFor(x => x.Address)</td>
                         </tr>
                     </table>
-                    <h2>Invoice</h2>
+                    <h4>Contract Details</h4>
+                    <table class="table table-condensed table-striped table-hover">
+                        <tr>
+                            <th>Contract/PO Number</th>
+                            <td>@Html.DisplayFor(x=>x.ContractNumber)</td>
+                        </tr>
+                        <tr>
+                            <th>Contract Date</th>
+                            <td>@Html.DisplayFor(x=>x.ContractDate)</td>
+                        </tr>
+                        <tr>
+                            <th>Contract Amount</th>
+                            <td>@Html.DisplayFor(x=>x.ContractAmount)</td>
+                        </tr>
+                        <tr>
+                            <th>Total Amount Due</th>
+                            <td>@Html.EditorFor(x=>x.InvoiceDetail.TotalAmountDue)</td>
+                        </tr>
+                        <tr>
+                            <th>Gross Invoice Amount</th>
+                            <td>@Html.EditorFor(x=>x.InvoiceDetail.GrossInvoiceAmount)</td>
+                        </tr>
+                        <tr>
+                            <th>Withhold %</th>
+                            <td>@Html.EditorFor(x=>x.InvoiceDetail.WithholdPercentage)</td>
+                        </tr>
+                        <tr>
+                            <th>Retainage</th>
+                            <td>@Html.EditorFor(x=>x.InvoiceDetail.Retainage)</td>
+                        </tr>
+                        <tr>
+                            <th>Net Invoice Amount</th>
+                            <td>@Html.EditorFor(x=>x.InvoiceDetail.NetInvoiceAmount)</td>
+                        </tr>
+                    </table>
+                    <h4>Invoice Details</h4>
                     <table class="table table-condensed table-striped table-hover">
                         <tr>
                             <th>Issue Invoice To Owner:</th>
@@ -104,7 +140,7 @@
                         </tr>
                         <tr>
                             <th>Comments</th>
-                            <td>@Html.TextAreaFor(x=>x.InvoiceDetail.Comments)</td>
+                            <td>@Html.TextAreaFor(x => x.InvoiceDetail.Comments)</td>
                         </tr>
                         <tr class="noprint">
                             <th></th>

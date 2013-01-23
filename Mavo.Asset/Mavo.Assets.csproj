@@ -221,6 +221,14 @@
     <Compile Include="Migrations\201301231726148_RemovedInvoiceStuffFromJob.Designer.cs">
       <DependentUpon>201301231726148_RemovedInvoiceStuffFromJob.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301231740555_AddedPricing.cs" />
+    <Compile Include="Migrations\201301231740555_AddedPricing.Designer.cs">
+      <DependentUpon>201301231740555_AddedPricing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301231742006_NullabledPricing.cs" />
+    <Compile Include="Migrations\201301231742006_NullabledPricing.Designer.cs">
+      <DependentUpon>201301231742006_NullabledPricing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -495,6 +503,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301231726148_RemovedInvoiceStuffFromJob.resx">
       <DependentUpon>201301231726148_RemovedInvoiceStuffFromJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301231740555_AddedPricing.resx">
+      <DependentUpon>201301231740555_AddedPricing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301231742006_NullabledPricing.resx">
+      <DependentUpon>201301231742006_NullabledPricing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -286,6 +286,16 @@ namespace Mavo.Assets.Models
         public string CopyAttention { get; set; }
 
         public string CopyTo { get; set; }
+
+        public decimal? NetInvoiceAmount { get; set; }
+
+        public decimal? Retainage { get; set; }
+
+        public decimal? WithholdPercentage { get; set; }
+
+        public decimal? GrossInvoiceAmount { get; set; }
+
+        public decimal? TotalAmountDue { get; set; }
     }
     [Flags]
     public enum SpecialForms
