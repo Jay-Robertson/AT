@@ -35,6 +35,8 @@ namespace Mavo.Assets.Models.ViewModel
 
 
 
+
+
         public Customer Customer { get; set; }
 
         public int? CustomerId { get; set; }
@@ -65,6 +67,28 @@ namespace Mavo.Assets.Models.ViewModel
         public DateTime CreatedDate { get; set; }
 
         public Summary Summary { get; set; }
+
+        public string SendInvoiceTo { get; set; }
+
+        public string Attention { get; set; }
+
+        public string InvoiceAddress { get; set; }
+
+        public string InvoiceInstructions { get; set; }
+
+        public string SendFinalReportTo { get; set; }
+
+        public string FinalReportAddress { get; set; }
+
+        public string FinalReportPhoneNumber { get; set; }
+
+        public YesNo Notifiable { get; set; }
+
+        public BillingType BillingType { get; set; }
+
+        public int? SupervisorsNeeded { get; set; }
+
+        public int? WorkersNeeded { get; set; }
     }
 
 
