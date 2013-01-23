@@ -91,6 +91,12 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult SaveInvoice()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SaveInvoice);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult SaveSummary()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SaveSummary);
@@ -126,6 +132,7 @@ namespace Mavo.Assets.Controllers
             public readonly string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string SaveInvoice = "SaveInvoice";
             public readonly string SaveSummary = "SaveSummary";
             public readonly string MarkReadyToPick = "MarkReadyToPick";
         }
@@ -142,6 +149,7 @@ namespace Mavo.Assets.Controllers
             public const string AddAssetsFromTemplate = "AddAssetsFromTemplate";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string SaveInvoice = "SaveInvoice";
             public const string SaveSummary = "SaveSummary";
             public const string MarkReadyToPick = "MarkReadyToPick";
         }
@@ -224,6 +232,15 @@ namespace Mavo.Assets.Controllers
             public readonly string id = "id";
             public readonly string jobPostModel = "jobPostModel";
         }
+        static readonly ActionParamsClass_SaveInvoice s_params_SaveInvoice = new ActionParamsClass_SaveInvoice();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_SaveInvoice SaveInvoiceParams { get { return s_params_SaveInvoice; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_SaveInvoice
+        {
+            public readonly string id = "id";
+            public readonly string jobPostModel = "jobPostModel";
+        }
         static readonly ActionParamsClass_SaveSummary s_params_SaveSummary = new ActionParamsClass_SaveSummary();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_SaveSummary SaveSummaryParams { get { return s_params_SaveSummary; } }
@@ -295,11 +312,13 @@ namespace Mavo.Assets.Controllers
                 public class _ViewNamesClass
                 {
                     public readonly string _AssetHistory = "_AssetHistory";
+                    public readonly string _BillingRequestForm = "_BillingRequestForm";
                     public readonly string _DataSheet = "_DataSheet";
                     public readonly string _JobSummary = "_JobSummary";
                     public readonly string _PickList = "_PickList";
                 }
                 public readonly string _AssetHistory = "~/Views/Job/Tabs/_AssetHistory.cshtml";
+                public readonly string _BillingRequestForm = "~/Views/Job/Tabs/_BillingRequestForm.cshtml";
                 public readonly string _DataSheet = "~/Views/Job/Tabs/_DataSheet.cshtml";
                 public readonly string _JobSummary = "~/Views/Job/Tabs/_JobSummary.cshtml";
                 public readonly string _PickList = "~/Views/Job/Tabs/_PickList.cshtml";
@@ -382,6 +401,14 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult SaveInvoice(int id, Mavo.Assets.Models.ViewModel.EditJobPostModel jobPostModel)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SaveInvoice);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobPostModel", jobPostModel);
             return callInfo;
         }
 

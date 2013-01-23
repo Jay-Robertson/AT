@@ -195,6 +195,17 @@ namespace Mavo.Assets.Controllers
         // POST: /Jobs/Edit/5
 
         [HttpPost]
+        public virtual ActionResult SaveInvoice(int id, EditJobPostModel jobPostModel)
+        {
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            job.InvoiceDetail = jobPostModel.InvoiceDetail;
+            var values = Request.Form["InvoiceDetail.SpecialForms"].Split(',');
+            job.InvoiceDetail.SpecialForms = (SpecialForms)values.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+            Context.SaveChanges();
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        [HttpPost]
         public virtual ActionResult SaveSummary(int id, EditJobPostModel jobPostModel)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);

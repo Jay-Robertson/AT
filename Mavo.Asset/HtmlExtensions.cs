@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Script.Serialization;
 using System.Text;
+using System.Web;
 
 namespace Mavo.Assets
 {
@@ -21,6 +22,8 @@ namespace Mavo.Assets
             Hour,
             Day
         }
+
+
 
         public static string ToRelative(this TimeSpan timeSpan, int maxNrOfElements = 5)
         {
@@ -99,6 +102,38 @@ namespace Mavo.Assets
                 return GetInputName(methodCallExpression);
             }
             return expression.Object.ToString();
+        }
+
+        public static IHtmlString EnumCheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression) where TModel : class
+        {
+            var value = htmlHelper.ViewData.Model == null
+              ? default(TProperty)
+              : expression.Compile()(htmlHelper.ViewData.Model);
+
+            StringBuilder sb = new StringBuilder();
+
+            string inputName = GetInputName(expression);
+
+            foreach (TProperty item in Enum.GetValues(typeof(TProperty)).Cast<TProperty>())
+            {
+                TagBuilder builder = new TagBuilder("input");
+                long targetValue = Convert.ToInt64(item);
+                long flagValue = Convert.ToInt64(value);
+
+                if ((targetValue & flagValue) == targetValue)
+                    builder.MergeAttribute("checked", "checked");
+                //<label class="checkbox">
+                //  <input type="checkbox"> Check me out
+                //</label>
+                builder.MergeAttribute("type", "checkbox");
+                builder.MergeAttribute("value", targetValue.ToString());
+                builder.MergeAttribute("name", inputName);
+                builder.InnerHtml = item.ToString();
+
+                sb.Append(String.Format("<label class='checkbox'>{0}</label>", builder.ToString(TagRenderMode.Normal)));
+            }
+
+            return new HtmlString(sb.ToString());
         }
 
         public static MvcHtmlString EnumDropDownListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string firstElement = null) where TModel : class

@@ -1,0 +1,120 @@
+﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
+@using Mavo.Assets;
+@if (null != Model && Model.Id.HasValue)
+{
+    <div class="tab-pane" id="billing-request-form">
+        <div class="row-fluid">
+            <div class="span12 well">
+                <h4>Billing Request Form</h4>
+                <a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
+                @using (Html.BeginForm(MVC.Job.SaveInvoice(Model.Id.Value, null)))
+                {
+                    <table class="table table-condensed table-striped table-hover">
+                        <tr>
+                            <th>Submitted By:</th>
+                            <td>@Html.DisplayFor(x => x.SubmittedBy.FullName)</td>
+                        </tr>
+                        <tr>
+                            <th>Date:</th>
+                            <td>@Html.DisplayFor(x => x.CreatedDate)</td>
+                        </tr>
+                        <tr>
+                            <th>ShiftHours:</th>
+                            <td>@Html.DisplayFor(x => x.Summary.ShiftHours)</td>
+                        </tr>
+                        <tr>
+                            <th>Scope of Work:</th>
+                            <td>@Html.DisplayFor(x => x.ScopeOfWork)</td>
+                        </tr>
+                        <tr>
+                            <th>JobNumber:</th>
+                            <td>@Html.DisplayFor(x => x.JobNumber)</td>
+                        </tr>
+                        <tr>
+                            <th>ContractDate:</th>
+                            <td>@Html.DisplayFor(x => x.ContractDate)</td>
+                        </tr>
+                        <tr>
+                            <th>EstimatedCompletionDate:</th>
+                            <td>@Html.DisplayFor(x => x.EstimatedCompletionDate)</td>
+                        </tr>
+                        <tr>
+                            <th>JobContact:</th>
+                            <td>@Html.DisplayFor(x => x.JobContact)</td>
+                        </tr>
+                        <tr>
+                            <th>JobContactPhone:</th>
+                            <td>@Html.DisplayFor(x => x.JobContactPhone)</td>
+                        </tr>
+                        <tr>
+                            <th>Job Address:</th>
+                            <td>@Html.DisplayFor(x => x.Address)</td>
+                        </tr>
+                    </table>
+                    <h2>Invoice</h2>
+                    <table class="table table-condensed table-striped table-hover">
+                        <tr>
+                            <th>Issue Invoice To Owner:</th>
+                            <td>@Html.EditorFor(x => x.InvoiceDetail.IssueInvoiceToOwner)</td>
+                        </tr>
+                        <tr>
+                            <th>InvoiceAddress:</th>
+                            <td>@Html.DisplayFor(x => x.InvoiceDetail.InvoiceAddress)</td>
+                        </tr>
+                        <tr>
+                            <th>SendInvoiceTo:</th>
+                            <td>@Html.DisplayFor(x => x.InvoiceDetail.SendInvoiceTo)</td>
+                        </tr>
+                        <tr>
+                            <th>SendInvoiceApprovalTo:</th>
+                            <td>@Html.EditorFor(x => x.InvoiceDetail.SendInvoiceApprovalTo)</td>
+                        </tr>
+                        <tr>
+                            <th>Attention:</th>
+                            <td>@Html.DisplayFor(x => x.InvoiceDetail.Attention)</td>
+                        </tr>
+                        <tr>
+                            <th>InvoiceAddress:</th>
+                            <td>@Html.DisplayFor(x => x.InvoiceDetail.InvoiceAddress)</td>
+                        </tr>
+                        <tr>
+                            <th>CopyTo:</th>
+                            <td>@Html.EditorFor(x => x.InvoiceDetail.CopyTo)</td>
+                        </tr>
+                        <tr>
+                            <th>Attention:</th>
+                            <td>@Html.EditorFor(x => x.InvoiceDetail.CopyAttention)</td>
+                        </tr>
+                        <tr>
+                            <th>CopyAddress:</th>
+                            <td>@Html.EditorFor(x => x.InvoiceDetail.CopyAddress)</td>
+                        </tr>
+                        <tr>
+                            <th>Special Invoice Instruction:</th>
+                            <td>@Html.DisplayFor(x => x.InvoiceDetail.InvoiceInstructions)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong>
+                                    <u>Special Forms to User:</u>
+                                </strong>
+                                <br />
+                                @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SpecialForms)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Comments</th>
+                            <td>@Html.TextAreaFor(x=>x.InvoiceDetail.Comments)</td>
+                        </tr>
+                        <tr class="noprint">
+                            <th></th>
+                            <td>
+                                <input type="submit" class="btn btn-success" value="Save" />
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+}

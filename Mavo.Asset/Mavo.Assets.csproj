@@ -205,6 +205,22 @@
     <Compile Include="Migrations\201301231630255_MovedSomeSummaryItems.Designer.cs">
       <DependentUpon>201301231630255_MovedSomeSummaryItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201301231641509_MovedSomeSummaryItemsAgain.cs" />
+    <Compile Include="Migrations\201301231641509_MovedSomeSummaryItemsAgain.Designer.cs">
+      <DependentUpon>201301231641509_MovedSomeSummaryItemsAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301231711113_AddedInvoiceDetails.cs" />
+    <Compile Include="Migrations\201301231711113_AddedInvoiceDetails.Designer.cs">
+      <DependentUpon>201301231711113_AddedInvoiceDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301231711510_AddedInvoiceDetailsToJob.cs" />
+    <Compile Include="Migrations\201301231711510_AddedInvoiceDetailsToJob.Designer.cs">
+      <DependentUpon>201301231711510_AddedInvoiceDetailsToJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301231726148_RemovedInvoiceStuffFromJob.cs" />
+    <Compile Include="Migrations\201301231726148_RemovedInvoiceStuffFromJob.Designer.cs">
+      <DependentUpon>201301231726148_RemovedInvoiceStuffFromJob.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -426,6 +442,7 @@
     <Content Include="Views\Job\Modals\_AddProjectManagerModal.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
     <Content Include="Views\Shared\_JobHeader.cshtml" />
+    <Content Include="Views\Job\Tabs\_BillingRequestForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -466,6 +483,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301231630255_MovedSomeSummaryItems.resx">
       <DependentUpon>201301231630255_MovedSomeSummaryItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301231641509_MovedSomeSummaryItemsAgain.resx">
+      <DependentUpon>201301231641509_MovedSomeSummaryItemsAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301231711113_AddedInvoiceDetails.resx">
+      <DependentUpon>201301231711113_AddedInvoiceDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301231711510_AddedInvoiceDetailsToJob.resx">
+      <DependentUpon>201301231711510_AddedInvoiceDetailsToJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301231726148_RemovedInvoiceStuffFromJob.resx">
+      <DependentUpon>201301231726148_RemovedInvoiceStuffFromJob.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

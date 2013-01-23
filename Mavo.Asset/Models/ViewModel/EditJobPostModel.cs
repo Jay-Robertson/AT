@@ -68,14 +68,10 @@ namespace Mavo.Assets.Models.ViewModel
 
         public Summary Summary { get; set; }
 
-        public string SendInvoiceTo { get; set; }
 
-        public string Attention { get; set; }
 
-        public string InvoiceAddress { get; set; }
-
-        public string InvoiceInstructions { get; set; }
-
+        public InvoiceDetails InvoiceDetail { get; set; }
+     
         public string SendFinalReportTo { get; set; }
 
         public string FinalReportAddress { get; set; }
@@ -89,7 +85,15 @@ namespace Mavo.Assets.Models.ViewModel
         public int? SupervisorsNeeded { get; set; }
 
         public int? WorkersNeeded { get; set; }
+
+        public string ScopeOfWork { get; set; }
+
+
+        public string JobContact { get; set; }
+
+        public string JobContactPhone { get; set; }
     }
+
 
 
 }

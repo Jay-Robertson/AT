@@ -60,9 +60,9 @@
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.Summary.ScopeOfWork, new { @class = "control-label" })
+                        @Html.LabelFor(x => x.ScopeOfWork, new { @class = "control-label" })
                         <div class="controls">
-                            @Html.EditorFor(x => x.Summary.ScopeOfWork)
+                            @Html.EditorFor(x => x.ScopeOfWork)
                         </div>
                     </div>
                     <div class="control-group">
@@ -161,6 +161,18 @@
                             @Html.EditorFor(x => x.Address.ZipCode)
                         </div>
                     </div>
+                     <div class="control-group">
+                        @Html.LabelFor(x => x.JobContact, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EditorFor(x => x.JobContact)
+                        </div>
+                    </div>
+                      <div class="control-group">
+                        @Html.LabelFor(x => x.JobContactPhone, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EditorFor(x => x.JobContactPhone)
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="well span6">
@@ -184,27 +196,27 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.SendInvoiceTo, new { @class = "control-label" })
+                    @Html.LabelFor(x => x.InvoiceDetail.SendInvoiceTo, new { @class = "control-label" })
                     <div class="controls">
-                        @Html.EditorFor(x => x.SendInvoiceTo)
+                        @Html.EditorFor(x => x.InvoiceDetail.SendInvoiceTo)
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.Attention, new { @class = "control-label" })
+                    @Html.LabelFor(x => x.InvoiceDetail.Attention, new { @class = "control-label" })
                     <div class="controls">
-                        @Html.EditorFor(x => x.Attention)
+                        @Html.EditorFor(x => x.InvoiceDetail.Attention)
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.InvoiceAddress, new { @class = "control-label" })
+                    @Html.LabelFor(x => x.InvoiceDetail.InvoiceAddress, new { @class = "control-label" })
                     <div class="controls">
-                        @Html.EditorFor(x => x.InvoiceAddress)
+                        @Html.EditorFor(x => x.InvoiceDetail.InvoiceAddress)
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.InvoiceInstructions, new { @class = "control-label" })
+                    @Html.LabelFor(x => x.InvoiceDetail.InvoiceInstructions, new { @class = "control-label" })
                     <div class="controls">
-                        @Html.EditorFor(x => x.InvoiceInstructions)
+                        @Html.EditorFor(x => x.InvoiceDetail.InvoiceInstructions)
                     </div>
                 </div>
                 <div class="control-group">

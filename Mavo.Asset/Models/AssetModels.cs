@@ -239,15 +239,6 @@ namespace Mavo.Assets.Models
 
         public Summary Summary { get; set; }
 
-
-        public string SendInvoiceTo { get; set; }
-
-        public string Attention { get; set; }
-
-        public string InvoiceAddress { get; set; }
-
-        public string InvoiceInstructions { get; set; }
-
         public string SendFinalReportTo { get; set; }
 
         public string FinalReportAddress { get; set; }
@@ -261,19 +252,61 @@ namespace Mavo.Assets.Models
         public int? SupervisorsNeeded { get; set; }
 
         public int? WorkersNeeded { get; set; }
-        
+
+        public string ScopeOfWork { get; set; }
+
+        public string JobContact { get; set; }
+
+        public string JobContactPhone { get; set; }
+
+        public InvoiceDetails InvoiceDetail { get; set; }
+    }
+
+    [ComplexType]
+    public class InvoiceDetails
+    {
+
+        public string Attention { get; set; }
+
+        public string SendInvoiceTo { get; set; }
+        public string InvoiceAddress { get; set; }
+
+        public string InvoiceInstructions { get; set; }
+
+        public string SendInvoiceApprovalTo { get; set; }
+
+        public string IssueInvoiceToOwner { get; set; }
+
+        public string Comments { get; set; }
+
+        public SpecialForms SpecialForms { get; set; }
+
+        public string CopyAddress { get; set; }
+
+        public string CopyAttention { get; set; }
+
+        public string CopyTo { get; set; }
+    }
+    [Flags]
+    public enum SpecialForms
+    {
+        AIADocuments = 0x1,
+        AsPerAttached = 0x2,
+        SubmitCertifiedPayrollWithBilling = 0x4,
+        StateForms = 0x8,
+        Other = 0x10,
+        ManifestOrFinalReportNeeded = 0x20
     }
 
     [ComplexType]
     public class Summary
     {
         public string FilledOutBy { get; set; }
-  
+
         public string ShiftHours { get; set; }
     
         public string Comments { get; set; }
 
-        public string ScopeOfWork { get; set; }
     }
     [ComplexType]
     public class Address
