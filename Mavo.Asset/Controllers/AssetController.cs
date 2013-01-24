@@ -68,7 +68,7 @@ namespace Mavo.Assets.Controllers
                 return null;
             ViewBag.IsForJob = false;
             ViewBag.TemplateId = id;
-            ViewBag.Assets = db.TemplateAssets.Include(x=>x.Asset).Include(x=>x.Asset.Items).Where(x => x.Template.Id == id.Value).ToList();
+            ViewBag.Assets = db.TemplateAssets.Include(x => x.Asset).Include(x => x.Asset.Items).Where(x => x.Template.Id == id.Value).ToList();
             ViewBag.Lock = false;
             return PartialView("_AssetPicker", db.AssetCategories.ToList());
         }
@@ -77,10 +77,12 @@ namespace Mavo.Assets.Controllers
         public virtual JsonResult IsAssetItemAvailable()
         {
             string barcode = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("barcode"))];
-        
+            int assetId = int.Parse(Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("assetid"))]);
+
             bool serialExists = db.AssetItems.Any(x => x.Barcode == barcode);
             bool isInStock = db.AssetItems.Any(x => x.Barcode == barcode && x.Status == InventoryStatus.In);
             bool isInGoodCondition = db.AssetItems.Any(x => x.Barcode == barcode && x.Condition == AssetCondition.Good);
+            bool existsWithinAsset = db.AssetItems.Any(x => x.Barcode == barcode && x.Asset.Id == assetId);
             IList<string> errors = new List<string>();
             if (!serialExists)
                 errors.Add("Serial number is not inventoried");
@@ -88,6 +90,9 @@ namespace Mavo.Assets.Controllers
                 errors.Add("Item is out on a job");
             else if (!isInGoodCondition)
                 errors.Add("Item is retired/damaged");
+            else if (!existsWithinAsset)
+                errors.Add(String.Format("This is not a {0}.", db.Assets.First(x => x.Id == assetId).Name));
+
             if (errors.Count == 0)
                 return Json(true, JsonRequestBehavior.AllowGet);
             else

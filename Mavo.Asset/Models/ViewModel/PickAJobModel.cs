@@ -56,7 +56,7 @@ namespace Mavo.Assets.Models.ViewModel
 
         public AssetKind Kind { get; set; }
 
-        [Remote("DoesSerialExist", "Asset", ErrorMessage = "Serial number does not exist")]
+        [Remote("DoesSerialExist", "Asset", AdditionalFields = "AssetId", ErrorMessage = "Serial number does not exist")]
         public string Barcode { get; set; }
 
         public int AssetId { get; set; }
