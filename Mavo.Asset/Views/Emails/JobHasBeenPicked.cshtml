@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Host = "http://" + Request.Url.Host + (Request.Url.Port > 0 ? ":" + Request.Url.Port.ToString() : "") + "/"; 
+}
+@section Title
+{
+    <text>Job @ViewBag.Job.JobNumber has been picked and needs to be staffed.</text>
+}
+
+<p align="left" class="article-title">Job Details</p>
+<div align="left" class="article-content">
+    @{Html.RenderPartial("_JobHeader");}
+    <p><a href="http://@ViewBag.Host/job/edit/@ViewBag.Job.Id">Click here</a> to view the job.</p>
+</div>

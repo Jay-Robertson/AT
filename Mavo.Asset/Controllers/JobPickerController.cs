@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
 using Mavo.Assets.Services;
+using Postal;
 
 namespace Mavo.Assets.Controllers
 {
@@ -95,6 +96,11 @@ namespace Mavo.Assets.Controllers
             }
             Context.SaveChanges();
 
+            dynamic email = new Email("JobHasBeenPicked");
+            email.Subject = String.Format("Job #{0} has been picked", job.JobNumber);
+            email.To = Properties.Settings.Default.WarehouseManager;
+            email.Job = job;
+            email.Send();
 
             return RedirectToAction(MVC.JobPicker.Success(id));
         }

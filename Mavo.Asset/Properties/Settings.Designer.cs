@@ -31,5 +31,14 @@ namespace Mavo.Assets.Properties {
                 return ((string)(this["WarehouseManager"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("scott@redbranchsoftware.com")]
+        public string StaffingManagerEmail {
+            get {
+                return ((string)(this["StaffingManagerEmail"]));
+            }
+        }
     }
 }
