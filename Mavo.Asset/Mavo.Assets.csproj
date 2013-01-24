@@ -191,6 +191,9 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="EmailsController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201301211646576_AddedCreatedByUser.cs" />
     <Compile Include="Migrations\201301211646576_AddedCreatedByUser.Designer.cs">
       <DependentUpon>201301211646576_AddedCreatedByUser.cs</DependentUpon>

@@ -227,9 +227,27 @@ namespace Mavo.Assets.Controllers
         //
         // POST: /Asset/Edit/5
 
-        public virtual ActionResult Scan()
+        public virtual ActionResult Scan(int? id = null)
         {
+
             ViewBag.Assets = db.Assets.ToList();
+            if (id.HasValue)
+            {
+                AssetScanPostModel model = db.AssetItems.Where(x => x.Id == id.Value).Select(x => new AssetScanPostModel()
+                    {
+                         AssetId = x.Asset.Id,
+                         Barcode = x.Barcode,
+                         Condition = x.Condition,
+                         Id = x.Id,
+                         Manufacturer = x.Manufacturer,
+                         ModelNumber = x.ModelNumber,
+                         PurchaseDate = x.PurchaseDate,
+                         PurchasePrice = x.PurchasePrice,
+                         SerialNumber = x.SerialNumber,
+                         WarrantyExpiration = x.WarrantyExpiration
+                    }).FirstOrDefault();
+                return View(model);
+            }
             return View();
         }
 

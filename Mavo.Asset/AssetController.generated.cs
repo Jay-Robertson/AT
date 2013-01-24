@@ -258,6 +258,14 @@ namespace Mavo.Assets.Controllers
             public readonly string id = "id";
             public readonly string asset = "asset";
         }
+        static readonly ActionParamsClass_Scan s_params_Scan = new ActionParamsClass_Scan();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Scan ScanParams { get { return s_params_Scan; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Scan
+        {
+            public readonly string id = "id";
+        }
         static readonly ActionParamsClass_ScanItem s_params_ScanItem = new ActionParamsClass_ScanItem();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_ScanItem ScanItemParams { get { return s_params_ScanItem; } }
@@ -432,9 +440,10 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Scan()
+        public override System.Web.Mvc.ActionResult Scan(int? id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Scan);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
