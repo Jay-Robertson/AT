@@ -3,6 +3,10 @@
 <div class="tab-pane @(null == Model ? "active" : "")" id="details">
     @using (Html.BeginForm(MVC.Job.Edit(), FormMethod.Post, new { @class = "form-horizontal" }))
     {
+        if (Model == null && Request["templateId"] != null)
+        {
+            @Html.Hidden("TemplateId", Request["templateId"])
+        }
         @Html.HiddenFor(x => x.Id)
         if (null == Model)
         {
