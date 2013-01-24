@@ -1,0 +1,10 @@
+﻿@model Mavo.Assets.Models.Address
+
+@Model.Address1
+<br />
+@if (Model.Address2 != null)
+{
+    @Model.Address2
+    <br />
+}
+@Model.City, @Model.State @Model.ZipCode

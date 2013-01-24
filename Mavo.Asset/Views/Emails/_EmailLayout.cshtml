@@ -1,6 +1,6 @@
 ﻿@{
     Layout = null;
-    ViewBag.Host = "http://" + (Request.Url.Port > 0 ? ":" + Request.Url.Port.ToString() : "") + "/"; 
+    ViewBag.Host = "http://" + Request.Url.Host + (Request.Url.Port > 0 ? ":" + Request.Url.Port.ToString() : "") + "/"; 
 }
 <html>
 <head>
@@ -649,7 +649,6 @@
                                                     <span class="hide">
                                                         <p id="permission-reminder" align="left" class="footer-content-left"></p>
                                                     </span>
-                                                    <p align="left" class="footer-content-left"><a href="#" class="cm-preferences" lang="en">Edit your subscription</a> | <a href="#" class="cm-unsubscribe">Unsubscribe</a></p>
                                                 </td>
                                                 <td class="hide w0" width="60"></td>
                                                 <td class="hide w0" width="160" valign="top">

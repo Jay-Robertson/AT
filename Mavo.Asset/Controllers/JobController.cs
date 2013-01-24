@@ -6,6 +6,7 @@ using System.Data.Entity;
 using Mavo.Assets.Services;
 using System.Collections.Generic;
 using Mavo.Assets.Models.ViewModel;
+using Postal;
 
 namespace Mavo.Assets.Controllers
 {
@@ -270,6 +271,13 @@ namespace Mavo.Assets.Controllers
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == jobId);
             job.Status = JobStatus.ReadyToPick;
             Context.SaveChanges();
+
+            dynamic email = new Email("ReadyToPick");
+            email.Subject = String.Format("Job #{0} is ready to pick", job.JobNumber);
+            email.To = Properties.Settings.Default.WarehouseManager;
+            email.Job = job;
+            email.Send();
+
             return RedirectToAction("Index");
         }
 

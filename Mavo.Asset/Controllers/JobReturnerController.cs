@@ -89,7 +89,7 @@ namespace Mavo.Assets.Controllers
 
             dynamic email = new Email("JobComplete");
             email.Subject = String.Format("Job #{0} is complete!", job.JobNumber);
-            email.To = "scott@redbranchsoftware.com";
+            email.To = job.ProjectManager.Email;
             email.Job = job;
             email.Send();
 

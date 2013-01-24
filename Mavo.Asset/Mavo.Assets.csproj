@@ -299,6 +299,11 @@
     <Compile Include="Models\ViewModel\TransferAssetsViewModel.cs" />
     <Compile Include="Models\ViewModel\YesNo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ReportingController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -348,6 +353,10 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Package.pubxml" />
+    <Content Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.7.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
@@ -463,6 +472,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Emails\JobComplete.cshtml" />
+    <Content Include="Views\Emails\_JobHeader.cshtml" />
+    <Content Include="Views\Emails\DisplayTemplates\Address.cshtml" />
+    <Content Include="Views\Emails\DisplayTemplates\AssetKind.cshtml" />
+    <Content Include="Views\Emails\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Emails\DisplayTemplates\JobStatus.cshtml" />
+    <Content Include="Views\Emails\ReadyToPick.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

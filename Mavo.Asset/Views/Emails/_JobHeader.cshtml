@@ -1,0 +1,61 @@
+﻿<table>
+    <tr>
+        <th>Job Name</th>
+        <td>@ViewBag.Job.Name</td>
+    </tr>
+    <tr>
+        <th>Job Number</th>
+        <td>@ViewBag.Job.JobNumber</td>
+    </tr>
+    @if (ViewBag.Job.ProjectManager != null)
+    {
+        <tr>
+            <th>Project Manager</th>
+            <td>@ViewBag.Job.ProjectManager.FullName</td>
+        </tr>
+    }
+    @if (ViewBag.Job.Customer != null)
+    {
+        <tr>
+            <th>Customer</th>
+            <td>@ViewBag.Job.Customer.Name</td>
+        </tr>
+    }
+    <tr>
+        <th>Completion Date</th>
+        @if (((Mavo.Assets.Models.Job)ViewBag.Job).Status == Mavo.Assets.Models.JobStatus.Completed)
+        {
+            <td>@(((Mavo.Assets.Models.Job)ViewBag.Job).ReturnCompleted.Value)</td>
+        }
+        else
+        {
+            <td>@(((Mavo.Assets.Models.Job)ViewBag.Job).EstimatedCompletionDate)</td>
+        }
+    </tr>
+    <tr>
+        <th>Pickup Time</th>
+        @if (((Mavo.Assets.Models.Job)ViewBag.Job).Status > Mavo.Assets.Models.JobStatus.Started)
+        {
+            <td>@(((Mavo.Assets.Models.Job)ViewBag.Job).PickCompleted.Value)</td>
+        }
+        else
+        {
+            <td>@(((Mavo.Assets.Models.Job)ViewBag.Job).PickupTime)</td>
+        }
+    </tr>
+    @if (!String.IsNullOrEmpty(ViewBag.Job.Address.Address1))
+    {
+        <tr>
+            <th>Job Address</th>
+            <td>@ViewBag.Job.Address.Address1
+                <br />
+                @if (ViewBag.Job.Address.Address2 != null)
+                {
+                    @ViewBag.Job.Address.Address2
+                    <br />
+                }
+                @ViewBag.Job.Address.City, @ViewBag.Job.Address.State @ViewBag.Job.Address.ZipCode
+            </td>
+        </tr>
+    }
+</table>

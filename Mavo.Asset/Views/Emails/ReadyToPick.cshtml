@@ -3,11 +3,11 @@
 }
 @section Title
 {
-    <text>Job @ViewBag.Job.JobNumber is complete and ready to be billed.</text>
+    <text>Job @ViewBag.Job.JobNumber is ready to be picked.</text>
 }
 
 <p align="left" class="article-title">Job Details</p>
 <div align="left" class="article-content">
     @{Html.RenderPartial("_JobHeader");}
-    <p><a href="http://@ViewBag.Host/job/edit/@ViewBag.Job.Id">Click here</a> to view the job.</p>
+    <p><a href="http://@ViewBag.Host/jobpicker/index/@ViewBag.Job.Id">Click here</a> to pick the job.</p>
 </div>
