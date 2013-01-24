@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Mavo.Assets.Models;
+using Mavo.Assets.Models.EmailViewModel;
 using Mavo.Assets.Models.ViewModel;
 using Mavo.Assets.Services;
+using Postal;
 
 namespace Mavo.Assets.Controllers
 {
@@ -85,6 +87,11 @@ namespace Mavo.Assets.Controllers
             }
             Context.SaveChanges();
 
+            dynamic email = new Email("JobComplete");
+            email.Subject = String.Format("Job #{0} is complete!", job.JobNumber);
+            email.To = "scott@redbranchsoftware.com";
+            email.Job = job;
+            email.Send();
 
             return RedirectToAction(MVC.JobReturner.Success(id));
         }

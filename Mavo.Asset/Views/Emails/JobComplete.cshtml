@@ -1,0 +1,54 @@
+﻿
+@section Title
+{
+    <text>Job @ViewBag.Job.JobNumber is complete and ready to be billed.</text>
+}
+
+<p align="left" class="article-title">Job Details</p>
+<div align="left" class="article-content">
+    <table>
+        <tr>
+            <th>Job Name</th>
+            <td>@ViewBag.Job.Name</td>
+        </tr>
+        <tr>
+            <th>Job Number</th>
+            <td>@ViewBag.Job.JobNumber</td>
+        </tr>
+        @if (ViewBag.Job.ProjectManager != null)
+        {
+        <tr>
+            <th>Project Manager</th>
+            <td>@ViewBag.Job.ProjectManager.FullName</td>
+        </tr>
+        }
+        @if (ViewBag.Job.Customer != null)
+        {
+            <tr>
+                <th>Customer</th>
+                <td>@ViewBag.Job.Customer.Name</td>
+            </tr>
+        }
+        <tr>
+            <th>Completion Date</th>
+            <td>@ViewBag.Job.ReturnCompleted</td>
+        </tr>
+        <tr>
+            <th>Pickup Time</th>
+            <td>@ViewBag.Job.PickCompleted</td>
+        </tr>
+        <tr>
+            <th>Job Address</th>
+            <td>@ViewBag.Job.Address.Address1
+                <br />
+                @if (ViewBag.Job.Address.Address2 != null)
+                {
+                    @ViewBag.Job.Address.Address2
+                    <br />
+                }
+                @ViewBag.Job.Address.City, @ViewBag.Job.Address.State @ViewBag.Job.Address.ZipCode
+            </td>
+        </tr>
+    </table>
+    <p><a href="http://@ViewBag.Host/job/edit/@ViewBag.Job.Id">Click here</a> to view the job.</p>
+</div>

@@ -235,6 +235,7 @@
     <Compile Include="Migrations\201301231742006_NullabledPricing.Designer.cs">
       <DependentUpon>201301231742006_NullabledPricing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
     <Compile Include="Controllers\JobController.cs" />
@@ -458,6 +459,10 @@
     <Content Include="Views\Shared\_JobHeader.cshtml" />
     <Content Include="Views\Job\Tabs\_BillingRequestForm.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\_EmailLayout.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Emails\JobComplete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
