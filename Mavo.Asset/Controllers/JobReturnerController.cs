@@ -87,11 +87,14 @@ namespace Mavo.Assets.Controllers
             }
             Context.SaveChanges();
 
-            dynamic email = new Email("JobComplete");
-            email.Subject = String.Format("Job #{0} is complete!", job.JobNumber);
-            email.To = job.ProjectManager.Email;
-            email.Job = job;
-            email.Send();
+            if (job.ProjectManager != null)
+            {
+                dynamic email = new Email("JobComplete");
+                email.Subject = String.Format("Job #{0} is complete!", job.JobNumber);
+                email.To = job.ProjectManager.Email;
+                email.Job = job;
+                email.Send();
+            }
 
             return RedirectToAction(MVC.JobReturner.Success(id));
         }
@@ -124,6 +127,7 @@ namespace Mavo.Assets.Controllers
                         Kind = a.Asset.Kind,
                         AssetId = a.Asset.Id,
                         Serial = a.Barcode,
+                        AssetCategory = a.Asset.Category.Name,
                         AssetItemId = (a.Item != null ? a.Item.Id : default(int))
                     })
                 }).First();
@@ -148,7 +152,8 @@ namespace Mavo.Assets.Controllers
                     QuantityNeeded = x.Quantity,
                     QuantityTaken = x.Quantity,
                     Kind = x.Kind,
-                    Barcode = x.Serial
+                    Barcode = x.Serial,
+                    AssetCategory = x.AssetCategory
                 }).ToList()
             });
         }

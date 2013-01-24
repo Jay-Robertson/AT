@@ -67,6 +67,7 @@ namespace Mavo.Assets.Models.ViewModel
 
         public int? QuantityAvailable { get; set; }
 
+        public string AssetCategory { get; set; }
 
         public bool IsDamaged { get; set; }
     }

@@ -478,6 +478,7 @@
     <Content Include="Views\Emails\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Emails\DisplayTemplates\JobStatus.cshtml" />
     <Content Include="Views\Emails\ReadyToPick.cshtml" />
+    <Content Include="Views\Emails\JobHasBeenPicked.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

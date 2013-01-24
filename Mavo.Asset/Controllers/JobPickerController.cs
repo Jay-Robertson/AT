@@ -136,7 +136,8 @@ namespace Mavo.Assets.Controllers
                         Kind = a.Asset.Kind,
                         AssetId = a.Asset.Id,
                         NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
-                        QuantityAvailable = a.Asset.Inventory
+                        QuantityAvailable = a.Asset.Inventory,
+                        AssetCategory = a.Asset.Category.Name
                     })
                 }).First();
             if (result.PickCompleted.HasValue)
@@ -164,7 +165,8 @@ namespace Mavo.Assets.Controllers
                     QuantityTaken = x.Quantity,
                     Kind = x.Kind,
                     NotEnoughQuantity = x.NotEnoughQuantity,
-                    QuantityAvailable = x.QuantityAvailable
+                    QuantityAvailable = x.QuantityAvailable,
+                    AssetCategory = x.AssetCategory
                 }).ToList()
             });
         }
