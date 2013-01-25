@@ -198,10 +198,6 @@
     <Compile Include="Migrations\201301211646576_AddedCreatedByUser.Designer.cs">
       <DependentUpon>201301211646576_AddedCreatedByUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201301211716490_AddRequiredCustomerFields.cs" />
-    <Compile Include="Migrations\201301211716490_AddRequiredCustomerFields.Designer.cs">
-      <DependentUpon>201301211716490_AddRequiredCustomerFields.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201301212131496_AddedSummary.cs" />
     <Compile Include="Migrations\201301212131496_AddedSummary.Designer.cs">
       <DependentUpon>201301212131496_AddedSummary.cs</DependentUpon>
@@ -510,9 +506,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301211646576_AddedCreatedByUser.resx">
       <DependentUpon>201301211646576_AddedCreatedByUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201301211716490_AddRequiredCustomerFields.resx">
-      <DependentUpon>201301211716490_AddRequiredCustomerFields.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301212131496_AddedSummary.resx">
       <DependentUpon>201301212131496_AddedSummary.cs</DependentUpon>

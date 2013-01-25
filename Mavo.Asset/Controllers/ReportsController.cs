@@ -136,7 +136,7 @@ namespace Mavo.Assets.Controllers
                     }
                     else if (pickedAsset.Asset.Kind == AssetKind.Serialized)
                     {
-                        fellOfTruck = returnedAssetsForJob.Any(x => x.Item != null && x.Item.Barcode == pickedAsset.Item.Barcode);
+                        fellOfTruck = !returnedAssetsForJob.Any(x => x.Item != null && x.Item.Barcode == pickedAsset.Item.Barcode);
                     }
                     else
                     {
