@@ -45,7 +45,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
         {
-            Job job = Context.Jobs.Include("PickedAssets").Include("PickedAssets.Item").Include("PickedAssets.Asset").FirstOrDefault(x => x.Id == id);
+            Job job = Context.Jobs.Include("PickedAssets").Include("PickedAssets.Item").Include("PickedAssets.Asset").Include("ProjectManager").FirstOrDefault(x => x.Id == id);
             job.Status = JobStatus.Completed;
             job.ReturnCompleted = DateTime.Now;
             job.ReturnedAssets = new List<ReturnedAsset>();
