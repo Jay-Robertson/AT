@@ -58,9 +58,11 @@
                         <select id="Status" name="Status">
                             <option></option>
                             <option value="0" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.New ? "selected" : "")>New</option>
-                            <option value="1" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.Started ? "selected" : "")>Started</option>
-                            <option value="2" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.Completed ? "selected" : "")>Completed</option>
-                            <option value="3" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "selected" : "")>ReadyToPick</option>
+                            <option value="1" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "selected" : "")>Ready To Pick</option>
+                            <option value="2" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "selected" : "")>Being Picked</option>
+                            <option value="3" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.Started ? "selected" : "")>Started</option>
+                            <option value="4" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.BeingReturned ? "selected" : "")>Being Returned</option>
+                            <option value="5" @(Model != null && Model.Status.HasValue && Model.Status == Mavo.Assets.Models.JobStatus.Completed ? "selected" : "")>Completed</option>
                         </select>
                     </div>
                 </div>
