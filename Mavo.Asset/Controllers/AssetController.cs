@@ -170,11 +170,10 @@ namespace Mavo.Assets.Controllers
             if (search.CategoryId.HasValue)
                 query = query.Where(x => x.Category.Id == search.CategoryId);
             if (!String.IsNullOrEmpty(search.SearchString))
-                query = query.Where(x => x.Barcode.Contains(search.SearchString)
+                query = query.Where(x => x.Items.Any(i=>i.Barcode.Contains(search.SearchString))
                     || x.Name.Contains(search.SearchString)
                     || x.Category.Name.Contains(search.SearchString)
                     );
-
             search.Results = query.Select(x => new AssetSearchResult()
             {
                 Name = x.Name,
