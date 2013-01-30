@@ -8,6 +8,7 @@ using System.Web.Security;
 using WebMatrix.WebData;
 using Mavo.Assets.Filters;
 using Mavo.Assets.Models;
+using Mavo.Assets.Services;
 
 namespace Mavo.Assets.Controllers
 {
@@ -15,11 +16,13 @@ namespace Mavo.Assets.Controllers
     public partial class AccountController : BaseController
     {
         private readonly AssetContext Ctx;
+        private readonly ICurrentUserService CurrentUser;
         /// <summary>
         /// Initializes a new instance of the AccountController class.
         /// </summary>
-        public AccountController(AssetContext ctx)
+        public AccountController(AssetContext ctx, ICurrentUserService currentUser)
         {
+            CurrentUser = currentUser;
             Ctx = ctx;
         }
         //
@@ -46,13 +49,18 @@ namespace Mavo.Assets.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            User user = Ctx.Users.FirstOrDefault(x => x.Email == model.UserName);
+            if (ModelState.IsValid && user != null && !user.Disabled && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
             }
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            if (user.Disabled)
+                ModelState.AddModelError("", "This account is disabled.");
+
+            else
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+
             return View(model);
         }
 
