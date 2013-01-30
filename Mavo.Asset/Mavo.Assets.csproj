@@ -182,6 +182,7 @@
     <Compile Include="AssetController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="BaseController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -191,6 +192,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="EmailsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -233,6 +235,14 @@
     <Compile Include="Migrations\201301231742006_NullabledPricing.cs" />
     <Compile Include="Migrations\201301231742006_NullabledPricing.Designer.cs">
       <DependentUpon>201301231742006_NullabledPricing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301301620007_addedstatus.cs" />
+    <Compile Include="Migrations\201301301620007_addedstatus.Designer.cs">
+      <DependentUpon>201301301620007_addedstatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201301301636392_AddedRequiredFieldsToUser.cs" />
+    <Compile Include="Migrations\201301301636392_AddedRequiredFieldsToUser.Designer.cs">
+      <DependentUpon>201301301636392_AddedRequiredFieldsToUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
@@ -294,6 +304,7 @@
     <Compile Include="Models\ViewModel\JobSearch.cs" />
     <Compile Include="Models\ViewModel\LeftNavViewModel.cs" />
     <Compile Include="Models\ViewModel\PickAJobModel.cs" />
+    <Compile Include="Models\ViewModel\SetPasswordModel.cs" />
     <Compile Include="Models\ViewModel\Summary.cs" />
     <Compile Include="Models\ViewModel\TransferAssetsViewModel.cs" />
     <Compile Include="Models\ViewModel\YesNo.cs" />
@@ -318,6 +329,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="TemplateController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserManagementController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -478,6 +492,13 @@
     <Content Include="Views\Emails\DisplayTemplates\JobStatus.cshtml" />
     <Content Include="Views\Emails\ReadyToPick.cshtml" />
     <Content Include="Views\Emails\JobHasBeenPicked.cshtml" />
+    <Content Include="Views\UserManagement\Index.cshtml" />
+    <Content Include="Views\UserManagement\Details.cshtml" />
+    <Content Include="Views\UserManagement\Edit.cshtml" />
+    <Content Include="Views\UserManagement\Delete.cshtml" />
+    <Content Include="Views\UserManagement\_SideNav.cshtml" />
+    <Content Include="Views\UserManagement\_AddUserModal.cshtml" />
+    <Content Include="Views\UserManagement\_SetPasswordModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -533,6 +554,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301231742006_NullabledPricing.resx">
       <DependentUpon>201301231742006_NullabledPricing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301301620007_addedstatus.resx">
+      <DependentUpon>201301301620007_addedstatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201301301636392_AddedRequiredFieldsToUser.resx">
+      <DependentUpon>201301301636392_AddedRequiredFieldsToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

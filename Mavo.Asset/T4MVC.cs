@@ -33,6 +33,7 @@ public static class MVC
     public static Mavo.Assets.Controllers.JobReturnerController JobReturner = new Mavo.Assets.Controllers.T4MVC_JobReturnerController();
     public static Mavo.Assets.Controllers.ReportingController Reporting = new Mavo.Assets.Controllers.T4MVC_ReportingController();
     public static Mavo.Assets.Controllers.TemplateController Template = new Mavo.Assets.Controllers.T4MVC_TemplateController();
+    public static Mavo.Assets.Controllers.UserManagementController UserManagement = new Mavo.Assets.Controllers.T4MVC_UserManagementController();
     public static T4MVC.EmailsController Emails = new T4MVC.EmailsController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

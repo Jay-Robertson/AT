@@ -1,0 +1,14 @@
+﻿@using Mavo.Assets
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">Actions</li>
+        <li><a href="#addUser" data-toggle="modal"><i class="icon-plus"></i>Create User</a></li>
+    </ul>
+    <ul class="nav nav-list">
+        <li class="nav-header">Users</li>
+        @foreach (var item in ViewBag.Users)
+        {
+            <li @(HtmlExtensions.GetActive(item.Id.ToString(), Url.RequestContext.RouteData.Values["id"]))><a href="/usermanagement/edit/@item.Id">@item.FullName</a></li>
+        }
+    </ul>
+</div>

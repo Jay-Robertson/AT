@@ -69,7 +69,7 @@ namespace Mavo.Assets.Controllers
         //
         // GET: /Account/Register
 
-        
+
 
         [AllowAnonymous]
         public virtual ActionResult Register(UserRole? role = null)
@@ -97,7 +97,10 @@ namespace Mavo.Assets.Controllers
                     Role = model.Role
                 });
             User user = Ctx.Users.FirstOrDefault(x => x.Email == model.Email);
-            return Json(new { value = user.Id, text = String.Format("{0}, {1}", user.LastName, user.FirstName) });
+            if (Request.IsAjaxRequest())
+                return Json(new { value = user.Id, text = String.Format("{0}, {1}", user.LastName, user.FirstName) });
+            else
+                return RedirectToAction(MVC.UserManagement.Edit(user.Id));
         }
 
         [HttpPost]

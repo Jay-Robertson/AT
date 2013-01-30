@@ -13,14 +13,20 @@ namespace Mavo.Assets.Models
     {
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public string EmployeeId { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
 
         public string FullName { get { return String.Format("{0} {1}", FirstName, LastName); } }
 
         public UserRole Role { get; set; }
+
+        public bool Disabled { get; set; }
     }
 
     public class LocalPasswordModel

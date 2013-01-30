@@ -1,0 +1,82 @@
+﻿@model Mavo.Assets.Models.User
+@using Mavo.Assets;
+@section LeftNav
+{
+    @{Html.RenderPartial(MVC.UserManagement.Views._SideNav);}
+}
+<div class="well">
+    @using (Html.BeginForm(MVC.UserManagement.Edit(Model.Id), FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>@Model.FullName <span class="label label-@(Model.Disabled ? "important" : "success")">@(Model.Disabled ? "DISABLED" : "ENABLED")</span></legend>
+
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.EmployeeId, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(model => model.EmployeeId)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(model => model.Email)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.FirstName, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(model => model.FirstName)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.LastName, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EditorFor(model => model.LastName)
+                </div>
+            </div>
+            <div class="control-group">
+                @Html.LabelFor(model => model.Role, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.EnumCheckBoxListFor(x => x.Role)
+                </div>
+            </div>
+            <p>
+                <input type="submit" class="btn btn-primary" value="Save" />
+                @if (Model.Disabled)
+                {
+                    <a href="#toggleStatus" data-toggle="modal" class="btn btn-success">Enable</a>
+                }
+                else
+                {
+                    <a href="#toggleStatus" data-toggle="modal" class="btn btn-danger">Disable</a>
+                }
+                    <a href="#setPassword" data-toggle="modal" class="btn">Set Password</a>
+
+            </p>
+        </fieldset>
+    }
+</div>
+
+<div id="toggleStatus" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="toggleStatusLabel" aria-hidden="true" style="display: block;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="toggleStatusLabel">@(Model.Disabled ? "Enable" : "Disable")</h3>
+    </div>
+    <form action="/usermanagement/togglestatus/@Model.Id" class="form form-horizontal" method="post" novalidate="novalidate">
+    <div class="modal-body">
+        <p>Are you sure you want to @(Model.Disabled ? "enable" : "disable") @Model.FullName's account?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Yes</button>
+    </div>
+    </form>
+</div>
+
+@{ Html.RenderPartial("_SetPasswordModal", new Mavo.Assets.Models.ViewModel.SetPasswordModel() { Id = Model.Id });}
+
+
+

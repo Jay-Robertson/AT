@@ -3,6 +3,7 @@
     var action = Url.RequestContext.RouteData.Values["action"].ToString().ToLower();
     var templates = ViewBag.Templates;
 }
+@using Mavo.Assets;
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
@@ -54,7 +55,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/template"><i class="icon-list"></i>List</a></li>
                                 <li><a href="/template/create"><i class="icon-plus"></i>Create</a></li>
-                                <li><a href="#templateModal"  data-toggle="modal"><i class="icon-plus"></i>Clone</a></li>
+                                <li><a href="#templateModal" data-toggle="modal"><i class="icon-plus"></i>Clone</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -71,7 +72,7 @@
                                         {
                                         <li><a href="/jobpicker/index/@job.Id">
                                             <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
-                                            @if(job is Mavo.Assets.Models.JobAddon)
+                                            @if (job is Mavo.Assets.Models.JobAddon)
                                             {
                                                 <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
                                             }
@@ -87,7 +88,7 @@
                     @if (((IOrderedEnumerable<IGrouping<DateTime, Mavo.Assets.Models.Job>>)ViewBag.JobsReadyForReturn).Any())
                     {
                         <ul class="nav">
-                            <li class="dropdown @(controller == "returnjob" ? "active" : "")">
+                            <li class="dropdown @(controller == "jobreturner" ? "active" : "")">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Return a Job <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     @foreach (IGrouping<DateTime, Mavo.Assets.Models.Job> item in ViewBag.JobsReadyForReturn)
@@ -103,7 +104,7 @@
                         </ul>
                     }
                     <ul class="nav">
-                        <li class="dropdown @(controller == "reports" ? "active" : "")">
+                        <li class="dropdown @(controller == "reporting" ? "active" : "")">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/reporting/latejobs"><i class="icon-calendar"></i>Late Jobs</a></li>
@@ -115,8 +116,24 @@
                         </li>
                     </ul>
                 </div>
+              
             }
-           
+            @if (ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
+            {
+                <ul class="nav">
+                    <li class="dropdown @(controller == "usermanagement" ? "active" : "")">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Users <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#addUser" data-toggle="modal"><i class="icon-plus"></i>Create User</a></li>
+                            <li class="nav-header">Users</li>
+                            @foreach (Mavo.Assets.Models.User user in ViewBag.AllUsers)
+                            {
+                                <li><a href="/usermanagement/edit/@user.Id">@user.FullName</a></li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            }
         </div>
     </div>
 </div>
@@ -131,12 +148,11 @@
             <h3>Clone a Template</h3>
         </div>
         <div class="modal-body">
-
             <text>Template:</text>@Html.DropDownList("id", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(y => new SelectListItem() { Text = y.Name, Value = y.Id.ToString() }))
         </div>
         <div class="modal-footer">
             <a href="#" data-dismiss="modal" class="btn">Close</a>
-            <input type="submit" class="btn btn-primary"  value="Clone"/>
+            <input type="submit" class="btn btn-primary" value="Clone" />
         </div>
     }
 
