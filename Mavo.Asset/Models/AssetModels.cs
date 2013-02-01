@@ -265,7 +265,10 @@ namespace Mavo.Assets.Models
     [ComplexType]
     public class InvoiceDetails
     {
-
+        public InvoiceDetails()
+        {
+            this.CopyAddress = new Address();
+        }
         public string Attention { get; set; }
 
         public Address SendInvoiceTo { get; set; }

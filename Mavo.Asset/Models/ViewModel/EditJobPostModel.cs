@@ -70,8 +70,6 @@ namespace Mavo.Assets.Models.ViewModel
 
         public Summary Summary { get; set; }
 
-
-
         public InvoiceDetails InvoiceDetail { get; set; }
      
         public string SendFinalReportTo { get; set; }

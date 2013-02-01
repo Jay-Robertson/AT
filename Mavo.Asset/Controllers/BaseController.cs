@@ -21,7 +21,7 @@ namespace Mavo.Assets.Controllers
 
             AssetContext assetContext = new AssetContext();
 
-            ViewBag.Templates = assetContext.Templates.Include("Assets").Include("Assets.Asset").ToList();
+            ViewBag.Templates = assetContext.Templates.Include("Assets").Include("Assets.Asset").OrderBy(x => x.Name).ToList();
             ViewBag.JobsReadyToPickForNav = assetContext.Jobs.Where(x => x.Status == JobStatus.ReadyToPick || x.Status == JobStatus.BeingPicked).ToList().GroupBy(x => x.PickupTime.Date).OrderBy(x => x.Key);
             ViewBag.JobsReadyForReturn = assetContext.Jobs.Where(x => !(x is JobAddon) && (x.Status == JobStatus.Started || x.Status == JobStatus.BeingReturned) && x.PickCompleted.HasValue).ToList().GroupBy(x => x.PickCompleted.Value.Date).OrderBy(x => x.Key);
 
@@ -35,7 +35,7 @@ namespace Mavo.Assets.Controllers
                     Response.Redirect("~/");
                 }
                 ViewBag.CurrentUserRole = currentUser.Role;
-                ViewBag.AllUsers = assetContext.Users.ToList();
+                ViewBag.AllUsers = assetContext.Users.ToList().OrderBy(x => x.FullName);
             }
 
 

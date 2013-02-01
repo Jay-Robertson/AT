@@ -111,7 +111,7 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult AssetPickerDetail(int id)
         {
-            List<Asset> assets = db.Assets.Where(x => x.Category.Id == id).ToList();
+            List<Asset> assets = db.Assets.Where(x => x.Category.Id == id).OrderBy(x=>x.Name).ToList();
             return PartialView("_AssetPickerDetail", assets);
         }
         [HttpPost]
