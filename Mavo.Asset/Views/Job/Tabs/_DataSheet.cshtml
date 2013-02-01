@@ -5,7 +5,7 @@
     {
         if (Model == null && Request["templateId"] != null)
         {
-            @Html.Hidden("TemplateId", Request["templateId"])
+        @Html.Hidden("TemplateId", Request["templateId"])
         }
         @Html.HiddenFor(x => x.Id)
         if (null == Model)
@@ -57,7 +57,7 @@
                             <a class="btn btn-small btn-success" href="#addProjectManagerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
                         </div>
                     </div>
-                   
+
                     <div class="control-group">
                         @Html.LabelFor(x => x.ScopeOfWork, new { @class = "control-label" })
                         <div class="controls">
@@ -70,7 +70,7 @@
                             @Html.EnumDropDownListFor(x => x.Notifiable)
                         </div>
                     </div>
-                     <div class="control-group">
+                    <div class="control-group">
                         @Html.LabelFor(x => x.SupervisorsNeeded, new { @class = "control-label" })
                         <div class="controls">
                             @Html.EditorFor(x => x.SupervisorsNeeded)
@@ -80,6 +80,13 @@
                         @Html.LabelFor(x => x.WorkersNeeded, new { @class = "control-label" })
                         <div class="controls">
                             @Html.EditorFor(x => x.WorkersNeeded)
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        @Html.LabelFor(x => x.ShiftStartDate, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EditorFor(x => x.ShiftStartDate)
                         </div>
                     </div>
 
@@ -95,7 +102,7 @@
                             @Html.EditorFor(x => x.EstimatedCompletionDate)
                         </div>
                     </div>
-                   
+
                     <div class="control-group">
                         @Html.LabelFor(x => x.ForemanNote, new { @class = "control-label" })
                         <div class="controls">
@@ -155,13 +162,13 @@
                             @Html.EditorFor(x => x.Address.ZipCode)
                         </div>
                     </div>
-                     <div class="control-group">
+                    <div class="control-group">
                         @Html.LabelFor(x => x.JobContact, new { @class = "control-label" })
                         <div class="controls">
                             @Html.EditorFor(x => x.JobContact)
                         </div>
                     </div>
-                      <div class="control-group">
+                    <div class="control-group">
                         @Html.LabelFor(x => x.JobContactPhone, new { @class = "control-label" })
                         <div class="controls">
                             @Html.EditorFor(x => x.JobContactPhone)

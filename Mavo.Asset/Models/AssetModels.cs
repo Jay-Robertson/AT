@@ -252,6 +252,9 @@ namespace Mavo.Assets.Models
 
         public int? WorkersNeeded { get; set; }
 
+        public DateTime? ShiftStartDate { get; set; }
+
+
         public string ScopeOfWork { get; set; }
 
         public string JobContact { get; set; }

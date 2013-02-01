@@ -92,6 +92,8 @@ namespace Mavo.Assets.Models.ViewModel
         public string JobContact { get; set; }
 
         public string JobContactPhone { get; set; }
+
+        public DateTime? ShiftStartDate { get; set; }
     }
 
 
