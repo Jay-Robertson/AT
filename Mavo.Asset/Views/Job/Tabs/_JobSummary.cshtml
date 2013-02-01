@@ -5,11 +5,15 @@
     <div class="tab-pane" id="jobSummary">
         <div class="row-fluid">
             <div class="span12 well">
-                <h4>Summary</h4>
+                <h4>@Model.Name Summary</h4>
                 <a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
                 @using (Html.BeginForm(MVC.Job.SaveSummary(Model.Id.Value, null)))
                 {
                     <table class="table table-condensed table-striped table-hover">
+                         <tr>
+                            <th>Site Name:</th>
+                            <td>@Html.DisplayFor(x => x.Name) @Html.DisplayFor(x=>x.Status)</td>
+                        </tr>
                         <tr>
                             <th>Submitted By:</th>
                             <td>@Html.DisplayFor(x => x.SubmittedBy.FullName)</td>
@@ -31,12 +35,20 @@
                             <td>@Html.DisplayFor(x => x.Notifiable)</td>
                         </tr>
                         <tr>
-                            <th>Job Site:</th>
-                            <td>@Html.DisplayFor(x => x.Name)</td>
+                            <th>Job Contact:</th>
+                            <td>@Html.DisplayFor(x => x.JobContact)</td>
+                        </tr>
+                          <tr>
+                            <th>Job Contact Phone:</th>
+                            <td>@Html.DisplayFor(x => x.JobContactPhone)</td>
                         </tr>
                         <tr>
                             <th>Job Number:</th>
                             <td>@Html.DisplayFor(x => x.JobNumber)</td>
+                        </tr>
+                         <tr>
+                            <th>Project Manager:</th>
+                            <td>@Html.DisplayFor(x => x.ProjectManager)</td>
                         </tr>
                         <tr>
                             <th>Start Date/Time:</th>
@@ -63,6 +75,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <th>Shift Start Date:</th>
+                            <td>@Html.DisplayFor(x => x.ShiftStartDate)</td>
+                        </tr>
+                         <tr>
+                            <th>Pickup Time:</th>
+                            <td>@Html.DisplayFor(x => x.PickupTime)</td>
+                        </tr>
+                        <tr>
                             <th>Foreman:</th>
                             <td>
                                 @Html.DropDownList("ForemanId", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
@@ -72,6 +92,12 @@
                                Selected = Model == null || Model.ForemanId == null ? false : x.Id == Model.ForemanId
                            }), string.Empty)
                                 <a class="btn btn-small btn-success" href="#addForemanModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
+                            </td>
+                        </tr>
+                          <tr>
+                            <th>Foreman Note:</th>
+                            <td>
+                                @Html.DisplayFor(x => x.ForemanNote)
                             </td>
                         </tr>
                         <tr>

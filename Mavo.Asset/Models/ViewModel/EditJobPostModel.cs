@@ -45,6 +45,7 @@ namespace Mavo.Assets.Models.ViewModel
         public int? CustomerId { get; set; }
         public int? ForemanId { get; set; }
         public int? ProjectManagerId { get; set; }
+        public string ProjectManager { get; set; }
         public JobStatus Status { get; set; }
         public DateTime PickupTime { get; set; }
         public DateTime ContractDate { get; set; }
