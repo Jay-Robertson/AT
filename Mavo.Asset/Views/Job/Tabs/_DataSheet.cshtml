@@ -26,18 +26,20 @@
                             @Html.EditorFor(x => x.Name)
                         </div>
                     </div>
+
                     <div class="control-group">
-                        <label class="control-label" for="Customer">Customer:</label>
+                        @Html.LabelFor(x => x.JobContact, new { @class = "control-label" })
                         <div class="controls">
-                            @Html.DropDownList("CustomerId", ((IList<Mavo.Assets.Models.Customer>)ViewBag.Customers).Select(x => new SelectListItem()
-                           {
-                               Value = x.Id.ToString(),
-                               Text = x.Name,
-                               Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
-                           }), string.Empty)
-                            @*<a class="btn btn-small btn-success" href="#addCustomerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>*@
+                            @Html.EditorFor(x => x.JobContact)
                         </div>
                     </div>
+                    <div class="control-group">
+                        @Html.LabelFor(x => x.JobContactPhone, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EditorFor(x => x.JobContact)
+                        </div>
+                    </div>
+                    @Html.EditorFor(x => x.Address)
                     <div class="control-group">
                         @Html.LabelFor(x => x.JobNumber, new { @class = "control-label" })
                         <div class="controls">
@@ -117,14 +119,24 @@
                                 @Html.DisplayFor(model => model.Status)
                             </div>
                         </div>
-                       
                     }
-
                 </div>
                 <div class="well">
-                    <h4>Job Location</h4>
+                    <h4>Customer Location</h4>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.Customer.Address, new { @class = "control-label" })
+                        <label class="control-label" for="Customer">Customer:</label>
+                        <div class="controls">
+                            @Html.DropDownList("CustomerId", ((IList<Mavo.Assets.Models.Customer>)ViewBag.Customers).Select(x => new SelectListItem()
+                           {
+                               Value = x.Id.ToString(),
+                               Text = x.Name,
+                               Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
+                           }), string.Empty)
+                            @*<a class="btn btn-small btn-success" href="#addCustomerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>*@
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Customer Address</label>
                         <div class="controls" id="customerAddress">
                             @if (Model != null && Model.Customer != null)
                             {
@@ -132,50 +144,9 @@
                             }
                         </div>
                     </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.Address.Address1, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(x => x.Address.Address1)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.Address.Address2, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(x => x.Address.Address2)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.Address.City, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(x => x.Address.City)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.Address.State, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(x => x.Address.State)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.Address.ZipCode, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(x => x.Address.ZipCode)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.JobContact, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(x => x.JobContact)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.JobContactPhone, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.EditorFor(x => x.JobContactPhone)
-                        </div>
-                    </div>
                 </div>
             </div>
+
             <div class="well span6">
                 <h4>Contractor</h4>
                 <div class="control-group">
@@ -196,24 +167,14 @@
                         @Html.EditorFor(x => x.ContractAmount)
                     </div>
                 </div>
-                <div class="control-group">
-                    @Html.LabelFor(x => x.InvoiceDetail.SendInvoiceTo, new { @class = "control-label" })
-                    <div class="controls">
-                        @Html.EditorFor(x => x.InvoiceDetail.SendInvoiceTo)
-                    </div>
-                </div>
+                @Html.EditorFor(x => x.InvoiceDetail.SendInvoiceTo)
                 <div class="control-group">
                     @Html.LabelFor(x => x.InvoiceDetail.Attention, new { @class = "control-label" })
                     <div class="controls">
                         @Html.EditorFor(x => x.InvoiceDetail.Attention)
                     </div>
                 </div>
-                <div class="control-group">
-                    @Html.LabelFor(x => x.InvoiceDetail.InvoiceAddress, new { @class = "control-label" })
-                    <div class="controls">
-                        @Html.EditorFor(x => x.InvoiceDetail.InvoiceAddress)
-                    </div>
-                </div>
+                @Html.EditorFor(x => x.InvoiceDetail.InvoiceAddress)
                 <div class="control-group">
                     @Html.LabelFor(x => x.InvoiceDetail.InvoiceInstructions, new { @class = "control-label" })
                     <div class="controls">
@@ -226,18 +187,14 @@
                         @Html.EditorFor(x => x.SendFinalReportTo)
                     </div>
                 </div>
-                <div class="control-group">
-                    @Html.LabelFor(x => x.FinalReportAddress, new { @class = "control-label" })
-                    <div class="controls">
-                        @Html.EditorFor(x => x.FinalReportAddress)
-                    </div>
-                </div>
+                @Html.EditorFor(x => x.FinalReportAddress)
                 <div class="control-group">
                     @Html.LabelFor(x => x.FinalReportPhoneNumber, new { @class = "control-label" })
                     <div class="controls">
                         @Html.EditorFor(x => x.FinalReportPhoneNumber)
                     </div>
                 </div>
+
 
             </div>
         </div>

@@ -26,6 +26,7 @@ namespace Mavo.Assets.Models.ViewModel
 
 
         [Required]
+        [Display(Name = "Job Site")]
         public Address Address { get; set; }
 
         [Display(Name="Contract/PO#")]
