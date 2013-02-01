@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -22,8 +23,8 @@ namespace Mavo.Assets.Models.ViewModel
         public DateTime? EndDate { get; set; }
 
 
+        [Display(Name="Site Name")]
         public string Name { get; set; }
-        public string JobName { get; set; }
 
         public IList<SearchResult> Results { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,6 +16,7 @@ namespace Mavo.Assets.Models.ViewModel
         {
             Assets = new List<JobAsset>();
         }
+        [Display(Name="Job Site")]
         public string JobName { get; set; }
 
         public Address Address { get; set; }

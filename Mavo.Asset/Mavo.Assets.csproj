@@ -256,6 +256,10 @@
     <Compile Include="Migrations\201302011608055_ChangeAddressToAddress3.Designer.cs">
       <DependentUpon>201302011608055_ChangeAddressToAddress3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302011708201_RemovedSiteName.cs" />
+    <Compile Include="Migrations\201302011708201_RemovedSiteName.Designer.cs">
+      <DependentUpon>201302011708201_RemovedSiteName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
@@ -581,6 +585,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302011608055_ChangeAddressToAddress3.resx">
       <DependentUpon>201302011608055_ChangeAddressToAddress3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302011708201_RemovedSiteName.resx">
+      <DependentUpon>201302011708201_RemovedSiteName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

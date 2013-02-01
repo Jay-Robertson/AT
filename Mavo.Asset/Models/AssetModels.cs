@@ -194,13 +194,12 @@ namespace Mavo.Assets.Models
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Job Name is Required")]
+        [Required(ErrorMessage = "Site Name is Required")]
+        [Display(Name="Site Name")]
         public string Name { get; set; }
 
         [Required]
         public string JobNumber { get; set; }
-        [Required]
-        public string JobSiteName { get; set; }
 
         [Required]
         public Address Address { get; set; }
