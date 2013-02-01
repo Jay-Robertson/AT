@@ -61,7 +61,7 @@
                     <div class="control-group">
                         @Html.LabelFor(x => x.ScopeOfWork, new { @class = "control-label" })
                         <div class="controls">
-                            @Html.EditorFor(x => x.ScopeOfWork)
+                            @Html.TextAreaFor(x => x.ScopeOfWork)
                         </div>
                     </div>
                     <div class="control-group">
@@ -95,12 +95,7 @@
                             @Html.EditorFor(x => x.EstimatedCompletionDate)
                         </div>
                     </div>
-                    <div class="control-group">
-                        @Html.LabelFor(x => x.Description, new { @class = "control-label" })
-                        <div class="controls">
-                            @Html.TextAreaFor(x => x.Description)
-                        </div>
-                    </div>
+                   
                     <div class="control-group">
                         @Html.LabelFor(x => x.ForemanNote, new { @class = "control-label" })
                         <div class="controls">
