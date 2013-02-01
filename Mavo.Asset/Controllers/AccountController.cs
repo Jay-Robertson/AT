@@ -113,7 +113,6 @@ namespace Mavo.Assets.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public virtual ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)

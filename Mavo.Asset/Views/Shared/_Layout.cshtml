@@ -109,10 +109,7 @@
         </footer>
 
     </div>
-    @if (Request.IsAuthenticated && ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
-    {
-        Html.RenderPartial(MVC.UserManagement.Views._AddUserModal);
-    }
+  
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryplugins")

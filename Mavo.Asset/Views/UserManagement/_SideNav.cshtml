@@ -12,3 +12,9 @@
         }
     </ul>
 </div>
+
+
+@if (Request.IsAuthenticated && ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
+{
+    Html.RenderPartial(MVC.UserManagement.Views._AddUserModal);
+}

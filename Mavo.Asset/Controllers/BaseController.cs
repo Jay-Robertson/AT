@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using System.Web;
 using Mavo.Assets.Filters;
 using Mavo.Assets.Models;
 using Mavo.Assets.Services;
@@ -18,13 +19,13 @@ namespace Mavo.Assets.Controllers
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
 
-            AssetContext assetContext = ServiceLocator.Current.GetInstance<AssetContext>();
+            AssetContext assetContext = new AssetContext();
 
             ViewBag.Templates = assetContext.Templates.Include("Assets").Include("Assets.Asset").ToList();
             ViewBag.JobsReadyToPickForNav = assetContext.Jobs.Where(x => x.Status == JobStatus.ReadyToPick || x.Status == JobStatus.BeingPicked).ToList().GroupBy(x => x.PickupTime.Date).OrderBy(x => x.Key);
             ViewBag.JobsReadyForReturn = assetContext.Jobs.Where(x => !(x is JobAddon) && (x.Status == JobStatus.Started || x.Status == JobStatus.BeingReturned) && x.PickCompleted.HasValue).ToList().GroupBy(x => x.PickCompleted.Value.Date).OrderBy(x => x.Key);
 
-            User currentUser = ServiceLocator.Current.GetInstance<ICurrentUserService>().GetCurrent();
+            User currentUser = assetContext.Users.FirstOrDefault(x => x.Email == HttpContext.User.Identity.Name);
             if (currentUser != null)
             {
                 if (currentUser.Disabled)

@@ -15,7 +15,7 @@
             <a class="brand" href="/">Mavo Asset Management</a>
             @if (Request.IsAuthenticated)
             {
-                <div class="nav-collapse collapse">
+                <div class=" ">
                     <p class="navbar-text pull-right">
                         Logged in as <a href="#" class="navbar-link">@User.Identity.Name</a> | 
                     <a href="/account/LogOff">Log Off</a>
@@ -115,24 +115,24 @@
                             </ul>
                         </li>
                     </ul>
+                    @if (ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
+                    {
+                        <ul class="nav">
+                            <li class="dropdown @(controller == "usermanagement" ? "active" : "")">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Users <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-header">Users</li>
+                                    @foreach (Mavo.Assets.Models.User user in ViewBag.AllUsers)
+                                    {
+                                        <li><a href="/usermanagement/edit/@user.Id">@user.FullName</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                    }
                 </div>
               
-                    if (ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
-                    {
-                <ul class="nav">
-                    <li class="dropdown @(controller == "usermanagement" ? "active" : "")">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Users <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#addUser" data-toggle="modal"><i class="icon-plus"></i>Create User</a></li>
-                            <li class="nav-header">Users</li>
-                            @foreach (Mavo.Assets.Models.User user in ViewBag.AllUsers)
-                            {
-                                <li><a href="/usermanagement/edit/@user.Id">@user.FullName</a></li>
-                            }
-                        </ul>
-                    </li>
-                </ul>
-                    }
+               
             }
         </div>
     </div>
