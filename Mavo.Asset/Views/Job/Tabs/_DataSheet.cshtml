@@ -73,6 +73,12 @@
                         </div>
                     </div>
                     <div class="control-group">
+                        @Html.LabelFor(x => x.BillingType, new { @class = "control-label" })
+                        <div class="controls">
+                            @Html.EnumDropDownListFor(x => x.BillingType)
+                        </div>
+                    </div>
+                    <div class="control-group">
                         @Html.LabelFor(x => x.SupervisorsNeeded, new { @class = "control-label" })
                         <div class="controls">
                             @Html.EditorFor(x => x.SupervisorsNeeded)

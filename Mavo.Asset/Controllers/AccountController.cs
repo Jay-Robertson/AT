@@ -55,7 +55,7 @@ namespace Mavo.Assets.Controllers
                 return RedirectToLocal(returnUrl);
             }
 
-            if (user.Disabled)
+            if (user != null && user.Disabled)
                 ModelState.AddModelError("", "This account is disabled.");
 
             else

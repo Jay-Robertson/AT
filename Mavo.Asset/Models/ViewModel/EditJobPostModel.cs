@@ -82,6 +82,7 @@ namespace Mavo.Assets.Models.ViewModel
 
         public YesNo Notifiable { get; set; }
 
+        [Display(Name="Contract or T&M")]
         public BillingType BillingType { get; set; }
 
         public int? SupervisorsNeeded { get; set; }
