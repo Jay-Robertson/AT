@@ -128,7 +128,8 @@ namespace Mavo.Assets.Controllers
                         AssetId = a.Asset.Id,
                         Serial = a.Barcode,
                         AssetCategory = a.Asset.Category.Name,
-                        AssetItemId = (a.Item != null ? a.Item.Id : default(int))
+                        AssetItemId = (a.Item != null ? a.Item.Id : default(int)),
+                        MavoItemNumber = a.Asset.MavoItemNumber
                     })
                 }).First();
             return View(new PickAJobModel()
@@ -153,7 +154,8 @@ namespace Mavo.Assets.Controllers
                     QuantityTaken = x.Quantity,
                     Kind = x.Kind,
                     Barcode = x.Serial,
-                    AssetCategory = x.AssetCategory
+                    AssetCategory = x.AssetCategory,
+                    MavoItemNumber = x.MavoItemNumber
                 }).ToList()
             });
         }

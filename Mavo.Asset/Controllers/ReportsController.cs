@@ -196,6 +196,7 @@ namespace Mavo.Assets.Controllers
                          NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
                          QuantityAvailable = a.Asset.Inventory,
                          AssetCategory = a.Asset.Category.Name,
+                         MavoItemNumber = a.Asset.MavoItemNumber
                      })
                  }).ToList();
 
@@ -227,7 +228,7 @@ namespace Mavo.Assets.Controllers
                         NotEnoughQuantity = x.NotEnoughQuantity,
                         QuantityAvailable = x.QuantityAvailable,
                         AssetCategory = x.AssetCategory,
-
+                        MavoItemNumber = x.MavoItemNumber
                     }).ToList()
                 }));
 

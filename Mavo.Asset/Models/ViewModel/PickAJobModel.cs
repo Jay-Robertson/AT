@@ -70,5 +70,7 @@ namespace Mavo.Assets.Models.ViewModel
         public string AssetCategory { get; set; }
 
         public bool IsDamaged { get; set; }
+
+        public string MavoItemNumber { get; set; }
     }
 }

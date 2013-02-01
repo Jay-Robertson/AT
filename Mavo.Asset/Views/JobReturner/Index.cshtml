@@ -95,7 +95,7 @@
                         for (int y = 0; y < group.ElementAt(i).QuantityNeeded; y++)
                         {
                     <tr>
-                        <td>@group.ElementAt(i).Id</td>
+                        <td>@group.ElementAt(i).MavoItemNumber</td>
                         <td>@group.ElementAt(i).Name</td>
                         <td>@(String.IsNullOrEmpty(group.ElementAt(i).Status) ? "" : group.ElementAt(i).Status)</td>
                         <td>
