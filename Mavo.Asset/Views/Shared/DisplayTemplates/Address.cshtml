@@ -1,10 +1,19 @@
 ﻿@model Mavo.Assets.Models.Address
 
-@Model.Address1
-<br />
-@if (Model.Address2 != null)
+@if (!String.IsNullOrEmpty(Model.Address1))
 {
-    @Model.Address2
+    <text>
+    @Model.Address1
     <br />
+    @if (Model.Address2 != null)
+    {
+        @Model.Address2
+        <br />
+    }
+    @Model.City, @Model.State @Model.ZipCode
+    </text>
 }
-@Model.City, @Model.State @Model.ZipCode
+else
+{
+    <span class="label label-important">Not Specified</span>
+}

@@ -28,7 +28,9 @@ namespace Mavo.Assets.Models.ViewModel
         [Required]
         public Address Address { get; set; }
 
+        [Display(Name="Contract/PO#")]
         public string ContractNumber { get; set; }
+
         public decimal? ContractAmount { get; set; }
         public string Description { get; set; }
         public string ForemanNote { get; set; }
@@ -74,7 +76,7 @@ namespace Mavo.Assets.Models.ViewModel
      
         public string SendFinalReportTo { get; set; }
 
-        public string FinalReportAddress { get; set; }
+        public Address FinalReportAddress { get; set; }
 
         public string FinalReportPhoneNumber { get; set; }
 

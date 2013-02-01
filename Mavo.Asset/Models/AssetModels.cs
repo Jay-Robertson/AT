@@ -241,7 +241,7 @@ namespace Mavo.Assets.Models
 
         public string SendFinalReportTo { get; set; }
 
-        public string FinalReportAddress { get; set; }
+        public Address FinalReportAddress { get; set; }
 
         public string FinalReportPhoneNumber { get; set; }
 
@@ -268,8 +268,8 @@ namespace Mavo.Assets.Models
 
         public string Attention { get; set; }
 
-        public string SendInvoiceTo { get; set; }
-        public string InvoiceAddress { get; set; }
+        public Address SendInvoiceTo { get; set; }
+        public Address InvoiceAddress { get; set; }
 
         public string InvoiceInstructions { get; set; }
 
@@ -281,7 +281,7 @@ namespace Mavo.Assets.Models
 
         public SpecialForms SpecialForms { get; set; }
 
-        public string CopyAddress { get; set; }
+        public Address CopyAddress { get; set; }
 
         public string CopyAttention { get; set; }
 

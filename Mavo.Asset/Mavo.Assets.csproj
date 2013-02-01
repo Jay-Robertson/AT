@@ -244,6 +244,18 @@
     <Compile Include="Migrations\201301301636392_AddedRequiredFieldsToUser.Designer.cs">
       <DependentUpon>201301301636392_AddedRequiredFieldsToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302011549387_ChangeAddressToAddress.cs" />
+    <Compile Include="Migrations\201302011549387_ChangeAddressToAddress.Designer.cs">
+      <DependentUpon>201302011549387_ChangeAddressToAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302011606567_ChangeAddressToAddress2.cs" />
+    <Compile Include="Migrations\201302011606567_ChangeAddressToAddress2.Designer.cs">
+      <DependentUpon>201302011606567_ChangeAddressToAddress2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302011608055_ChangeAddressToAddress3.cs" />
+    <Compile Include="Migrations\201302011608055_ChangeAddressToAddress3.Designer.cs">
+      <DependentUpon>201302011608055_ChangeAddressToAddress3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
@@ -560,6 +572,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201301301636392_AddedRequiredFieldsToUser.resx">
       <DependentUpon>201301301636392_AddedRequiredFieldsToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302011549387_ChangeAddressToAddress.resx">
+      <DependentUpon>201302011549387_ChangeAddressToAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302011606567_ChangeAddressToAddress2.resx">
+      <DependentUpon>201302011606567_ChangeAddressToAddress2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302011608055_ChangeAddressToAddress3.resx">
+      <DependentUpon>201302011608055_ChangeAddressToAddress3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
