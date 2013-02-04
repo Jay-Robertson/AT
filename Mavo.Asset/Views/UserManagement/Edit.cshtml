@@ -14,31 +14,31 @@
             @Html.HiddenFor(model => model.Id)
 
             <div class="control-group">
-                @Html.LabelFor(model => model.EmployeeId, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(model => model.EmployeeId)
                 <div class="controls">
                     @Html.EditorFor(model => model.EmployeeId)
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(model => model.Email)
                 <div class="controls">
                     @Html.EditorFor(model => model.Email)
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(model => model.FirstName, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(model => model.FirstName)
                 <div class="controls">
                     @Html.EditorFor(model => model.FirstName)
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(model => model.LastName, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(model => model.LastName)
                 <div class="controls">
                     @Html.EditorFor(model => model.LastName)
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(model => model.Role, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(model => model.Role)
                 <div class="controls">
                     @Html.EnumCheckBoxListFor(x => x.Role)
                 </div>

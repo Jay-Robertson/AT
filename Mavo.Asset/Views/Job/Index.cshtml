@@ -15,13 +15,13 @@
         <div class="row-fluid">
             <div class="span6">
                 <div class="control-group">
-                    @Html.LabelFor(x => x.SearchString, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.SearchString)
                     <div class="controls">
                         @Html.EditorFor(x => x.SearchString)
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.StartDate, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.StartDate)
                     <div class="controls">
                         @Html.EditorFor(x => x.StartDate)
                         -
@@ -31,7 +31,7 @@
             </div>
             <div class="span6">
                 <div class="control-group">
-                    @Html.LabelFor(x => x.Customer, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.Customer)
                     <div class="controls">
                         @Html.DropDownList("CustomerId", ((IList<Mavo.Assets.Models.Customer>)ViewBag.Customers).Select(x => new SelectListItem()
                                    {
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.ProjectManagerId, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.ProjectManagerId)
                     <div class="controls">
                         @Html.DropDownList("ProjectManagerId", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
                                    {
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.Status, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.Status)
                     <div class="controls">
                         <select id="Status" name="Status">
                             <option></option>

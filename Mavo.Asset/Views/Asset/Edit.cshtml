@@ -39,21 +39,21 @@
         <div class="well">
             <legend>Asset Details</legend>
             <div class="control-group">
-                @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Name)
                 <div class="controls">
                     @Html.EditorFor(x => x.Name)
                 </div>
             </div>
 
             <div class="control-group">
-                @Html.LabelFor(x => x.Barcode, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Barcode)
                 <div class="controls">
                     @Html.EditorFor(x => x.Barcode)
                 </div>
             </div>
 
             <div class="control-group">
-                @Html.LabelFor(x => x.Category, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Category)
                 <div class="controls">
                     @Html.DropDownList("CategoryId", ((IList<Mavo.Assets.Models.AssetCategory>)ViewBag.AssetCategories).Select(x => new SelectListItem()
                    {
@@ -65,13 +65,13 @@
             </div>
 
             <div class="control-group">
-                @Html.LabelFor(x => x.UnitOfMeasure, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.UnitOfMeasure)
                 <div class="controls">
                     @Html.EditorFor(x => x.UnitOfMeasure)
                 </div>
             </div>
              <div class="control-group">
-                @Html.LabelFor(x => x.MavoItemNumber, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.MavoItemNumber)
                 <div class="controls">
                     @Html.EditorFor(x => x.MavoItemNumber)
                 </div>
@@ -83,13 +83,13 @@
         <fieldset>
             <legend>Warehousing Data</legend>
             <div class="control-group">
-                @Html.LabelFor(x => x.Kind, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Kind)
                 <div class="controls">
                     @Html.DropDownListFor(model => model.Kind, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.AssetKind))))
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(x => x.Inventory, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Inventory)
                 <div class="controls">
                     @Html.EditorFor(x => x.Inventory)
                 </div>

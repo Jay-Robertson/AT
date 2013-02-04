@@ -21,33 +21,33 @@
                 <div class="well">
                     <h4>Job Details</h4>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.Name, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.Name)
                         <div class="controls">
                             @Html.EditorFor(x => x.Name)
                         </div>
                     </div>
 
                     <div class="control-group">
-                        @Html.LabelFor(x => x.JobContact, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.JobContact)
                         <div class="controls">
                             @Html.EditorFor(x => x.JobContact)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.JobContactPhone, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.JobContactPhone)
                         <div class="controls">
                             @Html.EditorFor(x => x.JobContact)
                         </div>
                     </div>
                     @Html.EditorFor(x => x.Address)
                     <div class="control-group">
-                        @Html.LabelFor(x => x.JobNumber, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.JobNumber)
                         <div class="controls">
                             @Html.EditorFor(x => x.JobNumber)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.ProjectManagerId, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.ProjectManagerId)
                         <div class="controls">
                             @Html.DropDownList("ProjectManagerId", ((IList<Mavo.Assets.Models.User>)ViewBag.ProjectManagers).Select(x => new SelectListItem()
                            {
@@ -61,58 +61,63 @@
                     </div>
 
                     <div class="control-group">
-                        @Html.LabelFor(x => x.ScopeOfWork, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.ScopeOfWork)
                         <div class="controls">
                             @Html.TextAreaFor(x => x.ScopeOfWork)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.Notifiable, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.Notifiable)
                         <div class="controls">
                             @Html.EnumDropDownListFor(x => x.Notifiable)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.BillingType, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.BillingType)
                         <div class="controls">
                             @Html.EnumDropDownListFor(x => x.BillingType)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.SupervisorsNeeded, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.SupervisorsNeeded)
                         <div class="controls">
                             @Html.EditorFor(x => x.SupervisorsNeeded)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.WorkersNeeded, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.WorkersNeeded)
                         <div class="controls">
                             @Html.EditorFor(x => x.WorkersNeeded)
                         </div>
                     </div>
 
                     <div class="control-group">
-                        @Html.LabelFor(x => x.ShiftStartDate, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.ShiftStartDate)
                         <div class="controls">
                             @Html.EditorFor(x => x.ShiftStartDate)
                         </div>
                     </div>
-
+                     <div class="control-group">
+                        @Html.LabelTitleizeFor(x => x.ShiftHours)
+                        <div class="controls">
+                            @Html.EditorFor(x => x.ShiftHours)
+                        </div>
+                    </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.PickupTime, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.PickupTime)
                         <div class="controls">
                             @Html.EditorFor(x => x.PickupTime)
                         </div>
                     </div>
                     <div class="control-group">
-                        @Html.LabelFor(x => x.EstimatedCompletionDate, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.EstimatedCompletionDate)
                         <div class="controls">
                             @Html.EditorFor(x => x.EstimatedCompletionDate)
                         </div>
                     </div>
 
                     <div class="control-group">
-                        @Html.LabelFor(x => x.ForemanNote, new { @class = "control-label" })
+                        @Html.LabelTitleizeFor(x => x.ForemanNote)
                         <div class="controls">
                             @Html.TextAreaFor(x => x.ForemanNote)
                         </div>
@@ -120,7 +125,7 @@
                     @if (Model != null)
                     {
                         <div class="control-group">
-                            @Html.LabelFor(x => x.Status, new { @class = "control-label" })
+                            @Html.LabelTitleizeFor(x => x.Status)
                             <div class="controls" id="status">
                                 @Html.DisplayFor(model => model.Status)
                             </div>
@@ -128,7 +133,7 @@
                     }
                 </div>
                 <div class="well">
-                    <h4>Customer Location</h4>
+                    <h4>Customer Information</h4>
                     <div class="control-group">
                         <label class="control-label" for="Customer">Customer:</label>
                         <div class="controls">
@@ -154,48 +159,48 @@
             </div>
 
             <div class="well span6">
-                <h4>Contractor</h4>
+                <h4>Consultant</h4>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.ContractNumber, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.ContractNumber)
                     <div class="controls">
                         @Html.EditorFor(x => x.ContractNumber)
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.ContractDate, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.ContractDate)
                     <div class="controls">
                         @Html.EditorFor(x => x.ContractDate)
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.ContractAmount, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.ContractAmount)
                     <div class="controls">
                         @Html.EditorFor(x => x.ContractAmount)
                     </div>
                 </div>
                 @Html.EditorFor(x => x.InvoiceDetail.SendInvoiceTo)
                 <div class="control-group">
-                    @Html.LabelFor(x => x.InvoiceDetail.Attention, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.InvoiceDetail.Attention)
                     <div class="controls">
                         @Html.EditorFor(x => x.InvoiceDetail.Attention)
                     </div>
                 </div>
                 @Html.EditorFor(x => x.InvoiceDetail.InvoiceAddress)
                 <div class="control-group">
-                    @Html.LabelFor(x => x.InvoiceDetail.InvoiceInstructions, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.InvoiceDetail.InvoiceInstructions)
                     <div class="controls">
                         @Html.EditorFor(x => x.InvoiceDetail.InvoiceInstructions)
                     </div>
                 </div>
                 <div class="control-group">
-                    @Html.LabelFor(x => x.SendFinalReportTo, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.SendFinalReportTo)
                     <div class="controls">
                         @Html.EditorFor(x => x.SendFinalReportTo)
                     </div>
                 </div>
                 @Html.EditorFor(x => x.FinalReportAddress)
                 <div class="control-group">
-                    @Html.LabelFor(x => x.FinalReportPhoneNumber, new { @class = "control-label" })
+                    @Html.LabelTitleizeFor(x => x.FinalReportPhoneNumber)
                     <div class="controls">
                         @Html.EditorFor(x => x.FinalReportPhoneNumber)
                     </div>

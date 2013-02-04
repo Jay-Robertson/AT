@@ -13,7 +13,7 @@
         <legend>Item Details</legend>
         <div class="well">
             <div class="control-group">
-                @Html.LabelFor(x => x.AssetId, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.AssetId)
                 <div class="controls">
                     @Html.DropDownList("AssetId", ((IList<Mavo.Assets.Models.Asset>)ViewBag.Assets).Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).Select(x => new SelectListItem()
                {
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(x => x.Barcode, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Barcode)
                 <div class="controls">
                     <div class="input-prepend input-append">
                         <span class="add-on"><i class="icon-barcode"></i></span>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(x => x.Condition, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Condition)
                 <div class="controls">
                     @Html.DropDownListFor(model => model.Condition, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.AssetCondition))))
 
@@ -44,14 +44,14 @@
         <legend>Manufactuer, Model and Vendor data</legend>
         <div class="well">
             <div class="control-group">
-                @Html.LabelFor(x => x.Manufacturer, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.Manufacturer)
                 <div class="controls">
                     @Html.EditorFor(x => x.Manufacturer)
                 </div>
             </div>
 
             <div class="control-group">
-                @Html.LabelFor(x => x.ModelNumber, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.ModelNumber)
                 <div class="controls">
                     @Html.EditorFor(x => x.ModelNumber)
                 </div>
@@ -62,28 +62,28 @@
         <legend>Warranty Information</legend>
         <div class="well">    
             <div class="control-group">
-                @Html.LabelFor(x => x.PurchaseDate, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.PurchaseDate)
                 <div class="controls">
                     @Html.EditorFor(x => x.PurchaseDate)
                 </div>
             </div>
 
             <div class="control-group">
-                @Html.LabelFor(x => x.PurchasePrice, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.PurchasePrice)
                 <div class="controls">
                     @Html.EditorFor(x => x.PurchasePrice)
                 </div>
             </div>
 
             <div class="control-group">
-                @Html.LabelFor(x => x.SerialNumber, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.SerialNumber)
                 <div class="controls">
                     @Html.EditorFor(x => x.SerialNumber)
                 </div>
             </div>
 
             <div class="control-group">
-                @Html.LabelFor(x => x.WarrantyExpiration, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(x => x.WarrantyExpiration)
                 <div class="controls">
                     @Html.EditorFor(x => x.WarrantyExpiration)
                 </div>

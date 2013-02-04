@@ -2,43 +2,43 @@
 @model Mavo.Assets.Models.RegisterModel
 
 <div class="control-group">
-    @Html.LabelFor(m => m.EmployeeId, new { @class = "control-label" })
+    @Html.LabelTitleizeFor(m => m.EmployeeId)
     <div class="controls">
         @Html.EditorFor(m => m.EmployeeId)
     </div>
 </div>
 <div class="control-group">
-    @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+    @Html.LabelTitleizeFor(m => m.FirstName)
     <div class="controls">
         @Html.EditorFor(m => m.FirstName)
     </div>
 </div>
 <div class="control-group">
-    @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+    @Html.LabelTitleizeFor(m => m.LastName)
     <div class="controls">
         @Html.EditorFor(m => m.LastName)
     </div>
 </div>
 <div class="control-group">
-    @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+    @Html.LabelTitleizeFor(m => m.Email)
     <div class="controls">
         @Html.EditorFor(m => m.Email)
     </div>
 </div>
 <div class="control-group">
-    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+    @Html.LabelTitleizeFor(m => m.Password)
     <div class="controls">
         @Html.EditorFor(m => m.Password)
     </div>
 </div>
 <div class="control-group">
-    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+    @Html.LabelTitleizeFor(m => m.ConfirmPassword)
     <div class="controls">
         @Html.EditorFor(m => m.ConfirmPassword)
     </div>
 </div>
 <div class="control-group">
-    @Html.LabelFor(m => m.Role, new { @class = "control-label" })
+    @Html.LabelTitleizeFor(m => m.Role)
     <div class="controls">
         @Html.EnumDropDownListFor(m => m.Role)
     </div>

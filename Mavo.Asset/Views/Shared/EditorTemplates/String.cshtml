@@ -3,7 +3,7 @@
 @if (Model is Enum)
 {
     <div class="editor-label">
-        @Html.LabelFor(m => m)
+        @Html.LabelTitleizeFor(m => m)
     </div>
     <div class="editor-field">     
         @Html.EnumDropDownListFor(m => m)

@@ -301,6 +301,8 @@ namespace Mavo.Assets.Models
         public decimal? GrossInvoiceAmount { get; set; }
 
         public decimal? TotalAmountDue { get; set; }
+
+        public int? ShiftHours { get; set; }
     }
     [Flags]
     public enum SpecialForms

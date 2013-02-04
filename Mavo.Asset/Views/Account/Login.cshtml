@@ -18,14 +18,14 @@
         <fieldset>
             <legend>Log in Form</legend>
             <div class="control-group">
-                @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(m => m.UserName)
                 <div class="controls">
                     @Html.EditorFor(x => x.UserName)
                     @Html.ValidationMessageFor(x => x.UserName)
                 </div>
             </div>
             <div class="control-group">
-                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                @Html.LabelTitleizeFor(m => m.Password)
                 <div class="controls">
                     @Html.EditorFor(x => x.Password)
                     @Html.ValidationMessageFor(x => x.Password)
@@ -35,7 +35,7 @@
                 <div class="controls">
                     <label class="checkbox">
                         @Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                        @Html.LabelTitleizeFor(m => m.RememberMe, new { @class = "checkbox" })
                     </label>
             <input type="submit" class="btn" value="Log in" />
                 </div>

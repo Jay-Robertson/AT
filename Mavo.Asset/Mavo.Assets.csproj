@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\downloads3\EntityFramework.Profiler-v2.0-Build-2093\HibernatingRhinos.Profiler.Appender.dll</HintPath>
     </Reference>
+    <Reference Include="Inflector">
+      <HintPath>..\packages\Inflector.1.0.0.0\lib\net45\Inflector.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -263,6 +266,10 @@
     <Compile Include="Migrations\201302011726589_AddedShiftTime.cs" />
     <Compile Include="Migrations\201302011726589_AddedShiftTime.Designer.cs">
       <DependentUpon>201302011726589_AddedShiftTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302042010450_ShiftHours.cs" />
+    <Compile Include="Migrations\201302042010450_ShiftHours.Designer.cs">
+      <DependentUpon>201302042010450_ShiftHours.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
@@ -596,6 +603,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302011726589_AddedShiftTime.resx">
       <DependentUpon>201302011726589_AddedShiftTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302042010450_ShiftHours.resx">
+      <DependentUpon>201302042010450_ShiftHours.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

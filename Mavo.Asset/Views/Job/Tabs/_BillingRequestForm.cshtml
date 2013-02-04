@@ -20,58 +20,58 @@
                             <td>@Html.DisplayFor(x => x.CreatedDate)</td>
                         </tr>
                         <tr>
-                            <th>ShiftHours:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.Summary.ShiftHours):</th>
                             <td>@Html.DisplayFor(x => x.Summary.ShiftHours)</td>
                         </tr>
                         <tr>
-                            <th>Scope of Work:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.ScopeOfWork):</th>
                             <td>@Html.DisplayFor(x => x.ScopeOfWork)</td>
                         </tr>
                         <tr>
-                            <th>JobNumber:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.JobNumber):</th>
                             <td>@Html.DisplayFor(x => x.JobNumber)</td>
                         </tr>
                         <tr>
-                            <th>ContractDate:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.ContractDate):</th>
                             <td>@Html.DisplayFor(x => x.ContractDate)</td>
                         </tr>
                         <tr>
-                            <th>EstimatedCompletionDate:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.EstimatedCompletionDate):</th>
                             <td>@Html.DisplayFor(x => x.EstimatedCompletionDate)</td>
                         </tr>
                         <tr>
-                            <th>JobContact:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.JobContact):</th>
                             <td>@Html.DisplayFor(x => x.JobContact)</td>
                         </tr>
                         <tr>
-                            <th>JobContactPhone:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.JobContactPhone):</th>
                             <td>@Html.DisplayFor(x => x.JobContactPhone)</td>
                         </tr>
                         <tr>
-                            <th>Job Address:</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.Address):</th>
                             <td>@Html.DisplayFor(x => x.Address)</td>
                         </tr>
                     </table>
                     <h4>Contract Details</h4>
                     <table class="table table-condensed table-striped table-hover">
                         <tr>
-                            <th>Contract/PO Number</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.ContractNumber)</th>
                             <td>@Html.DisplayFor(x=>x.ContractNumber)</td>
                         </tr>
                         <tr>
-                            <th>Contract Date</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.ContractDate)</th>
                             <td>@Html.DisplayFor(x=>x.ContractDate)</td>
                         </tr>
                         <tr>
-                            <th>Contract Amount</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.ContractAmount)</th>
                             <td>@Html.DisplayFor(x=>x.ContractAmount)</td>
                         </tr>
                         <tr>
-                            <th>Total Amount Due</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.InvoiceDetail.TotalAmountDue)</th>
                             <td>@Html.EditorFor(x=>x.InvoiceDetail.TotalAmountDue)</td>
                         </tr>
                         <tr>
-                            <th>Gross Invoice Amount</th>
+                            <th>@Html.DisplayNameTitleizedFor(x=>x.InvoiceDetail.TotalAmountDue)</th>
                             <td>@Html.EditorFor(x=>x.InvoiceDetail.GrossInvoiceAmount)</td>
                         </tr>
                         <tr>
@@ -94,15 +94,15 @@
                             <td>@Html.EditorFor(x => x.InvoiceDetail.IssueInvoiceToOwner)</td>
                         </tr>
                         <tr>
-                            <th>InvoiceAddress:</th>
+                            <th>Invoice Address:</th>
                             <td>@Html.DisplayFor(x => x.InvoiceDetail.InvoiceAddress)</td>
                         </tr>
                         <tr>
-                            <th>SendInvoiceTo:</th>
+                            <th>Send Invoice To:</th>
                             <td>@Html.DisplayFor(x => x.InvoiceDetail.SendInvoiceTo)</td>
                         </tr>
                         <tr>
-                            <th>SendInvoiceApprovalTo:</th>
+                            <th>Send Invoice Approval To:</th>
                             <td>@Html.EditorFor(x => x.InvoiceDetail.SendInvoiceApprovalTo)</td>
                         </tr>
                         <tr>
@@ -110,11 +110,7 @@
                             <td>@Html.DisplayFor(x => x.InvoiceDetail.Attention)</td>
                         </tr>
                         <tr>
-                            <th>InvoiceAddress:</th>
-                            <td>@Html.DisplayFor(x => x.InvoiceDetail.InvoiceAddress)</td>
-                        </tr>
-                        <tr>
-                            <th>CopyTo:</th>
+                            <th>Copy To:</th>
                             <td>@Html.EditorFor(x => x.InvoiceDetail.CopyTo)</td>
                         </tr>
                         <tr>
@@ -122,7 +118,7 @@
                             <td>@Html.EditorFor(x => x.InvoiceDetail.CopyAttention)</td>
                         </tr>
                         <tr>
-                            <th>CopyAddress:</th>
+                            <th>Copy Address:</th>
                             <td>@Html.EditorFor(x => x.InvoiceDetail.CopyAddress)</td>
                         </tr>
                         <tr>

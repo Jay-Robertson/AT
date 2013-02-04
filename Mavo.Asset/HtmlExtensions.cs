@@ -9,8 +9,8 @@ using System.Reflection;
 using System.Web.Script.Serialization;
 using System.Text;
 using System.Web;
-
-namespace Mavo.Assets
+using Inflector;
+namespace System.Web.Mvc
 {
     public static class HtmlExtensions
     {
@@ -23,7 +23,44 @@ namespace Mavo.Assets
             Day
         }
 
+        public static MvcHtmlString DisplayNameTitleizedFor<T, TResult>(this HtmlHelper<T> helper, Expression<Func<T, TResult>> expression)
+        {
+            string propertyName = ExpressionHelper.GetExpressionText(expression);
 
+            if (propertyName.IndexOf(".") > 0)
+            {
+                propertyName = propertyName.Substring(propertyName.LastIndexOf(".") + 1);
+            }
+
+            string labelValue = ModelMetadata.FromLambdaExpression(expression, helper.ViewData).DisplayName;
+
+            if (string.IsNullOrEmpty(labelValue))
+            {
+                labelValue = Inflector.Inflector.Titleize(propertyName);
+            }
+
+            return MvcHtmlString.Create(labelValue);
+        }
+
+        public static MvcHtmlString LabelTitleizeFor<T, TResult>(this HtmlHelper<T> helper, Expression<Func<T, TResult>> expression)
+        {
+            string propertyName = ExpressionHelper.GetExpressionText(expression);
+
+            if (propertyName.IndexOf(".") > 0)
+            {
+                propertyName = propertyName.Substring(propertyName.LastIndexOf(".") + 1);
+            }
+
+            string labelValue = ModelMetadata.FromLambdaExpression(expression, helper.ViewData).DisplayName;
+
+            if (string.IsNullOrEmpty(labelValue))
+            {
+                labelValue = Inflector.Inflector.Titleize(propertyName);
+            }
+
+            string label = String.Format("<label for=\"{0}\" class='control-label'>{1}</label>", ExpressionHelper.GetExpressionText(expression), labelValue);
+            return MvcHtmlString.Create(label);
+        }
 
         public static string ToRelative(this TimeSpan timeSpan, int maxNrOfElements = 5)
         {

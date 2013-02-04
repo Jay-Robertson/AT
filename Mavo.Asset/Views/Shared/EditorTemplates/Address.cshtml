@@ -1,31 +1,31 @@
 ﻿@model Mavo.Assets.Models.Address
-
+@{var title = Inflector.Inflector.Titleize(Html.DisplayNameForModel().ToHtmlString());}
 <div class="control-group">
-    <label class="control-label">@Html.DisplayNameForModel() Address1</label>
+    <label class="control-label"><em>@title</em> Address1</label>
     <div class="controls">
         @Html.TextBoxFor(x => x.Address1)
     </div>
 </div>
 <div class="control-group">
-    <label class="control-label">@Html.DisplayNameForModel() Address2</label>
+    <label class="control-label">@title Address2</label>
     <div class="controls">
         @Html.TextBoxFor(x => x.Address2)
     </div>
 </div>
 <div class="control-group">
-    <label class="control-label">@Html.DisplayNameForModel() City</label>
+    <label class="control-label">@title City</label>
     <div class="controls">
         @Html.TextBoxFor(x => x.City)
     </div>
 </div>
 <div class="control-group">
-    <label class="control-label">@Html.DisplayNameForModel() State</label>
+    <label class="control-label">@title</label>
     <div class="controls">
         @Html.TextBoxFor(x => x.State)
     </div>
 </div>
 <div class="control-group">
-    <label class="control-label">@Html.DisplayNameForModel() ZipCode</label>
+    <label class="control-label">@title ZipCode</label>
     <div class="controls">
         @Html.TextBoxFor(x => x.ZipCode)
     </div>

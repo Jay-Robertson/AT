@@ -17,6 +17,9 @@ namespace Mavo.Assets.Models.ViewModel
         }
         public int? Id { get; set; }
 
+        [Range(0,24)]
+        public int? ShiftHours { get; set; }
+
         [Required(ErrorMessage = "Job Site is Required")]
         [Display(Name = "Site Name")]
         public string Name { get; set; }
@@ -48,6 +51,7 @@ namespace Mavo.Assets.Models.ViewModel
         public string ProjectManager { get; set; }
         public JobStatus Status { get; set; }
         public DateTime PickupTime { get; set; }
+        [Display("Start Date/Time")]
         public DateTime ContractDate { get; set; }
         public DateTime EstimatedCompletionDate { get; set; }
 

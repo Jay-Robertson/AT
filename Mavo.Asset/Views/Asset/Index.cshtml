@@ -12,13 +12,13 @@
     @using (Html.BeginForm(MVC.Asset.Index(), FormMethod.Post, new { @class = "form-horizontal" }))
     {
         <div class="control-group">
-            @Html.LabelFor(x => x.SearchString   , new { @class = "control-label" })
+            @Html.LabelTitleizeFor(x => x.SearchString   )
             <div class="controls">
                 @Html.EditorFor(x => x.SearchString)
             </div>
         </div>
         <div class="control-group">
-            @Html.LabelFor(x => x.Category, new { @class = "control-label" })
+            @Html.LabelTitleizeFor(x => x.Category)
             <div class="controls">
                 @Html.DropDownList("CategoryId", ((IList<Mavo.Assets.Models.AssetCategory>)ViewBag.AssetCategories).Select(x => new SelectListItem()
                    {
@@ -29,7 +29,7 @@
             </div>
         </div>
          <div class="control-group">
-            @Html.LabelFor(x => x.Kind, new { @class = "control-label" })
+            @Html.LabelTitleizeFor(x => x.Kind)
             <div class="controls">
                 <select id="Kind" name="Kind">
                     <option></option>
