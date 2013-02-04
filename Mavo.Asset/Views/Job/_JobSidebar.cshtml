@@ -31,13 +31,7 @@
         <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], ((int)Mavo.Assets.Models.JobStatus.ReadyToPick).ToString())><a href="/job?status=@((int)Mavo.Assets.Models.JobStatus.ReadyToPick)">Ready To Pick</a></li>
         <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["status"], ((int)Mavo.Assets.Models.JobStatus.Completed).ToString())><a href="/job?status=@((int)Mavo.Assets.Models.JobStatus.Completed)">Completed</a></li>
     </ul>
-    <ul class="nav nav-list">
-        <li class="nav-header">Jobs By Customer</li>
-        @foreach (var item in ViewBag.Customers)
-        {
-            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["customerId"], item.Id)><a href="/job?customerId=@item.Id">@item.Name</a></li>
-        }
-    </ul>
+   
     <ul class="nav nav-list">
         <li class="nav-header">Jobs By Manager</li>
         @foreach (var item in ViewBag.ProjectManagers)
