@@ -125,7 +125,7 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult Index(SearchResult search)
         {
             SetListsForCrud(null);
-            var query = Context.Jobs.AsQueryable();
+            var query = Context.Jobs.Where(x => (x is JobAddon && x.Status < JobStatus.Started) || !(x is JobAddon)).AsQueryable();
             if (!String.IsNullOrEmpty(search.SearchString))
                 query = query.Where(x =>
                     x.Name.Contains(search.SearchString)
