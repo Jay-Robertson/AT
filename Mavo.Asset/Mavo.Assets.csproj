@@ -271,6 +271,22 @@
     <Compile Include="Migrations\201302042010450_ShiftHours.Designer.cs">
       <DependentUpon>201302042010450_ShiftHours.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302051949247_ChangesForContractor.cs" />
+    <Compile Include="Migrations\201302051949247_ChangesForContractor.Designer.cs">
+      <DependentUpon>201302051949247_ChangesForContractor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302052001400_AddedSendConsultant.cs" />
+    <Compile Include="Migrations\201302052001400_AddedSendConsultant.Designer.cs">
+      <DependentUpon>201302052001400_AddedSendConsultant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302052003506_AddedSendConsultantNullable.cs" />
+    <Compile Include="Migrations\201302052003506_AddedSendConsultantNullable.Designer.cs">
+      <DependentUpon>201302052003506_AddedSendConsultantNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302052004493_AddedSendConsultant2.cs" />
+    <Compile Include="Migrations\201302052004493_AddedSendConsultant2.Designer.cs">
+      <DependentUpon>201302052004493_AddedSendConsultant2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
@@ -320,6 +336,7 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
     <Compile Include="Models\NotPickedItem.cs" />
+    <Compile Include="Models\SendConsultant.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\ViewModel\AssetPostModel.cs" />
     <Compile Include="Models\ViewModel\AssetSearchResult.cs" />
@@ -606,6 +623,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302042010450_ShiftHours.resx">
       <DependentUpon>201302042010450_ShiftHours.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302051949247_ChangesForContractor.resx">
+      <DependentUpon>201302051949247_ChangesForContractor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302052001400_AddedSendConsultant.resx">
+      <DependentUpon>201302052001400_AddedSendConsultant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302052003506_AddedSendConsultantNullable.resx">
+      <DependentUpon>201302052003506_AddedSendConsultantNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302052004493_AddedSendConsultant2.resx">
+      <DependentUpon>201302052004493_AddedSendConsultant2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -97,7 +97,7 @@
                             @Html.EditorFor(x => x.ShiftStartDate)
                         </div>
                     </div>
-                     <div class="control-group">
+                    <div class="control-group">
                         @Html.LabelTitleizeFor(x => x.ShiftHours)
                         <div class="controls">
                             @Html.EditorFor(x => x.ShiftHours)
@@ -161,6 +161,30 @@
             <div class="well span6">
                 <h4>Consultant</h4>
                 <div class="control-group">
+                    @Html.LabelTitleizeFor(x => x.ConsultantName)
+                    <div class="controls">
+                        @Html.EditorFor(x => x.ConsultantName)
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelTitleizeFor(x => x.ConsultantContact)
+                    <div class="controls">
+                        @Html.EditorFor(x => x.ConsultantContact)
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelTitleizeFor(x => x.ConsultantContactNumber)
+                    <div class="controls">
+                        @Html.EditorFor(x => x.ConsultantContactNumber)
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelTitleizeFor(x => x.ConsultantEmail)
+                    <div class="controls">
+                        @Html.EditorFor(x => x.ConsultantEmail)
+                    </div>
+                </div>
+                <div class="control-group">
                     @Html.LabelTitleizeFor(x => x.ContractNumber)
                     <div class="controls">
                         @Html.EditorFor(x => x.ContractNumber)
@@ -178,14 +202,19 @@
                         @Html.EditorFor(x => x.ContractAmount)
                     </div>
                 </div>
-                @Html.EditorFor(x => x.InvoiceDetail.SendInvoiceTo)
+                @Html.EditorFor(x => x.InvoiceDetail.Consultant)
+                <div class="control-group">
+                    <label class="control-label">Send Consultant</label>
+                    <div class="controls">
+                        @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendConsultant)
+                    </div>
+                </div>
                 <div class="control-group">
                     @Html.LabelTitleizeFor(x => x.InvoiceDetail.Attention)
                     <div class="controls">
                         @Html.EditorFor(x => x.InvoiceDetail.Attention)
                     </div>
                 </div>
-                @Html.EditorFor(x => x.InvoiceDetail.InvoiceAddress)
                 <div class="control-group">
                     @Html.LabelTitleizeFor(x => x.InvoiceDetail.InvoiceInstructions)
                     <div class="controls">
@@ -198,14 +227,12 @@
                         @Html.EditorFor(x => x.SendFinalReportTo)
                     </div>
                 </div>
-                @Html.EditorFor(x => x.FinalReportAddress)
                 <div class="control-group">
                     @Html.LabelTitleizeFor(x => x.FinalReportPhoneNumber)
                     <div class="controls">
                         @Html.EditorFor(x => x.FinalReportPhoneNumber)
                     </div>
                 </div>
-
 
             </div>
         </div>

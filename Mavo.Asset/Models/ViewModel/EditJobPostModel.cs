@@ -51,7 +51,7 @@ namespace Mavo.Assets.Models.ViewModel
         public string ProjectManager { get; set; }
         public JobStatus Status { get; set; }
         public DateTime PickupTime { get; set; }
-        [Display("Start Date/Time")]
+        [Display(Name="Start Date/Time")]
         public DateTime ContractDate { get; set; }
         public DateTime EstimatedCompletionDate { get; set; }
 
@@ -80,8 +80,6 @@ namespace Mavo.Assets.Models.ViewModel
      
         public string SendFinalReportTo { get; set; }
 
-        public Address FinalReportAddress { get; set; }
-
         public string FinalReportPhoneNumber { get; set; }
 
         public YesNo Notifiable { get; set; }
@@ -101,6 +99,12 @@ namespace Mavo.Assets.Models.ViewModel
         public string JobContactPhone { get; set; }
 
         public DateTime? ShiftStartDate { get; set; }
+
+
+        public string ConsultantName { get; set; }
+        public string ConsultantContact { get; set; }
+        public string ConsultantContactNumber { get; set; }
+        public string ConsultantEmail { get; set; }
     }
 
 

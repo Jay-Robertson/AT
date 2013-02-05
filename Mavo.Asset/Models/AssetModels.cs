@@ -191,6 +191,10 @@ namespace Mavo.Assets.Models
     [Table("Jobs")]
     public class Job
     {
+        public Job()
+        {
+            FinalReportAddress = new Address();
+        }
         [Key, DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
@@ -262,6 +266,12 @@ namespace Mavo.Assets.Models
         public string JobContactPhone { get; set; }
 
         public InvoiceDetails InvoiceDetail { get; set; }
+
+
+        public string ConsultantName { get; set; }
+        public string ConsultantContact { get; set; }
+        public string ConsultantContactNumber { get; set; }
+        public string ConsultantEmail { get; set; }
     }
 
     [ComplexType]
@@ -270,10 +280,11 @@ namespace Mavo.Assets.Models
         public InvoiceDetails()
         {
             this.CopyAddress = new Address();
+            this.InvoiceAddress = new Address();
         }
         public string Attention { get; set; }
 
-        public Address SendInvoiceTo { get; set; }
+        public Address Consultant { get; set; }
         public Address InvoiceAddress { get; set; }
 
         public string InvoiceInstructions { get; set; }
@@ -303,6 +314,8 @@ namespace Mavo.Assets.Models
         public decimal? TotalAmountDue { get; set; }
 
         public int? ShiftHours { get; set; }
+
+        public SendConsultant SendConsultant { get; set; }
     }
     [Flags]
     public enum SpecialForms

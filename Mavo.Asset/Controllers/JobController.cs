@@ -224,12 +224,16 @@ namespace Mavo.Assets.Controllers
             job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
             if (ModelState.IsValid)
             {
+               
                 if (job is JobAddon)
                 {
                     job.PickupTime = jobPostModel.PickupTime;
                 }
                 else
                 {
+                    var sendConsultantValues = Request.Form["InvoiceDetail.SendConsultant"].Split(',');
+                    job.InvoiceDetail.SendConsultant = (SendConsultant)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+
                     if (jobPostModel.CustomerId.HasValue)
                         job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
 
