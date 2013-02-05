@@ -21,7 +21,7 @@ namespace Mavo.Assets.Models.ViewModel
         public int? ShiftHours { get; set; }
 
         [Required(ErrorMessage = "Job Site is Required")]
-        [Display(Name = "Site Name")]
+        [Display(Name = "Job Site Name")]
         public string Name { get; set; }
 
         [Required]

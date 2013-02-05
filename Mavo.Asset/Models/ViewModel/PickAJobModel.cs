@@ -27,6 +27,7 @@ namespace Mavo.Assets.Models.ViewModel
 
         public string Customer { get; set; }
 
+        [Display(Name ="Job Site Name")]
         public string JobSite { get; set; }
 
         public string Foreman { get; set; }

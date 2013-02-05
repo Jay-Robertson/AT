@@ -234,6 +234,9 @@ namespace Mavo.Assets.Controllers
                     var sendConsultantValues = Request.Form["InvoiceDetail.SendConsultant"].Split(',');
                     job.InvoiceDetail.SendConsultant = (SendConsultant)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
 
+                    var sendCustomerValues = Request.Form["InvoiceDetail.SendCustomer"].Split(',');
+                    job.InvoiceDetail.SendCustomer = (SendCustomer)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+
                     if (jobPostModel.CustomerId.HasValue)
                         job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
 

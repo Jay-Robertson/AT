@@ -23,7 +23,7 @@ namespace Mavo.Assets.Models.ViewModel
         public DateTime? EndDate { get; set; }
 
 
-        [Display(Name="Site Name")]
+        [Display(Name="Job Site Name")]
         public string Name { get; set; }
 
         public IList<SearchResult> Results { get; set; }

@@ -199,7 +199,7 @@ namespace Mavo.Assets.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Site Name is Required")]
-        [Display(Name="Site Name")]
+        [Display(Name="Job Site Name")]
         public string Name { get; set; }
 
         [Required]
@@ -316,6 +316,8 @@ namespace Mavo.Assets.Models
         public int? ShiftHours { get; set; }
 
         public SendConsultant SendConsultant { get; set; }
+
+        public SendCustomer SendCustomer { get; set; }
     }
     [Flags]
     public enum SpecialForms

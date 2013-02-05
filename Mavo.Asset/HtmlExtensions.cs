@@ -167,7 +167,7 @@ namespace System.Web.Mvc
                 builder.MergeAttribute("type", "checkbox");
                 builder.MergeAttribute("value", targetValue.ToString());
                 builder.MergeAttribute("name", inputName);
-                builder.InnerHtml = item.ToString();
+                builder.InnerHtml = item.ToString().Titleize();
 
                 sb.Append(String.Format("<label class='checkbox'>{0}</label>", builder.ToString(TagRenderMode.Normal)));
             }
@@ -199,7 +199,7 @@ namespace System.Web.Mvc
                 var title = attribute == null ? item.ToString() : ((DescriptionAttribute)attribute).Description;
                 var listItem = new SelectListItem
                 {
-                    Value = ((int)item).ToString(),
+                    Value = ((int)item).ToString().Titleize(),
                     Text = title,
                     Selected = selectedItem == ((int)item).ToString()
                 };
