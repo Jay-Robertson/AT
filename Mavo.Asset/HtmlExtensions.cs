@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 using System.Text;
 using System.Web;
 using Inflector;
+using System.ComponentModel.DataAnnotations;
 namespace System.Web.Mvc
 {
     public static class HtmlExtensions
@@ -45,13 +46,21 @@ namespace System.Web.Mvc
         public static MvcHtmlString LabelTitleizeFor<T, TResult>(this HtmlHelper<T> helper, Expression<Func<T, TResult>> expression)
         {
             string propertyName = ExpressionHelper.GetExpressionText(expression);
+            var me = expression.Body as MemberExpression;
+            var attr = me.Member
+                 .GetCustomAttributes(typeof(DisplayAttribute), false)
+                 .Cast<DisplayAttribute>()
+                 .SingleOrDefault();
 
             if (propertyName.IndexOf(".") > 0)
             {
                 propertyName = propertyName.Substring(propertyName.LastIndexOf(".") + 1);
             }
-
-            string labelValue = ModelMetadata.FromLambdaExpression(expression, helper.ViewData).DisplayName;
+            string labelValue = null;
+            if (attr != null)
+                labelValue = attr.Name;
+            else
+                labelValue = ModelMetadata.FromLambdaExpression(expression, helper.ViewData).DisplayName;
 
             if (string.IsNullOrEmpty(labelValue))
             {

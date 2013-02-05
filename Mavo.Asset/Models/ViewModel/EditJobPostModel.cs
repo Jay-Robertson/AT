@@ -17,7 +17,7 @@ namespace Mavo.Assets.Models.ViewModel
         }
         public int? Id { get; set; }
 
-        [Range(0,24)]
+        [Range(0, 24)]
         public int? ShiftHours { get; set; }
 
         [Required(ErrorMessage = "Job Site is Required")]
@@ -32,7 +32,7 @@ namespace Mavo.Assets.Models.ViewModel
         [Display(Name = "Job Site")]
         public Address Address { get; set; }
 
-        [Display(Name="Contract/PO#")]
+        [Display(Name = "Contract/PO#")]
         public string ContractNumber { get; set; }
 
         public decimal? ContractAmount { get; set; }
@@ -46,12 +46,15 @@ namespace Mavo.Assets.Models.ViewModel
         public Customer Customer { get; set; }
 
         public int? CustomerId { get; set; }
+
+        [Display(Name = "Foreman")]
         public int? ForemanId { get; set; }
         public int? ProjectManagerId { get; set; }
         public string ProjectManager { get; set; }
         public JobStatus Status { get; set; }
+        [Display(Name = "Warehouse Pickup Time")]
         public DateTime PickupTime { get; set; }
-        [Display(Name="Start Date/Time")]
+        [Display(Name = "Start Date/Time")]
         public DateTime ContractDate { get; set; }
         public DateTime EstimatedCompletionDate { get; set; }
 
@@ -77,14 +80,14 @@ namespace Mavo.Assets.Models.ViewModel
         public Summary Summary { get; set; }
 
         public InvoiceDetails InvoiceDetail { get; set; }
-     
+
         public string SendFinalReportTo { get; set; }
 
         public string FinalReportPhoneNumber { get; set; }
 
         public YesNo Notifiable { get; set; }
 
-        [Display(Name="Contract or T&M")]
+        [Display(Name = "Contract or T&M")]
         public BillingType BillingType { get; set; }
 
         public int? SupervisorsNeeded { get; set; }

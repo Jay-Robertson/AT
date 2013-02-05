@@ -157,7 +157,8 @@
                         <div class="controls">
                             @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendConsultant)
                         </div>
-                    </div>\ <div class="control-group">
+                    </div>
+                    <div class="control-group">
                         <label class="control-label">Send Customer</label>
                         <div class="controls">
                             @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendCustomer)
@@ -232,7 +233,7 @@
                                Text = x.Name,
                                Selected = Model == null || Model.CustomerId == null ? false : x.Id == Model.CustomerId
                            }), string.Empty)
-                            @*<a class="btn btn-small btn-success" href="#addCustomerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>*@
+                            <a class="btn btn-small btn-success" href="#addCustomerModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
                         </div>
                     </div>
                     <div class="control-group">

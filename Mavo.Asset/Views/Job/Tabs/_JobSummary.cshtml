@@ -4,130 +4,192 @@
 {
     <div class="tab-pane" id="jobSummary">
         <div class="row-fluid">
-            <div class="span12 well">
-                <h4>@Model.Name Summary</h4>
-                <a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
-                @using (Html.BeginForm(MVC.Job.SaveSummary(Model.Id.Value, null)))
-                {
-                    <table class="table table-condensed table-striped table-hover">
-                         <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.Name):</th>
-                            <td>@Html.DisplayFor(x => x.Name) @Html.DisplayFor(x=>x.Status)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.SubmittedBy):</th>
-                            <td>@Html.DisplayFor(x => x.SubmittedBy.FullName)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.Summary.FilledOutBy):</th>
-                            <td>
-                                @Html.EditorFor(x => x.Summary.FilledOutBy)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.ScopeOfWork):</th>
-                            <td>
-                                @Html.DisplayFor(x => x.ScopeOfWork)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.Notifiable):</th>
-                            <td>@Html.DisplayFor(x => x.Notifiable)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.JobContact):</th>
-                            <td>@Html.DisplayFor(x => x.JobContact)</td>
-                        </tr>
-                          <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.JobContactPhone):</th>
-                            <td>@Html.DisplayFor(x => x.JobContactPhone)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.JobNumber):</th>
-                            <td>@Html.DisplayFor(x => x.JobNumber)</td>
-                        </tr>
-                         <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.ProjectManager):</th>
-                            <td>@Html.DisplayFor(x => x.ProjectManager)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x=>x.ContractDate):</th>
-                            <td>@Html.DisplayFor(x => x.ContractDate)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.EstimatedCompletionDate):</th>
-                            <td>@Html.DisplayFor(x => x.EstimatedCompletionDate)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.Address):</th>
-                            <td>
-                                @Html.DisplayFor(x => x.Address)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.BillingType):</th>
-                            <td>@Html.DisplayFor(x => x.BillingType)</td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.Summary.ShiftHours):</th>
-                            <td>
-                                @Html.EditorFor(x => x.Summary.ShiftHours)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.ShiftStartDate):</th>
-                            <td>@Html.DisplayFor(x => x.ShiftStartDate)</td>
-                        </tr>
-                         <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.PickupTime):</th>
-                            <td>@Html.DisplayFor(x => x.PickupTime)</td>
-                        </tr>
-                        <tr>
-                            <th>Foreman:</th>
-                            <td>
-                                @Html.DropDownList("ForemanId", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
-                           {
-                               Value = x.Id.ToString(),
-                               Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
-                               Selected = Model == null || Model.ForemanId == null ? false : x.Id == Model.ForemanId
-                           }), string.Empty)
-                                <a class="btn btn-small btn-success" href="#addForemanModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
-                            </td>
-                        </tr>
-                          <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.ForemanNote):</th>
-                            <td>
-                                @Html.DisplayFor(x => x.ForemanNote)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.SupervisorsNeeded):</th>
-                            <td>
-                                @Html.DisplayFor(x => x.SupervisorsNeeded)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.WorkersNeeded):</th>
-                            <td>
-                                @Html.DisplayFor(x => x.WorkersNeeded)
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@Html.DisplayNameTitleizedFor(x => x.Summary.Comments):</th>
-                            <td>
-                                @Html.TextAreaFor(x => x.Summary.Comments, new { style = "width: 518px; height: 84px" })
-                            </td>
-                        </tr>
-                        <tr class="noprint">
-                            <th></th>
-                            <td>
-                                <input type="submit" class="btn btn-success" value="Save" />
-                            </td>
-                        </tr>
-                    </table>
-                }
+                <div class="span3 offset9">
+                    <a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
+                </div>
             </div>
-        </div>
+        @using (Html.BeginForm(MVC.Job.SaveSummary(Model.Id.Value, null), FormMethod.Post, new { @class = "form form-horizontal" }))
+        {
+            <div class="row-fluid">
+                <div class="span6 ">
+                    <div class="well">
+                        <h4>Summary @Html.DisplayFor(x => x.Status)</h4>
+                        <div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Name)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.Name, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.SubmittedBy)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.SubmittedBy, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Summary.FilledOutBy)
+                                <div class="controls">
+                                    @Html.EditorFor(x => x.Summary.FilledOutBy)
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.ScopeOfWork)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.ScopeOfWork, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Notifiable)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.Notifiable, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.JobContact)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.JobContact, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.JobContactPhone)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.JobContactPhone, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.JobNumber)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.JobNumber, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.ProjectManager)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.ProjectManager, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.ContractDate)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.ContractDate, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.EstimatedCompletionDate)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.EstimatedCompletionDate, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Address)
+                                <div class="controls">
+                                    @Html.DisplayFor(x => x.Address)
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.BillingType)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.BillingType, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Summary.ShiftHours)
+                                <div class="controls">
+                                    @Html.EditorFor(x => x.Summary.ShiftHours)
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.ShiftStartDate)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.ShiftStartDate, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.PickupTime)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.PickupTime, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.ForemanId)
+                                <div class="controls">
+                                    @Html.DropDownList("ForemanId", ((IList<Mavo.Assets.Models.User>)ViewBag.Foremen).Select(x => new SelectListItem()
+                                    {
+                                        Value = x.Id.ToString(),
+                                        Text = String.Format("{0}, {1}", x.LastName, x.FirstName),
+                                        Selected = Model == null || Model.ForemanId == null ? false : x.Id == Model.ForemanId
+                                    }), string.Empty)
+                                    <a class="btn btn-small btn-success" href="#addForemanModal" data-toggle="modal"><i class="icon-plus icon-white"></i></a>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.ForemanNote)
+                                <div class="controls">
+                                    @Html.TextAreaFor(x => x.ForemanNote, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.SupervisorsNeeded)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.SupervisorsNeeded, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.WorkersNeeded)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.WorkersNeeded, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Summary.Comments)
+                                <div class="controls">
+                                    @Html.TextAreaFor(x => x.Summary.Comments)
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="span6 ">
+                    <div class="well">
+                        <h4>Consultant</h4>
+                        <div class="control-group">
+                            @Html.LabelTitleizeFor(x => x.ConsultantName)
+                            <div class="controls">
+                                @Html.TextBoxFor(x => x.ConsultantName, new { disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelTitleizeFor(x => x.ConsultantContact)
+                            <div class="controls">
+                                @Html.TextBoxFor(x => x.ConsultantContact, new { disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelTitleizeFor(x => x.ConsultantContactNumber)
+                            <div class="controls">
+                                @Html.TextBoxFor(x => x.ConsultantContactNumber, new { disabled = "disabled" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelTitleizeFor(x => x.ConsultantEmail)
+                            <div class="controls">
+                                @Html.TextBoxFor(x => x.ConsultantEmail, new { disabled = "disabled" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="well">
+                        <input type="submit" class="btn btn-success" value="Save" />
+                    </div>
+                </div>
+            </div>
+        }
+
         <div id="map" style="width: 640px; height: 480px;"></div>
         <table id="steps" class="table table-condensed table-striped table-hover">
         </table>
