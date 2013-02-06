@@ -152,7 +152,7 @@ namespace System.Web.Mvc
             return expression.Object.ToString();
         }
 
-        public static IHtmlString EnumCheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression) where TModel : class
+        public static IHtmlString EnumCheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, bool? disabled = null) where TModel : class
         {
             var value = htmlHelper.ViewData.Model == null
               ? default(TProperty)
@@ -176,6 +176,8 @@ namespace System.Web.Mvc
                 builder.MergeAttribute("type", "checkbox");
                 builder.MergeAttribute("value", targetValue.ToString());
                 builder.MergeAttribute("name", inputName);
+                if (disabled.HasValue && disabled.Value)
+                    builder.MergeAttribute("disabled", "disabled");
                 builder.InnerHtml = item.ToString().Titleize();
 
                 sb.Append(String.Format("<label class='checkbox'>{0}</label>", builder.ToString(TagRenderMode.Normal)));

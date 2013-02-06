@@ -104,8 +104,11 @@ namespace Mavo.Assets.Controllers
         {
             if (ModelState.IsValid)
             {
-                var values = Request.Form["Role"].Split(',');
-                user.Role = (UserRole)values.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+                if (!String.IsNullOrEmpty(Request.Form["Role"]))
+                {
+                    var values = Request.Form["Role"].Split(',');
+                    user.Role = (UserRole)values.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+                }
 
                 var entry = db.Entry<User>(user);
 

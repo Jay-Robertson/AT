@@ -37,7 +37,7 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult GetCustomerAddress(int id)
         {
-            return Json(Context.Customers.FirstOrDefault(x=>x.Id == id).Address, JsonRequestBehavior.AllowGet);
+            return Json(Context.Customers.FirstOrDefault(x => x.Id == id).Address, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public virtual ActionResult CreateAddon(int id)
@@ -199,8 +199,13 @@ namespace Mavo.Assets.Controllers
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.InvoiceDetail = jobPostModel.InvoiceDetail;
-            var values = Request.Form["InvoiceDetail.SpecialForms"].Split(',');
-            job.InvoiceDetail.SpecialForms = (SpecialForms)values.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+            if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SpecialForms"]))
+            {
+                var values = Request.Form["InvoiceDetail.SpecialForms"].Split(',');
+                job.InvoiceDetail.SpecialForms = (SpecialForms)values.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+            }
+            if (job.InvoiceDetail.Consultant == null)
+                job.InvoiceDetail.Consultant = new Address();
             Context.SaveChanges();
             return RedirectToAction("Edit", new { id = id });
         }
@@ -224,18 +229,23 @@ namespace Mavo.Assets.Controllers
             job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
             if (ModelState.IsValid)
             {
-               
+
                 if (job is JobAddon)
                 {
                     job.PickupTime = jobPostModel.PickupTime;
                 }
                 else
                 {
-                    var sendConsultantValues = Request.Form["InvoiceDetail.SendConsultant"].Split(',');
-                    job.InvoiceDetail.SendConsultant = (SendConsultant)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
-
-                    var sendCustomerValues = Request.Form["InvoiceDetail.SendCustomer"].Split(',');
-                    job.InvoiceDetail.SendCustomer = (SendCustomer)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+                    if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendConsultant"]))
+                    {
+                        var sendConsultantValues = Request.Form["InvoiceDetail.SendConsultant"].Split(',');
+                        job.InvoiceDetail.SendConsultant = (SendConsultant)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+                    }
+                    if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendCustomer"]))
+                    {
+                        var sendCustomerValues = Request.Form["InvoiceDetail.SendCustomer"].Split(',');
+                        job.InvoiceDetail.SendCustomer = (SendCustomer)sendCustomerValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+                    }
 
                     if (jobPostModel.CustomerId.HasValue)
                         job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
@@ -289,7 +299,7 @@ namespace Mavo.Assets.Controllers
 
         private void SetListsForCrud(Job job)
         {
-            ViewBag.Customers = Context.Customers.OrderBy(x=>x.Name).ToList();
+            ViewBag.Customers = Context.Customers.OrderBy(x => x.Name).ToList();
             ViewBag.Foremen = Context.Users.Where(x => (x.Role & UserRole.Foreman) == UserRole.Foreman && !x.Disabled).ToList();
             ViewBag.ProjectManagers = Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager && !x.Disabled).ToList();
             ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Context.Jobs.ToList().GroupBy(x => x.Status).OrderBy(x => x.Key).ToList() };

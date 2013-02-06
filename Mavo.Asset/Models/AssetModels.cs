@@ -295,6 +295,7 @@ namespace Mavo.Assets.Models
 
         public string Comments { get; set; }
 
+        [Display(Name="Special Forms to Use")]
         public SpecialForms SpecialForms { get; set; }
 
         public Address CopyAddress { get; set; }
@@ -305,7 +306,9 @@ namespace Mavo.Assets.Models
 
         public decimal? NetInvoiceAmount { get; set; }
 
-        public decimal? Retainage { get; set; }
+        [Display(Name="Retainage %")]
+        [Range(0,100)]
+        public double? Retainage { get; set; }
 
         public decimal? WithholdPercentage { get; set; }
 
@@ -364,4 +367,4 @@ namespace Mavo.Assets.Models
         public Address Address { get; set; }
     }
 }
-
+    

@@ -291,6 +291,10 @@
     <Compile Include="Migrations\201302052034016_AddedSendCustomer.Designer.cs">
       <DependentUpon>201302052034016_AddedSendCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302061653557_ChangeDataType.cs" />
+    <Compile Include="Migrations\201302061653557_ChangeDataType.Designer.cs">
+      <DependentUpon>201302061653557_ChangeDataType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
@@ -643,6 +647,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302052034016_AddedSendCustomer.resx">
       <DependentUpon>201302052034016_AddedSendCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302061653557_ChangeDataType.resx">
+      <DependentUpon>201302061653557_ChangeDataType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
