@@ -36,7 +36,7 @@
                     <div class="control-group">
                         @Html.LabelTitleizeFor(x => x.JobContactPhone)
                         <div class="controls">
-                            @Html.EditorFor(x => x.JobContact)
+                            @Html.EditorFor(x => x.JobContactPhone)
                         </div>
                     </div>
                     @Html.EditorFor(x => x.Address)
@@ -208,18 +208,7 @@
                             @Html.EditorFor(x => x.InvoiceDetail.InvoiceInstructions)
                         </div>
                     </div>
-                    <div class="control-group">
-                        @Html.LabelTitleizeFor(x => x.SendFinalReportTo)
-                        <div class="controls">
-                            @Html.EditorFor(x => x.SendFinalReportTo)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelTitleizeFor(x => x.FinalReportPhoneNumber)
-                        <div class="controls">
-                            @Html.EditorFor(x => x.FinalReportPhoneNumber)
-                        </div>
-                    </div>
+                   
 
                 </div>
                 <div class="well">
