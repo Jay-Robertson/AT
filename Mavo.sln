@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxwellSync", "MaxwellSync\MaxwellSync.csproj", "{F33D77D9-0359-4C07-B385-9BB2C04C1337}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateAssetData2", "GenerateAssetData2\GenerateAssetData2.csproj", "{5818F50B-F10F-4A62-ADE6-1CC784AA8A89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F33D77D9-0359-4C07-B385-9BB2C04C1337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F33D77D9-0359-4C07-B385-9BB2C04C1337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F33D77D9-0359-4C07-B385-9BB2C04C1337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5818F50B-F10F-4A62-ADE6-1CC784AA8A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5818F50B-F10F-4A62-ADE6-1CC784AA8A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5818F50B-F10F-4A62-ADE6-1CC784AA8A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5818F50B-F10F-4A62-ADE6-1CC784AA8A89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,5 +40,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0101D1D1-1959-4CD1-98FB-98001EF64706} = {9762DE6C-4999-48EE-9F7F-E4129AA6ECC9}
 		{F33D77D9-0359-4C07-B385-9BB2C04C1337} = {9762DE6C-4999-48EE-9F7F-E4129AA6ECC9}
+		{5818F50B-F10F-4A62-ADE6-1CC784AA8A89} = {9762DE6C-4999-48EE-9F7F-E4129AA6ECC9}
 	EndGlobalSection
 EndGlobal
