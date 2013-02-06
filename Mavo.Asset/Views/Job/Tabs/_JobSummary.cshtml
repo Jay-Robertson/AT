@@ -3,11 +3,7 @@
 @if (null != Model && Model.Id.HasValue)
 {
     <div class="tab-pane" id="jobSummary">
-        <div class="row-fluid">
-                <div class="span3 offset9">
-                    <a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
-                </div>
-            </div>
+      
         @using (Html.BeginForm(MVC.Job.SaveSummary(Model.Id.Value, null), FormMethod.Post, new { @class = "form form-horizontal" }))
         {
             <div class="row-fluid">

@@ -209,6 +209,8 @@
             <a data-toggle="modal" href="#addOnModal@(Model.Id.Value)" class="btn btn-success"><i class="icon-plus icon-white"></i>&nbsp;Add On</a>
         </span>
         }
+        <text>&nbsp;</text><a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
+        
     }
 
 </h1>
@@ -226,7 +228,7 @@
             <li class="active"><a href="#jobstatus" data-toggle="tab">Status</a></li>
         }
         <li><a href="#jobSummary" id="jobSummary_link" data-toggle="tab">Job Summary</a></li>
-        <li><a href="#billing-request-form"  data-toggle="tab">Billing Request Form</a></li>
+        <li><a href="#billing-request-form" data-toggle="tab">Billing Request Form</a></li>
     </ul>
 }
 
@@ -239,7 +241,7 @@
         Html.RenderPartial("Tabs\\_AssetHistory", Model);
 
         Html.RenderPartial("Tabs\\_JobSummary", Model);
-        
+
         Html.RenderPartial("Tabs\\_BillingRequestForm", Model);
         
     }
