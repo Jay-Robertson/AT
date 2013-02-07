@@ -1,50 +1,40 @@
 ﻿@model Mavo.Assets.Models.ViewModel.PickAJobModel
-
-<div class="row-fluid">
-    <div class="well">
-        <h4>
-            Job Details 
+<div class="well">
+    <h4>
+        Job Details 
             @if (Model.IsAddon)
             {
                 <span><i class="icon-plus-sign icon-white"></i></span>
             }
-            <a class="btn" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
+        <a class="btn" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
+    </h4>
+    <div class="row-fluid">
+        <strong>Site:</strong>
+        <span>@Model.JobName</span>
+    </div>
+    <div class="row-fluid">
+        <strong>Number:</strong>
+        <span>@Model.JobNumber</span>
+    </div>
+    <div class="row-fluid">
+        <strong>PM:</strong>
+        <span>@Model.Manager</span>
+    </div>
+    <div class="row-fluid">
+        <strong>Customer:</strong>
+        <span>@Model.Customer</span>
+    </div>
+    <div class="row-fluid">
 
-        </h4>
-        <div class="row-fluid">
-            <div class="span4">
-                <strong>Job Site:</strong>
-                <span>@Model.JobName</span>
-            </div>
-            <div class="span4">
-                <strong>Job Number:</strong>
-                <span>@Model.JobNumber</span>
-            </div>
-            <div class="span4">
-                <strong>Project Manager:</strong>
-                <span>@Model.Manager</span>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span4">
-                <strong>Customer:</strong>
-                <span>@Model.Customer</span>
-            </div>
-
-            <div class="span4">
-                <strong>Completion Date:</strong>
-                <span>@Model.CompletionDate</span>
-            </div>
-            <div class="span4">
-                <strong>Pickup Time:</strong>
-                <span>@Model.PickupTime</span>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span4">
-                <strong>Job Address:</strong>
-                <span>@Html.DisplayFor(x => x.Address)</span>
-            </div>
-        </div>
+        <strong>Completion:</strong>
+        <span>@Model.CompletionDate</span>
+    </div>
+    <div class="row-fluid">
+        <strong>Pickup:</strong>
+        <span>@Model.PickupTime</span>
+    </div>
+    <div class="row-fluid">
+        <strong>Address:</strong>
+        <span>@Html.DisplayFor(x => x.Address)</span>
     </div>
 </div>

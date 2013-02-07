@@ -63,6 +63,7 @@ namespace T4MVC
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public partial class _EditorTemplatesClass
             {
+                public readonly string Address = "Address";
                 public readonly string DateTime = "DateTime";
                 public readonly string @decimal = "decimal";
                 public readonly string String = "String";

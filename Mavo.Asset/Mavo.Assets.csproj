@@ -553,6 +553,9 @@
     <Content Include="Views\UserManagement\_AddUserModal.cshtml" />
     <Content Include="Views\UserManagement\_SetPasswordModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Address.cshtml" />
+    <Content Include="Views\JobPicker\TabletPicker.cshtml" />
+    <Content Include="Views\JobPicker\_StartPicking.cshtml" />
+    <Content Include="Views\JobPicker\_PickerLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

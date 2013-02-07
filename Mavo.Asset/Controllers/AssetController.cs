@@ -70,7 +70,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.TemplateId = id;
             ViewBag.Assets = db.TemplateAssets.Include(x => x.Asset).Include(x => x.Asset.Items).Where(x => x.Template.Id == id.Value).ToList();
             ViewBag.Lock = false;
-            return PartialView("_AssetPicker", db.AssetCategories.ToList());
+            return PartialView("_AssetPicker", db.AssetCategories.OrderBy(x=>x.Name).ToList());
         }
 
         [HttpGet]
@@ -106,7 +106,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.JobId = id;
             ViewBag.Assets = job.Assets;
             ViewBag.Lock = job.Status != JobStatus.New && job.Status != JobStatus.ReadyToPick;
-            return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.ToList());
+            return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.OrderBy(x=>x.Name).ToList());
         }
 
         public virtual ActionResult AssetPickerDetail(int id)

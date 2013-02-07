@@ -1,0 +1,71 @@
+﻿@model Mavo.Assets.Models.ViewModel.PickAJobModel
+
+@{
+    ViewBag.Title = "_PickerLayout";
+    Layout = MVC.Shared.Views._Layout;
+}
+@section scripts
+{
+    @if (!Model.PickStarted.HasValue)
+    {
+        
+        <script type="text/javascript">
+            $('#btnSubmit').hide();
+            $('#startModal').modal({
+                keyboard: true,
+                show: false
+            });
+            $('#btnStartPicking').click(function () {
+                $.post('/jobpicker/startpicking/@Model.JobId', function (timeStarted) {
+                    $('#pickupTime').html(timeStarted);
+                    $('#pickupTimeDiv').removeClass('hide');
+                    $('#startModal').modal('hide');
+                    $('#btnSubmit').show();
+                    $('#btnSubmitDisabled').hide();
+                    $('#beginPicking').hide();
+                    $('.text-box').removeAttr('disabled');
+                    $('.input-mini').removeAttr('disabled');
+                    $('#jobStatus@(Model.JobId)').removeClass('label-important');
+                    $('#jobStatus@(Model.JobId)').addClass('label-success');
+                });
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $('#btnSubmitDisabled').hide();
+        </script>
+        
+    }
+    @RenderSection("AdditionalScripts")
+}
+@section LeftNav
+{
+    @{Html.RenderPartial("_JobHeader", Model);}
+}
+@if (!Model.PickStarted.HasValue)
+{
+    <div class="well" id="beginPicking">
+        <a href="#startModal" role="button" class="btn btn-large btn-primary" data-toggle="modal">Begin Picking</a>
+    </div>
+    <div id="startModal" class="modal show fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-show="true">
+        <div class="modal-header">
+            <h3 id="myModalLabel">Start Picking?</h3>
+        </div>
+        <div class="modal-body">
+            <p>Would you like to start picking this job?</p>
+        </div>
+        <div class="modal-footer">
+            <button id="btnStartPicking" class="btn btn-primary">Start Picking</button>
+        </div>
+    </div>
+}
+<div class="alert alert-info @(!Model.PickStarted.HasValue ? "hide" : "")" id="pickupTimeDiv">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Job Picking!</strong> This job started being picked up at <span id="pickupTime">@(Model.PickStarted.HasValue ? Model.PickStarted.Value.ToString() : "")</span>
+</div>
+
+
+
+@RenderBody()

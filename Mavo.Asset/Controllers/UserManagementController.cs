@@ -69,14 +69,14 @@ namespace Mavo.Assets.Controllers
 
             return View(user);
         }
-        public ActionResult ToggleStatus(int id)
+        public virtual ActionResult ToggleStatus(int id)
         {
             User user = db.Users.Find(id);
             user.Disabled = !user.Disabled;
             db.SaveChanges();
             return RedirectToAction(MVC.UserManagement.Edit(id));
         }
-        public ActionResult UpdatePassword(SetPasswordModel model)
+        public virtual ActionResult UpdatePassword(SetPasswordModel model)
         {
             string userId = db.Users.Find(model.Id).Email;
             string token = WebSecurity.GeneratePasswordResetToken(userId);

@@ -1,0 +1,107 @@
+﻿@model Mavo.Assets.Models.ViewModel.PickAJobModel
+
+@{
+    ViewBag.Title = "TabletPicker";
+    Layout = MVC.JobPicker.Views._PickerLayout;
+}
+
+@section AdditionalScripts
+{
+
+    <script type="text/javascript">
+        $('.pickform').submit(function () {
+            var assetId = $(this).children(':hidden').val();
+            var quantityPicked = parseInt($('#quantityPicked' + assetId).val());
+            var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
+            $('#pick' + assetId).modal('hide');
+            $('#quantityNeeded' + assetId).html(quantityNeeded - quantityPicked);
+            return false;
+        });
+    </script>
+
+}
+
+<div class="well well-small">
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form form-inline" }))
+    {
+        <input type="text" placeholder="Scan a Barcode" />
+        <input type="submit" value="Lookup" />
+    }
+</div>
+
+@using (Html.BeginForm(MVC.JobPicker.Index(Model.JobId, null), FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.ValidationSummary()
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Needed</th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Assets)
+        {
+            <tr>
+                <td>@item.MavoItemNumber</td>
+                <td>@item.Name</td>
+                <td id="quantityNeeded@(item.Id)">@item.QuantityNeeded</td>
+                <td>
+                    @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
+                    {
+                        <a href="#pick@(item.Id)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i>&nbsp;Pick</a>
+                    }
+                    else
+                    {
+                        <text>(scan barcodes)</text>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+<div class="row-fluid">
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" id="btnSubmit" />
+        <span class="btn btn-primary disabled" id="btnSubmitDisabled">Submit</span>
+    </div>
+</div>
+@foreach (var item in Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized))
+{
+    <div id="pick@(item.Id)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pick@(item.Id)Label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Pick @item.Name</h3>
+        </div>
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-inline pickform", id = "pickForm" + item.Id.ToString() }))
+        {
+            <input type="hidden" id="itemid@(item.Id)" value="@item.Id" />
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@item.MavoItemNumber</td>
+                            <td>@item.Name</td>
+                            <td>@item.QuantityNeeded</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <label for="quantityPicked@(item.Id)">Quantity Picked</label>
+                <input type="text" value="@item.QuantityNeeded" id="quantityPicked@(item.Id)" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button type="submit" class="btn btn-primary pick">Pick</button>
+            </div>
+        }
+    </div>
+}

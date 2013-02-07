@@ -43,6 +43,18 @@ namespace Mavo.Assets.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ToggleStatus()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ToggleStatus);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult UpdatePassword()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdatePassword);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult DeleteConfirmed()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
@@ -66,6 +78,8 @@ namespace Mavo.Assets.Controllers
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string Create = "Create";
+            public readonly string ToggleStatus = "ToggleStatus";
+            public readonly string UpdatePassword = "UpdatePassword";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
             public readonly string DeleteConfirmed = "Delete";
@@ -77,6 +91,8 @@ namespace Mavo.Assets.Controllers
             public const string Index = "Index";
             public const string Details = "Details";
             public const string Create = "Create";
+            public const string ToggleStatus = "ToggleStatus";
+            public const string UpdatePassword = "UpdatePassword";
             public const string Edit = "Edit";
             public const string Delete = "Delete";
             public const string DeleteConfirmed = "Delete";
@@ -98,6 +114,22 @@ namespace Mavo.Assets.Controllers
         public class ActionParamsClass_Create
         {
             public readonly string user = "user";
+        }
+        static readonly ActionParamsClass_ToggleStatus s_params_ToggleStatus = new ActionParamsClass_ToggleStatus();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ToggleStatus ToggleStatusParams { get { return s_params_ToggleStatus; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ToggleStatus
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_UpdatePassword s_params_UpdatePassword = new ActionParamsClass_UpdatePassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdatePassword UpdatePasswordParams { get { return s_params_UpdatePassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdatePassword
+        {
+            public readonly string model = "model";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -135,6 +167,7 @@ namespace Mavo.Assets.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _AddUserModal = "_AddUserModal";
+                public readonly string _SetPasswordModal = "_SetPasswordModal";
                 public readonly string _SideNav = "_SideNav";
                 public readonly string Delete = "Delete";
                 public readonly string Details = "Details";
@@ -142,6 +175,7 @@ namespace Mavo.Assets.Controllers
                 public readonly string Index = "Index";
             }
             public readonly string _AddUserModal = "~/Views/UserManagement/_AddUserModal.cshtml";
+            public readonly string _SetPasswordModal = "~/Views/UserManagement/_SetPasswordModal.cshtml";
             public readonly string _SideNav = "~/Views/UserManagement/_SideNav.cshtml";
             public readonly string Delete = "~/Views/UserManagement/Delete.cshtml";
             public readonly string Details = "~/Views/UserManagement/Details.cshtml";
@@ -178,6 +212,20 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "user", user);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ToggleStatus(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ToggleStatus);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult UpdatePassword(Mavo.Assets.Models.ViewModel.SetPasswordModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.UpdatePassword);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             return callInfo;
         }
 

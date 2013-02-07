@@ -121,6 +121,7 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string assets = "assets";
+            public readonly string isTablet = "isTablet";
         }
         static readonly ActionParamsClass_Success s_params_Success = new ActionParamsClass_Success();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -141,12 +142,18 @@ namespace Mavo.Assets.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _JobPickerSidebar = "_JobPickerSidebar";
+                public readonly string _PickerLayout = "_PickerLayout";
+                public readonly string _StartPicking = "_StartPicking";
                 public readonly string Index = "Index";
                 public readonly string Success = "Success";
+                public readonly string TabletPicker = "TabletPicker";
             }
             public readonly string _JobPickerSidebar = "~/Views/JobPicker/_JobPickerSidebar.cshtml";
+            public readonly string _PickerLayout = "~/Views/JobPicker/_PickerLayout.cshtml";
+            public readonly string _StartPicking = "~/Views/JobPicker/_StartPicking.cshtml";
             public readonly string Index = "~/Views/JobPicker/Index.cshtml";
             public readonly string Success = "~/Views/JobPicker/Success.cshtml";
+            public readonly string TabletPicker = "~/Views/JobPicker/TabletPicker.cshtml";
         }
     }
 
@@ -184,10 +191,11 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Index(int id)
+        public override System.Web.Mvc.ActionResult Index(int id, bool isTablet)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "isTablet", isTablet);
             return callInfo;
         }
 

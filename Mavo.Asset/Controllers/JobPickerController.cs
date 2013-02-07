@@ -108,7 +108,7 @@ namespace Mavo.Assets.Controllers
         {
             return View();
         }
-        public virtual ActionResult Index(int id)
+        public virtual ActionResult Index(int id, bool isTablet = false)
         {
             var result = Context.Jobs.Include("Assets").Include("Asset").Where(x => x.Id == id).Select(x =>
                 new
@@ -136,37 +136,41 @@ namespace Mavo.Assets.Controllers
                         AssetId = a.Asset.Id,
                         NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
                         QuantityAvailable = a.Asset.Inventory,
-                        AssetCategory = a.Asset.Category.Name
+                        AssetCategory = a.Asset.Category.Name,
+                        MavoItemNumber = a.Asset.MavoItemNumber
                     })
                 }).First();
             if (result.PickCompleted.HasValue)
                 return RedirectToAction(MVC.Reporting.Jobs());
 
-            return View(new PickAJobModel()
-            {
-                JobId = result.JobId,
-                JobName = result.JobName,
-                JobNumber = result.JobNumber,
-                Manager = String.Format("{0} {1}", result.ManagerFirstName, result.ManagerLastName),
-                Foreman = String.Format("{0} {1}", result.ForemanFirstName, result.ForemanLastName),
-                Customer = result.Customer,
-                PickStarted = result.PickStarted,
-                ReturnStarted = result.ReturnStarted,
-                Address = result.Address,
-                CompletionDate = result.CompletionDate,
-                Assets = result.Assets.Select(x => new JobAsset()
-                {
-                    Name = x.Name,
-                    Id = x.Id,
-                    AssetId = x.AssetId,
-                    QuantityNeeded = x.Quantity,
-                    QuantityTaken = x.Quantity,
-                    Kind = x.Kind,
-                    NotEnoughQuantity = x.NotEnoughQuantity,
-                    QuantityAvailable = x.QuantityAvailable,
-                    AssetCategory = x.AssetCategory
-                }).ToList()
-            });
+            PickAJobModel viewModel = new PickAJobModel()
+                        {
+                            JobId = result.JobId,
+                            JobName = result.JobName,
+                            JobNumber = result.JobNumber,
+                            Manager = String.Format("{0} {1}", result.ManagerFirstName, result.ManagerLastName),
+                            Foreman = String.Format("{0} {1}", result.ForemanFirstName, result.ForemanLastName),
+                            Customer = result.Customer,
+                            PickStarted = result.PickStarted,
+                            ReturnStarted = result.ReturnStarted,
+                            Address = result.Address,
+                            CompletionDate = result.CompletionDate,
+                            
+                            Assets = result.Assets.Select(x => new JobAsset()
+                            {
+                                Name = x.Name,
+                                Id = x.Id,
+                                AssetId = x.AssetId,
+                                QuantityNeeded = x.Quantity,
+                                QuantityTaken = x.Quantity,
+                                Kind = x.Kind,
+                                NotEnoughQuantity = x.NotEnoughQuantity,
+                                QuantityAvailable = x.QuantityAvailable,
+                                AssetCategory = x.AssetCategory,
+                                MavoItemNumber = x.MavoItemNumber
+                            }).ToList()
+                        };
+            return View(isTablet ? "TabletPicker" : "Index", viewModel);
         }
     }
 }

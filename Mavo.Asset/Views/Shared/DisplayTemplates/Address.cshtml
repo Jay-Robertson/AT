@@ -1,6 +1,6 @@
 ﻿@model Mavo.Assets.Models.Address
 
-@if (!String.IsNullOrEmpty(Model.Address1))
+@if (Model != null && !String.IsNullOrEmpty(Model.Address1))
 {
     <text>
     @Model.Address1
