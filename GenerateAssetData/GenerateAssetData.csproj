@@ -63,7 +63,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Data\FORMS32K_MavoDataSet.xsc">
       <DependentUpon>FORMS32K_MavoDataSet.xsd</DependentUpon>
     </None>

@@ -31,7 +31,8 @@ namespace GenerateAssetData2
             {
                 asset = new Asset
                 {
-                    MavoItemNumber = n
+                    MavoItemNumber = n,
+                    Kind = AssetKind.NotSerialized
                 };
                 db.Assets.Add(asset);
             }
@@ -132,9 +133,9 @@ namespace GenerateAssetData2
             var z = 0;
             foreach (var a in assets)
             {
-                if (z % 100 == 0)
+                if (++z % 100 == 0)
                 {
-                    Console.WriteLine("  {0}/{1}", ++z, assets.Count);
+                    Console.WriteLine("  {0}/{1}", z, assets.Count);
                 }
                 a.Import(db, categories);
                 db.SaveChanges();
@@ -145,9 +146,9 @@ namespace GenerateAssetData2
             z = 0;
             foreach (var i in items)
             {
-                if (z % 100 == 0)
+                if (++z % 100 == 0)
                 {
-                    Console.WriteLine("  {0}/{1}", ++z, assets.Count);
+                    Console.WriteLine("  {0}/{1}", z, items.Count);
                 }
                 var a = i.ToAsset().Import(db, categories);
                 var item = db.AssetItems.SingleOrDefault(x => x.Barcode == i.AssetTag);
@@ -159,6 +160,8 @@ namespace GenerateAssetData2
                     };
                     db.AssetItems.Add(item);
                 }
+                item.Asset = a;
+                a.Kind = AssetKind.Serialized;
                 item.Manufacturer = (i.Manufacturer == "NA" ? null : i.Manufacturer);
                 item.ModelNumber = (i.Model == "NA" ? null : i.Model);
                 item.SerialNumber = i.SerialNumber;
