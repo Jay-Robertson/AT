@@ -9,6 +9,12 @@
 {
 
     <script type="text/javascript">
+        var numberPicked = 0;
+        var nonserializedPicked = new Array();
+        var serializedPicked = new Array();
+        var alreadyPicked = new Array();
+        $('#serializedErrorBlock').hide();
+
         $('.pickform').submit(function () {
             var assetId = $(this).children(':hidden').val();
             var quantityPicked = parseInt($('#quantityPicked' + assetId).val());
@@ -16,28 +22,75 @@
             $('#pick' + assetId).modal('hide');
             $('#quantityNeeded' + assetId).html(quantityNeeded - quantityPicked);
             $('#qtyPicked' + assetId).val(quantityPicked);
+            if (quantityNeeded - quantityPicked == 0) {
+                $('#alreadyPickedTable').append($('#row' + assetId).remove());
+            }
+            if (quantityPicked > 0 && !$.inArray(assetId, nonserializedPicked) > -1) {
+                numberPicked = numberPicked + 1;
+                nonserializedPicked.push(assetId);
+            }
             return false;
         });
         $('#assetScanner').submit(function () {
-            alert('test');
-            return false;
+            $('#serializedErrorBlock').removeClass('in');
+            $('#serializedErrorBlock').hide();
+            if ($.inArray($('#barcodeInput').val(), alreadyPicked) > -1) {
+                $('#serializedErrorBlock').show();
+                $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
+                $('#serializedErrorBlock').addClass('in');
+                $('#barcodeInput').val('');
+                return false;
+            }
+            else {
+                var req = $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() });
+                req.success(function (data) {
+                    if (!data.success) {
+                        $('#serializedErrorBlock').show();
+                        $('#errorMessage').html(data.reason);
+                        $('#serializedErrorBlock').addClass('in');
+                        $('#barcodeInput').val('');
+                    }
+                    else {
+                        var assetId = data.assetId;
+                        var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
+                        quantityNeeded = quantityNeeded - 1;
+                        $('#quantityNeeded' + assetId).html(quantityNeeded);
+                        alreadyPicked.push($('#barcodeInput').val());
+                        $('#barcodeInput').val('');
+                        $.get('/asset/getassetrow/' + assetId + '?jobId=@Url.RequestContext.RouteData.Values["id"]&index=' + numberPicked, function (data) {
+                            $('#alreadyPickedTable').append(data);
+                        });
+                    }
+                });
+                return false;
+            }
         });
     </script>
 
 }
 
 <div class="well well-small">
-    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
+    @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
     {
-        <input type="text" placeholder="Scan a Barcode" />
+        var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
+        foreach (var serialzedAsset in serializedAssets)
+        {
+        <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
+        }
+        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" />
         <input type="submit" value="Lookup" />
     }
+</div>
+
+<div class="alert alert-block alert-error fade" id="serializedErrorBlock">
+    <h4 id="errorMessage">Error</h4>
 </div>
 
 @using (Html.BeginForm(MVC.JobPicker.Index(Model.JobId, null), FormMethod.Post, new { @class = "form-inline" }))
 {
     @Html.ValidationSummary()
-    <table class="table table-striped table-hover">
+    <h2>To Be Picked</h2>
+    <table class="table table-striped table-hover" id="toPickTable">
         <thead>
             <tr>
                 <th>#</th>
@@ -46,35 +99,43 @@
                 <th></th>
             </tr>
         </thead>
-        @for (int index = 0; index < Model.Assets.Count; index++)
-        {
-            var item = Model.Assets[index];            
-            <input type="hidden" name="assets[@(index)].QuantityTaken" id="qtyPicked@(item.Id)" />
-            <input type="hidden" name="assets[@(index)].AssetId" value="@item.AssetId" />
-            <input type="hidden" name="assets[@(index)].Name" value="@item.Name" />
-            <input type="hidden" name="assets[@(index)].Kind" value="@item.Kind" />
-            <input type="hidden" name="assets[@(index)].Status" value="@item.Status" />
-            <input type="hidden" name="assets[@(index)].Id" value="@item.Id" />
-            <input type="hidden" name="assets[@(index)].QuantityNeeded" value="@item.QuantityNeeded" />
-            <tr>
-                <td>@item.MavoItemNumber</td>
-                <td>@item.Name</td>
-                <td id="quantityNeeded@(item.Id)">
-                    @item.QuantityNeeded
-                </td>
-                <td>
-                    @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
-                    {
-                        <a href="#pick@(item.Id)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i>&nbsp;Pick</a>
-                    }
-                    else
-                    {
-                        <text>(scan barcodes)</text>
-                    }
-                </td>
-            </tr>
-        }
+        <tbody>
+            @foreach (var item in Model.Assets)
+            {
+                <tr id="row@(item.AssetId)">
+                    <td>@item.MavoItemNumber</td>
+                    <td>@item.Name</td>
+                    <td id="quantityNeeded@(item.AssetId)">
+                        @item.QuantityNeeded
+                    </td>
+                    <td>
+                        @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
+                        {
+                            <a href="#pick@(item.AssetId)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i>&nbsp;Pick</a>
+                        }
+                        else
+                        {
+                            <text>(scan barcodes)</text>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
     </table>
+    <h2>Already Picked</h2>
+    <table class="table table-striped table-hover" id="alreadyPickedTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Picked</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <span id="pickedSerialized"></span>
     <div class="row-fluid">
         <div class="form-actions">
             <input type="submit" class="btn btn-primary" id="btnSubmit" />
@@ -85,14 +146,14 @@
 
 @foreach (var item in Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized))
 {
-    <div id="pick@(item.Id)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pick@(item.Id)Label" aria-hidden="true">
+    <div id="pick@(item.AssetId)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pick@(item.AssetId)Label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Pick @item.Name</h3>
         </div>
-        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-inline pickform", id = "pickForm" + item.Id.ToString() }))
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-inline pickform", id = "pickForm" + item.AssetId.ToString() }))
         {
-            <input type="hidden" id="itemid@(item.Id)" value="@item.Id" />
+            <input type="hidden" id="itemid@(item.AssetId)" value="@item.AssetId" />
             <div class="modal-body">
                 <table class="table">
                     <thead>
@@ -111,8 +172,8 @@
                     </tbody>
                 </table>
 
-                <label for="quantityPicked@(item.Id)">Quantity Picked</label>
-                <input type="text" value="@item.QuantityNeeded" id="quantityPicked@(item.Id)" />
+                <label for="quantityPicked@(item.AssetId)">Quantity Picked</label>
+                <input type="text" value="@item.QuantityNeeded" id="quantityPicked@(item.AssetId)" />
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

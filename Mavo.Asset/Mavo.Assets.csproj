@@ -556,6 +556,7 @@
     <Content Include="Views\JobPicker\TabletPicker.cshtml" />
     <Content Include="Views\JobPicker\_StartPicking.cshtml" />
     <Content Include="Views\JobPicker\_PickerLayout.cshtml" />
+    <Content Include="Views\JobPicker\_TabletAssetRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

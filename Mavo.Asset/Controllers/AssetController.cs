@@ -70,7 +70,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.TemplateId = id;
             ViewBag.Assets = db.TemplateAssets.Include(x => x.Asset).Include(x => x.Asset.Items).Where(x => x.Template.Id == id.Value).ToList();
             ViewBag.Lock = false;
-            return PartialView("_AssetPicker", db.AssetCategories.OrderBy(x=>x.Name).ToList());
+            return PartialView("_AssetPicker", db.AssetCategories.OrderBy(x => x.Name).ToList());
         }
 
         [HttpGet]
@@ -106,12 +106,45 @@ namespace Mavo.Assets.Controllers
             ViewBag.JobId = id;
             ViewBag.Assets = job.Assets;
             ViewBag.Lock = job.Status != JobStatus.New && job.Status != JobStatus.ReadyToPick;
-            return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.OrderBy(x=>x.Name).ToList());
+            return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.OrderBy(x => x.Name).ToList());
+        }
+
+        public virtual ActionResult GetAssetDetail(string id, IList<int> availableAssets)
+        {
+            AssetItem assetItem = db.AssetItems.Include(x => x.Asset).Where(x => x.Barcode == id).FirstOrDefault();
+            if (assetItem == null)
+                return Json(new { success = false, reason = String.Format("{0} does not exist in inventory", id) });
+            if (!availableAssets.Contains(assetItem.Asset.Id))
+                return Json(new { success = false, reason = String.Format("You scanned a {0} item. This has not been marked to be picked.", assetItem.Asset.Name) });
+            if (assetItem.Condition != AssetCondition.Good)
+                return Json(new { success = false, reason = String.Format("{0} is {1}", assetItem.Asset.Name, assetItem.Condition) });
+            if (assetItem.Status == InventoryStatus.Out)
+                return Json(new { success = false, reason = String.Format("How could you be scanning this? It's out on a job.", assetItem.Asset.Name, assetItem.Condition) });
+
+            return Json(new { success = true, assetId = assetItem.Asset.Id, barcode = id }, JsonRequestBehavior.AllowGet);
+        }
+
+        public virtual ActionResult GetAssetRow(int id, int jobId, int index)
+        {
+            var assetItem = db.Jobs.Where(x => x.Id == jobId).SelectMany(x=>x.Assets).Where(x => x.Asset.Id == id).Select(a => new JobAsset()
+                            {
+                                Name = a.Asset.Name,
+                                Id = a.Id,
+                                QuantityNeeded = a.Quantity,
+                                Kind = a.Asset.Kind,
+                                AssetId = a.Asset.Id,
+                                NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
+                                QuantityAvailable = a.Asset.Inventory,
+                                AssetCategory = a.Asset.Category.Name,
+                                MavoItemNumber = a.Asset.MavoItemNumber
+                            }).First();
+            ViewData["index"] = index;
+            return PartialView(MVC.JobPicker.Views._TabletAssetRow, assetItem);
         }
 
         public virtual ActionResult AssetPickerDetail(int id)
         {
-            List<Asset> assets = db.Assets.Where(x => x.Category.Id == id).OrderBy(x=>x.Name).ToList();
+            List<Asset> assets = db.Assets.Where(x => x.Category.Id == id).OrderBy(x => x.Name).ToList();
             return PartialView("_AssetPickerDetail", assets);
         }
         [HttpPost]
@@ -169,7 +202,7 @@ namespace Mavo.Assets.Controllers
             if (search.CategoryId.HasValue)
                 query = query.Where(x => x.Category.Id == search.CategoryId);
             if (!String.IsNullOrEmpty(search.SearchString))
-                query = query.Where(x => x.Items.Any(i=>i.Barcode.Contains(search.SearchString))
+                query = query.Where(x => x.Items.Any(i => i.Barcode.Contains(search.SearchString))
                     || x.Name.Contains(search.SearchString)
                     || x.Category.Name.Contains(search.SearchString)
                     );
@@ -233,16 +266,16 @@ namespace Mavo.Assets.Controllers
             {
                 AssetScanPostModel model = db.AssetItems.Where(x => x.Id == id.Value).Select(x => new AssetScanPostModel()
                     {
-                         AssetId = x.Asset.Id,
-                         Barcode = x.Barcode,
-                         Condition = x.Condition,
-                         Id = x.Id,
-                         Manufacturer = x.Manufacturer,
-                         ModelNumber = x.ModelNumber,
-                         PurchaseDate = x.PurchaseDate,
-                         PurchasePrice = x.PurchasePrice,
-                         SerialNumber = x.SerialNumber,
-                         WarrantyExpiration = x.WarrantyExpiration
+                        AssetId = x.Asset.Id,
+                        Barcode = x.Barcode,
+                        Condition = x.Condition,
+                        Id = x.Id,
+                        Manufacturer = x.Manufacturer,
+                        ModelNumber = x.ModelNumber,
+                        PurchaseDate = x.PurchaseDate,
+                        PurchasePrice = x.PurchasePrice,
+                        SerialNumber = x.SerialNumber,
+                        WarrantyExpiration = x.WarrantyExpiration
                     }).FirstOrDefault();
                 return View(model);
             }

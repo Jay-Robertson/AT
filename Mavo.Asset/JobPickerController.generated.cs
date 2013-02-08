@@ -144,6 +144,7 @@ namespace Mavo.Assets.Controllers
                 public readonly string _JobPickerSidebar = "_JobPickerSidebar";
                 public readonly string _PickerLayout = "_PickerLayout";
                 public readonly string _StartPicking = "_StartPicking";
+                public readonly string _TabletAssetRow = "_TabletAssetRow";
                 public readonly string Index = "Index";
                 public readonly string Success = "Success";
                 public readonly string TabletPicker = "TabletPicker";
@@ -151,6 +152,7 @@ namespace Mavo.Assets.Controllers
             public readonly string _JobPickerSidebar = "~/Views/JobPicker/_JobPickerSidebar.cshtml";
             public readonly string _PickerLayout = "~/Views/JobPicker/_PickerLayout.cshtml";
             public readonly string _StartPicking = "~/Views/JobPicker/_StartPicking.cshtml";
+            public readonly string _TabletAssetRow = "~/Views/JobPicker/_TabletAssetRow.cshtml";
             public readonly string Index = "~/Views/JobPicker/Index.cshtml";
             public readonly string Success = "~/Views/JobPicker/Success.cshtml";
             public readonly string TabletPicker = "~/Views/JobPicker/TabletPicker.cshtml";

@@ -1,0 +1,14 @@
+﻿@model Mavo.Assets.Models.ViewModel.JobAsset
+@{var index = ViewData["index"];}
+<tr id="picked@(Model.AssetId)">
+    <input type="hidden" name="assets[@(index)].QuantityTaken" id="qtyPicked@(Model.AssetId)" />
+    <input type="hidden" name="assets[@(index)].AssetId" value="@Model.AssetId" />
+    <input type="hidden" name="assets[@(index)].Name" value="@Model.Name" />
+    <input type="hidden" name="assets[@(index)].Kind" value="@Model.Kind" />
+    <input type="hidden" name="assets[@(index)].Status" value="@Model.Status" />
+    <input type="hidden" name="assets[@(index)].Id" value="@Model.Id" />
+    <input type="hidden" name="assets[@(index)].QuantityNeeded" value="@Model.QuantityNeeded" />
+    <td>@Model.MavoItemNumber</td>
+    <td>@Model.Name</td>
+    <td id="taken@(Model.AssetId)">@ViewData["taken"]</td>
+</tr>
