@@ -134,7 +134,6 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult AddAsset(int id, int? jobId = null, int? templateId = null)
         {
-
             return PartialView("_AssetRow", AssetPicker.Add(id, jobId, templateId));
         }
 

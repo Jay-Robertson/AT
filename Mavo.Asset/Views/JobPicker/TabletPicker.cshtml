@@ -15,6 +15,11 @@
             var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
             $('#pick' + assetId).modal('hide');
             $('#quantityNeeded' + assetId).html(quantityNeeded - quantityPicked);
+            $('#qtyPicked' + assetId).val(quantityPicked);
+            return false;
+        });
+        $('#assetScanner').submit(function () {
+            alert('test');
             return false;
         });
     </script>
@@ -22,7 +27,7 @@
 }
 
 <div class="well well-small">
-    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form form-inline" }))
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
     {
         <input type="text" placeholder="Scan a Barcode" />
         <input type="submit" value="Lookup" />
@@ -41,12 +46,22 @@
                 <th></th>
             </tr>
         </thead>
-        @foreach (var item in Model.Assets)
+        @for (int index = 0; index < Model.Assets.Count; index++)
         {
+            var item = Model.Assets[index];            
+            <input type="hidden" name="assets[@(index)].QuantityTaken" id="qtyPicked@(item.Id)" />
+            <input type="hidden" name="assets[@(index)].AssetId" value="@item.AssetId" />
+            <input type="hidden" name="assets[@(index)].Name" value="@item.Name" />
+            <input type="hidden" name="assets[@(index)].Kind" value="@item.Kind" />
+            <input type="hidden" name="assets[@(index)].Status" value="@item.Status" />
+            <input type="hidden" name="assets[@(index)].Id" value="@item.Id" />
+            <input type="hidden" name="assets[@(index)].QuantityNeeded" value="@item.QuantityNeeded" />
             <tr>
                 <td>@item.MavoItemNumber</td>
                 <td>@item.Name</td>
-                <td id="quantityNeeded@(item.Id)">@item.QuantityNeeded</td>
+                <td id="quantityNeeded@(item.Id)">
+                    @item.QuantityNeeded
+                </td>
                 <td>
                     @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
                     {
@@ -60,13 +75,14 @@
             </tr>
         }
     </table>
-}
-<div class="row-fluid">
-    <div class="form-actions">
-        <input type="submit" class="btn btn-primary" id="btnSubmit" />
-        <span class="btn btn-primary disabled" id="btnSubmitDisabled">Submit</span>
+    <div class="row-fluid">
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" id="btnSubmit" />
+            <span class="btn btn-primary disabled" id="btnSubmitDisabled">Submit</span>
+        </div>
     </div>
-</div>
+}
+
 @foreach (var item in Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized))
 {
     <div id="pick@(item.Id)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pick@(item.Id)Label" aria-hidden="true">
