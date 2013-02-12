@@ -109,6 +109,8 @@ namespace Mavo.Assets.Controllers
             return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.OrderBy(x => x.Name).ToList());
         }
 
+       
+
         public virtual ActionResult GetAssetDetail(string id, IList<int> availableAssets)
         {
             AssetItem assetItem = db.AssetItems.Include(x => x.Asset).Where(x => x.Barcode == id).FirstOrDefault();
@@ -123,7 +125,7 @@ namespace Mavo.Assets.Controllers
 
             return Json(new { success = true, assetId = assetItem.Asset.Id, barcode = id }, JsonRequestBehavior.AllowGet);
         }
-
+        
         public virtual ActionResult GetAssetRow(int id, int jobId, int index)
         {
             var assetItem = db.Jobs.Where(x => x.Id == jobId).SelectMany(x=>x.Assets).Where(x => x.Asset.Id == id).Select(a => new JobAsset()

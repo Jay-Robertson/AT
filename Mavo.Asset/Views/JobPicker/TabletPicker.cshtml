@@ -23,7 +23,7 @@
             $('#quantityNeeded' + assetId).html(quantityNeeded - quantityPicked);
             $('#qtyPicked' + assetId).val(quantityPicked);
             if (quantityNeeded - quantityPicked == 0) {
-                $('#alreadyPickedTable').append($('#row' + assetId).remove());
+                $('#row' + assetId).remove();
             }
             if (quantityPicked > 0 && !$.inArray(assetId, nonserializedPicked) > -1) {
                 numberPicked = numberPicked + 1;
@@ -86,63 +86,60 @@
     <h4 id="errorMessage">Error</h4>
 </div>
 
-@using (Html.BeginForm(MVC.JobPicker.Index(Model.JobId, null), FormMethod.Post, new { @class = "form-inline" }))
-{
-    @Html.ValidationSummary()
-    <h2>To Be Picked</h2>
-    <table class="table table-striped table-hover" id="toPickTable">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Item</th>
-                <th>Needed</th>
-                <th></th>
+<h2>To Be Picked</h2>
+<table class="table table-striped table-hover" id="toPickTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Item</th>
+            <th>Needed</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Assets)
+        {
+            <tr id="row@(item.AssetId)">
+                <td>@item.MavoItemNumber</td>
+                <td>@item.Name</td>
+                <td id="quantityNeeded@(item.AssetId)">
+                    @item.QuantityNeeded
+                </td>
+                <td>
+                    @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
+                    {
+                        <a href="#pick@(item.AssetId)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i>&nbsp;Pick</a>
+                    }
+                    else
+                    {
+                        <text>(scan barcodes)</text>
+                    }
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Assets)
-            {
-                <tr id="row@(item.AssetId)">
-                    <td>@item.MavoItemNumber</td>
-                    <td>@item.Name</td>
-                    <td id="quantityNeeded@(item.AssetId)">
-                        @item.QuantityNeeded
-                    </td>
-                    <td>
-                        @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
-                        {
-                            <a href="#pick@(item.AssetId)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i>&nbsp;Pick</a>
-                        }
-                        else
-                        {
-                            <text>(scan barcodes)</text>
-                        }
-                    </td>
-                </tr>
 
-            }
-        </tbody>
-    </table>
-    <h2>Already Picked</h2>
-    <table class="table table-striped table-hover" id="alreadyPickedTable">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Item</th>
-                <th>Picked</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <span id="pickedSerialized"></span>
-    <div class="row-fluid">
-        <div class="form-actions">
-            <input type="submit" class="btn btn-primary" id="btnSubmit" />
-            <span class="btn btn-primary disabled" id="btnSubmitDisabled">Submit</span>
-        </div>
+        }
+    </tbody>
+</table>
+<h2>Already Picked</h2>
+<table class="table table-striped table-hover" id="alreadyPickedTable">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Item</th>
+            <th>Picked</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<span id="pickedSerialized"></span>
+
+<div class="row-fluid">
+    <div class="form-actions">
+        <input type="submit" class="btn btn-primary" id="btnSubmit" />
+        <span class="btn btn-primary disabled" id="btnSubmitDisabled">Submit</span>
     </div>
-}
+</div>
 
 @foreach (var item in Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized))
 {

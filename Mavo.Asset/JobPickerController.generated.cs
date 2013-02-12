@@ -55,6 +55,12 @@ namespace Mavo.Assets.Controllers
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult PickAssetForJob()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PickAssetForJob);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Index()
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
@@ -83,6 +89,7 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string Cancel = "Cancel";
             public readonly string StartPicking = "StartPicking";
+            public readonly string PickAssetForJob = "PickAssetForJob";
             public readonly string Index = "Index";
             public readonly string Success = "Success";
         }
@@ -92,6 +99,7 @@ namespace Mavo.Assets.Controllers
         {
             public const string Cancel = "Cancel";
             public const string StartPicking = "StartPicking";
+            public const string PickAssetForJob = "PickAssetForJob";
             public const string Index = "Index";
             public const string Success = "Success";
         }
@@ -112,6 +120,17 @@ namespace Mavo.Assets.Controllers
         public class ActionParamsClass_StartPicking
         {
             public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_PickAssetForJob s_params_PickAssetForJob = new ActionParamsClass_PickAssetForJob();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_PickAssetForJob PickAssetForJobParams { get { return s_params_PickAssetForJob; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_PickAssetForJob
+        {
+            public readonly string jobId = "jobId";
+            public readonly string assetId = "assetId";
+            public readonly string quantity = "quantity";
+            public readonly string barcode = "barcode";
         }
         static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -142,6 +161,7 @@ namespace Mavo.Assets.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _JobPickerSidebar = "_JobPickerSidebar";
+                public readonly string _PickedAssetRow = "_PickedAssetRow";
                 public readonly string _PickerLayout = "_PickerLayout";
                 public readonly string _StartPicking = "_StartPicking";
                 public readonly string _TabletAssetRow = "_TabletAssetRow";
@@ -150,6 +170,7 @@ namespace Mavo.Assets.Controllers
                 public readonly string TabletPicker = "TabletPicker";
             }
             public readonly string _JobPickerSidebar = "~/Views/JobPicker/_JobPickerSidebar.cshtml";
+            public readonly string _PickedAssetRow = "~/Views/JobPicker/_PickedAssetRow.cshtml";
             public readonly string _PickerLayout = "~/Views/JobPicker/_PickerLayout.cshtml";
             public readonly string _StartPicking = "~/Views/JobPicker/_StartPicking.cshtml";
             public readonly string _TabletAssetRow = "~/Views/JobPicker/_TabletAssetRow.cshtml";
@@ -175,6 +196,16 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.StartPicking);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult PickAssetForJob(int jobId, int assetId, int quantity, string barcode)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.PickAssetForJob);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "assetId", assetId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "quantity", quantity);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "barcode", barcode);
             return callInfo;
         }
 
