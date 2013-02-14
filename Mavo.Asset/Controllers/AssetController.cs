@@ -132,7 +132,7 @@ namespace Mavo.Assets.Controllers
                             {
                                 Name = a.Asset.Name,
                                 Id = a.Id,
-                                QuantityNeeded = a.Quantity,
+                                QuantityNeeded = a.Quantity - a.QuantityPicked,
                                 Kind = a.Asset.Kind,
                                 AssetId = a.Asset.Id,
                                 NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),

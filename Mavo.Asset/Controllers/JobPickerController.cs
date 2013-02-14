@@ -54,7 +54,9 @@ namespace Mavo.Assets.Controllers
 
             var pickedAsset = PickAsset(job, new JobAsset() { AssetId = assetId, QuantityTaken = quantity, Barcode = barcode });
 
-            return PartialView(MVC.JobPicker.Views._PickedAssetRow, new { AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = job.PickedAssets.Count(x=>x.Asset.Id == assetId) });
+            int currentlyPickedAmount = job.PickedAssets.Count(x => x.Asset.Id == assetId);
+            Context.SaveChanges();
+            return PartialView(MVC.JobPicker.Views._PickedAssetRow, new PickedAssetRow {  MavoNumber = pickedAsset.Asset.MavoItemNumber, AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = currentlyPickedAmount });
         }
         
 
@@ -71,6 +73,13 @@ namespace Mavo.Assets.Controllers
                       };
             Context.PickedAssets.Add(pickAsset);
 
+            foreach (var jobAsset in job.Assets)
+            {
+                if (jobAsset.Asset.Id == pickAsset.Asset.Id)
+                {
+                    jobAsset.QuantityPicked += pickAsset.Quantity;
+                }
+            }
 
             Asset asset = Context.Assets.FirstOrDefault(y => y.Id == pickAsset.Asset.Id);
             if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized && asset.Inventory.HasValue)
@@ -78,13 +87,35 @@ namespace Mavo.Assets.Controllers
             else if (asset.Kind == AssetKind.Serialized)
                 pickAsset.Item.Status = InventoryStatus.Out;
 
-            job.PickedAssets.Add(pickAsset);
             AssetActivity.Add(AssetAction.Pick, pickAsset.Asset, pickAsset.Item, job);
 
             return pickAsset;
         }
         [HttpPost]
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
+        {
+            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            
+            IEnumerable<JobAsset> pickedAssets = null;
+            if (assets != null)
+            {
+               pickedAssets = assets.Where(x=>(x.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(x.Barcode))
+                                   || ((x.Kind == AssetKind.NotSerialized || x.Kind == AssetKind.Consumable) && (x.QuantityTaken.HasValue && x.QuantityTaken.Value > 0)));
+                foreach (var pickedAsset in pickedAssets)
+                {
+                    PickAsset(job, pickedAsset);
+                }
+            }
+
+           return CompletePicking(id);
+        }
+        public virtual ActionResult Success(int id)
+        {
+
+          
+            return View();
+        }
+        public virtual ActionResult CompletePicking(int id)
         {
             JobAddon tempJob = Context.JobAddons.Include("ParentJob").FirstOrDefault(x => x.Id == id);
             Job job = null;
@@ -103,17 +134,9 @@ namespace Mavo.Assets.Controllers
                 job.PickedAssets = new List<PickedAsset>();
                 job.PickCompleted = DateTime.Now;
             }
+
             job.PickedBy = Context.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
-            IEnumerable<JobAsset> pickedAssets = null;
-            if (assets != null)
-            {
-               pickedAssets = assets.Where(x=>(x.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(x.Barcode))
-                                   || ((x.Kind == AssetKind.NotSerialized || x.Kind == AssetKind.Consumable) && (x.QuantityTaken.HasValue && x.QuantityTaken.Value > 0)));
-                foreach (var pickedAsset in pickedAssets)
-                {
-                    PickAsset(job, pickedAsset);
-                }
-            }
+
             Context.SaveChanges();
 
             dynamic email = new Email("JobHasBeenPicked");
@@ -123,10 +146,6 @@ namespace Mavo.Assets.Controllers
             email.Send();
 
             return RedirectToAction(MVC.JobPicker.Success(id));
-        }
-        public virtual ActionResult Success(int id)
-        {
-            return View();
         }
         public virtual ActionResult Index(int id, bool isTablet = false)
         {
@@ -157,7 +176,8 @@ namespace Mavo.Assets.Controllers
                         NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
                         QuantityAvailable = a.Asset.Inventory,
                         AssetCategory = a.Asset.Category.Name,
-                        MavoItemNumber = a.Asset.MavoItemNumber
+                        MavoItemNumber = a.Asset.MavoItemNumber,
+                        QuantityPicked = a.QuantityPicked
                     })
                 }).First();
             if (result.PickCompleted.HasValue)
@@ -175,14 +195,13 @@ namespace Mavo.Assets.Controllers
                             ReturnStarted = result.ReturnStarted,
                             Address = result.Address,
                             CompletionDate = result.CompletionDate,
-
                             Assets = result.Assets.Select(x => new JobAsset()
                             {
                                 Name = x.Name,
                                 Id = x.Id,
                                 AssetId = x.AssetId,
-                                QuantityNeeded = x.Quantity,
-                                QuantityTaken = x.Quantity,
+                                QuantityNeeded = x.Quantity - x.QuantityPicked,
+                                QuantityTaken = x.QuantityPicked,
                                 Kind = x.Kind,
                                 NotEnoughQuantity = x.NotEnoughQuantity,
                                 QuantityAvailable = x.QuantityAvailable,
@@ -190,7 +209,7 @@ namespace Mavo.Assets.Controllers
                                 MavoItemNumber = x.MavoItemNumber
                             }).ToList()
                         };
-            return View(isTablet ? "TabletPicker" : "Index", viewModel);
+            return View("TabletPicker", viewModel);
         }
     }
 }

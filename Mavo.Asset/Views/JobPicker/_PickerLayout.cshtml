@@ -21,7 +21,6 @@
                     $('#pickupTimeDiv').removeClass('hide');
                     $('#startModal').modal('hide');
                     $('#btnSubmit').show();
-                    $('#btnSubmitDisabled').hide();
                     $('#beginPicking').hide();
                     $('.text-box').removeAttr('disabled');
                     $('.input-mini').removeAttr('disabled');
@@ -34,7 +33,6 @@
     else
     {
         <script type="text/javascript">
-            $('#btnSubmitDisabled').hide();
         </script>
         
     }
@@ -46,9 +44,6 @@
 }
 @if (!Model.PickStarted.HasValue)
 {
-    <div class="well" id="beginPicking">
-        <a href="#startModal" role="button" class="btn btn-large btn-primary" data-toggle="modal">Begin Picking</a>
-    </div>
     <div id="startModal" class="modal show fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-show="true">
         <div class="modal-header">
             <h3 id="myModalLabel">Start Picking?</h3>

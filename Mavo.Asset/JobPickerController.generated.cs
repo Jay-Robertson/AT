@@ -71,6 +71,12 @@ namespace Mavo.Assets.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Success);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult CompletePicking()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CompletePicking);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public JobPickerController Actions { get { return MVC.JobPicker; } }
@@ -92,6 +98,7 @@ namespace Mavo.Assets.Controllers
             public readonly string PickAssetForJob = "PickAssetForJob";
             public readonly string Index = "Index";
             public readonly string Success = "Success";
+            public readonly string CompletePicking = "CompletePicking";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -102,6 +109,7 @@ namespace Mavo.Assets.Controllers
             public const string PickAssetForJob = "PickAssetForJob";
             public const string Index = "Index";
             public const string Success = "Success";
+            public const string CompletePicking = "CompletePicking";
         }
 
 
@@ -147,6 +155,14 @@ namespace Mavo.Assets.Controllers
         public ActionParamsClass_Success SuccessParams { get { return s_params_Success; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_Success
+        {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_CompletePicking s_params_CompletePicking = new ActionParamsClass_CompletePicking();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_CompletePicking CompletePickingParams { get { return s_params_CompletePicking; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_CompletePicking
         {
             public readonly string id = "id";
         }
@@ -220,6 +236,13 @@ namespace Mavo.Assets.Controllers
         public override System.Web.Mvc.ActionResult Success(int id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Success);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult CompletePicking(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CompletePicking);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }

@@ -22,7 +22,22 @@
             $('#pick' + assetId).modal('hide');
             $('#quantityNeeded' + assetId).html(quantityNeeded - quantityPicked);
             $('#qtyPicked' + assetId).val(quantityPicked);
-            if (quantityNeeded - quantityPicked == 0) {
+
+            var req = $.ajax(
+                {
+                    url: '/jobpicker/pickassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&quantity=' + quantityPicked,
+                    type: 'POST',
+                    dataType: "html"
+                });
+            req.success(function (data) {
+                if ($('#picked-row-' + assetId).length != 0) {
+                    $('#picked-row-' + assetId).replaceWith(data);
+                }
+                else {
+                    $('#alreadyPickedTable').append(data);
+                }
+            });
+            if (quantityNeeded - quantityPicked <= 0) {
                 $('#row' + assetId).remove();
             }
             if (quantityPicked > 0 && !$.inArray(assetId, nonserializedPicked) > -1) {
@@ -56,15 +71,32 @@
                         quantityNeeded = quantityNeeded - 1;
                         $('#quantityNeeded' + assetId).html(quantityNeeded);
                         alreadyPicked.push($('#barcodeInput').val());
-                        $('#barcodeInput').val('');
-                        $.get('/asset/getassetrow/' + assetId + '?jobId=@Url.RequestContext.RouteData.Values["id"]&index=' + numberPicked, function (data) {
-                            $('#alreadyPickedTable').append(data);
+
+                        var req = $.ajax(
+                          {
+                              url: '/jobpicker/pickassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&barcode=' + $('#barcodeInput').val(),
+                              type: 'POST',
+                              dataType: "html"
+                          });
+                        req.success(function (data) {
+                            if ($('#picked-row-' + assetId).length != 0) {
+                                $('#picked-row-' + assetId).replaceWith(data);
+                            }
+                            else {
+                                $('#alreadyPickedTable').append(data);
+                            }
+                            if (quantityNeeded - 1 <= 0) {
+                                $('#row' + assetId).remove();
+                            }
                         });
                     }
+                    $('#barcodeInput').val('');
+
                 });
                 return false;
             }
         });
+        $('#btnSubmit').removeAttr('disabled');
     </script>
 
 }
@@ -97,7 +129,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Assets)
+        @foreach (var item in Model.Assets.Where(x => x.QuantityNeeded > 0))
         {
             <tr id="row@(item.AssetId)">
                 <td>@item.MavoItemNumber</td>
@@ -130,14 +162,26 @@
         </tr>
     </thead>
     <tbody>
+        @foreach (var pickedAsset in Model.Assets.Where(x => x.QuantityTaken.HasValue && x.QuantityTaken > 0))
+        {
+            Html.RenderPartial(MVC.JobPicker.Views._PickedAssetRow, new Mavo.Assets.Controllers.PickedAssetRow()
+            {
+                AssetId = pickedAsset.AssetId,
+                AssetName = pickedAsset.Name,
+                CurrentPickedQty = pickedAsset.QuantityTaken.Value,
+                MavoNumber = pickedAsset.MavoItemNumber
+            });
+        }
     </tbody>
 </table>
 <span id="pickedSerialized"></span>
 
 <div class="row-fluid">
     <div class="form-actions">
-        <input type="submit" class="btn btn-primary" id="btnSubmit" />
-        <span class="btn btn-primary disabled" id="btnSubmitDisabled">Submit</span>
+        @using (Html.BeginForm(MVC.JobPicker.CompletePicking(Model.JobId)))
+        {
+            <input type="submit" class="btn btn-primary" id="btnSubmit" />
+        }
     </div>
 </div>
 

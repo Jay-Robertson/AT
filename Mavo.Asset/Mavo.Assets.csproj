@@ -195,6 +195,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PickedAssetRow.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="EmailsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -294,6 +295,10 @@
     <Compile Include="Migrations\201302061653557_ChangeDataType.cs" />
     <Compile Include="Migrations\201302061653557_ChangeDataType.Designer.cs">
       <DependentUpon>201302061653557_ChangeDataType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201302141515217_AddedQtyPicked.cs" />
+    <Compile Include="Migrations\201302141515217_AddedQtyPicked.Designer.cs">
+      <DependentUpon>201302141515217_AddedQtyPicked.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
@@ -655,6 +660,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302061653557_ChangeDataType.resx">
       <DependentUpon>201302061653557_ChangeDataType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302141515217_AddedQtyPicked.resx">
+      <DependentUpon>201302141515217_AddedQtyPicked.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

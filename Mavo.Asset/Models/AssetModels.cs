@@ -148,6 +148,8 @@ namespace Mavo.Assets.Models
         public int Id { get; set; }
         public Asset Asset { get; set; }
         public int Quantity { get; set; }
+
+        public int QuantityPicked { get; set; }
     }
 
     [Table("PickedAsset")]

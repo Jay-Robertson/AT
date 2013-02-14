@@ -195,7 +195,8 @@ namespace Mavo.Assets.Controllers
                          NotEnoughQuantity = a.Quantity > (a.Asset.Inventory ?? 0),
                          QuantityAvailable = a.Asset.Inventory,
                          AssetCategory = a.Asset.Category.Name,
-                         MavoItemNumber = a.Asset.MavoItemNumber
+                         MavoItemNumber = a.Asset.MavoItemNumber,
+                         QuantityPicked = a.QuantityPicked
                      })
                  }).ToList();
 
@@ -220,7 +221,7 @@ namespace Mavo.Assets.Controllers
                         Name = x.Name,
                         Id = x.Id,
                         AssetId = x.AssetId,
-                        QuantityNeeded = x.Quantity,
+                        QuantityNeeded = x.Quantity - x.QuantityPicked,
                         QuantityTaken = x.Quantity,
                         Kind = x.Kind,
                         NotEnoughQuantity = x.NotEnoughQuantity,
