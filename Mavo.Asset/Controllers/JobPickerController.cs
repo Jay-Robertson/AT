@@ -53,15 +53,14 @@ namespace Mavo.Assets.Controllers
                 StartPicking(jobId);
 
             var pickedAsset = PickAsset(job, new JobAsset() { AssetId = assetId, QuantityTaken = quantity, Barcode = barcode });
-
-            int currentlyPickedAmount = job.PickedAssets.Count(x => x.Asset.Id == assetId);
             Context.SaveChanges();
-            return PartialView(MVC.JobPicker.Views._PickedAssetRow, new PickedAssetRow { MavoNumber = pickedAsset.Asset.MavoItemNumber, AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = currentlyPickedAmount });
+            return PartialView(MVC.JobPicker.Views._PickedAssetRow, new PickedAssetRow { MavoNumber = pickedAsset.Asset.MavoItemNumber, AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = pickedAsset.Quantity });
         }
 
 
         private PickedAsset PickAsset(Job job, JobAsset x)
         {
+
             var pickAsset = new PickedAsset()
                       {
                           Asset = Context.Assets.FirstOrDefault(a => a.Id == x.AssetId),
@@ -71,7 +70,13 @@ namespace Mavo.Assets.Controllers
                           Quantity = Math.Max(x.QuantityTaken ?? 1, 1),
                           Barcode = x.Barcode
                       };
-            Context.PickedAssets.Add(pickAsset);
+            if (x.Kind != AssetKind.Serialized && job.PickedAssets.Any(a => a.Asset.Id == x.AssetId))
+            {
+                pickAsset = Context.PickedAssets.First(a => a.Asset.Id == x.AssetId);
+                pickAsset.Quantity += x.QuantityTaken.Value;
+            }
+            else
+                Context.PickedAssets.Add(pickAsset);
 
             foreach (var jobAsset in job.Assets)
             {
@@ -94,7 +99,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
         {
-            Job job = Context.Jobs.Include(x=>x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
+            Job job = Context.Jobs.Include(x => x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
 
             IEnumerable<JobAsset> pickedAssets = null;
             if (assets != null)
