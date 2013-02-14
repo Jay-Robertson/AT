@@ -48,7 +48,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult PickAssetForJob(int jobId, int assetId, int quantity = 1, string barcode = null)
         {
-            Job job = Context.Jobs.Include(x => x.Assets).Include(x => x.PickedAssets).FirstOrDefault(x => x.Id == jobId);
+            Job job = Context.Jobs.Include(x => x.Assets).Include("Assets.Asset").Include(x => x.PickedAssets).FirstOrDefault(x => x.Id == jobId);
             if (job.Status == JobStatus.ReadyToPick)
                 StartPicking(jobId);
 
