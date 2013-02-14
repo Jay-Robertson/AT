@@ -16,6 +16,8 @@
         $('#serializedErrorBlock').hide();
 
         $('.pickform').submit(function () {
+            $('#serializedErrorBlock').removeClass('in');
+            $('#serializedErrorBlock').hide();
             var assetId = $(this).children(':hidden').val();
             var quantityPicked = parseInt($('#quantityPicked' + assetId).val());
             var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
@@ -29,6 +31,13 @@
                     type: 'POST',
                     dataType: "html"
                 });
+            req.fail(function (data) {
+                $('#serializedErrorBlock').show();
+                $('#errorMessage').html('There was an error scanning this item');
+                $('#serializedErrorBlock').addClass('in');
+                $('#barcodeInput').val('');
+                return false;
+            });
             req.done(function (data) {
                 if ($('#picked-row-' + assetId).length != 0) {
                     $('#picked-row-' + assetId).replaceWith(data);

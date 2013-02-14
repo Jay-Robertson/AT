@@ -94,7 +94,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
         {
-            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            Job job = Context.Jobs.Include(x=>x.Assets).Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
 
             IEnumerable<JobAsset> pickedAssets = null;
             if (assets != null)
