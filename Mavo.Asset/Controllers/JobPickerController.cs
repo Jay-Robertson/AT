@@ -56,9 +56,9 @@ namespace Mavo.Assets.Controllers
 
             int currentlyPickedAmount = job.PickedAssets.Count(x => x.Asset.Id == assetId);
             Context.SaveChanges();
-            return PartialView(MVC.JobPicker.Views._PickedAssetRow, new PickedAssetRow {  MavoNumber = pickedAsset.Asset.MavoItemNumber, AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = currentlyPickedAmount });
+            return PartialView(MVC.JobPicker.Views._PickedAssetRow, new PickedAssetRow { MavoNumber = pickedAsset.Asset.MavoItemNumber, AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = currentlyPickedAmount });
         }
-        
+
 
         private PickedAsset PickAsset(Job job, JobAsset x)
         {
@@ -95,24 +95,24 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult Index(int id, IList<JobAsset> assets)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
-            
+
             IEnumerable<JobAsset> pickedAssets = null;
             if (assets != null)
             {
-               pickedAssets = assets.Where(x=>(x.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(x.Barcode))
-                                   || ((x.Kind == AssetKind.NotSerialized || x.Kind == AssetKind.Consumable) && (x.QuantityTaken.HasValue && x.QuantityTaken.Value > 0)));
+                pickedAssets = assets.Where(x => (x.Kind == AssetKind.Serialized && !String.IsNullOrEmpty(x.Barcode))
+                                    || ((x.Kind == AssetKind.NotSerialized || x.Kind == AssetKind.Consumable) && (x.QuantityTaken.HasValue && x.QuantityTaken.Value > 0)));
                 foreach (var pickedAsset in pickedAssets)
                 {
                     PickAsset(job, pickedAsset);
                 }
             }
 
-           return CompletePicking(id);
+            return CompletePicking(id);
         }
         public virtual ActionResult Success(int id)
         {
 
-          
+
             return View();
         }
         public virtual ActionResult CompletePicking(int id)

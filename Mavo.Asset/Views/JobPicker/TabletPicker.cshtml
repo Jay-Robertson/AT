@@ -29,7 +29,7 @@
                     type: 'POST',
                     dataType: "html"
                 });
-            req.success(function (data) {
+            req.done(function (data) {
                 if ($('#picked-row-' + assetId).length != 0) {
                     $('#picked-row-' + assetId).replaceWith(data);
                 }
@@ -57,13 +57,21 @@
                 return false;
             }
             else {
-                var req = $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() });
-                req.success(function (data) {
+                $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() })
+                .fail(function (data) {
+                    $('#serializedErrorBlock').show();
+                    $('#errorMessage').html('There was an error scanning ' + $('#barcodeInput').val());
+                    $('#serializedErrorBlock').addClass('in');
+                    $('#barcodeInput').val('');
+                    return false;
+                })
+                .done(function (data) {
                     if (!data.success) {
                         $('#serializedErrorBlock').show();
                         $('#errorMessage').html(data.reason);
                         $('#serializedErrorBlock').addClass('in');
                         $('#barcodeInput').val('');
+                        return false;
                     }
                     else {
                         var assetId = data.assetId;
@@ -78,6 +86,13 @@
                               type: 'POST',
                               dataType: "html"
                           });
+                        req.fail(function(data){
+                            $('#serializedErrorBlock').show();
+                            $('#errorMessage').html('There was an error scanning this item');
+                            $('#serializedErrorBlock').addClass('in');
+                            $('#barcodeInput').val('');
+                            return false;
+                        });
                         req.success(function (data) {
                             if ($('#picked-row-' + assetId).length != 0) {
                                 $('#picked-row-' + assetId).replaceWith(data);
@@ -91,12 +106,11 @@
                         });
                     }
                     $('#barcodeInput').val('');
-
                 });
                 return false;
             }
         });
-        $('#btnSubmit').removeAttr('disabled');
+       
     </script>
 
 }
