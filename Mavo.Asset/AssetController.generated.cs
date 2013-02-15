@@ -209,6 +209,7 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
             public readonly string availableAssets = "availableAssets";
+            public readonly string jobId = "jobId";
         }
         static readonly ActionParamsClass_GetAssetRow s_params_GetAssetRow = new ActionParamsClass_GetAssetRow();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -399,11 +400,12 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult GetAssetDetail(string id, System.Collections.Generic.IList<int> availableAssets)
+        public override System.Web.Mvc.ActionResult GetAssetDetail(string id, System.Collections.Generic.IList<int> availableAssets, int? jobId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.GetAssetDetail);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "availableAssets", availableAssets);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
             return callInfo;
         }
 

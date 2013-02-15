@@ -44,6 +44,8 @@ namespace Mavo.Assets.Models.ViewModel
         public bool IsAddon { get; set; }
 
         public DateTime CompletionDate { get; set; }
+
+        public IList<JobAsset> ReturnedAssets { get; set; }
     }
     public class JobAsset
     {
@@ -69,6 +71,8 @@ namespace Mavo.Assets.Models.ViewModel
         public int? AssetItemId { get; set; }
 
         public int? QuantityAvailable { get; set; }
+
+        public int? QuantityReturned { get; set; }
 
         public string AssetCategory { get; set; }
 

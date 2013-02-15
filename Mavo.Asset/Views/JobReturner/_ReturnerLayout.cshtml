@@ -1,0 +1,23 @@
+﻿@model Mavo.Assets.Models.ViewModel.PickAJobModel
+@{
+    ViewBag.Title = "_PickerLayout";
+    Layout = MVC.Shared.Views._Layout;
+}
+@section scripts
+{
+    @RenderSection("AdditionalScripts")
+}
+@section LeftNav
+{
+    @{Html.RenderPartial("_JobHeader", Model);}
+}
+
+@if (Model.ReturnStarted.HasValue)
+{
+    <div class="alert alert-info @(!Model.ReturnStarted.HasValue ? "hide" : "")" id="returnTimeDiv">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Job Returning!</strong> This job started being returned up at <span id="returnTime">@(Model.ReturnStarted.HasValue ? Model.ReturnStarted.Value.ToString() : "")</span>
+    </div>
+}
+
+@RenderBody()

@@ -102,6 +102,10 @@ namespace Mavo.Assets.Controllers
         {
             return View();
         }
+        public virtual ActionResult CompleteReturning(int jobId)
+        {
+            return View();
+        }
         public virtual ActionResult Index(int id)
         {
             var result = Context.Jobs.Include("Assets").Include("Asset").Include("Item").Where(x => x.Id == id).Select(x =>
@@ -118,6 +122,7 @@ namespace Mavo.Assets.Controllers
                     ReturnStarted = x.ReturnStarted,
                     Address = x.Address,
                     CompletionDate = x.EstimatedCompletionDate,
+                    ReturnedAssets = x.ReturnedAssets,
                     Assets = x.PickedAssets.Select(a => new
                     {
                         Name = a.Asset.Name,
@@ -132,7 +137,7 @@ namespace Mavo.Assets.Controllers
                         QuantityPicked = a.QuantityPicked
                     })
                 }).First();
-            return View(new PickAJobModel()
+            return View("TabletReturner", new PickAJobModel()
             {
                 JobId = result.JobId,
                 JobName = result.JobName,
@@ -143,6 +148,18 @@ namespace Mavo.Assets.Controllers
                 ReturnStarted = result.ReturnStarted,
                 Address = result.Address,
                 CompletionDate = result.CompletionDate,
+                ReturnedAssets = result.ReturnedAssets.Select(x => new JobAsset()
+                {
+                    Name = x.Asset.Name,
+                    Id = x.Id,
+                    AssetId = x.Asset.Id,
+                    AssetItemId = x.Item.Id,
+                    QuantityNeeded = x.Quantity - x.QuantityPicked,
+                    QuantityTaken = x.Quantity,
+                    Kind = x.Asset.Kind,
+                    Barcode = x.Item.Barcode,
+                    MavoItemNumber = x.Asset.MavoItemNumber
+                }).ToList(),
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
                     Name = x.Name,

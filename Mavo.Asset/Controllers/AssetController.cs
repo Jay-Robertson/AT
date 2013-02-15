@@ -111,7 +111,7 @@ namespace Mavo.Assets.Controllers
 
        
 
-        public virtual ActionResult GetAssetDetail(string id, IList<int> availableAssets)
+        public virtual ActionResult GetAssetDetail(string id, IList<int> availableAssets, int? jobId = null)
         {
             AssetItem assetItem = db.AssetItems.Include(x => x.Asset).Where(x => x.Barcode == id).FirstOrDefault();
             if (assetItem == null)
@@ -120,7 +120,8 @@ namespace Mavo.Assets.Controllers
                 return Json(new { success = false, reason = String.Format("You scanned a {0} item. This has not been marked to be picked.", assetItem.Asset.Name) });
             if (assetItem.Condition != AssetCondition.Good)
                 return Json(new { success = false, reason = String.Format("{0} is {1}", assetItem.Asset.Name, assetItem.Condition) });
-            if (assetItem.Status == InventoryStatus.Out)
+
+            if (!jobId.HasValue && assetItem.Status == InventoryStatus.Out)
                 return Json(new { success = false, reason = String.Format("How could you be scanning this? It's out on a job.", assetItem.Asset.Name, assetItem.Condition) });
 
             return Json(new { success = true, assetId = assetItem.Asset.Id, barcode = id }, JsonRequestBehavior.AllowGet);

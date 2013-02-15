@@ -52,7 +52,7 @@ namespace Mavo.Assets.Controllers
             if (job.Status == JobStatus.ReadyToPick)
                 StartPicking(jobId);
 
-            var pickedAsset = PickAsset(job, new JobAsset() { AssetId = assetId, QuantityTaken = quantity, Barcode = barcode });
+            var pickedAsset = PickAsset(job, new JobAsset() { AssetId = assetId, QuantityTaken = quantity, Barcode = barcode, Kind = Context.Assets.First(x=>x.Id == assetId).Kind });
             Context.SaveChanges();
             return PartialView(MVC.JobPicker.Views._PickedAssetRow, new PickedAssetRow { MavoNumber = pickedAsset.Asset.MavoItemNumber, AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = pickedAsset.Quantity });
         }

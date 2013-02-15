@@ -10,7 +10,6 @@
     {
         
         <script type="text/javascript">
-            $('#btnSubmit').hide();
             $('#startModal').modal({
                 keyboard: true,
                 show: false
@@ -20,7 +19,6 @@
                     $('#pickupTime').html(timeStarted);
                     $('#pickupTimeDiv').removeClass('hide');
                     $('#startModal').modal('hide');
-                    $('#btnSubmit').show();
                     $('#beginPicking').hide();
                     $('.text-box').removeAttr('disabled');
                     $('.input-mini').removeAttr('disabled');

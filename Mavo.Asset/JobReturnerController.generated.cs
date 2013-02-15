@@ -65,6 +65,12 @@ namespace Mavo.Assets.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Success);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult CompleteReturning()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CompleteReturning);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public JobReturnerController Actions { get { return MVC.JobReturner; } }
@@ -85,6 +91,7 @@ namespace Mavo.Assets.Controllers
             public readonly string StartReturning = "StartReturning";
             public readonly string Index = "Index";
             public readonly string Success = "Success";
+            public readonly string CompleteReturning = "CompleteReturning";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -94,6 +101,7 @@ namespace Mavo.Assets.Controllers
             public const string StartReturning = "StartReturning";
             public const string Index = "Index";
             public const string Success = "Success";
+            public const string CompleteReturning = "CompleteReturning";
         }
 
 
@@ -130,6 +138,14 @@ namespace Mavo.Assets.Controllers
         {
             public readonly string id = "id";
         }
+        static readonly ActionParamsClass_CompleteReturning s_params_CompleteReturning = new ActionParamsClass_CompleteReturning();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_CompleteReturning CompleteReturningParams { get { return s_params_CompleteReturning; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_CompleteReturning
+        {
+            public readonly string jobId = "jobId";
+        }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewsClass Views { get { return s_views; } }
@@ -141,12 +157,16 @@ namespace Mavo.Assets.Controllers
             public class _ViewNamesClass
             {
                 public readonly string _JobReturnerSidebar = "_JobReturnerSidebar";
+                public readonly string _ReturnerLayout = "_ReturnerLayout";
                 public readonly string Index = "Index";
                 public readonly string Success = "Success";
+                public readonly string TabletReturner = "TabletReturner";
             }
             public readonly string _JobReturnerSidebar = "~/Views/JobReturner/_JobReturnerSidebar.cshtml";
+            public readonly string _ReturnerLayout = "~/Views/JobReturner/_ReturnerLayout.cshtml";
             public readonly string Index = "~/Views/JobReturner/Index.cshtml";
             public readonly string Success = "~/Views/JobReturner/Success.cshtml";
+            public readonly string TabletReturner = "~/Views/JobReturner/TabletReturner.cshtml";
         }
     }
 
@@ -181,6 +201,13 @@ namespace Mavo.Assets.Controllers
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Success);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult CompleteReturning(int jobId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CompleteReturning);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
             return callInfo;
         }
 
