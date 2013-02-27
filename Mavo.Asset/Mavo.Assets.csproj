@@ -304,6 +304,10 @@
     <Compile Include="Migrations\201302271627006_AddedBarcodeToReturnedAsset.Designer.cs">
       <DependentUpon>201302271627006_AddedBarcodeToReturnedAsset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302271826497_AddedADescription.cs" />
+    <Compile Include="Migrations\201302271826497_AddedADescription.Designer.cs">
+      <DependentUpon>201302271826497_AddedADescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
@@ -672,6 +676,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302271627006_AddedBarcodeToReturnedAsset.resx">
       <DependentUpon>201302271627006_AddedBarcodeToReturnedAsset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302271826497_AddedADescription.resx">
+      <DependentUpon>201302271826497_AddedADescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
