@@ -152,8 +152,7 @@
             if (Model.IsAddon)
             {
                 <text>
-        $(":input").attr("disabled", "disabled");
-        $("#PickupTime, #btnSubmit, #btnPickYes").removeAttr('disabled');
+        $(".tab-content .tab-pane:not(#assets) :input:not(:submit, #PickupTime, #btnPickYes)").attr("disabled", "disabled");
                 </text>
             }
             else
