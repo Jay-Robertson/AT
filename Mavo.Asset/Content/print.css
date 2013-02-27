@@ -2,3 +2,7 @@
 {
 	display:none;
 }
+#map
+{
+	page-break-before: always;
+}
