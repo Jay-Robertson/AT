@@ -198,19 +198,18 @@
         {
         <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
         }
-        if (Model.Status == Mavo.Assets.Models.JobStatus.New)
+        <div class="pull-right btn-group">
+        @if (Model.Status == Mavo.Assets.Models.JobStatus.New)
         {
-        <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="pull-right btn btn-primary noprint"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
+            <a data-toggle="modal" href="#pickupModal@(Model.Id.Value)" class="btn btn-primary noprint"><i class="icon-lock icon-white"></i>&nbsp;Ready to pick</a>
         }
         else if (Model.Status == Mavo.Assets.Models.JobStatus.Started && !Model.IsAddon)
         {
-        <span class="pull-right">
             <a data-toggle="modal" href="#transferAssetModel@(Model.Id.Value)" class="btn btn-primary"><i class="icon-random icon-white"></i>&nbsp;Transfer Assets</a>
             <a data-toggle="modal" href="#addOnModal@(Model.Id.Value)" class="btn btn-success"><i class="icon-plus icon-white"></i>&nbsp;Add On</a>
-        </span>
         }
-        <text>&nbsp;</text><a class="btn pull-right" href="#" onclick="window.print()"><i class="icon-print"></i>&nbsp;Print</a>
-        
+        <a class="btn" href="#" onclick="window.print()"><i class="icon-print"></i> Print</a>
+        </div>
     }
 
 </h1>
