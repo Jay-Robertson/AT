@@ -65,7 +65,6 @@ namespace Mavo.Assets.Models
 
     public class RegisterModel
     {
-        [Required]
         [Display(Name = "Employee Number")]
         public string EmployeeId { get; set; }
 
