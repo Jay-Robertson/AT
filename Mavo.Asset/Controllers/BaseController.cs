@@ -35,7 +35,7 @@ namespace Mavo.Assets.Controllers
                     Response.Redirect("~/");
                 }
                 ViewBag.CurrentUserRole = currentUser.Role;
-                ViewBag.AllUsers = assetContext.Users.ToList().OrderBy(x => x.FullName);
+                ViewBag.AllUsers = assetContext.Users.OrderBy(x => x.LastName).ThenBy(x=>x.FirstName).ToList();
             }
 
 

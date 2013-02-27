@@ -8,7 +8,7 @@
         <li class="nav-header">Users</li>
         @foreach (var item in ViewBag.Users)
         {
-            <li @(HtmlExtensions.GetActive(item.Id.ToString(), Url.RequestContext.RouteData.Values["id"]))><a href="/usermanagement/edit/@item.Id">@item.FullName</a></li>
+            <li @(HtmlExtensions.GetActive(item.Id.ToString(), Url.RequestContext.RouteData.Values["id"]))><a href="/usermanagement/edit/@item.Id">@item.LastName, @item.FirstName</a></li>
         }
     </ul>
 </div>

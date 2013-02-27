@@ -22,7 +22,7 @@ namespace Mavo.Assets.Controllers
         }
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            ViewBag.Users = db.Users.ToList();
+            ViewBag.Users = db.Users.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
             base.OnActionExecuting(filterContext);
         }
         //

@@ -123,7 +123,7 @@
                                     <li class="nav-header">Users</li>
                                     @foreach (Mavo.Assets.Models.User user in ViewBag.AllUsers)
                                     {
-                                        <li><a href="/usermanagement/edit/@user.Id">@user.FullName</a></li>
+                                        <li><a href="/usermanagement/edit/@user.Id">@user.LastName, @user.FirstName</a></li>
                                     }
                                 </ul>
                             </li>

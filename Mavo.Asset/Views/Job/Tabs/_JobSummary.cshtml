@@ -20,7 +20,7 @@
                             <div class="control-group">
                                 @Html.LabelTitleizeFor(x => x.SubmittedBy)
                                 <div class="controls">
-                                    @Html.TextBoxFor(x => x.SubmittedBy, new { disabled = "disabled" })
+                                    @Html.TextBoxFor(x => x.SubmittedBy.FullName, new { disabled = "disabled" })
                                 </div>
                             </div>
                             <div class="control-group">

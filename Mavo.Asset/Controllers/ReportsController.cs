@@ -61,7 +61,7 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult AssetHistory()
         {
-            ViewBag.Users = Context.Users.ToList();
+            ViewBag.Users = Context.Users.OrderBy(x=>x.LastName).ThenBy(x=>x.FirstName).ToList();
             return View();
         }
 
@@ -89,7 +89,7 @@ namespace Mavo.Assets.Controllers
                 result = result.Where(x => x.Date >= startDate);
             if (endDate.HasValue)
                 result = result.Where(x => x.Date < endDate);
-            ViewBag.Users = Context.Users.ToList();
+            ViewBag.Users = Context.Users.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
 
             return View("AssetHistory", result.OrderBy(x => x.Date).ToList());
         }
