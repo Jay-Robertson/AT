@@ -109,7 +109,7 @@ namespace Mavo.Assets.Controllers
             return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.OrderBy(x => x.Name).ToList());
         }
 
-       
+
 
         public virtual ActionResult GetAssetDetail(string id, IList<int> availableAssets, int? jobId = null)
         {
@@ -126,10 +126,10 @@ namespace Mavo.Assets.Controllers
 
             return Json(new { success = true, assetId = assetItem.Asset.Id, barcode = id }, JsonRequestBehavior.AllowGet);
         }
-        
+
         public virtual ActionResult GetAssetRow(int id, int jobId, int index)
         {
-            var assetItem = db.Jobs.Where(x => x.Id == jobId).SelectMany(x=>x.Assets).Where(x => x.Asset.Id == id).Select(a => new JobAsset()
+            var assetItem = db.Jobs.Where(x => x.Id == jobId).SelectMany(x => x.Assets).Where(x => x.Asset.Id == id).Select(a => new JobAsset()
                             {
                                 Name = a.Asset.Name,
                                 Id = a.Id,
@@ -263,8 +263,11 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Scan(int? id = null)
         {
-
+            List<AssetCategory> categories = db.Assets.Where(x => x.Kind == AssetKind.Serialized).Select(x => x.Category).Distinct().OrderBy(x => x.Name).ToList();
+            ViewBag.AssetCategories = categories;
             ViewBag.Assets = db.Assets.ToList();
+            var currentCategoryId = categories.First().Id;
+            ViewBag.AssetsForDropDown = db.Assets.Where(x => x.Category.Id == currentCategoryId).ToList();
             if (id.HasValue)
             {
                 AssetScanPostModel model = db.AssetItems.Where(x => x.Id == id.Value).Select(x => new AssetScanPostModel()

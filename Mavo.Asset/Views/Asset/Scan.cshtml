@@ -13,9 +13,19 @@
         <legend>Item Details</legend>
         <div class="well">
             <div class="control-group">
+                @Html.LabelTitleizeFor(x => x.AssetCategoryId)
+                <div class="controls">
+                    @Html.DropDownList("AssetCategoryId", ((IList<Mavo.Assets.Models.AssetCategory>)ViewBag.AssetCategories).Select(x => new SelectListItem()
+               {
+                   Value = x.Id.ToString(),
+                   Text = x.Name
+               }))
+                </div>
+            </div>
+            <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.AssetId)
                 <div class="controls">
-                    @Html.DropDownList("AssetId", ((IList<Mavo.Assets.Models.Asset>)ViewBag.Assets).Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).Select(x => new SelectListItem()
+                    @Html.DropDownList("AssetId", ((IList<Mavo.Assets.Models.Asset>)ViewBag.AssetsForDropDown).Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).Select(x => new SelectListItem()
                {
                    Value = x.Id.ToString(),
                    Text = x.Name
@@ -96,4 +106,16 @@
             <input type="submit" class="btn btn-primary" />
         </div>
     </div>
+}
+
+@section Scripts
+{
+    <script>
+        $('#AssetCategoryId').change(function () {
+            $.get('/asset/assetpickerdetail/' + $(this).val(), function (data) {
+                $('#AssetId').html(data)
+            });
+        });
+    </script>
+
 }

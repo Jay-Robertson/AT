@@ -58,7 +58,12 @@ namespace System.Web.Mvc
             }
             string labelValue = null;
             if (attr != null)
-                labelValue = attr.Name;
+            {
+                if (attr.Name != null)
+                    labelValue = attr.Name;
+                else
+                    labelValue = attr.Description;
+            }
             else
                 labelValue = ModelMetadata.FromLambdaExpression(expression, helper.ViewData).DisplayName;
 

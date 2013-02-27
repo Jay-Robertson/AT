@@ -22,6 +22,7 @@ namespace Mavo.Assets.Models.ViewModel
     public class AssetScanPostModel
     {
         public int? Id { get; set; }
+        [Display(Description = "Item Name")]
         public int AssetId { get; set; }
         [Required]
         public string Barcode { get; set; }                 // mavo barcode value
@@ -30,12 +31,15 @@ namespace Mavo.Assets.Models.ViewModel
         // manufactuer/model/vendor data
         public string Manufacturer { get; set; }
         public string ModelNumber { get; set; }
-        
+
         // purchasing/warranty data
         public string SerialNumber { get; set; }            // manufacturer's serial number
         public DateTime? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
         public DateTime? WarrantyExpiration { get; set; }
 
+
+        [Display(Name="Item Category")]
+        public int AssetCategoryId { get; set; }
     }
 }
