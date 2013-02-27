@@ -577,6 +577,7 @@
     <Content Include="Views\JobPicker\_PickedAssetRow.cshtml" />
     <Content Include="Views\JobReturner\_ReturnerLayout.cshtml" />
     <Content Include="Views\JobReturner\TabletReturner.cshtml" />
+    <Content Include="Views\Emails\Shorts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

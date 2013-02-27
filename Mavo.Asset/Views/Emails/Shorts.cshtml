@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Host = "http://" + Request.Url.Host + (Request.Url.Port > 0 ? ":" + Request.Url.Port.ToString() : "") + "/"; 
+}
+@section Title
+{
+    <text>Job <a href="@ViewBag.Host/job/edit/@ViewBag.Job.Id">@ViewBag.Job.JobNumber</a> is short some items.</text>
+}
+
+<p align="left" class="article-title">Job Details</p>
+<div align="left" class="article-content">
+    @{Html.RenderPartial("_JobHeader");}
+    <table>
+        <thead>
+            <tr>
+                <th>Item Number</th>
+                <th>Item Name</th>
+                <th>Quantity Short</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Mavo.Assets.Controllers.MissingItem item in ViewBag.Shorts)
+            {
+                <tr>
+                    <td>@item.MavoItemNumber</td>
+                    <td>@item.AssetName</td>
+                    <td>@item.NumberShort</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

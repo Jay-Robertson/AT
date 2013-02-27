@@ -8,11 +8,13 @@ using Mavo.Assets.Models.ViewModel;
 using Mavo.Assets.Services;
 using Postal;
 using System.Data.Entity;
+using System.Diagnostics;
 namespace Mavo.Assets.Controllers
 {
     [Authorize]
     public partial class JobPickerController : BaseController
     {
+
         private readonly IAssetActivityManager AssetActivity;
         private readonly AssetContext Context;
         /// <summary>
@@ -52,7 +54,7 @@ namespace Mavo.Assets.Controllers
             if (job.Status == JobStatus.ReadyToPick)
                 StartPicking(jobId);
 
-            var pickedAsset = PickAsset(job, new JobAsset() { AssetId = assetId, QuantityTaken = quantity, Barcode = barcode, Kind = Context.Assets.First(x=>x.Id == assetId).Kind });
+            var pickedAsset = PickAsset(job, new JobAsset() { AssetId = assetId, QuantityTaken = quantity, Barcode = barcode, Kind = Context.Assets.First(x => x.Id == assetId).Kind });
             Context.SaveChanges();
             return PartialView(MVC.JobPicker.Views._PickedAssetRow, new PickedAssetRow { MavoNumber = pickedAsset.Asset.MavoItemNumber, AssetId = assetId, AssetName = pickedAsset.Asset.Name, CurrentPickedQty = pickedAsset.Quantity });
         }
@@ -122,7 +124,9 @@ namespace Mavo.Assets.Controllers
         }
         public virtual ActionResult CompletePicking(int id)
         {
-            JobAddon tempJob = Context.JobAddons.Include("ParentJob").FirstOrDefault(x => x.Id == id);
+            JobAddon tempJob = Context.JobAddons
+                .Include("Assets").Include("Assets.Asset").Include("PickedAssets").Include("PickedAssets.Asset")
+                .Include("ParentJob").FirstOrDefault(x => x.Id == id);
             Job job = null;
             if (tempJob != null)
             {
@@ -134,9 +138,10 @@ namespace Mavo.Assets.Controllers
             }
             else
             {
-                job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+                job = Context.Jobs
+                    .Include("Assets").Include("Assets.Asset").Include("PickedAssets").Include("PickedAssets.Asset")
+                    .FirstOrDefault(x => x.Id == id);
                 job.Status = JobStatus.Started;
-                job.PickedAssets = new List<PickedAsset>();
                 job.PickCompleted = DateTime.Now;
             }
 
@@ -149,12 +154,33 @@ namespace Mavo.Assets.Controllers
             email.To = Properties.Settings.Default.WarehouseManager;
             email.Job = job;
             email.Send();
+            var shorts = new List<MissingItem>();
+            foreach (var requestedAsset in job.Assets)
+            {
+                int requestedAmount = requestedAsset.Quantity;
+                int pickedAmount = requestedAsset.QuantityPicked;
+
+                if (pickedAmount < requestedAmount)
+                {
+                    shorts.Add(new MissingItem(requestedAsset.Asset.MavoItemNumber, requestedAmount - pickedAmount, requestedAsset.Asset.Name));
+                }
+            }
+            if (shorts.Any())
+            {
+                dynamic shortEmail = new Email("Shorts");
+                shortEmail.Subject = String.Format("Job #{0} is short some items", job.JobNumber);
+                shortEmail.Shorts = shorts;
+                shortEmail.To = Properties.Settings.Default.WarehouseManager;
+                shortEmail.Job = job;
+                shortEmail.Send();
+            }
 
             return RedirectToAction(MVC.JobPicker.Success(id));
         }
         public virtual ActionResult Index(int id, bool isTablet = false)
         {
-            var result = Context.Jobs.Include("Assets").Include("Asset").Where(x => x.Id == id).Select(x =>
+            var result = Context.Jobs.Include("Assets").Include("Assets.Asset").Include("PickedAssets").Include("PickedAssets.Asset")
+                .Where(x => x.Id == id).Select(x =>
                 new
                 {
                     JobId = x.Id,
@@ -215,6 +241,73 @@ namespace Mavo.Assets.Controllers
                             }).ToList()
                         };
             return View("TabletPicker", viewModel);
+        }
+    }
+    [DebuggerDisplay("\\{ MavoItemNumber = {MavoItemNumber}, NumberShort = {NumberShort}, AssetName = {AssetName} \\}")]
+    public sealed class MissingItem : IEquatable<MissingItem>
+    {
+        private readonly string _MavoItemNumber;
+        private readonly int _NumberShort;
+        private readonly string _AssetName;
+
+        public MissingItem(string mavoItemNumber, int numberShort, string assetName)
+        {
+            _MavoItemNumber = mavoItemNumber;
+            _NumberShort = numberShort;
+            _AssetName = assetName;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is MissingItem)
+                return Equals((MissingItem)obj);
+            return false;
+        }
+        public bool Equals(MissingItem obj)
+        {
+            if (obj == null)
+                return false;
+            if (!EqualityComparer<string>.Default.Equals(_MavoItemNumber, obj._MavoItemNumber))
+                return false;
+            if (!EqualityComparer<int>.Default.Equals(_NumberShort, obj._NumberShort))
+                return false;
+            if (!EqualityComparer<string>.Default.Equals(_AssetName, obj._AssetName))
+                return false;
+            return true;
+        }
+        public override int GetHashCode()
+        {
+            int hash = 0;
+            hash ^= EqualityComparer<string>.Default.GetHashCode(_MavoItemNumber);
+            hash ^= EqualityComparer<int>.Default.GetHashCode(_NumberShort);
+            hash ^= EqualityComparer<string>.Default.GetHashCode(_AssetName);
+            return hash;
+        }
+        public override string ToString()
+        {
+            return String.Format("{{ MavoItemNumber = {0}, NumberShort = {1}, AssetName = {2} }}", _MavoItemNumber, _NumberShort, _AssetName);
+        }
+
+        public string MavoItemNumber
+        {
+            get
+            {
+                return _MavoItemNumber;
+            }
+        }
+        public int NumberShort
+        {
+            get
+            {
+                return _NumberShort;
+            }
+        }
+        public string AssetName
+        {
+            get
+            {
+                return _AssetName;
+            }
         }
     }
 }
