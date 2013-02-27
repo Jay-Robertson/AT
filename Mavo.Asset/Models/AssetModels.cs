@@ -73,6 +73,7 @@ namespace Mavo.Assets.Models
         public string MavoItemNumber { get; set; }
         public string Barcode { get; set; }          // mavo barcode value
         public AssetCategory Category { get; set; }
+        [Display(Name="Item Name")]
         public string Name { get; set; }
         public string UnitOfMeasure { get; set; }    // valid on Consumable and NonSerialized assets
 
