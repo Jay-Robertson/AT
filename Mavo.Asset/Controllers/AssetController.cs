@@ -263,7 +263,10 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Scan(int? id = null)
         {
-            List<AssetCategory> categories = db.Assets.Where(x => x.Kind == AssetKind.Serialized).Select(x => x.Category).Distinct().OrderBy(x => x.Name).ToList();
+            List<AssetCategory> categories = db.Assets
+                .Where(x => x.Kind == AssetKind.Serialized && x.Category != null)
+                .Select(x => x.Category)
+                .Distinct().OrderBy(x => x.Name).ToList();
             ViewBag.AssetCategories = categories;
             ViewBag.Assets = db.Assets.ToList();
             var currentCategoryId = categories.First().Id;
