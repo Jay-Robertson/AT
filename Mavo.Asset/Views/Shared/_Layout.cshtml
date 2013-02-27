@@ -173,6 +173,15 @@
                 gotoCurrent: true
             });
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+
+            $(':submit').live('click', function () {
+                var $this = $(this);
+                if ($this.is('.btn'))
+                {
+                    $this.button('loading');
+                    setTimeout(function () { $this.button('reset'); }, 1000 * 10);
+                }
+            });
         });
 
     </script>
