@@ -308,6 +308,10 @@
     <Compile Include="Migrations\201302271826497_AddedADescription.Designer.cs">
       <DependentUpon>201302271826497_AddedADescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302271909352_RetainageToNumberic2.cs" />
+    <Compile Include="Migrations\201302271909352_RetainageToNumberic2.Designer.cs">
+      <DependentUpon>201302271909352_RetainageToNumberic2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
@@ -679,6 +683,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201302271826497_AddedADescription.resx">
       <DependentUpon>201302271826497_AddedADescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201302271909352_RetainageToNumberic2.resx">
+      <DependentUpon>201302271909352_RetainageToNumberic2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

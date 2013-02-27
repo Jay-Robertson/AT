@@ -314,7 +314,7 @@ namespace Mavo.Assets.Models
 
         [Display(Name="Retainage %")]
         [Range(0,100)]
-        public double? Retainage { get; set; }
+        public int? Retainage { get; set; }
 
         public decimal? WithholdPercentage { get; set; }
 
