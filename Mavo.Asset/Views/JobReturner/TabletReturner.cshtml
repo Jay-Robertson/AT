@@ -39,8 +39,8 @@
                 return false;
             });
             req.done(function (data) {
-                if ($('#returned-row-' + assetId).length != 0) {
-                    $('#returned-row-' + assetId).replaceWith(data);
+                if ($('#asset-row-' + assetId).length != 0) {
+                    $('#asset-row-' + assetId).replaceWith(data);
                 }
                 else {
                     $('#alreadyReturnedTable').append(data);
@@ -56,6 +56,8 @@
             return false;
         });
         $('#assetScanner').submit(function () {
+            var val = $("input[type=submit][clicked=true]").val()
+            var isDamaged = val == 'Scan & Return Damaged';
             $('#serializedErrorBlock').removeClass('in');
             $('#serializedErrorBlock').hide();
             if ($.inArray($('#barcodeInput').val(), alreadyReturned) > -1) {
@@ -91,11 +93,11 @@
 
                         var req = $.ajax(
                           {
-                              url: '/jobreturner/returnassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&barcode=' + $('#barcodeInput').val(),
+                              url: '/jobreturner/returnassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&barcode=' + $('#barcodeInput').val() + '&isDamaged=' + isDamaged,
                               type: 'POST',
                               dataType: "html"
                           });
-                        req.fail(function(data){
+                        req.fail(function (data) {
                             $('#serializedErrorBlock').show();
                             $('#errorMessage').html('There was an error scanning this item');
                             $('#serializedErrorBlock').addClass('in');
@@ -103,8 +105,8 @@
                             return false;
                         });
                         req.success(function (data) {
-                            if ($('#returned-row-' + assetId).length != 0) {
-                                $('#returned-row-' + assetId).replaceWith(data);
+                            if ($('#asset-row-' + assetId).length != 0) {
+                                $('#asset-row-' + assetId).replaceWith(data);
                             }
                             else {
                                 $('#alreadyReturnedTable').append(data);
@@ -119,7 +121,11 @@
                 return false;
             }
         });
-       
+
+        $("form input[type=submit]").click(function () {
+            $("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
+            $(this).attr("clicked", "true");
+        });
     </script>
 
 }
@@ -134,7 +140,8 @@
         }
         <input type="hidden" name="jobId" value="@Model.JobId" />
         <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" />
-        <input type="submit" value="Lookup" />
+        <input type="submit" name="return" class="btn btn-primary" value="Scan & Return" />
+        <input type="submit" name="returndamaged" class="btn btn-danger" value="Scan & Return Damaged" />
     }
 </div>
 
@@ -153,13 +160,13 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Assets.Where(x => x.QuantityTaken > 0))
+        @foreach (var item in Model.Assets.Where(x => x.QuantityNeeded > 0))
         {
             <tr id="row@(item.AssetId)">
                 <td>@item.MavoItemNumber</td>
                 <td>@item.Name</td>
                 <td id="quantityNeeded@(item.AssetId)">
-                    @item.QuantityTaken
+                    @item.QuantityNeeded
                 </td>
                 <td>
                     @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)

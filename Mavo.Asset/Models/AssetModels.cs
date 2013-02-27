@@ -168,6 +168,9 @@ namespace Mavo.Assets.Models
         public Job Job { get; set; }
         public DateTime Returned { get; set; }
         public AssetItem Item { get; set; }
+
+        public string Barcode { get; set; }
+
     }
 
     [Table("TemplatesAssets")]

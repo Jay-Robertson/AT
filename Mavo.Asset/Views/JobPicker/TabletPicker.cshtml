@@ -39,8 +39,8 @@
                 return false;
             });
             req.done(function (data) {
-                if ($('#picked-row-' + assetId).length != 0) {
-                    $('#picked-row-' + assetId).replaceWith(data);
+                if ($('#asset-row-' + assetId).length != 0) {
+                    $('#asset-row-' + assetId).replaceWith(data);
                 }
                 else {
                     $('#alreadyPickedTable').append(data);
@@ -103,8 +103,8 @@
                             return false;
                         });
                         req.success(function (data) {
-                            if ($('#picked-row-' + assetId).length != 0) {
-                                $('#picked-row-' + assetId).replaceWith(data);
+                            if ($('#asset-row-' + assetId).length != 0) {
+                                $('#asset-row-' + assetId).replaceWith(data);
                             }
                             else {
                                 $('#alreadyPickedTable').append(data);
