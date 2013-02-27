@@ -64,7 +64,7 @@
                 req.success(function (data) {
                     $('#CustomerId').append($('<option></option>').val(data.Id).html(data.Name));
                     $('#CustomerId').val(data.Id);
-                    $('#addCustomerModal').hide();
+                    $('#addCustomerModal').modal('hide');
                 });
                 return false;
             }

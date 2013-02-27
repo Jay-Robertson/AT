@@ -300,8 +300,8 @@ namespace Mavo.Assets.Controllers
         private void SetListsForCrud(Job job)
         {
             ViewBag.Customers = Context.Customers.OrderBy(x => x.Name).ToList();
-            ViewBag.Foremen = Context.Users.Where(x => (x.Role & UserRole.Foreman) == UserRole.Foreman && !x.Disabled).ToList();
-            ViewBag.ProjectManagers = Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager && !x.Disabled).ToList();
+            ViewBag.Foremen = Context.Users.Where(x => (x.Role & UserRole.Foreman) == UserRole.Foreman && !x.Disabled).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
+            ViewBag.ProjectManagers = Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager && !x.Disabled).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
             ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Context.Jobs.ToList().GroupBy(x => x.Status).OrderBy(x => x.Key).ToList() };
         }
     }

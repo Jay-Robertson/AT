@@ -36,7 +36,7 @@
         <li class="nav-header">Jobs By Manager</li>
         @foreach (var item in ViewBag.ProjectManagers)
         {
-            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["projectManagerId"], item.Id)><a href="/job?projectManagerId=@item.Id">@item.FullName</a></li>
+            <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["projectManagerId"], item.Id)><a href="/job?projectManagerId=@item.Id">@item.LastName, @item.FirstName</a></li>
         }
     </ul>
 </div>
