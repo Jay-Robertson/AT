@@ -155,14 +155,17 @@ namespace Mavo.Assets.Controllers
             email.Job = job;
             email.Send();
             var shorts = new List<MissingItem>();
-            foreach (var requestedAsset in job.Assets)
+            if (job.Assets != null && job.Assets.Any())
             {
-                int requestedAmount = requestedAsset.Quantity;
-                int pickedAmount = requestedAsset.QuantityPicked;
-
-                if (pickedAmount < requestedAmount)
+                foreach (var requestedAsset in job.Assets)
                 {
-                    shorts.Add(new MissingItem(requestedAsset.Asset.MavoItemNumber, requestedAmount - pickedAmount, requestedAsset.Asset.Name));
+                    int requestedAmount = requestedAsset.Quantity;
+                    int pickedAmount = requestedAsset.QuantityPicked;
+
+                    if (pickedAmount < requestedAmount)
+                    {
+                        shorts.Add(new MissingItem(requestedAsset.Asset.MavoItemNumber, requestedAmount - pickedAmount, requestedAsset.Asset.Name));
+                    }
                 }
             }
             if (shorts.Any())

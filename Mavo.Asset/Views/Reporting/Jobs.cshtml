@@ -181,9 +181,14 @@
                             
                         </td>
                         <td>@job.JobNumber</td>
-                        <td>@job.PickStarted.Value.ToShortTimeString()</td>
-                        <td>@job.PickCompleted.Value.ToShortTimeString()</td>
-                        <td>@((job.PickCompleted.Value - job.PickStarted.Value).ToRelative())</td>
+                        <td>@(job.PickStarted.HasValue ? job.PickStarted.Value.ToShortTimeString() : "")</td>
+                        <td>@(job.PickCompleted.HasValue ? job.PickCompleted.Value.ToShortTimeString() : "")</td>
+                        <td>
+                            @if(job.PickCompleted.HasValue && job.PickStarted.HasValue)
+                            {
+                            @((job.PickCompleted.Value - job.PickStarted.Value).ToRelative())
+                            }
+                        </td>
                         <td>@(job.PickedBy != null ? job.PickedBy.FullName : "so and so")</td>
                     </tr>
                 }
@@ -217,10 +222,15 @@
                         </td>
                         <td>@job.JobNumber</td>
                         <td>
-                            @job.ReturnStarted.Value.ToShortTimeString()
+                            @(job.ReturnStarted.HasValue ? job.ReturnStarted.Value.ToShortTimeString() : "")
                         </td>
                         <td>@job.ReturnCompleted.Value.ToShortTimeString()</td>
-                        <td>@((job.ReturnCompleted.Value - job.ReturnStarted.Value).ToRelative())</td>
+                        <td>
+                            @if(job.ReturnCompleted.HasValue && job.ReturnStarted.HasValue)
+                            {
+                            @((job.ReturnCompleted.Value - job.ReturnStarted.Value).ToRelative())
+                            }
+                        </td>
                         <td>@(job.ReturnedBy != null ? job.ReturnedBy.FullName : "so and so")</td>
                     </tr>
                 }

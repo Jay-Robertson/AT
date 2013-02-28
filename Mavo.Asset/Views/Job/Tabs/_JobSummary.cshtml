@@ -92,7 +92,7 @@
                             <div class="control-group">
                                 @Html.LabelTitleizeFor(x => x.ShiftHours)
                                 <div class="controls">
-                                    @Html.EditorFor(x => x.ShiftHours)
+                                    @Html.TextBoxFor(x => x.ShiftHours, new { disabled = "disabled" })
                                 </div>
                             </div>
                             <div class="control-group">

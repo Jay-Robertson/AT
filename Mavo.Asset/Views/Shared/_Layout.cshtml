@@ -109,7 +109,7 @@
         </footer>
 
     </div>
-  
+
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryplugins")
@@ -164,6 +164,11 @@
 
 
         $(document).ready(function () {
+
+            $('.currency').change(function () {
+                $(this).val($(this).val().replace(',', ''));
+            });
+
             $(".date").datetimepicker({
                 changeMonth: true,
                 changeYear: true,
