@@ -185,7 +185,9 @@ namespace Mavo.Assets.Controllers
 
                 ViewBag.Action = "Edit a";
 
-                return View("Edit", AutoMapper.Mapper.Map<Job, EditJobPostModel>(job));
+                EditJobPostModel result = AutoMapper.Mapper.Map<Job, EditJobPostModel>(job);
+                result.ShiftHours = job.Summary.ShiftHours;
+                return View("Edit", result);
             }
             else
                 return RedirectToAction(MVC.Job.Create());
@@ -227,6 +229,7 @@ namespace Mavo.Assets.Controllers
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == (jobPostModel.Id ?? 0));
             job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
+            job.Summary.ShiftHours = jobPostModel.ShiftHours;
             if (ModelState.IsValid)
             {
 

@@ -344,7 +344,7 @@ namespace Mavo.Assets.Models
     {
         public string FilledOutBy { get; set; }
 
-        public string ShiftHours { get; set; }
+        public int? ShiftHours { get; set; }
     
         public string Comments { get; set; }
 
