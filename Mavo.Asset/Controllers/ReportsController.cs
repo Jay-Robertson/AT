@@ -22,7 +22,12 @@ namespace Mavo.Assets.Controllers
         }
         private List<Job> GetReadyToPick()
         {
-            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.Status == JobStatus.ReadyToPick).ToList().Where(x => x.PickupTime.Date == DateTime.Today).ToList();
+            return Context.Jobs
+                .Include("ProjectManager").Include("PickedBy").Include("ReturnedBy")
+                .Where(x => x.Status == JobStatus.ReadyToPick)
+                .ToList()
+                .Where(x => x.PickupTime.Date <= DateTime.Now.Date.AddDays(7))
+                .ToList();
         }
         private List<Job> GetReadyToReturn()
         {

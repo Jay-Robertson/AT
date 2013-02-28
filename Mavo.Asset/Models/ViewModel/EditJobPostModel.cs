@@ -49,6 +49,7 @@ namespace Mavo.Assets.Models.ViewModel
 
         [Display(Name = "Foreman")]
         public int? ForemanId { get; set; }
+        [Required]
         public int? ProjectManagerId { get; set; }
         public string ProjectManager { get; set; }
         public JobStatus Status { get; set; }

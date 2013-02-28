@@ -290,6 +290,7 @@ namespace Mavo.Assets.Models
         }
         public string Attention { get; set; }
 
+        [Display(Name="Consultant Address")]
         public Address Consultant { get; set; }
         public Address InvoiceAddress { get; set; }
 
