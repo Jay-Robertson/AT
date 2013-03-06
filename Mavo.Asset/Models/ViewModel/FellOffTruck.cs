@@ -10,6 +10,7 @@ namespace Mavo.Assets.Models.ViewModel
     public sealed class AssetsWithoutReturn : IEquatable<AssetsWithoutReturn>
     {
         private int _JobId;
+        private readonly string _MavoItemNumber;
         private readonly string _Asset;
         private readonly string _Barcode;
         private int _Id = 0;
@@ -18,8 +19,9 @@ namespace Mavo.Assets.Models.ViewModel
         private readonly string _ReturnedBy;
 
         public int? QuantityLost { get; set; }
-        public AssetsWithoutReturn(int id, string asset, AssetItem assetItem, Models.Job job, int? quantityLost)
+        public AssetsWithoutReturn(int id, string mavoItemNumber, string asset, AssetItem assetItem, Models.Job job, int? quantityLost)
         {
+            _MavoItemNumber = mavoItemNumber;
             _JobId = job.Id;
             _Asset = asset;
             if (assetItem != null)
@@ -41,6 +43,8 @@ namespace Mavo.Assets.Models.ViewModel
         public bool Equals(AssetsWithoutReturn obj)
         {
             if (obj == null)
+                return false;
+            if (!EqualityComparer<string>.Default.Equals(_MavoItemNumber, obj._MavoItemNumber))
                 return false;
             if (!EqualityComparer<string>.Default.Equals(_Asset, obj._Asset))
                 return false;
@@ -74,6 +78,8 @@ namespace Mavo.Assets.Models.ViewModel
         {
             return String.Format("{{Id = {5}, Asset = {0}, Barcode = {1}, Job = {2}, ReturnedOn = {3}, ReturnedBy = {4} }}", _Asset, _Barcode, _Job, _ReturnedOn, _ReturnedBy, _Id);
         }
+
+        public string MavoItemNumber { get { return _MavoItemNumber; } }
 
         public string Asset
         {

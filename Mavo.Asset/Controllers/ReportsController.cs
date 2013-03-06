@@ -157,7 +157,7 @@ namespace Mavo.Assets.Controllers
 
                     if (fellOfTruck)
                     {
-                        result.Add(new AssetsWithoutReturn(pickedAsset.Id, pickedAsset.Asset.Name, pickedAsset.Item, pickedAssetsForJob.Key, quantityLost));
+                        result.Add(new AssetsWithoutReturn(pickedAsset.Id, pickedAsset.Asset.MavoItemNumber, pickedAsset.Asset.Name, pickedAsset.Item, pickedAssetsForJob.Key, quantityLost));
                     }
                 }
             }

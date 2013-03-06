@@ -23,6 +23,9 @@
 <table class="table table-striped table-hover">
     <tr>
         <th>
+            Mavo Item Number
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Asset)
         </th>
         <th>
@@ -45,6 +48,7 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>@item.MavoItemNumber</td>
             <td>
                 <a href="/asset/edit/@(item.Id)">@Html.DisplayFor(modelItem => item.Asset)</a>
             </td>

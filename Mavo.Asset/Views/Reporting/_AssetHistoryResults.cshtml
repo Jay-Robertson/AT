@@ -3,6 +3,7 @@
 {
     <table class="table table-striped table-hover">
         <tr>
+            <th>Mavo Item Number</th>
             <th>Asset</th>
             <th>Barcode</th>
             <th>Action</th>
@@ -14,6 +15,7 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.Asset.MavoItemNumber</td>
                 <td>
                     @{
             switch (item.Asset.Kind)

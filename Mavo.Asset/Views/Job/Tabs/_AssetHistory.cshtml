@@ -9,6 +9,7 @@
                     <table id="asset-table" class="table table-striped">
                         <thead>
                             <tr>
+                                <th>Mavo Item Number</th>
                                 <th>Asset</th>
                                 <th>Quantity/Barcode</th>
                             </tr>
@@ -17,6 +18,7 @@
                             @foreach (var item in Model.PickedAssets)
                             {
                                 <tr>
+                                    <td>@item.Asset.MavoItemNumber</td>
                                     <td>
                                         @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
                                         {

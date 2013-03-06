@@ -2,6 +2,7 @@
 @if (null != Model.Asset)
 {
     <tr id="row-@Model.Id" data-asset-id="@(Model.Asset.Id)">
+        <td>@Model.Asset.MavoItemNumber</td>
         <td>@Model.Asset.Name
             @Html.HiddenFor(model => Model.Asset.Id)
         </td>
