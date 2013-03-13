@@ -197,6 +197,16 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult Index(AssetSearchResult search)
         {
+            // do an initial search for a specific barcode
+            if (!String.IsNullOrWhiteSpace(search.SearchString))
+            {
+                var i = db.AssetItems.FirstOrDefault(x => x.Barcode == search.SearchString.Trim());
+                if (null != i)
+                {
+                    return RedirectToAction(MVC.Asset.Scan(i.Id));
+                }
+            }
+
             var query = db.Assets.AsQueryable();
 
             if (search.Kind.HasValue)
@@ -269,25 +279,32 @@ namespace Mavo.Assets.Controllers
                 .Distinct().OrderBy(x => x.Name).ToList();
             ViewBag.AssetCategories = categories;
             ViewBag.Assets = db.Assets.ToList();
-            var currentCategoryId = categories.First().Id;
-            ViewBag.AssetsForDropDown = db.Assets.Where(x => x.Category.Id == currentCategoryId).ToList();
             if (id.HasValue)
             {
-                AssetScanPostModel model = db.AssetItems.Where(x => x.Id == id.Value).Select(x => new AssetScanPostModel()
-                    {
-                        AssetId = x.Asset.Id,
-                        Barcode = x.Barcode,
-                        Condition = x.Condition,
-                        Id = x.Id,
-                        Manufacturer = x.Manufacturer,
-                        ModelNumber = x.ModelNumber,
-                        PurchaseDate = x.PurchaseDate,
-                        PurchasePrice = x.PurchasePrice,
-                        SerialNumber = x.SerialNumber,
-                        WarrantyExpiration = x.WarrantyExpiration
-                    }).FirstOrDefault();
+                // editing existing item
+                var assetItem = db.AssetItems.First(x => x.Id == id.Value);
+                AssetScanPostModel model = new AssetScanPostModel
+                {
+                    AssetId = assetItem.Asset.Id,
+                    Barcode = assetItem.Barcode,
+                    Condition = assetItem.Condition,
+                    Id = assetItem.Id,
+                    Manufacturer = assetItem.Manufacturer,
+                    ModelNumber = assetItem.ModelNumber,
+                    PurchaseDate = assetItem.PurchaseDate,
+                    PurchasePrice = assetItem.PurchasePrice,
+                    SerialNumber = assetItem.SerialNumber,
+                    WarrantyExpiration = assetItem.WarrantyExpiration,
+                    AssetCategoryId = assetItem.Asset.Category.Id
+                };
+                ViewBag.AssetsForDropDown = db.Assets.Where(x => x.Category.Id == model.AssetCategoryId).ToList();
                 return View(model);
             }
+
+            // scanning new item
+            var currentCategoryId = categories.First().Id;
+            ViewBag.AssetsForDropDown = db.Assets.Where(x => x.Category.Id == currentCategoryId).ToList();
+            ViewBag.CurrentCategoryId = currentCategoryId;
             return View();
         }
 
@@ -297,7 +314,25 @@ namespace Mavo.Assets.Controllers
             if (ModelState.IsValid)
             {
                 Asset asset = db.Assets.FirstOrDefault(x => x.Id == scan.AssetId);
-                AssetItem assetItem = new AssetItem()
+                AssetItem assetItem = null;
+                if (scan.Id.HasValue)
+                {
+                    assetItem = db.AssetItems.Single(x => x.Id == scan.Id);
+                    assetItem.Asset = asset;
+                    assetItem.Barcode = scan.Barcode;
+                    assetItem.Condition = scan.Condition;
+                    assetItem.PurchaseDate = scan.PurchaseDate;
+                    assetItem.WarrantyExpiration = scan.WarrantyExpiration;
+                    assetItem.SerialNumber = scan.SerialNumber;
+                    assetItem.PurchasePrice = scan.PurchasePrice;
+                    assetItem.ModelNumber = scan.ModelNumber;
+                    assetItem.Manufacturer = scan.Manufacturer;
+                    db.SaveChanges();
+                    AssetActivity.Add(AssetAction.Edit, asset, assetItem);
+                    return RedirectToAction(MVC.Asset.Edit(asset.Id));
+                }
+                
+                assetItem = new AssetItem()
                 {
                     Asset = asset,
                     Barcode = scan.Barcode,
@@ -309,12 +344,9 @@ namespace Mavo.Assets.Controllers
                     ModelNumber = scan.ModelNumber,
                     Manufacturer = scan.Manufacturer,
                 };
-
                 db.AssetItems.Add(assetItem);
                 db.SaveChanges();
-
                 AssetActivity.Add(AssetAction.Scanned, asset, assetItem);
-
             }
             return RedirectToAction("Scan");
         }

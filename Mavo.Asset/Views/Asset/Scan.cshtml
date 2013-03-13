@@ -9,13 +9,17 @@
 }
 @using (Html.BeginForm(MVC.Asset.ScanItem(), FormMethod.Post, new { @class = "form-horizontal" }))
 {
+    if (Model != null && Model.Id.HasValue)
+    {
+        @Html.HiddenFor(x => x.Id)
+    }
     <fieldset>
         <legend>Item Details</legend>
         <div class="well">
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.AssetCategoryId)
                 <div class="controls">
-                    @Html.DropDownList("AssetCategoryId", ((IList<Mavo.Assets.Models.AssetCategory>)ViewBag.AssetCategories).Select(x => new SelectListItem()
+                    @Html.DropDownListFor(x => x.AssetCategoryId, ((IList<Mavo.Assets.Models.AssetCategory>)ViewBag.AssetCategories).Select(x => new SelectListItem()
                {
                    Value = x.Id.ToString(),
                    Text = x.Name
@@ -25,7 +29,7 @@
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.AssetId)
                 <div class="controls">
-                    @Html.DropDownList("AssetId", ((IList<Mavo.Assets.Models.Asset>)ViewBag.AssetsForDropDown).Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).Select(x => new SelectListItem()
+                    @Html.DropDownListFor(x => x.AssetId, ((IList<Mavo.Assets.Models.Asset>)ViewBag.AssetsForDropDown).Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).Select(x => new SelectListItem()
                {
                    Value = x.Id.ToString(),
                    Text = x.Name
