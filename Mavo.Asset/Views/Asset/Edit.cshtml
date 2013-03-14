@@ -56,6 +56,7 @@
                        Text = x.Name,
                        Selected = Model == null || Model.Category == null ? false : x.Id == Model.Category.Id
                    }), string.Empty)
+                    <a class="btn btn-small btn-success" href="#createCategory"><i class="icon-plus icon-white"></i></a>
                 </div>
             </div>
 
@@ -135,4 +136,31 @@
     </div>
 }
 
-
+@section scripts
+{
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('a[href="#createCategory"]').click(function () {
+            var a = prompt("New category name:");
+            if (a.length > 0)
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/category',
+                    data: { Name: a }
+                })
+                .fail(function () { alert('Error creating category.'); })
+                .done(function (data) {
+                    $('#CategoryId').append(
+                        '<option selected="true" value="' +
+                        data.Id +
+                        '">' +
+                        data.Name +
+                        '</option>'
+                    );
+                });
+            }
+        });
+    });
+</script>
+}
