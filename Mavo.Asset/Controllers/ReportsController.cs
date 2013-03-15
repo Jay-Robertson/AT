@@ -2,12 +2,54 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System.Web.Mvc;
+using System.Text;
+
+using CsvHelper;
+using CsvHelper.Configuration;
+
 using Mavo.Assets.Models;
 using Mavo.Assets.Models.ViewModel;
-using System.Web.Mvc;
 
 namespace Mavo.Assets.Controllers
 {
+    class CsvResult<TRow> : ActionResult where TRow : class
+    {
+        private String _filename;
+        private IEnumerable<TRow> _rows;
+
+        public CsvResult(string filename, IEnumerable<TRow> rows)
+        {
+            _filename = filename;
+            _rows = rows;
+        }
+
+        public override void ExecuteResult(ControllerContext context)
+        {
+            context.HttpContext.Response.ContentType = "application/csv";
+            context.HttpContext.Response.AddHeader(
+                "Content-disposition",
+                String.Format("attachment; filename=\"{0}\"", _filename)
+            );
+            using (var csv = new CsvWriter(context.HttpContext.Response.Output))
+            {
+                csv.Configuration.HasHeaderRecord = true;
+                csv.WriteRecords(_rows);
+            }
+        }
+    }
+
+    class __AssetExportRow
+    {
+        [CsvField(Index=1)] public string MavoItemNumber { get; set; }
+        [CsvField(Index=0)] public string Category { get; set; }
+        [CsvField(Index=2)] public string Name { get; set; }
+        [CsvField(Index=3)] public AssetKind Kind { get; set; }
+        [CsvField(Index=4)] public string Barcode { get; set; }
+        [CsvField(Index=5)] public AssetCondition? Condition { get; set; }
+        [CsvField(Index=6)] public int? Quantity { get; set; }
+    }
+
     [System.Web.Mvc.Authorize]
     public partial class ReportingController : BaseController
     {
@@ -16,6 +58,42 @@ namespace Mavo.Assets.Controllers
         {
             Context = context;
         }
+
+        public virtual ActionResult AssetExport()
+        {
+            var rows = new List<__AssetExportRow>();
+            rows.AddRange(
+                Context.Assets.Where(x => x.Kind != AssetKind.Serialized).Select(x => 
+                    new __AssetExportRow {
+                        MavoItemNumber = x.MavoItemNumber,
+                        Category = x.Category.Name,
+                        Name = x.Name,
+                        Kind = x.Kind,
+                        Barcode = null,
+                        Condition = null,
+                        Quantity = x.Inventory,
+                    }
+                )
+            );
+            rows.AddRange(
+                Context.AssetItems.Include("Asset").Select(x => 
+                    new __AssetExportRow {
+                        MavoItemNumber = x.Asset.MavoItemNumber,
+                        Category = x.Asset.Category.Name,
+                        Name = x.Asset.Name,
+                        Kind = x.Asset.Kind,
+                        Barcode = x.Barcode,
+                        Condition = x.Condition,
+                        Quantity = null,
+                    }
+                )
+            );
+            return new CsvResult<__AssetExportRow>(
+                String.Format("mavo-assets-{0:yyyy-MM-dd}.csv", DateTime.Now),
+                rows
+            );
+        }
+
         public virtual ActionResult LateJobs()
         {
             return View(Context.Jobs.Where(x => !(x is JobAddon) && x.EstimatedCompletionDate < DateTime.Today && x.Status == JobStatus.Started).ToList());

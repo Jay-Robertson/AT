@@ -50,6 +50,9 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.1.17.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="HibernatingRhinos.Profiler.Appender, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\downloads3\EntityFramework.Profiler-v2.0-Build-2093\HibernatingRhinos.Profiler.Appender.dll</HintPath>
