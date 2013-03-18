@@ -18,6 +18,8 @@
         $('.pickform').submit(function () {
             $('#serializedErrorBlock').removeClass('in');
             $('#serializedErrorBlock').hide();
+            $('#serializedSuccessBlock').hide();
+
             var assetId = $(this).children(':hidden').val();
             var quantityPicked = parseInt($('#quantityPicked' + assetId).val());
             var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
@@ -58,6 +60,8 @@
         $('#assetScanner').submit(function () {
             $('#serializedErrorBlock').removeClass('in');
             $('#serializedErrorBlock').hide();
+            $('#serializedSuccessBlock').hide();
+
             if ($.inArray($('#barcodeInput').val(), alreadyPicked) > -1) {
                 $('#serializedErrorBlock').show();
                 $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
@@ -88,7 +92,6 @@
                         quantityNeeded = quantityNeeded - 1;
                         $('#quantityNeeded' + assetId).html(quantityNeeded);
                         alreadyPicked.push($('#barcodeInput').val());
-
                         var req = $.ajax(
                           {
                               url: '/jobpicker/pickassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&barcode=' + $('#barcodeInput').val(),
@@ -103,6 +106,7 @@
                             return false;
                         });
                         req.success(function (data) {
+                            $('#serializedSuccessBlock').show();
                             if ($('#asset-row-' + assetId).length != 0) {
                                 $('#asset-row-' + assetId).replaceWith(data);
                             }
@@ -134,7 +138,12 @@
         }
         <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" />
         <input type="submit" value="Lookup" />
+
     }
+</div>
+
+<div class="alert alert-block alert-success hide" id="serializedSuccessBlock">
+    <strong>Barcode Scanned Succesfully</strong>
 </div>
 
 <div class="alert alert-block alert-error fade" id="serializedErrorBlock">

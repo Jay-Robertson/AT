@@ -18,6 +18,7 @@
         $('.returnform').submit(function () {
             $('#serializedErrorBlock').removeClass('in');
             $('#serializedErrorBlock').hide();
+            $('#serializedSuccessBlock').hide();
             var assetId = $(this).children(':hidden').val();
             var quantityReturned = parseInt($('#quantityReturned' + assetId).val());
             var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
@@ -69,6 +70,7 @@
             var isDamaged = val == 'Scan & Return Damaged';
             $('#serializedErrorBlock').removeClass('in');
             $('#serializedErrorBlock').hide();
+            $('#serializedSuccessBlock').hide();
             if ($.inArray($('#barcodeInput').val(), alreadyReturned) > -1) {
                 $('#serializedErrorBlock').show();
                 $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
@@ -114,6 +116,7 @@
                             return false;
                         });
                         req.success(function (data) {
+                            $('#serializedSuccessBlock').show();
                             if ($('#asset-row-' + assetId).length != 0) {
                                 $('#asset-row-' + assetId).replaceWith(data);
                             }
@@ -160,6 +163,10 @@
         <input type="submit" name="return" class="btn btn-primary" value="Scan & Return" />
         <input type="submit" name="returndamaged" class="btn btn-danger" value="Scan & Return Damaged" />
     }
+</div>
+
+<div class="alert alert-block alert-success hide" id="serializedSuccessBlock">
+    <strong>Barcode Scanned Succesfully</strong>
 </div>
 
 <div class="alert alert-block alert-error fade" id="serializedErrorBlock">
