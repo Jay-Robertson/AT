@@ -21,8 +21,13 @@
             var assetId = $(this).children(':hidden').val();
             var quantityReturned = parseInt($('#quantityReturned' + assetId).val());
             var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
+            if (quantityReturned > quantityNeeded) {
+                alert('Too many of this item being returned.');
+                return false;
+            }
             $('#return' + assetId).modal('hide');
             $('#quantityNeeded' + assetId).html(quantityNeeded - quantityReturned);
+            $('#quantityNeededModal' + assetId).html(quantityNeeded - quantityReturned);
             $('#qtyReturned' + assetId).val(quantityReturned);
 
             var req = $.ajax(
@@ -126,6 +131,15 @@
             $("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
             $(this).attr("clicked", "true");
         });
+
+        $('.return-quantity-button').click(function () {
+            var txt = $('#quantityReturned' + $(this).data('asset-id'));
+            console.log(txt);
+            setTimeout(function () {
+                txt.focus();
+            }, 0);
+        });
+
     </script>
 
 }
@@ -171,7 +185,7 @@
                 <td>
                     @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
                     {
-                        <a href="#return@(item.AssetId)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-upload icon-white"></i>&nbsp;Return</a>
+                        <a href="#return@(item.AssetId)" data-asset-id="@item.AssetId" role="button"  data-toggle="modal" class="btn btn-primary return-quantity-button"><i class="icon-upload icon-white"></i>&nbsp;Return</a>
                     }
                     else
                     {
@@ -218,7 +232,7 @@
 
 @foreach (var item in Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized))
 {
-    <div id="return@(item.AssetId)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="return@(item.AssetId)Label" aria-hidden="true">
+    <div id="return@(item.AssetId)" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="return@(item.AssetId)Label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Return @item.Name</h3>
@@ -239,13 +253,13 @@
                         <tr>
                             <td>@item.MavoItemNumber</td>
                             <td>@item.Name</td>
-                            <td>@item.QuantityNeeded</td>
+                            <td id="quantityNeededModal@(item.AssetId)">@item.QuantityNeeded</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <label for="quantityReturned@(item.AssetId)">Quantity Returned</label>
-                <input type="text" value="@item.QuantityNeeded" id="quantityReturned@(item.AssetId)" />
+                <input type="text" value="" id="quantityReturned@(item.AssetId)" class="quantity-returned" />
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
