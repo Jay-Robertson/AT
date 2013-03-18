@@ -21,6 +21,10 @@
             var assetId = $(this).children(':hidden').val();
             var quantityReturned = parseInt($('#quantityReturned' + assetId).val());
             var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
+            if (isNaN(quantityReturned) || quantityReturned < 1) {
+                alert('Please enter a valid number greater than zero.');
+                return false;
+            }
             if (quantityReturned > quantityNeeded) {
                 alert('Too many of this item being returned.');
                 return false;
@@ -134,7 +138,6 @@
 
         $('.return-quantity-button').click(function () {
             var txt = $('#quantityReturned' + $(this).data('asset-id'));
-            console.log(txt);
             setTimeout(function () {
                 txt.focus();
             }, 0);
@@ -259,7 +262,7 @@
                 </table>
 
                 <label for="quantityReturned@(item.AssetId)">Quantity Returned</label>
-                <input type="text" value="" id="quantityReturned@(item.AssetId)" class="quantity-returned" />
+                <input type="text" value="" id="quantityReturned@(item.AssetId)" class="quantity-returned required" />
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
