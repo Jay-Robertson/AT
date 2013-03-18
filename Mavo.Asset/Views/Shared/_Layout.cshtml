@@ -126,6 +126,14 @@
         * The errors are produced by the MVC unobtrusive validation.
         */
         $(function () {
+
+            $('.modal :text').keydown(function (e) {
+                if (e.which == 13) {
+                    $(this).closest('.modal').find('.btn-primary').click();
+                    return false;
+                }
+            });
+
             $('form').submit(function () {
                 $(this).find('div.control-group').each(function () {
                     if ($(this).find('span.field-validation-error').length == 0) {
