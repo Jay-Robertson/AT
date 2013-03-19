@@ -75,6 +75,10 @@
                                             {
                                                 <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
                                             }
+                                            @if (job.PickStarted.HasValue && !job.PickCompleted.HasValue)
+                                            {
+                                                <span class="label label-info"><i class="icon-shopping-cart icon-white"></i></span>
+                                            }
                                             @job.Name
                                         </a>
                                         </li>
@@ -95,7 +99,14 @@
                                         <li class="nav-header">@item.Key.ToShortDateString()</li>
                                         foreach (Mavo.Assets.Models.Job job in item)
                                         {
-                                        <li><a href="/jobreturner/index/@job.Id">@job.Name</a></li>
+                                        <li>
+                                            <a href="/jobreturner/index/@job.Id">@job.Name
+                                            @if (job.ReturnStarted.HasValue && !job.ReturnCompleted.HasValue)
+                                            {
+                                                <span class="label label-info"><i class="icon-shopping-cart icon-white"></i></span>
+                                            }
+                                            </a>
+                                        </li>
                                         }
                                     }
                                 </ul>
