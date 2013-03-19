@@ -2,6 +2,6 @@
 <select id="asset-value">
     @foreach (var value in Model)
     {
-        <option value="@value.Id">@value.Name</option>
+        <option value="@value.Id">[@value.MavoItemNumber] @value.Name</option>
     }
 </select>
