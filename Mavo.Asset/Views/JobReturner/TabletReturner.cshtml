@@ -66,8 +66,7 @@
             return false;
         });
         $('#assetScanner').submit(function () {
-            var val = $("input[type=submit][clicked=true]").val()
-            var isDamaged = val == 'Scan & Return Damaged';
+            var isDamaged = $('#returnAsDamaged').is(':checked');
             $('#serializedErrorBlock').removeClass('in');
             $('#serializedErrorBlock').hide();
             $('#serializedSuccessBlock').hide();
@@ -75,7 +74,7 @@
                 $('#serializedErrorBlock').show();
                 $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
                 $('#serializedErrorBlock').addClass('in');
-                $('#barcodeInput').val('');
+                resetBarcodeInput();
                 return false;
             }
             else {
@@ -84,7 +83,7 @@
                     $('#serializedErrorBlock').show();
                     $('#errorMessage').html('There was an error scanning ' + $('#barcodeInput').val());
                     $('#serializedErrorBlock').addClass('in');
-                    $('#barcodeInput').val('');
+                    resetBarcodeInput();
                     return false;
                 })
                 .done(function (data) {
@@ -92,7 +91,7 @@
                         $('#serializedErrorBlock').show();
                         $('#errorMessage').html(data.reason);
                         $('#serializedErrorBlock').addClass('in');
-                        $('#barcodeInput').val('');
+                        resetBarcodeInput();
                         return false;
                     }
                     else {
@@ -112,7 +111,7 @@
                             $('#serializedErrorBlock').show();
                             $('#errorMessage').html('There was an error scanning this item');
                             $('#serializedErrorBlock').addClass('in');
-                            $('#barcodeInput').val('');
+                            resetBarcodeInput();
                             return false;
                         });
                         req.success(function (data) {
@@ -128,7 +127,7 @@
                             }
                         });
                     }
-                    $('#barcodeInput').val('');
+                    resetBarcodeInput();
                 });
                 return false;
             }
@@ -146,6 +145,23 @@
             }, 0);
         });
 
+        $('#returnAsDamaged').click(function () {
+            var checked = $(this).is(':checked');
+            $('#assetScanner :submit')
+                .toggleClass('btn-primary', !checked)
+                .toggleClass('btn-danger', checked)
+                .val(checked ? 'Scan & Return as Damaged' : 'Scan & Return');
+        });
+
+        function resetBarcodeInput() {
+            $('#barcodeInput').val('');
+            $('#returnAsDamaged').removeAttr('checked');
+            $('#assetScanner :submit')
+                .toggleClass('btn-primary', true)
+                .toggleClass('btn-danger', false)
+                .val('Scan & Return');
+        }
+
     </script>
 
 }
@@ -159,9 +175,15 @@
         <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
         }
         <input type="hidden" name="jobId" value="@Model.JobId" />
-        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" />
-        <input type="submit" name="return" class="btn btn-primary" value="Scan & Return" />
-        <input type="submit" name="returndamaged" class="btn btn-danger" value="Scan & Return Damaged" />
+        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" />
+        <input type="submit" name="return" class="btn btn-primary btn-large" value="Scan & Return" />
+        <div style="margin-top: 10px;">
+            <label class="checkbox">
+                <input type="checkbox" name="returndamaged" value="1" id="returnAsDamaged" />
+                Item is Damaged
+            </label>
+        </div>
+        @*<input type="submit" name="returndamaged" class="btn btn-danger" value="Scan & Return Damaged" />*@
     }
 </div>
 
