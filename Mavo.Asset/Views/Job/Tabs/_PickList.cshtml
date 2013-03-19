@@ -4,6 +4,8 @@
 {
     
     <div class="tab-pane @(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")" id="assets">
+        @if (!Model.IsAddon)
+        {
         <div class="row-fluid noprint">
             <div class="well">
                 <h4>Template</h4>
@@ -19,6 +21,7 @@
                 }
             </div>
         </div>
+        }
         <div class="row-fluid">
             <div class="span12 well">
                 <h4>Job Assets</h4>
