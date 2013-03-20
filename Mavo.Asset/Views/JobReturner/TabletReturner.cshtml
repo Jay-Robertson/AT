@@ -12,7 +12,12 @@
         var numberReturned = 0;
         var nonserializedReturned = new Array();
         var serializedReturned = new Array();
-        var alreadyReturned = new Array();
+        var alreadyReturned = [
+            @foreach (var x in Model.ReturnedAssets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized)) {
+            <text>'@x.Barcode',</text>
+            }
+            'asdf'
+        ];
         $('#serializedErrorBlock').hide();
 
         $('.returnform').submit(function () {
@@ -96,6 +101,7 @@
                     }
                     else {
                         var assetId = data.assetId;
+                        var assetItemId = data.assetItemId;
                         var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
                         quantityNeeded = quantityNeeded - 1;
                         $('#quantityNeeded' + assetId).html(quantityNeeded);
@@ -103,7 +109,7 @@
 
                         var req = $.ajax(
                           {
-                              url: '/jobreturner/returnassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&barcode=' + $('#barcodeInput').val() + '&isDamaged=' + isDamaged,
+                              url: '/jobreturner/returnassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&assetItemId=' + assetItemId + '&barcode=' + $('#barcodeInput').val() + '&isDamaged=' + isDamaged,
                               type: 'POST',
                               dataType: "html"
                           });
@@ -123,7 +129,7 @@
                                 $('#alreadyReturnedTable').append(data);
                             }
                             if (quantityNeeded - 1 <= 0) {
-                                $('#row' + assetId).remove();
+                                $('#toReturnTable tr[data-asset-item-id="' + assetItemId + '"]').remove();
                             }
                         });
                     }
@@ -208,7 +214,7 @@
     <tbody>
         @foreach (var item in Model.Assets.Where(x => x.QuantityNeeded > 0))
         {
-            <tr id="row@(item.AssetId)">
+            <tr id="row@(item.AssetId)" @if (item.Kind == Mavo.Assets.Models.AssetKind.Serialized) { <text>data-asset-item-id="@item.AssetItemId"</text> }>
                 <td>@item.MavoItemNumber</td>
                 <td>@item.Name</td>
                 <td id="quantityNeeded@(item.AssetId)">
@@ -225,7 +231,6 @@
                     }
                 </td>
             </tr>
-
         }
     </tbody>
 </table>
@@ -246,7 +251,7 @@
                 AssetId = returnedAsset.AssetId,
                 AssetName = returnedAsset.Name,
                 CurrentPickedQty = returnedAsset.QuantityReturned.Value,
-                MavoNumber = returnedAsset.MavoItemNumber
+                MavoNumber = returnedAsset.MavoItemNumber,
             });
         }
     </tbody>

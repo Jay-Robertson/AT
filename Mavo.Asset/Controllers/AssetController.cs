@@ -124,7 +124,7 @@ namespace Mavo.Assets.Controllers
             if (!jobId.HasValue && assetItem.Status == InventoryStatus.Out)
                 return Json(new { success = false, reason = String.Format("How could you be scanning this? It's out on a job.", assetItem.Asset.Name, assetItem.Condition) });
 
-            return Json(new { success = true, assetId = assetItem.Asset.Id, barcode = id }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, assetId = assetItem.Asset.Id, assetItemId = assetItem.Id, barcode = id }, JsonRequestBehavior.AllowGet);
         }
 
         public virtual ActionResult GetAssetRow(int id, int jobId, int index)
