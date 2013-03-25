@@ -10,6 +10,7 @@ namespace Mavo.Assets.Models.ViewModel
     public sealed class AssetsWithoutReturn : IEquatable<AssetsWithoutReturn>
     {
         private int _JobId;
+        private readonly int? _AssetItemId;
         private readonly string _MavoItemNumber;
         private readonly string _Asset;
         private readonly string _Barcode;
@@ -25,6 +26,7 @@ namespace Mavo.Assets.Models.ViewModel
             _JobId = job.Id;
             _Asset = asset;
             if (assetItem != null)
+                _AssetItemId = assetItem.Id;
                 _Barcode = assetItem.Barcode;
             _Job = job.Name;
             _ReturnedOn = job.ReturnedDate;
@@ -88,6 +90,7 @@ namespace Mavo.Assets.Models.ViewModel
                 return _Asset;
             }
         }
+        public int? AssetItemId { get { return _AssetItemId; } } 
         public string Barcode
         {
             get

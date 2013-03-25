@@ -188,7 +188,7 @@ namespace Mavo.Assets.Controllers
 
             var pickedAssets = Context.PickedAssets
                 .Include(x => x.Job).Include(x => x.Job.ReturnedBy).Include(x => x.Item).Include(x => x.Asset)
-                .Where(x => x.Job.ReturnCompleted >= startDate && x.Job.ReturnCompleted < endDate)
+                .Where(x => x.Job.Status == JobStatus.Completed && x.Job.ReturnCompleted >= startDate && x.Job.ReturnCompleted < endDate)
                 .ToList()
                 .Where(x => x.Job != null)
                 .GroupBy(x => x.Job);
@@ -235,7 +235,7 @@ namespace Mavo.Assets.Controllers
 
                     if (fellOfTruck)
                     {
-                        result.Add(new AssetsWithoutReturn(pickedAsset.Id, pickedAsset.Asset.MavoItemNumber, pickedAsset.Asset.Name, pickedAsset.Item, pickedAssetsForJob.Key, quantityLost));
+                        result.Add(new AssetsWithoutReturn(pickedAsset.Asset.Id, pickedAsset.Asset.MavoItemNumber, pickedAsset.Asset.Name, pickedAsset.Item, pickedAssetsForJob.Key, quantityLost));
                     }
                 }
             }

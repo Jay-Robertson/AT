@@ -53,7 +53,10 @@
                 <a href="/asset/edit/@(item.Id)">@Html.DisplayFor(modelItem => item.Asset)</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Barcode)
+                @if (item.AssetItemId.HasValue)
+                {
+                    <a href="/Asset/Scan/@item.AssetItemId"><i class="icon-barcode"></i> @Html.DisplayFor(modelItem => item.Barcode)</a>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.QuantityLost)
