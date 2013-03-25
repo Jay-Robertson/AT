@@ -4,160 +4,21 @@
     Layout = "~/Views/JobReturner/_ReturnerLayout.cshtml";
 }
 
-
 @section AdditionalScripts
 {
-
     <script type="text/javascript">
-        var numberReturned = 0;
-        var nonserializedReturned = new Array();
-        var serializedReturned = new Array();
         var alreadyReturned = [
             @foreach (var x in Model.ReturnedAssets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized)) {
             <text>'@x.Barcode',</text>
             }
-            'asdf'
+            ''
         ];
         $('#serializedErrorBlock').hide();
 
-        $('.returnform').submit(function () {
+        function resetMessages() {
             $('#serializedErrorBlock').removeClass('in');
-            $('#serializedErrorBlock').hide();
-            $('#serializedSuccessBlock').hide();
-            var assetId = $(this).children(':hidden').val();
-            var quantityReturned = parseInt($('#quantityReturned' + assetId).val());
-            var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
-            if (isNaN(quantityReturned) || quantityReturned < 1) {
-                alert('Please enter a valid number greater than zero.');
-                return false;
-            }
-            if (quantityReturned > quantityNeeded) {
-                alert('Too many of this item being returned.');
-                return false;
-            }
-            $('#return' + assetId).modal('hide');
-            $('#quantityNeeded' + assetId).html(quantityNeeded - quantityReturned);
-            $('#quantityNeededModal' + assetId).html(quantityNeeded - quantityReturned);
-            $('#qtyReturned' + assetId).val(quantityReturned);
-
-            var req = $.ajax(
-                {
-                    url: '/jobreturner/returnassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&quantity=' + quantityReturned,
-                    type: 'POST',
-                    dataType: "html"
-                });
-            req.fail(function (data) {
-                $('#serializedErrorBlock').show();
-                $('#errorMessage').html('There was an error scanning this item');
-                $('#serializedErrorBlock').addClass('in');
-                $('#barcodeInput').val('');
-                return false;
-            });
-            req.done(function (data) {
-                if ($('#asset-row-' + assetId).length != 0) {
-                    $('#asset-row-' + assetId).replaceWith(data);
-                }
-                else {
-                    $('#alreadyReturnedTable').append(data);
-                }
-            });
-            if (quantityNeeded - quantityReturned <= 0) {
-                $('#row' + assetId).remove();
-            }
-            if (quantityReturned > 0 && !$.inArray(assetId, nonserializedReturned) > -1) {
-                numberReturned = numberReturned + 1;
-                nonserializedReturned.push(assetId);
-            }
-            return false;
-        });
-        $('#assetScanner').submit(function () {
-            var isDamaged = $('#returnAsDamaged').is(':checked');
-            $('#serializedErrorBlock').removeClass('in');
-            $('#serializedErrorBlock').hide();
-            $('#serializedSuccessBlock').hide();
-            if ($.inArray($('#barcodeInput').val(), alreadyReturned) > -1) {
-                $('#serializedErrorBlock').show();
-                $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
-                $('#serializedErrorBlock').addClass('in');
-                resetBarcodeInput();
-                return false;
-            }
-            else {
-                $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() })
-                .fail(function (data) {
-                    $('#serializedErrorBlock').show();
-                    $('#errorMessage').html('There was an error scanning ' + $('#barcodeInput').val());
-                    $('#serializedErrorBlock').addClass('in');
-                    resetBarcodeInput();
-                    return false;
-                })
-                .done(function (data) {
-                    if (!data.success) {
-                        $('#serializedErrorBlock').show();
-                        $('#errorMessage').html(data.reason);
-                        $('#serializedErrorBlock').addClass('in');
-                        resetBarcodeInput();
-                        return false;
-                    }
-                    else {
-                        var assetId = data.assetId;
-                        var assetItemId = data.assetItemId;
-                        var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
-                        quantityNeeded = quantityNeeded - 1;
-                        $('#quantityNeeded' + assetId).html(quantityNeeded);
-                        alreadyReturned.push($('#barcodeInput').val());
-
-                        var req = $.ajax(
-                          {
-                              url: '/jobreturner/returnassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&assetItemId=' + assetItemId + '&barcode=' + $('#barcodeInput').val() + '&isDamaged=' + isDamaged,
-                              type: 'POST',
-                              dataType: "html"
-                          });
-                        req.fail(function (data) {
-                            $('#serializedErrorBlock').show();
-                            $('#errorMessage').html('There was an error scanning this item');
-                            $('#serializedErrorBlock').addClass('in');
-                            resetBarcodeInput();
-                            return false;
-                        });
-                        req.success(function (data) {
-                            $('#serializedSuccessBlock').show();
-                            if ($('#asset-row-' + assetId).length != 0) {
-                                $('#asset-row-' + assetId).replaceWith(data);
-                            }
-                            else {
-                                $('#alreadyReturnedTable').append(data);
-                            }
-                            if (quantityNeeded - 1 <= 0) {
-                                $('#toReturnTable tr[data-asset-item-id="' + assetItemId + '"]').remove();
-                            }
-                        });
-                    }
-                    resetBarcodeInput();
-                });
-                return false;
-            }
-        });
-
-        $("form input[type=submit]").click(function () {
-            $("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
-            $(this).attr("clicked", "true");
-        });
-
-        $('.return-quantity-button').click(function () {
-            var txt = $('#quantityReturned' + $(this).data('asset-id'));
-            setTimeout(function () {
-                txt.focus();
-            }, 0);
-        });
-
-        $('#returnAsDamaged').click(function () {
-            var checked = $(this).is(':checked');
-            $('#assetScanner :submit')
-                .toggleClass('btn-primary', !checked)
-                .toggleClass('btn-danger', checked)
-                .val(checked ? 'Scan & Return as Damaged' : 'Scan & Return');
-        });
+            $('.alert').hide();
+        }
 
         function resetBarcodeInput() {
             $('#barcodeInput').val('');
@@ -168,8 +29,118 @@
                 .val('Scan & Return');
         }
 
-    </script>
+        $('.modal-return-nonserialized form').submit(function () {
+            resetMessages();
+            var modal = $(this).closest('.modal');
+            var assetId = modal.data('asset-id');
+            var quantityNeeded = modal.data('quantity-needed');
+            var quantityReturned = parseInt(modal.find(':text[name="quantity"]').val());
 
+            // validate is positive integer or zero
+            if (isNaN(quantityReturned) || quantityReturned < 0) {
+                alert('Please enter a valid number of at least zero.');
+                return false;
+            }
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: {
+                    jobId: '@Model.JobId',
+                    assetId: assetId,
+                    quantity: quantityReturned
+                }
+            })
+            .fail(function (data) {
+                modal.find('.alert').show();
+            })
+            .done(function (data) {
+
+                // hide this modal
+                modal.modal('hide');
+
+                // remove the row from the 'needed' table,
+                // yes, *even if there are still needed items left*
+                $('#row-' + assetId).remove();
+                
+                // update the html in the already returned table
+                if ($('#asset-row-' + assetId).length) {
+                    $('#asset-row-' + assetId).replaceWith(data);
+                }
+                else {
+                    $('#alreadyReturnedTable').append(data);
+                }
+            });
+
+            return false;
+        });
+
+        $('#assetScanner').submit(function () {
+            resetMessages();
+
+            // already scanned?
+            var barcode = $('#barcodeInput').val();
+            if ($.inArray(barcode, alreadyReturned) > -1)
+            {
+                $('#serializedErrorBlock').show();
+                $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
+                $('#serializedErrorBlock').addClass('in');
+                resetBarcodeInput();
+                return false;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/JobReturner/ReturnSerialized',
+                data: {
+                    jobId: '@Model.JobId',
+                    barcode: barcode,
+                    isDamaged: $('#returnAsDamaged').is(':checked')
+                }
+            })
+            .fail(function (data) {
+                $('#serializedErrorBlock').show();
+                $('#errorMessage').text(data);
+                $('#serializedErrorBlock').addClass('in');
+                resetBarcodeInput();
+            })
+            .success(function (data) {
+                $('#serializedSuccessBlock').show();
+                var assetItemId = $(data).data('asset-item-id');
+                $('#alreadyReturnedTable').append(data);
+                $('#toReturnTable tr[data-asset-item-id="' + assetItemId + '"]').remove();
+            });
+
+            return false;
+        });
+        
+
+        $("form input[type=submit]").click(function () {
+            $("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
+            $(this).attr("clicked", "true");
+        });
+
+        // set the focus to the quantity text box whenever the return non-serialized modal is shown,
+        // and hide any alerts
+        $('.return-quantity-button').click(function () {
+            var modal = $($(this).attr('href'))
+            var txt = modal.find(':text[name="quantity"]');
+            setTimeout(function () {
+                modal.find('.alert').hide();
+                txt.focus();
+            }, 0);
+        });
+
+        // alter the return button when the damaged checkbox is marked
+        $('#returnAsDamaged').click(function () {
+            var checked = $(this).is(':checked');
+            $('#assetScanner :submit')
+                .toggleClass('btn-primary', !checked)
+                .toggleClass('btn-danger', checked)
+                .val(checked ? 'Scan & Return as Damaged' : 'Scan & Return');
+        });
+
+    </script>
 }
 
 <div class="well well-small">
@@ -212,22 +183,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Assets.Where(x => x.QuantityNeeded > 0))
+        @foreach (var item in Model.Assets.Where(x => x.QuantityNeeded > 0 && x.QuantityNeeded == x.QuantityTaken))
         {
-            <tr id="row@(item.AssetId)" @if (item.Kind == Mavo.Assets.Models.AssetKind.Serialized) { <text>data-asset-item-id="@item.AssetItemId"</text> }>
+            <tr id="row-@(item.AssetId)" @if (item.Kind == Mavo.Assets.Models.AssetKind.Serialized) { <text>data-asset-item-id="@item.AssetItemId"</text> }>
                 <td>@item.MavoItemNumber</td>
                 <td>@item.Name</td>
-                <td id="quantityNeeded@(item.AssetId)">
-                    @item.QuantityNeeded
-                </td>
+                <td>@item.QuantityNeeded</td>
                 <td>
                     @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
                     {
-                        <a href="#return@(item.AssetId)" data-asset-id="@item.AssetId" role="button"  data-toggle="modal" class="btn btn-primary return-quantity-button"><i class="icon-upload icon-white"></i>&nbsp;Return</a>
+                        <a href="#modal-return-@(item.AssetId)" role="button"  data-toggle="modal" class="btn btn-primary return-quantity-button"><i class="icon-upload icon-white"></i>&nbsp;Return</a>
                     }
                     else
                     {
-                        <text>@item.Barcode</text>
+                        <span class="label label-info"><i class="icon-white icon-barcode"></i> @item.Barcode</span>
                     }
                 </td>
             </tr>
@@ -249,8 +218,10 @@
             Html.RenderPartial(MVC.JobPicker.Views._PickedAssetRow, new Mavo.Assets.Controllers.PickedAssetRow()
             {
                 AssetId = returnedAsset.AssetId,
+                AssetItemId = returnedAsset.AssetItemId,
                 AssetName = returnedAsset.Name,
                 CurrentPickedQty = returnedAsset.QuantityReturned.Value,
+                Barcodes = returnedAsset.Barcode,
                 MavoNumber = returnedAsset.MavoItemNumber,
             });
         }
@@ -269,39 +240,41 @@
 
 @foreach (var item in Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized))
 {
-    <div id="return@(item.AssetId)" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="return@(item.AssetId)Label" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Return @item.Name</h3>
-        </div>
-        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-inline returnform", id = "returnForm" + item.AssetId.ToString() }))
-        {
-            <input type="hidden" id="itemid@(item.AssetId)" value="@item.AssetId" />
-            <div class="modal-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Item</th>
-                            <th>Needed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>@item.MavoItemNumber</td>
-                            <td>@item.Name</td>
-                            <td id="quantityNeededModal@(item.AssetId)">@item.QuantityNeeded</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <label for="quantityReturned@(item.AssetId)">Quantity Returned</label>
-                <input type="text" value="" id="quantityReturned@(item.AssetId)" class="quantity-returned required" />
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                <button type="submit" class="btn btn-primary return">Return</button>
-            </div>
-        }
+<div id="modal-return-@item.AssetId" data-asset-id="@item.AssetId" class="modal-return-nonserialized modal hide" tabindex="-1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Return @item.Name</h3>
     </div>
+    <form action="/JobReturner/ReturnNonSerialized" method="post" class="form-inline">
+        <div class="modal-body">
+            <div class="alert alert-error hide">
+                <strong>There was a problem returning this asset.</strong>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Needed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@item.MavoItemNumber</td>
+                        <td>@item.Name</td>
+                        <td>@item.QuantityNeeded</td>
+                    </tr>
+                </tbody>
+            </table>
+            <label>
+                Quantity Returned
+                <input type="text" class="required" name="quantity" />
+            </label>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button type="submit" class="btn btn-primary return">Return</button>
+        </div>
+    </form>
+</div>
 }

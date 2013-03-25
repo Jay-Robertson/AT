@@ -8,6 +8,7 @@ using Mavo.Assets.Models.EmailViewModel;
 using Mavo.Assets.Models.ViewModel;
 using Mavo.Assets.Services;
 using Postal;
+using System.Net;
 
 namespace Mavo.Assets.Controllers
 {
@@ -47,77 +48,140 @@ namespace Mavo.Assets.Controllers
             return Json(job.ReturnStarted.ToString());
         }
 
-        [HttpPost]
-        public ActionResult ReturnAssetForJob(int jobId, int assetId, int? assetItemId, int quantity = 1, bool isDamaged = false)
+        private Job __GetJobForReturningActions(int jobId)
         {
+            // find the job by id
             var job = Context.Jobs
                 .Include("ReturnedAssets").Include("ReturnedAssets.Item").Include("ReturnedAssets.Asset")
                 .Include("PickedAssets").Include("PickedAssets.Item").Include("PickedAssets.Asset")
                 .Include("ProjectManager")
                 .FirstOrDefault(x => x.Id == jobId);
 
+            // mark it as being returned if needed
             if (job.Status == JobStatus.Started)
             {
                 job.Status = JobStatus.BeingReturned;
                 job.ReturnStarted = DateTime.Now;
+                Context.SaveChanges();
             }
 
-            var pickedAsset = assetItemId.HasValue
-                ? job.PickedAssets.FirstOrDefault(x => x.Item.Id == assetItemId.Value)
-                : job.PickedAssets.FirstOrDefault(x => x.Asset.Id == assetId);
-             
-            bool hasReturned = false;
-            var asset = Context.Assets.FirstOrDefault(x => x.Id == pickedAsset.Asset.Id);
-            int? quantityUsed = quantity;
-            if (asset.Kind == AssetKind.Consumable || asset.Kind == AssetKind.NotSerialized)
+            return job;
+        }
+
+        [HttpPost]
+        public ActionResult ReturnSerialized(int jobId, string barcode, bool isDamaged = false)
+        {
+            // find job and asset item
+            var job = __GetJobForReturningActions(jobId);
+            var assetItem = Context.AssetItems.FirstOrDefault(x => x.Barcode == barcode.Trim());
+
+            // validate barcode
+            if (null == assetItem)
             {
-                hasReturned = true;
-
-                if (!asset.Inventory.HasValue)
-                    asset.Inventory = quantityUsed;
-                else
-                    asset.Inventory += quantityUsed;
+                Response.StatusCode = (int)HttpStatusCode.NotFound;
+                return Json(String.Format("{0} does not exist in inventory.", barcode));
             }
-            else if (asset.Kind == AssetKind.Serialized)
+
+            // validate item was picked
+            if (!job.PickedAssets.Any(x => x.Item == assetItem))
             {
-                hasReturned = true;
-                pickedAsset.Item.Status = InventoryStatus.In;
-                if (isDamaged)
-                {
-                    AssetActivity.Add(AssetAction.Damaged, pickedAsset.Asset, pickedAsset.Item, job);
-                    pickedAsset.Item.Condition = AssetCondition.Damaged;
-                }
+                Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                return Json(String.Format("{1} {0} is not part of the job.", barcode, assetItem.Asset.Name));
             }
-            ReturnedAsset newReturnedAsset = new ReturnedAsset() { Asset = asset, Item = pickedAsset.Item, Quantity = pickedAsset.QuantityPicked, QuantityPicked = quantity, Job = job, Returned = DateTime.Now };
-            if (hasReturned)
+
+            // validate item isnt already returned
+            if (job.ReturnedAssets.Any(x => x.Item == assetItem))
             {
-                if (job.ReturnedAssets != null && asset.Kind != AssetKind.Serialized && job.ReturnedAssets.Any(x => x.Asset.Id == asset.Id))
-                {
-                    newReturnedAsset = job.ReturnedAssets.FirstOrDefault(x => x.Asset.Id == asset.Id);
-                    newReturnedAsset.QuantityPicked += quantity;
-                }
-                else
-                {
-                    if (job.ReturnedAssets == null)
-                        job.ReturnedAssets = new List<ReturnedAsset>();
-
-                    job.ReturnedAssets.Add(newReturnedAsset);
-                }
-
-                AssetActivity.Add(AssetAction.Return, pickedAsset.Asset, pickedAsset.Item, job);
+                Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                return Json(String.Format("{1} {0} has already been returned.", barcode, assetItem.Asset.Name));
             }
+
+            job.ReturnedAssets.Add(new ReturnedAsset
+            {
+                Asset = assetItem.Asset,
+                Item = assetItem,
+                Quantity = 1,
+                QuantityPicked = 1,
+                Job = job,
+                Returned = DateTime.Now
+            });
+            AssetActivity.Add(AssetAction.Return, assetItem.Asset, assetItem, job);
             Context.SaveChanges();
 
+            return PartialView(
+                MVC.JobPicker.Views._PickedAssetRow,
+                new PickedAssetRow()
+                {
+                    AssetId = assetItem.Asset.Id,
+                    AssetItemId = assetItem.Id,
+                    AssetName = assetItem.Asset.Name,
+                    Barcodes = assetItem.Barcode,
+                    CurrentPickedQty = 1,
+                    MavoNumber = assetItem.Asset.MavoItemNumber
+                }
+            );
+        }
 
-            return PartialView(MVC.JobPicker.Views._PickedAssetRow,
-                 new PickedAssetRow()
-                 {
-                     AssetId = assetId,
-                     AssetName = pickedAsset.Asset.Name,
-                     CurrentPickedQty = newReturnedAsset.QuantityPicked,
-                     MavoNumber = pickedAsset.Asset.MavoItemNumber
-                 }
-                );
+        [HttpPost]
+        public ActionResult ReturnNonSerialized(int jobId, int assetId, int quantity = 1)
+        {
+            var job = __GetJobForReturningActions(jobId);
+            var asset = Context.Assets.FirstOrDefault(x => x.Id == assetId);
+            
+            // validate asset exists
+            if (null == asset)
+            {
+                Response.StatusCode = (int)HttpStatusCode.NotFound;
+                return Json(String.Format("No asset found with Id of {0}", assetId));
+            }
+
+            // validate asset is consumable/non-serialized
+            if (asset.Kind == AssetKind.Serialized)
+            {
+                Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                return Json(String.Format("{0} is a serialized asset.", asset.Name));
+            }
+
+            // validate asset was picked
+            var pickedAsset = job.PickedAssets.FirstOrDefault(x => x.Asset == asset);
+            if (null == pickedAsset)
+            {
+                Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                return Json(String.Format("{0} is not part of the job.", asset.Name));
+            }
+
+            // create returned record (if needed)
+            var returnedAsset = job.ReturnedAssets.FirstOrDefault(x => x.Asset == asset);
+            if (null == returnedAsset)
+            {
+                returnedAsset = new ReturnedAsset {
+                    Asset = asset,
+                    Item = null,
+                    Quantity = 0,
+                    QuantityPicked = 0,
+                    Job = job,
+                    Returned = DateTime.Now
+                };
+                job.ReturnedAssets.Add(returnedAsset);
+            }
+
+            // increment returned quantity
+            returnedAsset.Quantity += quantity;
+            returnedAsset.QuantityPicked += quantity;
+            
+            AssetActivity.Add(AssetAction.Return, pickedAsset.Asset, pickedAsset.Item, job);
+            Context.SaveChanges();
+
+            return PartialView(
+                MVC.JobPicker.Views._PickedAssetRow,
+                new PickedAssetRow()
+                {
+                    AssetId = assetId,
+                    AssetName = pickedAsset.Asset.Name,
+                    CurrentPickedQty = returnedAsset.QuantityPicked,
+                    MavoNumber = asset.MavoItemNumber
+                }
+            );
         }
 
         [HttpPost]
@@ -221,9 +285,9 @@ namespace Mavo.Assets.Controllers
                         Quantity = a.Quantity,
                         Kind = a.Asset.Kind,
                         AssetId = a.Asset.Id,
-                        Serial = a.Item.Barcode,
+                        Barcode = a.Item.Barcode,
                         AssetCategory = a.Asset.Category.Name,
-                        AssetItemId = (a.Item != null ? a.Item.Id : default(int)),
+                        AssetItemId = (a.Item != null ? a.Item.Id : (int?)null),
                         MavoItemNumber = a.Asset.MavoItemNumber,
                         QuantityReturned = a.QuantityPicked,
                     }),
@@ -234,9 +298,9 @@ namespace Mavo.Assets.Controllers
                         Quantity = a.Quantity,
                         Kind = a.Asset.Kind,
                         AssetId = a.Asset.Id,
-                        Serial = a.Item.Barcode,
+                        Barcode = a.Item.Barcode,
                         AssetCategory = a.Asset.Category.Name,
-                        AssetItemId = (a.Item != null ? a.Item.Id : default(int)),
+                        AssetItemId = (a.Item != null ? a.Item.Id : (int?)null),
                         MavoItemNumber = a.Asset.MavoItemNumber,
                         QuantityReturned = a.QuantityPicked
                     })
@@ -263,7 +327,7 @@ namespace Mavo.Assets.Controllers
                     QuantityReturned = x.QuantityReturned,
                     QuantityTaken = x.QuantityReturned,
                     Kind = x.Kind,
-                    Barcode = x.Serial,
+                    Barcode = x.Barcode,
                     AssetCategory = x.AssetCategory,
                     MavoItemNumber = x.MavoItemNumber
                 }).ToList(),
@@ -279,7 +343,7 @@ namespace Mavo.Assets.Controllers
                             : (result.ReturnedAssets.Any(y => x.AssetId == y.AssetId) ? result.ReturnedAssets.FirstOrDefault(y => y.AssetId == x.AssetId).QuantityReturned : 0)),
                     QuantityTaken = x.Quantity,
                     Kind = x.Kind,
-                    Barcode = x.Serial,
+                    Barcode = x.Barcode,
                     AssetCategory = x.AssetCategory,
                     MavoItemNumber = x.MavoItemNumber
                 }).ToList()

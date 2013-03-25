@@ -1,6 +1,15 @@
 ﻿@model Mavo.Assets.Controllers.PickedAssetRow
-<tr id="asset-row-@Model.AssetId">
+<tr id="asset-row-@Model.AssetId" @if (Model.AssetItemId.HasValue) {<text>data-asset-item-id="@Model.AssetItemId"</text> }>
     <td>@Model.MavoNumber</td>
     <td>@Model.AssetName</td>
-    <td>@Model.CurrentPickedQty</td>
+    <td>
+        @if (Model.AssetItemId.HasValue)
+        {
+            <span class="label label-info"><i class="icon-white icon-barcode"></i> @Model.Barcodes</span>
+        }
+        else
+        {
+            <span class="badge badge-info">@Model.CurrentPickedQty</span>
+        }
+    </td>
 </tr>
