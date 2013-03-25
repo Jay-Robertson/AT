@@ -239,6 +239,11 @@ namespace Mavo.Assets.Controllers
                 email.Job = job;
                 email.Send();
             }
+            dynamic email2 = new Email("JobComplete");
+            email2.Subject = String.Format("Job #{0} is complete and ready for billing!", job.JobNumber);
+            email2.To = Properties.Settings.Default.BillingManager;
+            email2.Job = job;
+            email2.Send();
 
             return RedirectToAction(MVC.JobReturner.Success(id));
         }

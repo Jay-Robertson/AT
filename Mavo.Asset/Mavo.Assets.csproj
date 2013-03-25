@@ -570,7 +570,6 @@
     <Content Include="Views\Emails\DisplayTemplates\AssetKind.cshtml" />
     <Content Include="Views\Emails\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Emails\DisplayTemplates\JobStatus.cshtml" />
-    <Content Include="Views\Emails\ReadyToPick.cshtml" />
     <Content Include="Views\Emails\JobHasBeenPicked.cshtml" />
     <Content Include="Views\UserManagement\Index.cshtml" />
     <Content Include="Views\UserManagement\Details.cshtml" />
@@ -588,6 +587,7 @@
     <Content Include="Views\JobReturner\_ReturnerLayout.cshtml" />
     <Content Include="Views\JobReturner\TabletReturner.cshtml" />
     <Content Include="Views\Emails\Shorts.cshtml" />
+    <Content Include="Views\Emails\JobReadyToStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

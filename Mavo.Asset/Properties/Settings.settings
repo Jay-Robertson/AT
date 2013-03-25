@@ -3,10 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="WarehouseManager" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">scott@redbranchsoftware.com</Value>
+      <Value Profile="(Default)">nnystrom@gmail.com</Value>
     </Setting>
     <Setting Name="StaffingManagerEmail" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">scott@redbranchsoftware.com</Value>
+      <Value Profile="(Default)">nnystrom@gmail.com</Value>
+    </Setting>
+    <Setting Name="BillingManager" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">nnystrom@gmail.com</Value>
     </Setting>
   </Settings>
 </SettingsFile>
