@@ -136,8 +136,8 @@
         {
         <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
         }
-        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" />
-        <input type="submit" class="btn btn-primary" value="Lookup" />
+        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" />
+        <input type="submit" class="btn btn-primary btn-large" value="Lookup" />
 
     }
 </div>
