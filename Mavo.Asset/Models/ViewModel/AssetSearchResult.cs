@@ -8,6 +8,8 @@ namespace Mavo.Assets.Models.ViewModel
 {
     public class AssetSearchResult
     {
+        public string MavoItemNumber { get; set; }
+
         public string Name { get; set; }
 
         public AssetKind? Kind { get; set; }

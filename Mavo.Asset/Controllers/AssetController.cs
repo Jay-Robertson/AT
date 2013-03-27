@@ -221,6 +221,7 @@ namespace Mavo.Assets.Controllers
                     );
             search.Results = query.Select(x => new AssetSearchResult()
             {
+                MavoItemNumber = x.MavoItemNumber,
                 Name = x.Name,
                 Category = x.Category.Name,
                 Kind = x.Kind,
