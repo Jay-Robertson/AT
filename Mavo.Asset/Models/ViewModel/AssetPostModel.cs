@@ -13,6 +13,7 @@ namespace Mavo.Assets.Models.ViewModel
         public int? CategoryId { get; set; }
         public string Name { get; set; }
         public string UnitOfMeasure { get; set; }
+        public string MavoItemNumber { get; set; }
 
         // warehousing data
         public AssetKind Kind { get; set; }
