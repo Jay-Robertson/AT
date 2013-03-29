@@ -1,5 +1,5 @@
 ﻿@model Mavo.Assets.Controllers.PickedAssetRow
-<tr id="asset-row-@Model.AssetId" @if (Model.AssetItemId.HasValue) {<text>data-asset-item-id="@Model.AssetItemId"</text> }>
+<tr id="asset-row-@Model.AssetId" data-asset-id="@Model.AssetId" @if (Model.AssetItemId.HasValue) {<text>data-asset-item-id="@Model.AssetItemId"</text> }>
     <td>@Model.MavoNumber</td>
     <td>@Model.AssetName</td>
     <td>

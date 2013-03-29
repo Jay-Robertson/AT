@@ -45,6 +45,7 @@ namespace Mavo.Assets.Models.ViewModel
 
         public DateTime CompletionDate { get; set; }
 
+        public IList<JobAsset> PickedAssets { get; set; }
         public IList<JobAsset> ReturnedAssets { get; set; }
     }
     public class JobAsset

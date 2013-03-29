@@ -96,6 +96,14 @@ namespace Mavo.Assets.Controllers
                 return Json(String.Format("{1} {0} has already been returned.", barcode, assetItem.Asset.Name));
             }
 
+            // item is back in inventory
+            assetItem.Status = InventoryStatus.In;
+            if (isDamaged)
+            {
+                assetItem.Condition = AssetCondition.Damaged;
+            }
+
+            // record the returned asset
             job.ReturnedAssets.Add(new ReturnedAsset
             {
                 Asset = assetItem.Asset,
@@ -106,6 +114,7 @@ namespace Mavo.Assets.Controllers
                 Returned = DateTime.Now
             });
             AssetActivity.Add(AssetAction.Return, assetItem.Asset, assetItem, job);
+
             Context.SaveChanges();
 
             return PartialView(

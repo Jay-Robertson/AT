@@ -98,6 +98,7 @@ namespace Mavo.Assets.Controllers
             else
                 return Json(string.Join(", ", errors), JsonRequestBehavior.AllowGet);
         }
+
         public virtual ActionResult AssetPickerForJob(int id)
         {
             AssetContext outOfRequestDb = new AssetContext();

@@ -7,125 +7,112 @@
 
 @section AdditionalScripts
 {
-
     <script type="text/javascript">
-        var numberPicked = 0;
-        var nonserializedPicked = new Array();
-        var serializedPicked = new Array();
-        var alreadyPicked = new Array();
-        $('#serializedErrorBlock').hide();
+
+        function resetBarcode() {
+            $('#barcodeInput').val('');
+        }
+
+        function resetMessages() {
+            $('#serializedErrorBlock').removeClass('in');
+            $('.alert').hide();
+        }
 
         $('.pickform').submit(function () {
-            $('#serializedErrorBlock').removeClass('in');
-            $('#serializedErrorBlock').hide();
-            $('#serializedSuccessBlock').hide();
+            resetMessages();
+            var assetId = $(this).closest('.modal').data('asset-id');
+            var $pickRow = $('#toPickTable tr[data-asset-id="' + assetId + '"]');
+            var $pickBox = $(this).find(':text[name="quantity"]');
+            var quantityNeeded = Number($pickRow.data('quantity-needed'));
+            var quantityPicked = Number($pickBox.val());
 
-            var assetId = $(this).children(':hidden').val();
-            var quantityPicked = parseInt($('#quantityPicked' + assetId).val());
-            var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
-            $('#pick' + assetId).modal('hide');
-            $('#quantityNeeded' + assetId).html(quantityNeeded - quantityPicked);
-            $('#qtyPicked' + assetId).val(quantityPicked);
-
-            var req = $.ajax(
-                {
-                    url: '/jobpicker/pickassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&quantity=' + quantityPicked,
-                    type: 'POST',
-                    dataType: "html"
-                });
-            req.fail(function (data) {
-                $('#serializedErrorBlock').show();
+            // must enter a number
+            if (isNaN(quantityPicked)) {
                 $('#errorMessage').html('There was an error scanning this item');
-                $('#serializedErrorBlock').addClass('in');
-                $('#barcodeInput').val('');
-                return false;
-            });
-            req.done(function (data) {
-                if ($('#asset-row-' + assetId).length != 0) {
-                    $('#asset-row-' + assetId).replaceWith(data);
+                $('#serializedErrorBlock').show();
+                return;
+            }
+
+            $.ajax({
+                type: 'post',
+                url: '/JobPicker/PickNonSerialized',
+                data: {
+                    jobId: '@Model.JobId',
+                    assetId: assetId,
+                    quantity: quantityPicked
+                }
+            })
+            .fail(function (xhr, status, data) {
+                $('#serializedErrorBlock').show();
+                $('#errorMessage').text(xhr.responseText);
+            })
+            .done(function (data) {
+
+                // update remaining needed quantity
+                quantityNeeded -= quantityPicked;
+                $pickRow.data('quantity-needed', quantityNeeded);
+                $pickRow.find('.quantity-needed').text(quantityNeeded);
+                $pickBox.val(quantityNeeded);
+                if (quantityNeeded <= 0) {
+                    $pickRow.remove();
+                }
+
+                // update already picked quantity
+                $alreadyPickedRow = $('#alreadyPickedTable tr[data-asset-id="' + assetId + '"]');
+                if ($alreadyPickedRow.length > 0) {
+                    $alreadyPickedRow.replaceWith(data);
                 }
                 else {
-                    $('#alreadyPickedTable').append(data);
+                    $('#alreadyPickedTable tbody').append(data);
                 }
+
             });
-            if (quantityNeeded - quantityPicked <= 0) {
-                $('#row' + assetId).remove();
-            }
-            if (quantityPicked > 0 && !$.inArray(assetId, nonserializedPicked) > -1) {
-                numberPicked = numberPicked + 1;
-                nonserializedPicked.push(assetId);
-            }
+
+            $('#pick-' + assetId).modal('hide');
             return false;
         });
-        $('#assetScanner').submit(function () {
-            $('#serializedErrorBlock').removeClass('in');
-            $('#serializedErrorBlock').hide();
-            $('#serializedSuccessBlock').hide();
 
-            if ($.inArray($('#barcodeInput').val(), alreadyPicked) > -1) {
+        $('#assetScanner').submit(function ()
+        {
+            resetMessages();
+            var barcode = $('#barcodeInput').val();
+            $.ajax({
+                type: 'post',
+                url: '/JobPicker/PickSerialized',
+                data: {
+                    jobId: '@Model.JobId',
+                    barcode: barcode
+                }
+            })
+            .fail(function (xhr, status, data) {
                 $('#serializedErrorBlock').show();
-                $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
-                $('#serializedErrorBlock').addClass('in');
-                $('#barcodeInput').val('');
-                return false;
-            }
-            else {
-                $.ajax({ url: $(this).attr('action'), type: 'POST', data: $(this).serialize() })
-                .fail(function (data) {
-                    $('#serializedErrorBlock').show();
-                    $('#errorMessage').html('There was an error scanning ' + $('#barcodeInput').val());
-                    $('#serializedErrorBlock').addClass('in');
-                    $('#barcodeInput').val('');
-                    return false;
-                })
-                .done(function (data) {
-                    if (!data.success) {
-                        $('#serializedErrorBlock').show();
-                        $('#errorMessage').html(data.reason);
-                        $('#serializedErrorBlock').addClass('in');
-                        $('#barcodeInput').val('');
-                        return false;
-                    }
-                    else {
-                        var assetId = data.assetId;
-                        var quantityNeeded = parseInt($('#quantityNeeded' + assetId).html());
-                        quantityNeeded = quantityNeeded - 1;
-                        $('#quantityNeeded' + assetId).html(quantityNeeded);
-                        alreadyPicked.push($('#barcodeInput').val());
-                        var req = $.ajax(
-                          {
-                              url: '/jobpicker/pickassetforjob?jobId=@Model.JobId&assetId=' + assetId + '&barcode=' + $('#barcodeInput').val(),
-                              type: 'POST',
-                              dataType: "html"
-                          });
-                        req.fail(function(data){
-                            $('#serializedErrorBlock').show();
-                            $('#errorMessage').html('There was an error scanning this item');
-                            $('#serializedErrorBlock').addClass('in');
-                            $('#barcodeInput').val('');
-                            return false;
-                        });
-                        req.success(function (data) {
-                            $('#serializedSuccessBlock').show();
-                            if ($('#asset-row-' + assetId).length != 0) {
-                                $('#asset-row-' + assetId).replaceWith(data);
-                            }
-                            else {
-                                $('#alreadyPickedTable').append(data);
-                            }
-                            if (quantityNeeded - 1 <= 0) {
-                                $('#row' + assetId).remove();
-                            }
-                        });
-                    }
-                    $('#barcodeInput').val('');
-                });
-                return false;
-            }
+                $('#errorMessage').text(xhr.responseText);
+                resetBarcode();
+            })
+            .done(function (data) {
+                var assetId = $(data).data('asset-id');
+                var assetItemId = $(data).data('asset-item-id');
+                
+                // append row to already picked table
+                $('#alreadyPickedTable').append(data);
+
+                // decrement (possibly remove) the to be picked quantity
+                var $pickRow = $('#toPickTable tr[data-asset-id="' + assetId + '"]');
+                var needed = $pickRow.data('quantity-needed') - 1;
+                $pickRow.data('quantity-needed', needed);
+                $pickRow.find('.quantity-needed').text(needed);
+                if (needed == 0) {
+                    $pickRow.remove();
+                }
+
+                $('#serializedSuccessBlock').show();
+
+            });
+            return false;
+
         });
        
     </script>
-
 }
 
 <div class="well well-small">
@@ -146,7 +133,7 @@
     <strong>Barcode Scanned Succesfully</strong>
 </div>
 
-<div class="alert alert-block alert-error fade" id="serializedErrorBlock">
+<div class="alert alert-block alert-error hide" id="serializedErrorBlock">
     <h4 id="errorMessage">Error</h4>
 </div>
 
@@ -163,16 +150,16 @@
     <tbody>
         @foreach (var item in Model.Assets.Where(x => x.QuantityNeeded > 0))
         {
-            <tr id="row@(item.AssetId)">
+            <tr data-asset-id="@item.AssetId" data-quantity-needed="@item.QuantityNeeded">
                 <td>@item.MavoItemNumber</td>
                 <td>@item.Name</td>
-                <td id="quantityNeeded@(item.AssetId)">
+                <td class="quantity-needed">
                     @item.QuantityNeeded
                 </td>
                 <td>
                     @if (item.Kind != Mavo.Assets.Models.AssetKind.Serialized)
                     {
-                        <a href="#pick@(item.AssetId)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i>&nbsp;Pick</a>
+                        <a href="#pick-@(item.AssetId)" role="button"  data-toggle="modal" class="btn btn-primary"><i class="icon-shopping-cart icon-white"></i>&nbsp;Pick</a>
                     }
                     else
                     {
@@ -194,14 +181,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var pickedAsset in Model.Assets.Where(x => x.QuantityTaken.HasValue && x.QuantityTaken > 0))
+        @foreach (var pickedAsset in Model.PickedAssets)
         {
             Html.RenderPartial(MVC.JobPicker.Views._PickedAssetRow, new Mavo.Assets.Controllers.PickedAssetRow()
             {
                 AssetId = pickedAsset.AssetId,
                 AssetName = pickedAsset.Name,
                 CurrentPickedQty = pickedAsset.QuantityTaken.Value,
-                MavoNumber = pickedAsset.MavoItemNumber
+                MavoNumber = pickedAsset.MavoItemNumber,
+                Barcodes = pickedAsset.Barcode,
+                AssetItemId = pickedAsset.AssetItemId,
             });
         }
     </tbody>
@@ -219,14 +208,13 @@
 
 @foreach (var item in Model.Assets.Where(x => x.Kind != Mavo.Assets.Models.AssetKind.Serialized))
 {
-    <div id="pick@(item.AssetId)" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pick@(item.AssetId)Label" aria-hidden="true">
+    <div id="pick-@(item.AssetId)" data-asset-id="@item.AssetId" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="pick@(item.AssetId)Label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Pick @item.Name</h3>
         </div>
         @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-inline pickform", id = "pickForm" + item.AssetId.ToString() }))
         {
-            <input type="hidden" id="itemid@(item.AssetId)" value="@item.AssetId" />
             <div class="modal-body">
                 <table class="table">
                     <thead>
@@ -240,13 +228,15 @@
                         <tr>
                             <td>@item.MavoItemNumber</td>
                             <td>@item.Name</td>
-                            <td>@item.QuantityNeeded</td>
+                            <td class="quantity-needed">@item.QuantityNeeded</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <label for="quantityPicked@(item.AssetId)">Quantity Picked</label>
-                <input type="text" value="@item.QuantityNeeded" id="quantityPicked@(item.AssetId)" />
+                <label>
+                    Quantity Picked
+                    <input type="text" value="@item.QuantityNeeded" name="quantity" />
+                </label>
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

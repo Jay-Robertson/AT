@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Linq;
 using System.Globalization;
 using System.Web.Security;
 using Mavo.Assets.Models.ViewModel;
@@ -32,6 +33,16 @@ namespace Mavo.Assets.Models
         public DbSet<PickedAsset> PickedAssets { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Customer> Customers { get; set; }
+
+        public AssetItem Lookup(string barcode)
+        {
+            if (String.IsNullOrWhiteSpace(barcode))
+            {
+                return null;
+            }
+            barcode = barcode.Trim();
+            return this.AssetItems.SingleOrDefault(x => x.Barcode == barcode);
+        }
     }
 
     public enum InventoryStatus
@@ -278,6 +289,11 @@ namespace Mavo.Assets.Models
         public string ConsultantContact { get; set; }
         public string ConsultantContactNumber { get; set; }
         public string ConsultantEmail { get; set; }
+
+        public int GetQuantityPicked(Asset asset)
+        {
+            return this.PickedAssets.Where(x => x.Asset.Id == asset.Id).Sum(x => x.Quantity);
+        }
     }
 
     [ComplexType]
