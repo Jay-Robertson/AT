@@ -278,6 +278,7 @@ namespace Mavo.Assets.Controllers
                     ReturnStarted = x.ReturnStarted,
                     Address = x.Address,
                     CompletionDate = x.EstimatedCompletionDate,
+                    PickupTime = x.PickupTime,
                     ReturnedAssets = x.ReturnedAssets.Select(a => new
                     {
                         Name = a.Asset.Name,
@@ -317,6 +318,7 @@ namespace Mavo.Assets.Controllers
                 ReturnStarted = result.ReturnStarted,
                 Address = result.Address,
                 CompletionDate = result.CompletionDate,
+                PickupTime = result.PickupTime,
                 ReturnedAssets = result.ReturnedAssets.Select(x => new JobAsset()
                 {
                     Name = x.Name,
