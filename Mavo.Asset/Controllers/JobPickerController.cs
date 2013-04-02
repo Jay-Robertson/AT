@@ -57,7 +57,7 @@ namespace Mavo.Assets.Controllers
                 .FirstOrDefault(x => x.Id == jobId);
 
             // mark it as being picked if needed
-            if (picking && job.Status == JobStatus.Started)
+            if (picking && job.Status != JobStatus.BeingPicked)
             {
                 job.Status = JobStatus.BeingPicked;
                 job.PickStarted = DateTime.Now;
