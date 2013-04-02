@@ -14,6 +14,6 @@ namespace Mavo.Assets.Controllers
 
         public int CurrentPickedQty { get; set; }
         public string Barcodes { get; set; }
-        
+        public bool Damaged { get; set; }
     }
 }

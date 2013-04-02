@@ -6,6 +6,10 @@
         @if (Model.AssetItemId.HasValue)
         {
             <span class="label label-info"><i class="icon-white icon-barcode"></i> @Model.Barcodes</span>
+            if (Model.Damaged)
+            {
+                <span class="label label-important">Damaged</span>
+            }
         }
         else
         {

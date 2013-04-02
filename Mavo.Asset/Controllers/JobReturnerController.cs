@@ -126,7 +126,8 @@ namespace Mavo.Assets.Controllers
                     AssetName = assetItem.Asset.Name,
                     Barcodes = assetItem.Barcode,
                     CurrentPickedQty = 1,
-                    MavoNumber = assetItem.Asset.MavoItemNumber
+                    MavoNumber = assetItem.Asset.MavoItemNumber,
+                    Damaged = (assetItem.Condition == AssetCondition.Damaged)
                 }
             );
         }
@@ -300,6 +301,7 @@ namespace Mavo.Assets.Controllers
                         AssetItemId = (a.Item != null ? a.Item.Id : (int?)null),
                         MavoItemNumber = a.Asset.MavoItemNumber,
                         QuantityReturned = a.QuantityPicked,
+                        IsDamaged = (a.Item.Condition == AssetCondition.Damaged)
                     }),
                     Assets = x.PickedAssets.Select(a => new
                     {
@@ -340,7 +342,9 @@ namespace Mavo.Assets.Controllers
                     Kind = x.Kind,
                     Barcode = x.Barcode,
                     AssetCategory = x.AssetCategory,
-                    MavoItemNumber = x.MavoItemNumber
+                    MavoItemNumber = x.MavoItemNumber,
+                    IsDamaged = x.IsDamaged
+
                 }).ToList(),
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
