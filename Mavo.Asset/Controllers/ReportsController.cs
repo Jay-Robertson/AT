@@ -188,7 +188,10 @@ namespace Mavo.Assets.Controllers
 
             var pickedAssets = Context.PickedAssets
                 .Include(x => x.Job).Include(x => x.Job.ReturnedBy).Include(x => x.Item).Include(x => x.Asset)
-                .Where(x => x.Job.Status == JobStatus.Completed && x.Job.ReturnCompleted >= startDate && x.Job.ReturnCompleted < endDate)
+                .Where(x => x.Item.Status == InventoryStatus.Out &&
+                            x.Job.Status == JobStatus.Completed &&
+                            x.Job.ReturnCompleted >= startDate &&
+                            x.Job.ReturnCompleted < endDate)
                 .ToList()
                 .Where(x => x.Job != null)
                 .GroupBy(x => x.Job);
