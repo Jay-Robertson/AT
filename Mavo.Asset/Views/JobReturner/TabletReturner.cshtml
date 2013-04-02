@@ -21,7 +21,7 @@
         }
 
         function resetBarcodeInput() {
-            $('#barcodeInput').val('');
+            $('#barcodeInput').val('').focus();
             $('#returnAsDamaged').removeAttr('checked');
             $('#assetScanner :submit')
                 .toggleClass('btn-primary', true)
@@ -109,6 +109,7 @@
                 var assetItemId = $(data).data('asset-item-id');
                 $('#alreadyReturnedTable').append(data);
                 $('#toReturnTable tr[data-asset-item-id="' + assetItemId + '"]').remove();
+                resetBarcodeInput();
             });
 
             return false;
