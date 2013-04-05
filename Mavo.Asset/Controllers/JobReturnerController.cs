@@ -260,11 +260,21 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult CompleteReturning(int jobId)
         {
-            Job job = Context.Jobs.FirstOrDefault(x => x.Id == jobId);
+            Job job = Context.Jobs.Include("ProjectManager").FirstOrDefault(x => x.Id == jobId);
             job.ReturnedBy = CurrentUser.GetCurrent();
             job.ReturnCompleted = DateTime.Now;
             job.Status = JobStatus.Completed;
             Context.SaveChanges();
+
+            if (job.ProjectManager != null)
+            {
+                dynamic email = new Email("JobComplete");
+                email.Subject = String.Format("Job #{0} is complete!", job.JobNumber);
+                email.To = job.ProjectManager.Email;
+                email.Job = job;
+                email.Send();
+            }
+
             return Success(jobId);
         }
 
