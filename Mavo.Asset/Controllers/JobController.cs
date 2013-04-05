@@ -160,7 +160,7 @@ namespace Mavo.Assets.Controllers
                 ProjectManager = x.ProjectManager.FirstName + " " + x.ProjectManager.LastName,
                 Status = x.Status,
                 ShipDate = x.PickupTime,
-                ReturnDate = x.ReturnedDate,
+                ReturnDate = x.ReturnCompleted ?? x.EstimatedCompletionDate,
                 Id = x.Id,
                 IsAddon = x is JobAddon
             }).ToList();

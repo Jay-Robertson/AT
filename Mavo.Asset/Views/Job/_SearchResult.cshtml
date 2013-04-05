@@ -36,8 +36,8 @@
                 </td>
                 <td>@Html.DisplayFor(x=>item.JobNumber)</td>
                 <td>@Html.DisplayFor(x => item.Customer)</td>
-                <td>@Html.DisplayFor(x => item.ShipDate)</td>
-                <td>@Html.DisplayFor(x => item.ReturnDate)</td>
+                <td>@(item.ShipDate.HasValue ? item.ShipDate.Value.ToShortDateString() : "-")</td>
+                <td>@(item.ReturnDate.HasValue ? item.ReturnDate.Value.ToShortDateString() : "-")</td>
                 <td>
                     @if (item.Status == Mavo.Assets.Models.JobStatus.ReadyToPick)
                     {
