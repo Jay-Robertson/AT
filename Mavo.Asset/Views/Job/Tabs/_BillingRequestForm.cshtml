@@ -193,13 +193,13 @@
                         <div class="control-group">
                             @Html.LabelTitleizeFor(x => x.InvoiceDetail.SendConsultant)
                             <div class="controls">
-                                @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendConsultant, true)
+                                @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendConsultant, false)
                             </div>
                         </div>
                         <div class="control-group">
                             @Html.LabelTitleizeFor(x => x.InvoiceDetail.SendCustomer)
                             <div class="controls">
-                                @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendCustomer, true)
+                                @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendCustomer, false)
                             </div>
                         </div>
                         <h5>Special Invoice Instructions</h5>

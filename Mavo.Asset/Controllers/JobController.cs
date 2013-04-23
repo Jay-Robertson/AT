@@ -206,6 +206,16 @@ namespace Mavo.Assets.Controllers
                 var values = Request.Form["InvoiceDetail.SpecialForms"].Split(',');
                 job.InvoiceDetail.SpecialForms = (SpecialForms)values.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
             }
+            if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendConsultant"]))
+            {
+                var sendConsultantValues = Request.Form["InvoiceDetail.SendConsultant"].Split(',');
+                job.InvoiceDetail.SendConsultant = (SendConsultant)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+            }
+            if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendCustomer"]))
+            {
+                var sendCustomerValues = Request.Form["InvoiceDetail.SendCustomer"].Split(',');
+                job.InvoiceDetail.SendCustomer = (SendCustomer)sendCustomerValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+            }
             if (job.InvoiceDetail.Consultant == null)
                 job.InvoiceDetail.Consultant = new Address();
             Context.SaveChanges();
