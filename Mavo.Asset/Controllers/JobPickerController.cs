@@ -281,6 +281,12 @@ namespace Mavo.Assets.Controllers
                 tempJob.PickCompleted = DateTime.Now;
 
                 job = tempJob.ParentJob;
+
+                // move all added on assets into the parent job
+                foreach (var a in tempJob.PickedAssets)
+                {
+                    a.Job = job;
+                }
             }
             else
             {
