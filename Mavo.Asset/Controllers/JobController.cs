@@ -280,17 +280,20 @@ namespace Mavo.Assets.Controllers
                             job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
                         }
 
-                        dynamic email = new Email("JobReadyToStaff");
-                        email.Subject = String.Format("Job #{0} is ready to staff!", job.JobNumber);
-                        email.To = Properties.Settings.Default.StaffingManagerEmail;
-                        email.Job = job;
-                        email.Send();
-
                         Context.Jobs.Add(job);
                     }
                 }
 
                 Context.SaveChanges();
+
+                if (!jobPostModel.Id.HasValue)
+                {
+                    dynamic email = new Email("JobReadyToStaff");
+                    email.Subject = String.Format("Job #{0} is ready to staff!", job.JobNumber);
+                    email.To = Properties.Settings.Default.StaffingManagerEmail;
+                    email.Job = job;
+                    email.Send();
+                }
 
                 return RedirectToAction("Edit", new { id = job.Id });
             }
