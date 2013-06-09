@@ -1,8 +1,48 @@
-﻿.navbar, .leftNav, .h1, .alert, .sidebar-nav, .add-on, .noprint, #job-tabs, .btn
+﻿
+.navbar, .leftNav, .h1, .alert, .sidebar-nav, .add-on, .noprint, #job-tabs, .btn, .form-actions
 {
-	display:none;
+    /* needs to override more specific selectors for row-fluids and such*/
+	display: none !important;
+    width: 0 !important;    
+    height: 0 !important;
 }
+
 #map
 {
 	page-break-before: always;
 }
+
+input[type="text"], textarea, .well, .input-append .add-on, .input-prepend .add-on {
+    border: none;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0 !important;
+    font-size: 12px;
+}
+
+.well {
+    padding: 10px !important;
+    margin: 0 !important;
+}
+
+.control-group {
+    margin-bottom: 0px !important;
+}
+
+h4 {
+    font-size: 14px;
+}
+
+label { 
+    padding-top: 0 !important;
+    margin-bottom: 0 !important;
+    font-size: 12px;
+}
+
+body 
+{
+    padding-top: 0 !important;
+}
+
+/*.leftNav + .span9 { margin-left: 0; }*/

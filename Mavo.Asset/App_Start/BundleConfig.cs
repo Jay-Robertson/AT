@@ -36,7 +36,6 @@ namespace Mavo.Assets
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/themes/bootstrap/jquery-ui-1.8.16.custom.css",
                         "~/Content/bootstrap.css",
-                        "~/Content/bootstrap.css",
                         "~/Content/bootstrap-responsive.css"));
         }
     }
