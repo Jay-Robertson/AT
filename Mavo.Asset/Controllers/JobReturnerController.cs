@@ -311,7 +311,7 @@ namespace Mavo.Assets.Controllers
                         AssetItemId = (a.Item != null ? a.Item.Id : (int?)null),
                         MavoItemNumber = a.Asset.MavoItemNumber,
                         QuantityReturned = a.QuantityPicked,
-                        IsDamaged = (a.Item.Condition == AssetCondition.Damaged)
+                        IsDamaged = ((bool?)(a.Item.Condition == AssetCondition.Damaged)) ?? false
                     }),
                     Assets = x.PickedAssets.Select(a => new
                     {
