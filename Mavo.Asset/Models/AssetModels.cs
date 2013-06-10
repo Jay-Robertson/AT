@@ -94,6 +94,12 @@ namespace Mavo.Assets.Models
 
         public List<AssetItem> Items { get; set; }
 
+        public static int? SortableMavoItemNumber(string mavoItemNumber)
+        {
+            int i;
+            if (int.TryParse(mavoItemNumber, out i)) return i;
+            return null;
+        }
     }
 
     [Table("AssetItems")]

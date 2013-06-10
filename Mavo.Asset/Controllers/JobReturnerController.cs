@@ -355,7 +355,7 @@ namespace Mavo.Assets.Controllers
                     MavoItemNumber = x.MavoItemNumber,
                     IsDamaged = x.IsDamaged
 
-                }).ToList(),
+                }).OrderByDescending(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList(),
                 Assets = result.Assets.Select(x => new JobAsset()
                 {
                     Name = x.Name,
@@ -371,7 +371,7 @@ namespace Mavo.Assets.Controllers
                     Barcode = x.Barcode,
                     AssetCategory = x.AssetCategory,
                     MavoItemNumber = x.MavoItemNumber
-                }).ToList()
+                }).OrderByDescending(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList()
             });
         }
     }
