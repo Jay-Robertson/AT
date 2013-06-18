@@ -126,6 +126,7 @@ namespace Mavo.Assets.Controllers
         {
             SetListsForCrud(null);
             var query = Context.Jobs.Where(x => (x is JobAddon && x.Status < JobStatus.Started) || !(x is JobAddon)).AsQueryable();
+            query = query.OrderByDescending(x => x.PickupTime);
             if (!String.IsNullOrEmpty(search.SearchString))
                 query = query.Where(x =>
                     x.Name.Contains(search.SearchString)
