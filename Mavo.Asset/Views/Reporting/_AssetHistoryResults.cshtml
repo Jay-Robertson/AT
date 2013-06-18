@@ -50,7 +50,7 @@
                         <span class="label label-info"><i class="icon-white icon-plus-sign"></i></span>
                         }
 
-                        @Html.DisplayFor(modelItem => item.Job.Name)
+                        <a href="/job/edit/@item.Job.Id">@Html.DisplayFor(modelItem => item.Job.Name)</a>
                     }
                 </td>
                 <td>

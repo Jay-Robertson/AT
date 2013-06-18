@@ -377,7 +377,6 @@ namespace Mavo.Assets.Controllers
             return View(asset);
         }
 
-
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

@@ -68,7 +68,7 @@ else
                                           
                                                     <tr>
                                                         <td>@assetItem.Barcode</td>
-                                                        <td><span class="label label-@(assetItem.Status == Mavo.Assets.Models.InventoryStatus.In ? "success" : "important")"><i class="icon-white icon-@(assetItem.Status == Mavo.Assets.Models.InventoryStatus.In ? "ok-sign" : "remove-circle")"></i>&nbsp;@assetItem.Status</span></td>
+                                                        <td><a href="/Reporting/AssetHistoryFilter?Id=@assetItem.Barcode"><span class="label label-@(assetItem.Status == Mavo.Assets.Models.InventoryStatus.In ? "success" : "important")"><i class="icon-white icon-@(assetItem.Status == Mavo.Assets.Models.InventoryStatus.In ? "ok-sign" : "remove-circle")"></i>&nbsp;@assetItem.Status</span></a></td>
                                                         <td>@assetItem.Condition</td>
                                                     </tr>
                                              
