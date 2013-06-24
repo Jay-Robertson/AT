@@ -24,5 +24,6 @@ namespace Mavo.Assets.Models.ViewModel
         public List<Job> BeingReturned { get; set; }
         public List<Job> AlreadyPicked { get; set; }
         public List<Job> AlreadyReturned { get; set; }
+        public List<Job> FutureJobs { get; set; }
     }
 }

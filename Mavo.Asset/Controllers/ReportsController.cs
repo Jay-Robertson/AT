@@ -107,11 +107,6 @@ namespace Mavo.Assets.Controllers
                 .Where(x => x.PickupTime.Date <= DateTime.Now.Date.AddDays(7))
                 .ToList();
         }
-        private List<Job> GetReadyToReturn()
-        {
-            var tomorrow = DateTime.Today.AddDays(1).AddSeconds(-1);
-            return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => !(x is JobAddon) && x.Status == JobStatus.Started && x.EstimatedCompletionDate >= DateTime.Today && x.EstimatedCompletionDate < tomorrow).ToList();
-        }
         private List<Job> GetAlreadyPicked()
         {
             return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => x.PickCompleted.HasValue && x.PickCompleted >= DateTime.Today).ToList();
@@ -128,16 +123,27 @@ namespace Mavo.Assets.Controllers
         {
             return Context.Jobs.Include("ProjectManager").Include("PickedBy").Include("ReturnedBy").Where(x => !(x is JobAddon) && x.Status == JobStatus.BeingReturned).OrderBy(x => x.ReturnStarted).ToList();
         }
+
+        private List<Job> GetFutureJobs()
+        {
+            return Context.Jobs
+                .Include("ProjectManager").Include("PickedBy").Include("ReturnedBy")
+                .Where(x => x.Status == JobStatus.ReadyToPick)
+                .ToList()
+                .Where(x => x.PickupTime.Date > DateTime.Now.Date.AddDays(7))
+                .ToList();
+        }
+
         public virtual ActionResult Jobs()
         {
             JobReportViewModel result = new JobReportViewModel()
                 {
                     ReadyToPick = GetReadyToPick(),
-                    ReadyToReturn = GetReadyToReturn(),
                     AlreadyPicked = GetAlreadyPicked(),
                     AlreadyReturned = GetAlreadyReturned(),
                     BeingPicked = GetBeingPicked(),
-                    BeingReturned = GetBeingReturned()
+                    BeingReturned = GetBeingReturned(),
+                    FutureJobs = GetFutureJobs()
                 };
             return View(result);
         }
