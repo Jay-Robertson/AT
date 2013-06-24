@@ -1,10 +1,15 @@
 ﻿
-.navbar, .leftNav, .h1, .alert, .sidebar-nav, .add-on, .noprint, #job-tabs, .btn, .form-actions
+.navbar, .h1, .alert, .sidebar-nav, .add-on, .noprint, #job-tabs, .btn, .form-actions, #barcodeInput,
+#returnAsDamagedLabel
 {
     /* needs to override more specific selectors for row-fluids and such*/
 	display: none !important;
     width: 0 !important;    
     height: 0 !important;
+}
+
+.leftNav {
+    float: none !important;
 }
 
 #map
