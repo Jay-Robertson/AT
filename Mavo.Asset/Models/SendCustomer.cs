@@ -9,6 +9,7 @@ namespace Mavo.Assets.Models
     public enum SendCustomer
     {
         CopyOfInvoice = 0x1,
-        CopyFinalReport = 0x2
+        CopyFinalReport = 0x2,
+        CopyOfAIADocumens = 0x4
     }
 }

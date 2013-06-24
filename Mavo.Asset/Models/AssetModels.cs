@@ -296,6 +296,10 @@ namespace Mavo.Assets.Models
         public string ConsultantContactNumber { get; set; }
         public string ConsultantEmail { get; set; }
 
+        public string Labels { get; set; }
+        public string Drums { get; set; }
+        public string Bags { get; set; }
+
         public int GetQuantityPicked(Asset asset)
         {
             return this.PickedAssets.Where(x => x.Asset.Id == asset.Id).Sum(x => x.Quantity);

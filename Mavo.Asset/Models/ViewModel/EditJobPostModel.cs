@@ -110,6 +110,10 @@ namespace Mavo.Assets.Models.ViewModel
         public string ConsultantContactNumber { get; set; }
         public string ConsultantEmail { get; set; }
 
+        public string Labels { get; set; }
+        public string Drums { get; set; }
+        public string Bags { get; set; }
+
     }
 
 

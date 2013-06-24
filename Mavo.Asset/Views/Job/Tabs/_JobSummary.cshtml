@@ -101,6 +101,26 @@
                                     @Html.TextBoxFor(x => x.ShiftStartDate, new { disabled = "disabled" })
                                 </div>
                             </div>
+
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Labels)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.Labels, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Drums)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.Drums, new { disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                @Html.LabelTitleizeFor(x => x.Bags)
+                                <div class="controls">
+                                    @Html.TextBoxFor(x => x.Bags, new { disabled = "disabled" })
+                                </div>
+                            </div>
+
                             <div class="control-group">
                                 @Html.LabelTitleizeFor(x => x.PickupTime)
                                 <div class="controls">

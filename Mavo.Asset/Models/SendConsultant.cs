@@ -9,6 +9,7 @@ namespace Mavo.Assets.Models
     public enum SendConsultant
     {
         InvoiceForApproval = 0x1,
-        FinalReport = 0x2
+        FinalReport = 0x2,
+        AIADocuments = 0x4
     }
 }
