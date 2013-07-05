@@ -990,7 +990,7 @@ input[type="color"],
   display: inline-block;
   height: 20px;
   padding: 4px 6px;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
   font-size: 14px;
   line-height: 20px;
   color: #555555;
@@ -2770,7 +2770,7 @@ table th[class*="span"],
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 1000;
+  z-index: 9999;
   display: none;
   float: left;
   min-width: 160px;

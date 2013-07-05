@@ -1,6 +1,11 @@
 ﻿@model IList<Mavo.Assets.Models.AssetCategory>
 @if (!(ViewBag.Lock != null && ViewBag.Lock))
 {
+    <div>
+        <input type="text" placeholder="Search" id="asset-search" autocomplete="off" />
+        <button class="btn" id="add-asset-search">Add</button>
+    </div>
+    
     <select id="asset-category">
         @foreach (var category in Model)
         {
@@ -20,17 +25,17 @@
 @if (!(ViewBag.Lock != null && ViewBag.Lock))
 {
     <script>
-        var idSpecifier = '@(ViewBag.IsForJob ? String.Format("jobId={0}", ViewBag.JobId ?? 0) : String.Format("templateId={0}", ViewBag.TemplateId))';
-        function removeRow(assetId) {
-            $('#row-' + assetId).remove();
-            $.post('/asset/removeasset/' + assetId + '?' + idSpecifier);
-            return false;
+    var idSpecifier = '@(ViewBag.IsForJob ? String.Format("jobId={0}", ViewBag.JobId ?? 0) : String.Format("templateId={0}", ViewBag.TemplateId))';
+    function removeRow(assetId) {
+        $('#row-' + assetId).remove();
+        $.post('/asset/removeasset/' + assetId + '?' + idSpecifier);
+        return false;
+    }
+    function updateQuantity(assetId, quantity) {
+        if (0 == quantity || !quantity) {
+            return removeRow(assetId);
         }
-        function updateQuantity(assetId, quantity) {
-            if (0 == quantity || !quantity) {
-                return removeRow(assetId);
-            }
-            $.post('/asset/updatequantity@(ViewBag.IsForJob ? "" : "fortemplate")/' + assetId + '?quantity=' + quantity);
+        $.post('/asset/updatequantity@(ViewBag.IsForJob ? "" : "fortemplate")/' + assetId + '?quantity=' + quantity);
         $('#asset-table #row-' + assetId + ' .btn-primary').css('visibility', 'hidden');
     }
     jQuery(function ($) {
@@ -41,16 +46,56 @@
             });
         });
 
-        $('#add-asset').click(function () {
-            $.post('/asset/addasset/' + $('#asset-value').val() + '?' + idSpecifier, function (data) {
-                var $row = $("#asset-table tr[data-asset-id='" + $('#asset-value').val() + "']");
-                if ($row.length > 0) {
-                    $row.replaceWith(data);
-                }
-                else {
-                    $('#asset-table > tbody:last').append(data);
-                }
+        var addAsset = function (id) {
+            $.post(
+                '/asset/addasset/' + id + '?' + idSpecifier,
+                function(data) {
+                    var $row = $("#asset-table tr[data-asset-id='" + id + "']");
+                    if ($row.length > 0) {
+                        $row.replaceWith(data);
+                    }
+                    else {
+                        $('#asset-table > tbody:last').append(data);
+                    }
             });
+        }
+
+        $('#add-asset').click(function () {
+            addAsset($('#asset-value').val());
+        });
+
+        var searchResults = null;
+        $('#asset-search').typeahead({
+            minLength: 2,
+            source: function (query, next) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Asset/Search',
+                    data: { q: query },
+                    dataType: 'json'
+                })
+                .done(function (data) {
+                    searchResults = data;
+                    var a = [];
+                    for (var i = 0; i < data.length; i++) {
+                        a.push(data[i].name);
+                    }
+                    next(a);
+                })
+                .fail(function () {
+                    next(['Sorry, there was a search error.']);
+                });
+            }
+        });
+
+        $('#add-asset-search').click(function () {
+            var x = $('#asset-search').val();
+            if (null == searchResults || !x) return false;
+            for (var i = 0; i < searchResults.length; i++) {
+                if (searchResults[i].name == x) {
+                    return addAsset(searchResults[i].id);
+                }
+            }
             return false;
         });
 

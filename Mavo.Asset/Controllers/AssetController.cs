@@ -11,6 +11,7 @@ using AutoMapper;
 using System.Text;
 using Mavo.Assets.Services;
 using System.Web.UI;
+using System.Data.Objects.SqlClient;
 
 namespace Mavo.Assets.Controllers
 {
@@ -195,6 +196,30 @@ namespace Mavo.Assets.Controllers
                 return Index(new AssetSearchResult() { CategoryId = categoryId, Kind = kind });
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Search(string q)
+        {
+            return Json(
+                db.Assets
+                    .Where(x =>
+                        x.Name.Contains(q) ||
+                        x.Barcode.Contains(q) ||
+                        x.MavoItemNumber.Contains(q) ||
+                        x.Category.Name.Contains(q))
+                    .Take(16)
+                    .Select(x => new {
+                        id = x.Id,
+                        number = x.MavoItemNumber,
+                        name = "[" + x.MavoItemNumber + "] "+ x.Name
+                    })
+                    .ToList()
+                    .OrderBy(x => Convert.ToInt32(x.number)),
+                JsonRequestBehavior.AllowGet
+            );
+        }
+
+
         [HttpPost]
         public virtual ActionResult Index(AssetSearchResult search)
         {
