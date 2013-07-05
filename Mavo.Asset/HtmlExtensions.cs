@@ -183,7 +183,7 @@ namespace System.Web.Mvc
                 builder.MergeAttribute("name", inputName);
                 if (disabled.HasValue && disabled.Value)
                     builder.MergeAttribute("disabled", "disabled");
-                builder.InnerHtml = item.ToString().Titleize();
+                builder.InnerHtml = item.ToString().Titleize().Replace("Aia", "AIA");
 
                 sb.Append(String.Format("<label class='checkbox'>{0}</label>", builder.ToString(TagRenderMode.Normal)));
             }
