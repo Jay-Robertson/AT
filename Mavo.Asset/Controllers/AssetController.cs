@@ -100,18 +100,25 @@ namespace Mavo.Assets.Controllers
                 return Json(string.Join(", ", errors), JsonRequestBehavior.AllowGet);
         }
 
-        public virtual ActionResult AssetPickerForJob(int id)
+        public ActionResult UnlockedAssetPickerForJob(int id)
+        {
+            return this.AssetPickerForJob(id, true);
+        }
+
+        public virtual ActionResult AssetPickerForJob(int id, bool? unlock = false)
         {
             AssetContext outOfRequestDb = new AssetContext();
             Job job = outOfRequestDb.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
             ViewBag.Assets = job.Assets;
-            ViewBag.Lock = job.Status != JobStatus.New && job.Status != JobStatus.ReadyToPick;
+            ViewBag.Lock = (job.Status != JobStatus.New && job.Status != JobStatus.ReadyToPick);
+            if (unlock.HasValue && unlock.Value == true)
+            {
+                ViewBag.Lock = false;
+            }
             return PartialView("_AssetPicker", outOfRequestDb.AssetCategories.OrderBy(x => x.Name).ToList());
         }
-
-
 
         public virtual ActionResult GetAssetDetail(string id, IList<int> availableAssets, int? jobId = null)
         {

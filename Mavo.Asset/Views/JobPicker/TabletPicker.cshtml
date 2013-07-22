@@ -111,11 +111,21 @@
             return false;
 
         });
+
+        $('#add-button').click(function () {
+            $('#barcode-panel').hide();
+            $('#add').show();
+            $('#add ~ *').hide();
+        });
+        $('#add-done').click(function () {
+            window.location.reload();
+        });
        
     </script>
 }
 
-<div class="well well-small">
+<div class="well well-small" id="barcode-panel">
+    <button class="btn btn-primary btn-large" id="add-button" style="float: right;">Add Item to Picklist</button>
     @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
     {
         var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
@@ -127,6 +137,11 @@
         <input type="submit" class="btn btn-primary btn-large" value="Scan & Pick" />
 
     }
+</div>
+
+<div id="add" style="display: none;">
+    @{ Html.RenderAction("UnlockedAssetPickerForJob", "Asset", new { id = Model.JobId }); }
+    <button id="add-done" class="btn btn-primary btn-large">Continue Picking</button>
 </div>
 
 <div class="alert alert-block alert-success hide" id="serializedSuccessBlock">

@@ -14,7 +14,7 @@
     </select>
 
     <span id="asset-detail">
-        @{Html.RenderAction("AssetPickerDetail","Asset", new { id = Model.First().Id });}
+        @{Html.RenderAction("AssetPickerDetail", "Asset", new { id = Model.First().Id });}
     </span>
     <button class="btn" id="add-asset">Add</button>
 }

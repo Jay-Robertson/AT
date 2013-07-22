@@ -393,10 +393,11 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult AssetPickerForJob(int id)
+        public override System.Web.Mvc.ActionResult AssetPickerForJob(int id, bool? unlock)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AssetPickerForJob);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "unlock", unlock);
             return callInfo;
         }
 
