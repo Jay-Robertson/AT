@@ -47,6 +47,16 @@ namespace Mavo.Assets.Controllers
             return Json(job.PickStarted.ToString());
         }
 
+        [HttpPost]
+        public JsonResult UpdateQuantity(int id, int assetId, int quantity)
+        {
+            var job = __GetJobForPickingActions(id, true);
+            var picked = job.PickedAssets.First(x => x.Asset.Id == assetId);
+            picked.Quantity = quantity;
+            Context.SaveChanges();
+            return Json("Ok");
+        }
+
         private Job __GetJobForPickingActions(int jobId, bool picking = false)
         {
             // find the job by id

@@ -150,6 +150,29 @@
                 .val(checked ? 'Scan & Return as Damaged' : 'Scan & Return');
         });
 
+        $('#alreadyReturnedTable').on('click', '.badge-info', function () {
+            var assetId = $(this).closest('tr').data('asset-id');
+            var jobId = '@Model.JobId';
+            var currentQty = Number($(this).text());
+            var newQty = prompt("Enter an updated quantity:", currentQty);
+            if (null == newQty) return false;
+            newQty = Number(newQty);
+            if (isNaN(newQty)) return false;
+            if (newQty == currentQty) return false;
+            $.ajax({
+                type: 'post',
+                url: '/JobReturner/UpdateQuantity/' + jobId,
+                data: {
+                    assetId: assetId,
+                    quantity: newQty
+                }
+            })
+            .fail(function () { alert('Error updating quantity.'); })
+            .done(function () { window.location.reload(); });
+            return false;
+                });
+
+
     </script>
 }
 
