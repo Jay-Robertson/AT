@@ -48,6 +48,7 @@ namespace Mavo.Assets.Controllers
         [CsvField(Index=4)] public string Barcode { get; set; }
         [CsvField(Index=5)] public AssetCondition? Condition { get; set; }
         [CsvField(Index=6)] public int? Quantity { get; set; }
+        [CsvField(Index=7)] public string UnitOfMeasure { get; set; }
     }
 
     [System.Web.Mvc.Authorize]
@@ -72,6 +73,7 @@ namespace Mavo.Assets.Controllers
                         Barcode = null,
                         Condition = null,
                         Quantity = x.Inventory,
+                        UnitOfMeasure = x.UnitOfMeasure
                     }
                 )
             );
@@ -85,6 +87,7 @@ namespace Mavo.Assets.Controllers
                         Barcode = x.Barcode,
                         Condition = x.Condition,
                         Quantity = null,
+                        UnitOfMeasure = x.Asset.UnitOfMeasure
                     }
                 )
             );
