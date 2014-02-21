@@ -152,39 +152,7 @@
                         </div>
                     }
                 </div>
-                <div class="well">
-                    <h4>Contract/Billing</h4>
-                    <div class="control-group">
-                        @Html.LabelTitleizeFor(x => x.ContractNumber)
-                        <div class="controls">
-                            @Html.EditorFor(x => x.ContractNumber)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelTitleizeFor(x => x.ContractDate)
-                        <div class="controls">
-                            @Html.EditorFor(x => x.ContractDate)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        @Html.LabelTitleizeFor(x => x.ContractAmount)
-                        <div class="controls">
-                            @Html.EditorFor(x => x.ContractAmount)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Send Consultant</label>
-                        <div class="controls">
-                            @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendConsultant)
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">Send Customer</label>
-                        <div class="controls">
-                            @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendCustomer)
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <div class="span6">
                 <div class="well ">
@@ -252,6 +220,39 @@
                             {
                                 @Html.DisplayFor(x => x.Customer.Address)
                             }
+                        </div>
+                    </div>
+                </div>
+                <div class="well">
+                    <h4>Contract/Billing</h4>
+                    <div class="control-group">
+                        @Html.LabelTitleizeFor(x => x.ContractNumber)
+                        <div class="controls">
+                            @Html.EditorFor(x => x.ContractNumber)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelTitleizeFor(x => x.ContractDate)
+                        <div class="controls">
+                            @Html.EditorFor(x => x.ContractDate)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        @Html.LabelTitleizeFor(x => x.ContractAmount)
+                        <div class="controls">
+                            @Html.EditorFor(x => x.ContractAmount)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Send Consultant</label>
+                        <div class="controls">
+                            @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendConsultant)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Send Customer</label>
+                        <div class="controls">
+                            @Html.EnumCheckBoxListFor(x => x.InvoiceDetail.SendCustomer)
                         </div>
                     </div>
                 </div>
