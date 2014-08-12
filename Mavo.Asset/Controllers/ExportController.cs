@@ -9,12 +9,62 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+
 using Mavo.Assets.Models;
 
 namespace Mavo.Assets.Controllers
 {
-    public class ExportController : ApiController
+    public class ProjectsController : ApiController
     {
+        public class Project
+        {
+            public string CustomerNumber { get; set; }
+            public string JobNumber { get; set; }
+            public string Name { get; set; }
+            public string Site { get; set; }
+            public string Address1 { get; set; }
+            public string Address2 { get; set; }
+            public string City { get; set; }
+            public string State { get; set; }
+            public string PostalCode { get; set; }
+            public DateTime? EstimatedCompletionDate { get; set; }
+            public decimal? EstimatedCost { get; set; }
+            public DateTime? ContractStartDate { get; set; }
+            public string JobContractNumber { get; set; }
+            public Decimal? JobContractAmount { get; set; }
+            public string ProjectManagerCode { get; set; }
+        }
+
+        private AssetContext db = new AssetContext();
+
+        [HttpGet]
+        public IEnumerable<Project> Get(DateTime from, DateTime to)
+        {
+            var a = db.Jobs.Where(x => x.CreatedDate >= from && x.CreatedDate < to).Select(x =>
+                new Project
+                {
+                    CustomerNumber = x.Customer.CustomerNumber,
+                    JobNumber = x.JobNumber,
+                    Name = x.Name,
+                    Address1 = x.Address.Address1,
+                    Address2 = x.Address.Address2,
+                    City = x.Address.City,
+                    State = x.Address.State,
+                    PostalCode = x.Address.ZipCode,
+                    EstimatedCompletionDate = x.EstimatedCompletionDate,
+                    ContractStartDate = x.ContractDate,
+                    JobContractNumber = x.ContractNumber,
+                    JobContractAmount = x.ContractAmount
+                }
+            );
+            return a;
+        }
+
+    }
+
+    public class AssetsController : ApiController
+    {
+        
         public class AssetTransaction
         {
             public DateTime Date { get; set; }
@@ -25,8 +75,9 @@ namespace Mavo.Assets.Controllers
 
         private AssetContext db = new AssetContext();
 
-        [HttpGet, ActionName("AssetTransactions")]
-        public IEnumerable<AssetTransaction> GetAssetTransactions(DateTime from, DateTime to)
+        
+        [HttpGet]
+        public IEnumerable<AssetTransaction> Get(DateTime from, DateTime to)
         {
             var cx = db.Database.Connection;
             if (cx.State != ConnectionState.Open)
