@@ -122,6 +122,19 @@
                                 @Html.TextBoxFor(x => x.ContractNumber, new { disabled = "disabled" })
                             </div>
                         </div>
+
+                        <div class="control-group">
+                            @Html.LabelTitleizeFor(x => x.EstimatedCost)
+                            <div class="controls">
+                                @Html.EditorFor(x => x.EstimatedCost)
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelTitleizeFor(x => x.EstimatedContractAmount)
+                            <div class="controls">
+                                @Html.EditorFor(x => x.EstimatedContractAmount)
+                            </div>
+                        </div>
                         <div class="control-group">
                             @Html.LabelTitleizeFor(x => x.ContractAmount)
                             <div class="controls">

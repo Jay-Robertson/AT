@@ -325,6 +325,14 @@
     <Compile Include="Migrations\201306242013031_GH170.Designer.cs">
       <DependentUpon>201306242013031_GH170.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410141525386_EstimatedContractAmount.cs" />
+    <Compile Include="Migrations\201410141525386_EstimatedContractAmount.Designer.cs">
+      <DependentUpon>201410141525386_EstimatedContractAmount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410141937357_EstimatedCost.cs" />
+    <Compile Include="Migrations\201410141937357_EstimatedCost.Designer.cs">
+      <DependentUpon>201410141937357_EstimatedCost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EmailViewModel\JobCompleteEmail.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemNotPicked.cs" />
@@ -708,6 +716,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306242013031_GH170.resx">
       <DependentUpon>201306242013031_GH170.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410141525386_EstimatedContractAmount.resx">
+      <DependentUpon>201410141525386_EstimatedContractAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410141937357_EstimatedCost.resx">
+      <DependentUpon>201410141937357_EstimatedCost.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

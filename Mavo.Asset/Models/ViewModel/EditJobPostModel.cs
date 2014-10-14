@@ -35,6 +35,8 @@ namespace Mavo.Assets.Models.ViewModel
         [Display(Name = "Contract/PO#")]
         public string ContractNumber { get; set; }
 
+        public decimal? EstimatedCost { get; set; }
+        public decimal? EstimatedContractAmount { get; set; }
         public decimal? ContractAmount { get; set; }
         public string Description { get; set; }
         public string ForemanNote { get; set; }
