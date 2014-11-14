@@ -32,7 +32,7 @@
                                     <td>
                                         @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
                                         {
-                                            @item.Item.Barcode
+                                            @(item.Item != null ? item.Item.Barcode : "-")
                                         }
                                         else
                                         {
