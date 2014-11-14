@@ -23,9 +23,11 @@ namespace TransactionsSync
         public string State { get; set; }
         public string PostalCode { get; set; }
         public DateTime? EstimatedCompletionDate { get; set; }
+        public decimal? EstimatedCost { get; set; }
         public DateTime? ContractStartDate { get; set; }
         public string JobContractNumber { get; set; }
         public Decimal? JobContractAmount { get; set; }
+        public string ProjectManagerCode { get; set; }
     }
 
     class ProjectSync
@@ -65,7 +67,21 @@ namespace TransactionsSync
             cmd.Parameters[0].Value = companyCode;
 
             var cmd2 = cx.CreateCommand();
-            cmd2.CommandText = @"INSERT INTO CWIPX(CO_CODE, JOB_NO, CUST_NO, CERTIFY_PR_YN, CONTRACT_DATE, EST_COMPL_DATE, JOB_CONTRACT_NO, JOB_CNTRACT_AMT) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+            cmd2.CommandText = @"INSERT INTO CWIPX(
+                    CO_CODE,
+                    JOB_NO,
+                    CUST_NO,
+                    CERTIFY_PR_YN,
+                    CONTRACT_DATE,
+                    EST_COMPL_DATE,
+                    JOB_CONTRACT_NO,
+                    JOB_CNTRACT_AMT,
+                    PROJ_MGR_CODE,
+                    JOB_EST_COST_6
+                )
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            cmd2.Parameters.Add(cmd.CreateParameter());
+            cmd2.Parameters.Add(cmd.CreateParameter());
             cmd2.Parameters.Add(cmd.CreateParameter());
             cmd2.Parameters.Add(cmd.CreateParameter());
             cmd2.Parameters.Add(cmd.CreateParameter());
@@ -95,6 +111,8 @@ namespace TransactionsSync
                         cmd2.Parameters[5].Value = p.EstimatedCompletionDate.HasValue ? p.EstimatedCompletionDate.Value.ToString("yyMMdd") : "-";
                         cmd2.Parameters[6].Value = String.IsNullOrEmpty(p.JobContractNumber) ? "-" : p.JobContractNumber;
                         cmd2.Parameters[7].Value = p.JobContractAmount.GetValueOrDefault(0).ToString();
+                        cmd2.Parameters[8].Value = p.ProjectManagerCode ?? "";
+                        cmd2.Parameters[9].Value = p.EstimatedCost.GetValueOrDefault(0).ToString();
                         cmd2.ExecuteNonQuery();
                     }
                     catch (Exception ex)

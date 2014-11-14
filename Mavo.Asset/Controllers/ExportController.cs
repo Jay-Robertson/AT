@@ -54,7 +54,9 @@ namespace Mavo.Assets.Controllers
                     EstimatedCompletionDate = x.EstimatedCompletionDate,
                     ContractStartDate = x.ContractDate,
                     JobContractNumber = x.ContractNumber,
-                    JobContractAmount = x.ContractAmount
+                    JobContractAmount = x.ContractAmount ?? x.EstimatedContractAmount,
+                    ProjectManagerCode = x.ProjectManager.EmployeeId,
+                    EstimatedCost = x.EstimatedCost,
                 }
             );
             return a;
