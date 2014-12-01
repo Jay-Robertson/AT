@@ -2,9 +2,8 @@
 
 @if (null != Model && Model.Id.HasValue)
 {
-    
     <div class="tab-pane @(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")" id="assets">
-        @if (!Model.IsAddon)
+        @if (!Model.IsAddon && Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick)
         {
         <div class="row-fluid noprint">
             <div class="well">
@@ -20,6 +19,12 @@
                     <a href="#" id="btnAddFromTemplate" class="btn btn-success">Add Items from Template</a>
                 }
             </div>
+        </div>
+        }
+        @if (!(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick))
+        {
+        <div class="alert alert-info">
+            This is the list of assets as specified by the project manager. To see the which items were picked, look at the Status tab. 
         </div>
         }
         <div class="row-fluid">

@@ -70,6 +70,7 @@ namespace Mavo.Assets.Models.ViewModel
         public string PickedUpByStr { get; set; }
 
         public DateTime? PickStarted { get; set; }
+        public DateTime? PickCompleted { get; set; }
 
         public DateTime? ReturnStarted { get; set; }
         public string ReturnedByStr { get; set; }

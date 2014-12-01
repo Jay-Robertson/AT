@@ -22,27 +22,38 @@
                 <tr>
                     <th>Job</th>
                     <th>Job Number</th>
-                    <th>Start Date</th>
-                    <th>Pick Time</th>
+                    <th>Ready for Pickup By</th>
                     <th>Project Manager</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var job in Model.ReadyToPick)
+                @foreach (var job in Model.ReadyToPick.Where(x => !(x is Mavo.Assets.Models.JobAddon)))
+                {
+                    <tr>
+                        <td><a href="/job/edit/@job.Id">@job.Name</a></td>
+                        <td>@job.JobNumber</td>
+                        <td>
+                            <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToString("g")</span>
+                        </td>
+                        <td>@(job.ProjectManager != null ? job.ProjectManager.FullName : "")</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="5">
+                        <h4>Addons</h4>
+                    </td>
+                </tr>
+                @foreach (var job in Model.ReadyToPick.Where(x => x is Mavo.Assets.Models.JobAddon))
                 {
                     <tr>
                         <td>
-                             @if (job is Mavo.Assets.Models.JobAddon)
-                            {
-                                <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
-                            }
+                            <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
                             <a href="/job/edit/@job.Id">@job.Name</a>
-                           
+
                         </td>
                         <td>@job.JobNumber</td>
-                        <td>@job.ContractDate.ToShortDateString()</td>
                         <td>
-                            <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
+                            <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToString("g")</span>
                         </td>
                         <td>@(job.ProjectManager != null ? job.ProjectManager.FullName : "")</td>
                     </tr>

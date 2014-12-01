@@ -179,7 +179,7 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Edit(int id)
         {
-            Mavo.Assets.Models.Job job = Context.Jobs.Include(x => x.PickedAssets).Include("PickedAssets.Asset").Include("PickedAssets.Item").FirstOrDefault(x => x.Id == id);
+            Mavo.Assets.Models.Job job = Context.Jobs.Include(x => x.PickedAssets).Include(x=> x.PickedBy).Include("PickedAssets.Asset").Include("PickedAssets.Item").FirstOrDefault(x => x.Id == id);
             if (job != null)
             {
                 SetListsForCrud(job);
@@ -239,50 +239,51 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult Edit(EditJobPostModel jobPostModel)
         {
             Job job = Context.Jobs.FirstOrDefault(x => x.Id == (jobPostModel.Id ?? 0));
+
+            // addons can only change the pickup date, everything else is locked
+            if (job is JobAddon)
+            {
+                job.PickupTime = jobPostModel.PickupTime;
+                Context.SaveChanges();
+                return RedirectToAction("Edit", new { id = job.Id });
+            }
+
             job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
             job.Summary.ShiftHours = jobPostModel.ShiftHours;
             if (ModelState.IsValid)
             {
-
-                if (job is JobAddon)
+                if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendConsultant"]))
                 {
-                    job.PickupTime = jobPostModel.PickupTime;
+                    var sendConsultantValues = Request.Form["InvoiceDetail.SendConsultant"].Split(',');
+                    job.InvoiceDetail.SendConsultant = (SendConsultant)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
                 }
-                else
+                if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendCustomer"]))
                 {
-                    if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendConsultant"]))
+                    var sendCustomerValues = Request.Form["InvoiceDetail.SendCustomer"].Split(',');
+                    job.InvoiceDetail.SendCustomer = (SendCustomer)sendCustomerValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+                }
+
+                if (jobPostModel.CustomerId.HasValue)
+                    job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
+
+                if (jobPostModel.ForemanId.HasValue)
+                    job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
+
+                if (jobPostModel.ProjectManagerId.HasValue)
+                    job.ProjectManager = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ProjectManagerId.Value);
+
+                if (!jobPostModel.Id.HasValue)
+                {
+                    job.Status = JobStatus.New;
+                    job.CreatedDate = DateTime.Now;
+                    job.SubmittedBy = CurrentUserService.GetCurrent();
+                    if (jobPostModel.TemplateId.HasValue)
                     {
-                        var sendConsultantValues = Request.Form["InvoiceDetail.SendConsultant"].Split(',');
-                        job.InvoiceDetail.SendConsultant = (SendConsultant)sendConsultantValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
-                    }
-                    if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendCustomer"]))
-                    {
-                        var sendCustomerValues = Request.Form["InvoiceDetail.SendCustomer"].Split(',');
-                        job.InvoiceDetail.SendCustomer = (SendCustomer)sendCustomerValues.Aggregate(0, (acc, v) => acc |= Convert.ToInt32(v), acc => acc);
+                        var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
+                        job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
                     }
 
-                    if (jobPostModel.CustomerId.HasValue)
-                        job.Customer = Context.Customers.FirstOrDefault(x => x.Id == jobPostModel.CustomerId.Value);
-
-                    if (jobPostModel.ForemanId.HasValue)
-                        job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
-
-                    if (jobPostModel.ProjectManagerId.HasValue)
-                        job.ProjectManager = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ProjectManagerId.Value);
-
-                    if (!jobPostModel.Id.HasValue)
-                    {
-                        job.Status = JobStatus.New;
-                        job.CreatedDate = DateTime.Now;
-                        job.SubmittedBy = CurrentUserService.GetCurrent();
-                        if (jobPostModel.TemplateId.HasValue)
-                        {
-                            var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
-                            job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
-                        }
-
-                        Context.Jobs.Add(job);
-                    }
+                    Context.Jobs.Add(job);
                 }
 
                 Context.SaveChanges();

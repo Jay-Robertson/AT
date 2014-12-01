@@ -4,7 +4,10 @@
             <th>Mavo Item Number</th>
             <th>Asset</th>
             <th>Quantity</th>
+            @if (!(ViewBag.Lock != null && ViewBag.Lock))
+            {
             <th>Actions</th>
+            }
         </tr>
     </thead>
     <tbody>

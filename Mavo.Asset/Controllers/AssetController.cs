@@ -111,7 +111,7 @@ namespace Mavo.Assets.Controllers
             Job job = outOfRequestDb.Jobs.Include("Assets").Include("Assets.Asset").FirstOrDefault(x => x.Id == id);
             ViewBag.IsForJob = true;
             ViewBag.JobId = id;
-            ViewBag.Assets = job.Assets;
+            ViewBag.Assets = job.Assets.OrderByDescending(x => Asset.SortableMavoItemNumber(x.Asset.MavoItemNumber));
             ViewBag.Lock = (job.Status != JobStatus.New && job.Status != JobStatus.ReadyToPick);
             if (unlock.HasValue && unlock.Value == true)
             {

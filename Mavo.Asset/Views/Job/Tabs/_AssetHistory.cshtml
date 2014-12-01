@@ -1,52 +1,55 @@
 ﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
-@if (null != Model && Model.Status >= Mavo.Assets.Models.JobStatus.Started)
+@if (null != Model && Model.Status >= Mavo.Assets.Models.JobStatus.BeingPicked)
 {
     <div class="tab-pane active" id="jobstatus">
-        <div class="row-fluid">
-            <div class="span12 well">
-                <h4>Job Status</h4>
-                <div id="asset-container">
-                    <table id="asset-table" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Mavo Item Number</th>
-                                <th>Asset</th>
-                                <th>Quantity/Barcode</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.PickedAssets)
-                            {
-                                <tr>
-                                    <td>@item.Asset.MavoItemNumber</td>
-                                    <td>
-                                        @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
-                                        {
-                                            <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(item.Barcode))">@item.Asset.Name</a>
-                                        }
-                                        else
-                                        {
-                                            @item.Asset.Name
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
-                                        {
-                                            @(item.Item != null ? item.Item.Barcode : "-")
-                                        }
-                                        else
-                                        {
-                                            @item.Quantity
-                                        }
-                                    </td>
-                                </tr>
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
-                <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(job: Model.Id))">View detailed Asset History for this job</a>
-            </div>
+        @if (Model.Status > Mavo.Assets.Models.JobStatus.BeingPicked)
+        {
+        <div class="alert alert-info">
+            Job picked by <strong>@Model.PickedUpByStr</strong> at <strong>@Model.PickCompleted</strong>
         </div>
+        }
+        
+        <h4>Job Status</h4>
+        <div id="asset-container">
+            <table id="asset-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Mavo Item Number</th>
+                        <th>Asset</th>
+                        <th>Quantity/Barcode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PickedAssets)
+                    {
+                        <tr>
+                            <td>@item.Asset.MavoItemNumber</td>
+                            <td>
+                                @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
+                                {
+                                    <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(item.Barcode))">@item.Asset.Name</a>
+                                }
+                                else
+                                {
+                                    @item.Asset.Name
+                                }
+                            </td>
+                            <td>
+                                @if (item.Asset.Kind == Mavo.Assets.Models.AssetKind.Serialized)
+                                {
+                                    @(item.Item != null ? item.Item.Barcode : "-")
+                                }
+                                else
+                                {
+                                    @item.Quantity
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(job: Model.Id))">View detailed Asset History for this job</a>
     </div>
 }

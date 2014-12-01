@@ -188,11 +188,16 @@
         Html.RenderAction("AddOnModal", new { id = Model.Id });
     }
 }
-<h1 class="noprint">
-    <span>@ViewBag.Action Job</span>
+<h2 class="noprint">
     @if (null != Model)
     {
-        <span>&gt; @Model.Name</span>
+        <span>
+            @if (!String.IsNullOrEmpty(Model.JobNumber))
+            {
+                <text>#</text>@(Model.JobNumber)
+            }
+            @Model.Name
+        </span>
         if (Model.IsAddon)
         {
         <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
@@ -211,7 +216,7 @@
         </div>
     }
 
-</h1>
+</h2>
 
 @{Html.RenderPartial("_JobAlerts", Model);}
 
