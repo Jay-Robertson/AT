@@ -13,6 +13,8 @@ namespace Mavo.Assets.Models
     }
     public class NotPickedItem
     {
+        public Asset Asset { get; set; }
+        public string AssetNumber { get; set; }
         public string AssetName { get; set; }
         public int AssetId { get; set; }
         public int Picked { get; set; }

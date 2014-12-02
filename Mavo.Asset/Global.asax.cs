@@ -52,7 +52,10 @@ namespace Mavo.Assets
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.PickupTime, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(x => x.PickStarted, opt => opt.Ignore())
-                .ForMember(x => x.PickCompleted, opt => opt.Ignore());
+                .ForMember(x => x.PickCompleted, opt => opt.Ignore())
+                .ForMember(x => x.Assets, opt => opt.Ignore())
+                .ForMember(x => x.PickedAssets, opt => opt.Ignore())
+                .ForMember(x => x.ReturnedAssets, opt => opt.Ignore());
 
             ///HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 

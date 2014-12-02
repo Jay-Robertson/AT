@@ -330,13 +330,17 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult ItemsNotPicked(DateTime? startDate = null, DateTime? endDate = null)
         {
-            if (!startDate.HasValue)
-                startDate = DateTime.Today.AddDays(-7);
-            if (!endDate.HasValue)
-                endDate = DateTime.Today;
+            if (!startDate.HasValue) startDate = DateTime.Today.AddDays(-7);
+            if (!endDate.HasValue) endDate = DateTime.Today;
 
-            var list = Context.Jobs.Include(x => x.PickedAssets).Include("PickedAssets.Asset").Include("Assets").Include("Assets.Asset")
-                 .Where(x => x.PickupTime > startDate && x.PickupTime <= endDate && x.PickedAssets.Count != x.Assets.Count);
+            var list = Context.Jobs
+                .Include(x => x.PickedAssets)
+                .Include("PickedAssets.Asset")
+                .Include("Assets")
+                .Include("Assets.Asset")
+                .Where(x => x.PickupTime > startDate &&
+                            x.PickupTime <= endDate &&
+                            x.PickedAssets.Count != x.Assets.Count);
 
             List<ItemNotPicked> result = new List<ItemNotPicked>();
 
@@ -348,7 +352,9 @@ namespace Mavo.Assets.Controllers
                     int picked = 0;
                     int requested = requestedAsset.Quantity;
                     if (requestedAsset.Asset.Kind == AssetKind.Serialized)
+                    {
                         picked = item.PickedAssets.Count(x => x.Asset.Id == requestedAsset.Asset.Id);
+                    }
                     else
                     {
                         PickedAsset pickedAsset = item.PickedAssets.FirstOrDefault(x => x.Asset.Id == requestedAsset.Asset.Id);
@@ -356,6 +362,7 @@ namespace Mavo.Assets.Controllers
                             picked = pickedAsset.Quantity;
                     }
                     if (requested != picked)
+                    {
                         newItemNotPicked.NotPicked.Add(new NotPickedItem()
                         {
                             AssetId = requestedAsset.Asset.Id,
@@ -363,6 +370,7 @@ namespace Mavo.Assets.Controllers
                             Picked = picked,
                             Requested = requested
                         });
+                    }
                 }
                 result.Add(newItemNotPicked);
             }

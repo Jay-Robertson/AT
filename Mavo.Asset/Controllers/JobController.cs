@@ -179,19 +179,30 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Edit(int id)
         {
-            Mavo.Assets.Models.Job job = Context.Jobs.Include(x => x.PickedAssets).Include(x=> x.PickedBy).Include("PickedAssets.Asset").Include("PickedAssets.Item").FirstOrDefault(x => x.Id == id);
+            var job = Context.Jobs
+                .Include(x => x.PickedAssets)
+                .Include(x => x.PickedBy)
+                .Include("PickedAssets.Asset")
+                .Include("PickedAssets.Item")
+                .Include("Assets")
+                .Include("Assets.Asset")
+                .FirstOrDefault(x => x.Id == id);
             if (job != null)
             {
                 SetListsForCrud(job);
-
                 ViewBag.Action = "Edit a";
-
-                EditJobPostModel result = AutoMapper.Mapper.Map<Job, EditJobPostModel>(job);
+                if (job.Status > JobStatus.ReadyToPick)
+                {
+                    ViewBag.ItemsNotPicked = job.GetItemsNotPicked();
+                }
+                var result = AutoMapper.Mapper.Map<Job, EditJobPostModel>(job);
                 result.ShiftHours = job.Summary.ShiftHours;
                 return View("Edit", result);
             }
             else
+            {
                 return RedirectToAction(MVC.Job.Create());
+            }
         }
 
         //
@@ -200,7 +211,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult SaveInvoice(int id, EditJobPostModel jobPostModel)
         {
-            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            var job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.InvoiceDetail = jobPostModel.InvoiceDetail;
             if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SpecialForms"]))
             {
@@ -226,7 +237,7 @@ namespace Mavo.Assets.Controllers
         [HttpPost]
         public virtual ActionResult SaveSummary(int id, EditJobPostModel jobPostModel)
         {
-            Job job = Context.Jobs.FirstOrDefault(x => x.Id == id);
+            var job = Context.Jobs.FirstOrDefault(x => x.Id == id);
             job.Summary = jobPostModel.Summary;
             if (jobPostModel.ForemanId.HasValue)
                 job.Foreman = Context.Users.FirstOrDefault(x => x.Id == jobPostModel.ForemanId.Value);
@@ -304,6 +315,57 @@ namespace Mavo.Assets.Controllers
                 SetListsForCrud(job);
                 return View(jobPostModel);
             }
+        }
+
+        [HttpGet, ActionName("create-missing-addon")]
+        public virtual ActionResult CreateMissingAddon(int id)
+        {
+            // find existing job
+            var job = Context.Jobs
+                .Include(x => x.Customer)
+                .Include(x => x.Foreman)
+                .Include(x => x.ProjectManager)
+                .Include(x => x.PickedAssets)
+                .Include("PickedAssets.Asset")
+                .Include("PickedAssets.Item")
+                .Include("Assets")
+                .Include("Assets.Asset")
+                .FirstOrDefault(x => x.Id == id);
+            if (null == job)
+            {
+                return new HttpNotFoundResult("No job found.");
+            }
+
+            // create basic addon from old job
+            var addon = AutoMapper.Mapper.Map<Job, JobAddon>(job);
+            addon.Assets = new List<AssetWithQuantity>();
+
+            // add missing items to new addon
+            var missing = job.GetItemsNotPicked();
+            foreach (var i in missing)
+            {
+                addon.Assets.Add(new AssetWithQuantity
+                {
+                    Asset = i.Asset,
+                    Quantity = i.Requested - i.Picked
+                });
+            }
+
+            // remove missing items from picklist of existing job
+            foreach (var i in missing)
+            {
+                var a = job.Assets.First(x => x.Asset.Id == i.AssetId);
+                a.Quantity = i.Picked;
+            }
+            foreach (var a in job.Assets.Where(x => x.Quantity == 0).ToList())
+            {
+                job.Assets.Remove(a);
+            }
+
+            // save and redirect to new addon
+            Context.JobAddons.Add(addon);
+            Context.SaveChanges();
+            return RedirectToAction("Edit", new { id = addon.Id });
         }
 
         [HttpPost]

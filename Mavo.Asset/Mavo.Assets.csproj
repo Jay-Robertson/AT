@@ -381,7 +381,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AssetModels.cs" />
-    <Compile Include="Models\NotPickedItem.cs" />
     <Compile Include="Models\SendConsultant.cs" />
     <Compile Include="Models\SendCustomer.cs" />
     <Compile Include="Models\UserRole.cs" />

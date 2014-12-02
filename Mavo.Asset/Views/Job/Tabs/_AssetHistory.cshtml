@@ -9,8 +9,10 @@
         </div>
         }
         
-        <h4>Job Status</h4>
+        <h4>Items Picked</h4>
         <div id="asset-container">
+            @if (Model.PickedAssets.Count > 0)
+            {
             <table id="asset-table" class="table table-striped">
                 <thead>
                     <tr>
@@ -20,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.PickedAssets)
+                    @foreach (var item in Model.PickedAssets.OrderByDescending(x => Mavo.Assets.Models.Asset.SortableMavoItemNumber(x.Asset.MavoItemNumber)))
                     {
                         <tr>
                             <td>@item.Asset.MavoItemNumber</td>
@@ -49,7 +51,63 @@
 
                 </tbody>
             </table>
+            <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(job: Model.Id))">View detailed Asset History for this job</a>
+            }
+            else
+            {
+                <div class="alert alert-warning">No items have been picked yet.</div>
+            }
+
+            @if (Model.Status > Mavo.Assets.Models.JobStatus.BeingPicked && null != ViewBag.ItemsNotPicked && ViewBag.ItemsNotPicked.Count > 0)
+            { 
+                <hr/>
+                <h4>Items Not Picked</h4>
+                <div class="alert alert-warning">These items were requested, but not picked or only partially picked.</div>
+                <table id="asset-notpicked-table" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mavo Item Number</th>
+                            <th>Asset</th>
+                            <th>Quantity Missing / Requested</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ((List<Mavo.Assets.Models.NotPickedItem>)ViewBag.ItemsNotPicked).OrderByDescending(x => Mavo.Assets.Models.Asset.SortableMavoItemNumber(x.AssetNumber)))
+                        {
+                            <tr>
+                                <td>@item.AssetNumber</td>
+                                <td>@item.AssetName</td>
+                                <td>@(item.Requested-item.Picked) / @item.Requested</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                if (Model.Status < Mavo.Assets.Models.JobStatus.BeingReturned)
+                {
+                    <div class="row-fluid" style="text-align: center;">
+                        <div class="span5">
+                            <a href="/jobpicker/index/@Model.Id" class="btn btn-large btn-primary">Resume Picking</a>
+                            <p class="help-block" style="margin-top: 10px;">
+                                If the truck has not yet left, you may simply resume picking this job.
+                            </p>
+                        </div>
+                        <div class="span1" style="padding-top: 10px;"><h4>- OR -</h4></div>
+                        <div class="span5">
+                            <a href="/job/create-missing-addon/@Model.Id" class="btn btn-large btn-primary">Create Add-on with Missing Items</a>
+                            <p class="help-block" style="margin-top: 10px;">
+                                If the truck has already left, you must create an addon. This function will automatically create a new
+                                addon and move all unpicked items into that new addon.
+                        </div>
+                    </div>
+                }
+            }
+            
         </div>
-        <a href="@Url.Action(MVC.Reporting.AssetHistoryFilter(job: Model.Id))">View detailed Asset History for this job</a>
+
+
+
+
+
     </div>
 }

@@ -306,6 +306,41 @@ namespace Mavo.Assets.Models
         {
             return this.PickedAssets.Where(x => x.Asset.Id == asset.Id).Sum(x => x.Quantity);
         }
+
+        public List<NotPickedItem> GetItemsNotPicked()
+        {
+            var result = new List<NotPickedItem>();
+            foreach (var requestedAsset in this.Assets)
+            {
+                var picked = 0;
+                var requested = requestedAsset.Quantity;
+                if (requestedAsset.Asset.Kind == AssetKind.Serialized)
+                {
+                    picked = this.PickedAssets.Count(x => x.Asset.Id == requestedAsset.Asset.Id);
+                }
+                else
+                {
+                    var pickedAsset = this.PickedAssets.FirstOrDefault(x => x.Asset.Id == requestedAsset.Asset.Id);
+                    if (pickedAsset != null)
+                    {
+                        picked = pickedAsset.Quantity;
+                    }
+                }
+                if (requested > picked)
+                {
+                    result.Add(new NotPickedItem
+                    {
+                        Asset = requestedAsset.Asset,
+                        AssetId = requestedAsset.Asset.Id,
+                        AssetName = requestedAsset.Asset.Name,
+                        AssetNumber = requestedAsset.Asset.MavoItemNumber,
+                        Picked = picked,
+                        Requested = requested
+                    });
+                }
+            }
+            return result;
+        }
     }
 
     [ComplexType]
