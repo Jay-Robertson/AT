@@ -86,6 +86,22 @@ namespace Mavo.Assets.Controllers
             // validate barcode, stock, and repair
             if (null == assetItem)
             {
+                // look for a consumable/non-serialized that has this barcode on its bin
+                if (!String.IsNullOrWhiteSpace(barcode))
+                {
+                    barcode = barcode.Trim();
+                    var asset = Context.Assets.Where(x => x.Barcode == barcode).FirstOrDefault();
+                    if (null != asset)
+                    {
+                        return this.Json(new
+                        {
+                            AssetId = asset.Id,
+                            AssetNumber = asset.MavoItemNumber,
+                            AssetKind = asset.Kind
+                        });
+                    }
+                }
+
                 Response.StatusCode = (int)HttpStatusCode.NotFound;
                 return Content(String.Format("{0} does not exist in inventory.", barcode));
                
@@ -141,6 +157,7 @@ namespace Mavo.Assets.Controllers
                     MavoNumber = assetItem.Asset.MavoItemNumber,
                     AssetId = assetItem.Asset.Id,
                     AssetName = assetItem.Asset.Name,
+                    AssetKind = assetItem.Asset.Kind,
                     Barcodes = assetItem.Barcode,
                     AssetItemId = assetItem.Id
                 });

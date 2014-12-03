@@ -90,22 +90,32 @@
                 resetBarcode();
             })
             .done(function (data) {
-                var assetId = $(data).data('asset-id');
-                var assetItemId = $(data).data('asset-item-id');
-                
-                // append row to already picked table
-                $('#alreadyPickedTable').append(data);
 
-                // decrement (possibly remove) the to be picked quantity
-                var $pickRow = $('#toPickTable tr[data-asset-id="' + assetId + '"]');
-                var needed = $pickRow.data('quantity-needed') - 1;
-                $pickRow.data('quantity-needed', needed);
-                $pickRow.find('.quantity-needed').text(needed);
-                if (needed == 0) {
-                    $pickRow.remove();
+                // check for a non-serialized asset respons in json
+                if (data && data.AssetKind != 1)
+                {
+                    $('#pick-' + data.AssetId).modal('show');
+                }
+                else
+                {
+                    var assetId = $(data).data('asset-id');
+                    var assetItemId = $(data).data('asset-item-id');
+                
+                    // append row to already picked table
+                    $('#alreadyPickedTable').append(data);
+
+                    // decrement (possibly remove) the to be picked quantity
+                    var $pickRow = $('#toPickTable tr[data-asset-id="' + assetId + '"]');
+                    var needed = $pickRow.data('quantity-needed') - 1;
+                    $pickRow.data('quantity-needed', needed);
+                    $pickRow.find('.quantity-needed').text(needed);
+                    if (needed == 0) {
+                        $pickRow.remove();
+                    }
+
+                    $('#serializedSuccessBlock').show();
                 }
 
-                $('#serializedSuccessBlock').show();
                 resetBarcode();
             });
             return false;
