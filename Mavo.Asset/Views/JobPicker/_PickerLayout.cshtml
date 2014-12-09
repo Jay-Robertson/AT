@@ -59,6 +59,8 @@
     <strong>Job Picking!</strong> This job started being picked up at <span id="pickupTime">@(Model.PickStarted.HasValue ? Model.PickStarted.Value.ToString() : "")</span>
 </div>
 
-
+<div class="hide" id="jobpicker-header-info-printable">
+    @{Html.RenderPartial("_JobHeaderPrintable", Model);}
+</div>
 
 @RenderBody()

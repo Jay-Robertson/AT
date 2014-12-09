@@ -27,9 +27,10 @@ input[type="text"], input[type="number"], select, textarea, .well, .input-append
     -webkit-box-shadow: none;
     box-shadow: none;
     padding: 0 !important;
-    font-size: 10px;
-    line-height: 16px;    
+    font-size: 12px;
+    line-height: 18px;    
     height: inherit;
+    transition: none;
 }
 
 .radio, .checkbox {
@@ -69,8 +70,8 @@ h4 {
 label { 
     padding-top: 0 !important;
     margin-bottom: 0 !important;
-    font-size: 10px;
-    line-height: 16px;
+    font-size: 12px;
+    line-height: 18px;
 }
 
 body 
@@ -78,4 +79,26 @@ body
     padding-top: 0 !important;
 }
 
-/*.leftNav + .span9 { margin-left: 0; }*/
+.leftNav + .span9 {
+    float: none;
+    margin-left: 0;
+}
+
+#truck-info {
+    display: table;
+    page-break-inside: avoid;
+}
+
+#jobheader-printable {
+    width: 100%;
+    page-break-inside: avoid;
+}
+
+#truck-info td,
+#jobheader-printable {
+    padding: 0.5cm;
+}
+
+#jobpicker-header-info-printable {
+    display: block;
+}

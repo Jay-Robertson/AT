@@ -157,7 +157,15 @@
 }
 
 <div class="well well-small" id="barcode-panel">
-    <button class="btn btn-primary btn-large" id="add-button" style="float: right;">Add Item to Picklist</button>
+    <table>
+        <tbody>
+            <tr>
+                <td><input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" /></td>
+                <td><input type="submit" class="btn btn-primary btn-large" value="Scan & Pick" /></td>
+                <td><button class="btn btn-primary btn-large" id="add-button" style="float: right;">Add Item to Picklist</button></td>
+            </tr>
+        </tbody>
+    </table>
     @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
     {
         var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
@@ -165,9 +173,6 @@
         {
         <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
         }
-        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" />
-        <input type="submit" class="btn btn-primary btn-large" value="Scan & Pick" />
-
     }
 </div>
 
@@ -292,3 +297,30 @@
         }
     </div>
 }
+
+   <table id="truck-info" class="hide">
+        <tr>
+            <td>Keys/Job Book on Dock</td>
+            <td>_____________________________________</td>
+        </tr>
+        <tr>
+            <td>Loaded on Truck#</td>
+            <td>_____________________________________</td>
+        </tr>
+        <tr>
+            <td>Truck Needs Gas</td>
+            <td>_____________________________________</td>
+        </tr>
+        <tr>
+            <td>Order Filled By</td>
+            <td>_____________________________________</td>
+        </tr>
+        <tr>
+            <td>Days Truck is Needed</td>
+            <td>_____________________________________</td>
+        </tr>
+        <tr>
+            <td>Order Returned By</td>
+            <td>_____________________________________</td>
+        </tr>
+    </table>

@@ -2,7 +2,7 @@
 @using Mavo.Assets;
 @if (null != Model && Model.Id.HasValue)
 {
-    <div class="tab-pane" id="jobSummary">
+    <div class="tab-pane" id="jobSummary" style="position: relative">
       
         @using (Html.BeginForm(MVC.Job.SaveSummary(Model.Id.Value, null), FormMethod.Post, new { @class = "form form-horizontal" }))
         {
@@ -205,6 +205,8 @@
                 </div>
             </div>
         }
+
+        <div style="position: relative; page-break-after: always;"><!-- pagebreak --></div>
 
         <div id="map" style="width: 640px; height: 480px;"></div>
         <table id="steps" class="table table-condensed table-striped table-hover">

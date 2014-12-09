@@ -570,7 +570,6 @@
     <Content Include="Views\Job\Modals\_AddCustomerModal.cshtml" />
     <Content Include="Views\Job\Modals\_AddProjectManagerModal.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Address.cshtml" />
-    <Content Include="Views\Shared\_JobHeader.cshtml" />
     <Content Include="Views\Job\Tabs\_BillingRequestForm.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="Views\Emails\_EmailLayout.cshtml">
@@ -600,6 +599,7 @@
     <Content Include="Views\JobReturner\TabletReturner.cshtml" />
     <Content Include="Views\Emails\Shorts.cshtml" />
     <Content Include="Views\Emails\JobReadyToStaff.cshtml" />
+    <Content Include="Views\Shared\_JobHeaderPrintable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

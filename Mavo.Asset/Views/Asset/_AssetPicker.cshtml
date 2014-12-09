@@ -1,22 +1,25 @@
 ﻿@model IList<Mavo.Assets.Models.AssetCategory>
 @if (!(ViewBag.Lock != null && ViewBag.Lock))
 {
-    <div>
-        <input type="text" placeholder="Search" id="asset-search" autocomplete="off" />
-        <button class="btn" id="add-asset-search">Add</button>
-    </div>
-    
-    <select id="asset-category">
-        @foreach (var category in Model)
-        {
-            <option  value="@category.Id">@category.Name</option>
-        }
-    </select>
 
-    <span id="asset-detail">
-        @{Html.RenderAction("AssetPickerDetail", "Asset", new { id = Model.First().Id });}
-    </span>
-    <button class="btn" id="add-asset">Add</button>
+    <div class="noprint">
+        <div>
+            <input type="text" placeholder="Search" id="asset-search" autocomplete="off" />
+            <button class="btn" id="add-asset-search">Add</button>
+        </div>
+
+        <select id="asset-category">
+            @foreach (var category in Model)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        </select>
+
+        <span id="asset-detail">
+            @{Html.RenderAction("AssetPickerDetail", "Asset", new { id = Model.First().Id });}
+        </span>
+        <button class="btn" id="add-asset">Add</button>
+    </div>
 }
 
 <div id="asset-container">

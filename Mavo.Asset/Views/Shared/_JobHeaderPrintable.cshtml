@@ -1,0 +1,19 @@
+﻿@model Mavo.Assets.Models.ViewModel.PickAJobModel
+<table id="jobheader-printable">
+    <tr>
+        <td><strong>Site:</strong><span>@Model.JobName</span></td>
+        <td><strong>Completion:</strong><span>@Model.CompletionDate</span></td>
+    </tr>
+    <tr>
+        <td><strong>Number:</strong><span>@Model.JobNumber</span></td>
+        <td><strong>Pickup:</strong><span>@Model.PickupTime</span></td>
+    </tr>
+    <tr>
+        <td><strong>PM:</strong><span>@Model.Manager</span></td>
+        <td><strong>Address:</strong><span>@Html.DisplayFor(x => x.Address)</span></td>
+    </tr>
+    <tr>
+        <td><strong>Customer:</strong><span>@Model.Customer</span></td>
+        <td></td>
+    </tr>
+</table>
