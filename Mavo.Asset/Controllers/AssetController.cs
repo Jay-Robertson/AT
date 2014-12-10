@@ -241,19 +241,26 @@ namespace Mavo.Assets.Controllers
             }
 
             var query = db.Assets.AsQueryable();
-
             if (search.Kind.HasValue)
+            {
                 query = query.Where(x => x.Kind == search.Kind);
-
+            }
             if (search.CategoryId.HasValue)
+            {
                 query = query.Where(x => x.Category.Id == search.CategoryId);
+            }
             if (!String.IsNullOrEmpty(search.SearchString))
-                query = query.Where(x => x.Items.Any(i => 
-                       i.Barcode.Contains(search.SearchString))
-                    || x.Name.Contains(search.SearchString)
-                    || x.Category.Name.Contains(search.SearchString)
-                    || x.MavoItemNumber.Contains(search.SearchString)
-                    );
+            {
+                query = query.Where(x =>
+                    x.Barcode.Contains(search.SearchString) ||
+                    x.Items.Any(i =>
+                        i.Barcode.Contains(search.SearchString)) ||
+                        x.Name.Contains(search.SearchString) ||
+                        x.Category.Name.Contains(search.SearchString) ||
+                        x.MavoItemNumber.Contains(search.SearchString
+                    )
+                );
+            }
             search.Results = query.Select(x => new AssetSearchResult()
             {
                 MavoItemNumber = x.MavoItemNumber,
@@ -265,6 +272,11 @@ namespace Mavo.Assets.Controllers
                 Quantity = x.Kind == AssetKind.Serialized ? x.Items.Count() : x.Inventory,
                 AssetItems = x.Items
             }).ToList();
+
+            if (search.Results.Count == 1)
+            {
+                return RedirectToAction("Edit", new { id = search.Results[0].AssetId });
+            }
             return View(search);
         }
 
