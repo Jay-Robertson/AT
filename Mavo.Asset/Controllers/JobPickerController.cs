@@ -328,28 +328,30 @@ namespace Mavo.Assets.Controllers
                 PickupTime = job.PickupTime,
                 CompletionDate = job.EstimatedCompletionDate
             };
+
             viewModel.Assets = job.Assets.Select(x => new JobAsset
             {
-                Name = x.Asset.Name,
+                Name = x.AssetName,
                 Id = x.Id,
-                AssetId = x.Asset.Id,
+                AssetId = x.AssetId ?? 0,
                 QuantityNeeded = x.Quantity - job.GetQuantityPicked(x.Asset),
                 QuantityTaken = job.GetQuantityPicked(x.Asset),
                 Kind = x.Asset.Kind,
-                NotEnoughQuantity = (x.Quantity - job.GetQuantityPicked(x.Asset)) > x.Asset.Inventory,
-                QuantityAvailable = x.Asset.Inventory,
-                AssetCategory = x.Asset.Category.Name,
-                MavoItemNumber = x.Asset.MavoItemNumber
+                NotEnoughQuantity = (x.Quantity - job.GetQuantityPicked(x.Asset)) > x.AssetInventory,
+                QuantityAvailable = x.AssetInventory,
+                AssetCategory = x.AssetCategoryName,
+                MavoItemNumber = x.AssetMavoItemNumber
             }).OrderByDescending(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList();
+
             viewModel.PickedAssets = job.PickedAssets.Select(x => new JobAsset
             {
                 Name = x.Asset.Name,
                 Id = x.Id,
-                AssetId = x.Asset.Id,
+                AssetId = x.AssetId ?? 0,
                 QuantityTaken = x.Quantity,
-                Kind = x.Asset.Kind,
-                AssetCategory = x.Asset.Category.Name,
-                MavoItemNumber = x.Asset.MavoItemNumber,
+                Kind = x.AssetKind ?? AssetKind.Consumable,
+                AssetCategory = x.AssetCategoryName,
+                MavoItemNumber = x.AssetMavoItemNumber,
                 Barcode = x.Barcode,
                 AssetItemId = x.Item == null ? (int?)null : x.Item.Id
             }).OrderByDescending(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList();
