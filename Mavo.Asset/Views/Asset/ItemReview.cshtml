@@ -24,7 +24,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><a href="/asset/edit/@item.Id">@item.Asset.Name</a></td>
+                    <td><a href="/asset/scan/@item.Id">@item.Asset.Name</a></td>
                     <td>@item.Barcode</td>
                     <td>@item.SerialNumber</td>
                     <td>@Html.DisplayFor(x => item.PurchaseDate)</td>
