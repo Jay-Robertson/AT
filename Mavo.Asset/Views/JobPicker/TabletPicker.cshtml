@@ -22,7 +22,7 @@
             resetMessages();
             var assetId = $(this).closest('.modal').data('asset-id');
             var $pickRow = $('#toPickTable tr[data-asset-id="' + assetId + '"]');
-            var $pickBox = $(this).find(':text[name="quantity"]');
+            var $pickBox = $(this).find(':hidden[name="quantity"]');
             var quantityNeeded = Number($pickRow.data('quantity-needed'));
             var quantityPicked = Number($pickBox.val());
 
@@ -30,7 +30,7 @@
             if (isNaN(quantityPicked)) {
                 $('#errorMessage').html('There was an error scanning this item');
                 $('#serializedErrorBlock').show();
-                return;
+                return false;
             }
 
             $.ajax({
@@ -72,55 +72,6 @@
             return false;
         });
 
-        $('#assetScanner').submit(function ()
-        {
-            resetMessages();
-            var barcode = $('#barcodeInput').val();
-            $.ajax({
-                type: 'post',
-                url: '/JobPicker/PickSerialized',
-                data: {
-                    jobId: '@Model.JobId',
-                    barcode: barcode
-                }
-            })
-            .fail(function (xhr, status, data) {
-                $('#serializedErrorBlock').show();
-                $('#errorMessage').text(xhr.responseText);
-                resetBarcode();
-            })
-            .done(function (data) {
-
-                // check for a non-serialized asset respons in json
-                if (data && data.AssetKind != 1)
-                {
-                    $('#pick-' + data.AssetId).modal('show');
-                }
-                else
-                {
-                    var assetId = $(data).data('asset-id');
-                    var assetItemId = $(data).data('asset-item-id');
-                
-                    // append row to already picked table
-                    $('#alreadyPickedTable').append(data);
-
-                    // decrement (possibly remove) the to be picked quantity
-                    var $pickRow = $('#toPickTable tr[data-asset-id="' + assetId + '"]');
-                    var needed = $pickRow.data('quantity-needed') - 1;
-                    $pickRow.data('quantity-needed', needed);
-                    $pickRow.find('.quantity-needed').text(needed);
-                    if (needed == 0) {
-                        $pickRow.remove();
-                    }
-
-                    $('#serializedSuccessBlock').show();
-                }
-
-                resetBarcode();
-            });
-            return false;
-
-        });
 
         $('#add-button').click(function () {
             $('#barcode-panel').hide();
@@ -152,29 +103,134 @@
             .done(function () { window.location.reload(); });
             return false;
         });
-       
+ 
+        $('.quantity ~ a[data-increment]').click(function () {
+            var $hidden = $(this).prevAll('input:hidden');
+            var $label = $(this).prevAll('.quantity');
+
+            var val = Number($hidden.val());
+            var inc = Number($(this).data('increment'));
+            if (isNaN(inc)) return false;
+            if (isNaN(val)) val = 0;
+
+            val += inc;
+            if (val < 0) val = 0;
+
+            $hidden.val(val);
+            $label.text(val);
+            return true;
+        });
+
+
+        var buf = null;
+        var timer = null;
+        var timeout = function() {
+            buf = null;
+            timer = null;
+        };
+        $(window).keypress(function (e) {
+            var handled = false;
+            var key = String.fromCharCode(e.charCode);
+            if (key === '%') {
+                // start marker
+                buf = [];
+                handled = true;
+
+                // reset timeout
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(timeout, 1000);
+            }
+            else if (key === '$') {
+
+                var barcode = buf.join('');
+                if (barcode) {
+                    $('#barcodeInput').val(barcode);
+                    $('#assetScanner').submit();
+                }
+
+                // end marker
+                buf = null;
+                handled = true;
+
+                // clear existing timeout
+                if (timer) clearTimeout(timer);
+                timer = null;
+            }
+            else if (buf !== null) {
+                // barcode character
+                handled = true;
+                buf.push(key.trim())
+
+                // reset timeout
+                if (timer) clearTimeout(timer);
+                timer = setTimeout(timeout, 1000);
+            }
+            if (handled) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
+        });
+
+        $('#assetScanner').submit(function () {
+            resetMessages();
+            var barcode = $('#barcodeInput').val();
+            $.ajax({
+                type: 'post',
+                url: '/JobPicker/PickSerialized',
+                data: {
+                    jobId: '@Model.JobId',
+                    barcode: barcode
+                }
+            })
+            .fail(function (xhr, status, data) {
+                $('#serializedErrorBlock').show();
+                $('#errorMessage').text(xhr.responseText);
+                resetBarcode();
+            })
+            .done(function (data) {
+
+                // check for a non-serialized asset respons in json
+                if (data && data.AssetKind != 1) {
+                    $('#pick-' + data.AssetId).modal('show');
+                }
+                else {
+                    var assetId = $(data).data('asset-id');
+                    var assetItemId = $(data).data('asset-item-id');
+
+                    // append row to already picked table
+                    $('#alreadyPickedTable').append(data);
+
+                    // decrement (possibly remove) the to be picked quantity
+                    var $pickRow = $('#toPickTable tr[data-asset-id="' + assetId + '"]');
+                    var needed = $pickRow.data('quantity-needed') - 1;
+                    $pickRow.data('quantity-needed', needed);
+                    $pickRow.find('.quantity-needed').text(needed);
+                    if (needed == 0) {
+                        $pickRow.remove();
+                    }
+
+                    $('#serializedSuccessBlock').show();
+                }
+
+                resetBarcode();
+            });
+            return false;
+
+        });
+
     </script>
 }
-
-<div class="well well-small" id="barcode-panel">
-    <table>
-        <tbody>
-            <tr>
-                <td><input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" /></td>
-                <td><input type="submit" class="btn btn-primary btn-large" value="Scan & Pick" /></td>
-                <td><button class="btn btn-primary btn-large" id="add-button" style="float: right;">Add Item to Picklist</button></td>
-            </tr>
-        </tbody>
-    </table>
-    @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
+ 
+<input type="hidden" name="id" id="barcodeInput" />
+@using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
+{
+    var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
+    foreach (var serialzedAsset in serializedAssets)
     {
-        var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
-        foreach (var serialzedAsset in serializedAssets)
-        {
-        <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
-        }
+    <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
     }
-</div>
+}
 
 <div id="add" style="display: none;">
     @{ Html.RenderAction("UnlockedAssetPickerForJob", "Asset", new { id = Model.JobId }); }
@@ -189,7 +245,11 @@
     <h4 id="errorMessage">Error</h4>
 </div>
 
-<h2>To Be Picked</h2>
+<h2>
+    <button class="btn btn-primary btn-large" id="add-button" style="float: right;">Add Item to Picklist</button>
+    To Be Picked
+</h2>
+
 <table class="table table-striped table-hover" id="toPickTable">
     <thead>
         <tr>
@@ -265,7 +325,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Pick @item.Name</h3>
         </div>
-        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-inline pickform", id = "pickForm" + item.AssetId.ToString() }))
+        @using (Html.BeginForm("Index", "JobPicker", FormMethod.Post, new { @class = "form-inline pickform", id = "pickForm" + item.AssetId.ToString() }))
         {
             <div class="modal-body">
                 <table class="table">
@@ -284,11 +344,13 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <label>
-                    Quantity Picked
-                    <input type="text" value="@item.QuantityNeeded" name="quantity" />
-                </label>
+                <h3>
+                    Quantity Picked:
+                    <input type="hidden" value="@item.QuantityNeeded" name="quantity" />
+                    <span class="quantity">@item.QuantityNeeded</span>
+                    <a href="#" class="btn btn-large btn-success increment" data-increment="1">+1</a>
+                    <a href="#" class="btn btn-large btn-danger increment" data-increment="-1">-1</a>
+                </h3>
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

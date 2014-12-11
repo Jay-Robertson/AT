@@ -1,0 +1,37 @@
+﻿@using Mavo.Assets.Models;
+@model IEnumerable<IGrouping<DateTime, Job>>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .span3.leftNav {
+        display: none;
+    }
+</style>
+
+<h4>Jobs Ready to Pick</h4>
+
+<ul class="">
+    @foreach (var item in Model)
+    {
+        <li class="nav-header">@item.Key.ToShortDateString()</li>
+        foreach (var job in item.OrderBy(x => x.PickupTime))
+        {
+            <li>
+                <a href="/jobpicker/index/@job.Id">
+                    <span class='label @(job.Status == Mavo.Assets.Models.JobStatus.BeingPicked ? "label-success" : job.PickupTime < DateTime.Now ? "label-important" : job.PickupTime > DateTime.Now && job.PickupTime <= DateTime.Now.AddHours(1) ? "label-warning" : "")'>@job.PickupTime.ToShortTimeString()</span>
+                    @if (job is Mavo.Assets.Models.JobAddon)
+                    {
+                        <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+                    }
+                    @if (job.PickStarted.HasValue && !job.PickCompleted.HasValue)
+                    {
+                        <span class="label label-info"><i class="icon-shopping-cart icon-white"></i></span>
+                    }
+                    @job.Name
+                </a>
+            </li>
+        }
+    }
+</ul>

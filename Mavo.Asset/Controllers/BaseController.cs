@@ -22,13 +22,7 @@ namespace Mavo.Assets.Controllers
             AssetContext assetContext = new AssetContext();
 
             ViewBag.Templates = assetContext.Templates.Include("Assets").Include("Assets.Asset").OrderBy(x => x.Name).ToList();
-            ViewBag.JobsReadyToPickForNav = assetContext.Jobs
-                .Where(x => x.Status == JobStatus.ReadyToPick || x.Status == JobStatus.BeingPicked).ToList()
-                .GroupBy(x => x.EstimatedCompletionDate.Date)
-                .OrderBy(x => x.Key);
-
-            ViewBag.JobsReadyForReturn = assetContext.Jobs.Where(x => !(x is JobAddon) && (x.Status == JobStatus.Started || x.Status == JobStatus.BeingReturned) && x.PickCompleted.HasValue).ToList().GroupBy(x => x.PickCompleted.Value.Date).OrderBy(x => x.Key);
-
+            
             User currentUser = assetContext.Users.FirstOrDefault(x => x.Email == HttpContext.User.Identity.Name);
             if (currentUser != null)
             {

@@ -477,6 +477,9 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="T4MVC.tt.settings.xml" />
+    <Content Include="Views\JobPicker\List.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -600,6 +603,7 @@
     <Content Include="Views\Emails\Shorts.cshtml" />
     <Content Include="Views\Emails\JobReadyToStaff.cshtml" />
     <Content Include="Views\Shared\_JobHeaderPrintable.cshtml" />
+    <Content Include="Views\JobReturner\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

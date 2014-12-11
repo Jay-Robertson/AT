@@ -26,6 +26,20 @@ namespace Mavo.Assets.Controllers
             Context = context;
         }
 
+        [HttpGet]
+        public virtual ActionResult List()
+        {
+            var jobs = Context.Jobs
+                .Where(x =>
+                    !(x is JobAddon) &&
+                    (x.Status == JobStatus.Started || x.Status == JobStatus.BeingReturned) &&
+                    x.PickCompleted.HasValue
+                )
+                .ToList()
+                .GroupBy(x => x.PickCompleted.Value.Date).OrderBy(x => x.Key);
+            return View(jobs);            
+        }
+
         [HttpPost]
         public virtual ActionResult Cancel(int id)
         {

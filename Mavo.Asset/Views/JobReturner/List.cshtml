@@ -1,0 +1,28 @@
+﻿@using Mavo.Assets.Models;
+@model IEnumerable<IGrouping<DateTime, Job>>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>.span3.leftNav { display: none; }</style>
+
+<h4>Jobs Ready to Return</h4>
+
+<ul class="">
+@foreach (var item in Model)
+{
+    <li class="nav-header">@item.Key.ToShortDateString()</li>
+    foreach (var job in item)
+    {
+    <li>
+        <a href="/jobreturner/index/@job.Id">
+        @job.Name
+        @if (job.ReturnStarted.HasValue && !job.ReturnCompleted.HasValue)
+        {
+                                                                                                                                                                                                                                    <span class="label label-info"><i class="icon-shopping-cart icon-white"></i></span>
+        }
+        </a>
+    </li>
+    }
+}
+</ul>
