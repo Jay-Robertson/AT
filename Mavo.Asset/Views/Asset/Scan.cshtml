@@ -41,7 +41,7 @@
                 <div class="controls">
                     <div class="input-prepend input-append">
                         <span class="add-on"><i class="icon-barcode"></i></span>
-                        @Html.EditorFor(x => x.Barcode)
+                        @Html.TextBoxFor(x => x.Barcode, new { data_barcode_receiver = "true" })
                     </div>
                 </div>
             </div>

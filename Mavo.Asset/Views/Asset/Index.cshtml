@@ -14,7 +14,7 @@
         <div class="control-group">
             @Html.LabelTitleizeFor(x => x.SearchString   )
             <div class="controls">
-                @Html.EditorFor(x => x.SearchString)
+                @Html.TextBoxFor(x => x.SearchString, new { data_barcode_receiver = true, data_barcode_submit = true })
             </div>
         </div>
         <div class="control-group">

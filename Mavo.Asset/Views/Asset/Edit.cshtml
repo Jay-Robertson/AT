@@ -100,7 +100,7 @@
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.Barcode)
                 <div class="controls">
-                    @Html.EditorFor(x => x.Barcode)
+                    @Html.TextBoxFor(x => x.Barcode, new { data_barcode_receiver = true })
                     <p class="help-block">
                         If there is a barcode on the shelf or bin where these assets are kept, enter that here.
                         Do not enter the barcodes on individual items here.

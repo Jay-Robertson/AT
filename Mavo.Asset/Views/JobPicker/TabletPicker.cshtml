@@ -121,55 +121,9 @@
             return true;
         });
 
-
-        var buf = null;
-        var timer = null;
-        var timeout = function() {
-            buf = null;
-            timer = null;
-        };
-        $(window).keypress(function (e) {
-            var handled = false;
-            var key = String.fromCharCode(e.charCode);
-            if (key === '%') {
-                // start marker
-                buf = [];
-                handled = true;
-
-                // reset timeout
-                if (timer) clearTimeout(timer);
-                timer = setTimeout(timeout, 1000);
-            }
-            else if (key === '$') {
-
-                var barcode = buf.join('');
-                if (barcode) {
-                    $('#barcodeInput').val(barcode);
-                    $('#assetScanner').submit();
-                }
-
-                // end marker
-                buf = null;
-                handled = true;
-
-                // clear existing timeout
-                if (timer) clearTimeout(timer);
-                timer = null;
-            }
-            else if (buf !== null) {
-                // barcode character
-                handled = true;
-                buf.push(key.trim())
-
-                // reset timeout
-                if (timer) clearTimeout(timer);
-                timer = setTimeout(timeout, 1000);
-            }
-            if (handled) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }
+        $(window).on('barcode', function (e, barcode) {
+            $('#barcodeInput').val(barcode);
+            $('#assetScanner').submit();
         });
 
         $('#assetScanner').submit(function () {

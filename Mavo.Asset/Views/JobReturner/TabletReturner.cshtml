@@ -185,7 +185,7 @@
         <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
         }
         <input type="hidden" name="jobId" value="@Model.JobId" />
-        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" />
+        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" data-barcode-receiver="true" />
         <input type="submit" name="return" class="btn btn-primary btn-large" value="Scan & Return" />
         <div style="margin-top: 10px;">
             <label class="checkbox" id="returnAsDamagedLabel">
