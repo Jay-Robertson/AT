@@ -122,13 +122,19 @@
         });
 
         $(window).on('barcode', function (e, barcode) {
-            $('#barcodeInput').val(barcode);
-            $('#assetScanner').submit();
+            if ($('#add').is(':visible')) {
+                $('#asset-search').val(barcode);
+            }
+            else {
+                $('#barcodeInput').val(barcode);
+                $('#assetScanner').submit();
+            }
         });
 
         $('#assetScanner').submit(function () {
             resetMessages();
             var barcode = $('#barcodeInput').val();
+            $('#loading').show();
             $.ajax({
                 type: 'post',
                 url: '/JobPicker/PickSerialized',
@@ -138,6 +144,7 @@
                 }
             })
             .fail(function (xhr, status, data) {
+                $('#loading').hide();
                 $('#serializedErrorBlock').show();
                 $('#errorMessage').text(xhr.responseText);
                 resetBarcode();
@@ -167,6 +174,7 @@
                     $('#serializedSuccessBlock').show();
                 }
 
+                $('#loading').hide();
                 resetBarcode();
             });
             return false;
@@ -176,6 +184,12 @@
     </script>
 }
  
+<div id="loading" class="modal-backdrop" style="display: none;">
+    <div style="position: absolute; width: 100px; text-align: center; height: 40px; left: 50%; top: 50%; margin-left: -50px; margin-top: -20px; background: #fff; border-radius: 10px; line-height: 40px;">
+        Processing...
+    </div>
+</div>
+
 <input type="hidden" name="id" id="barcodeInput" />
 @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
 {

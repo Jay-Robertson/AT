@@ -120,6 +120,14 @@ namespace Mavo.Assets.Models
         public DateTime? WarrantyExpiration { get; set; }
 
         public InventoryStatus Status { get; set; }
+
+        public int? AssetId { get { return Asset == null ? null : (int?)Asset.Id; } }
+        public string AssetName { get { return Asset == null ? null : Asset.Name; } }
+        public AssetKind? AssetKind { get { return Asset == null ? null : (AssetKind?)Asset.Kind; } }
+        public int? AssetInventory { get { return Asset == null ? null : Asset.Inventory; } }
+        public string AssetMavoItemNumber { get { return Asset == null ? null : Asset.MavoItemNumber; } }
+        public AssetCategory AssetCategory { get { return Asset == null ? null : Asset.Category; } }
+        public string AssetCategoryName { get { return this.AssetCategory == null ? null : AssetCategory.Name; } }
     }
 
     public enum AssetAction

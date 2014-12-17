@@ -218,7 +218,7 @@ namespace Mavo.Assets.Controllers
                     .Select(x => new {
                         id = x.Id,
                         number = x.MavoItemNumber,
-                        name = "[" + x.MavoItemNumber + "] "+ x.Name
+                        name = "[" + x.MavoItemNumber + "] "+ x.Name + (String.IsNullOrEmpty(x.Barcode) ? "" : " (" + x.Barcode + ")")
                     })
                     .ToList()
                     .OrderBy(x => Convert.ToInt32(x.number)),

@@ -114,7 +114,6 @@ namespace Mavo.Assets.Controllers
 
                 Response.StatusCode = (int)HttpStatusCode.NotFound;
                 return Content(String.Format("{0} does not exist in inventory.", barcode));
-               
             }
             if (assetItem.Status != InventoryStatus.In)
             {
@@ -128,7 +127,7 @@ namespace Mavo.Assets.Controllers
             }
 
             // validate that this asset is part of the job
-            var ask = job.Assets.FirstOrDefault(x => x.Asset.Id == assetItem.Asset.Id);
+            var ask = job.Assets.FirstOrDefault(x => x.AssetId.HasValue && x.AssetId == assetItem.AssetId);
             if (null == ask)
             {
                 Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
@@ -164,10 +163,10 @@ namespace Mavo.Assets.Controllers
             return PartialView(
                 MVC.JobPicker.Views._PickedAssetRow,
                 new PickedAssetRow {
-                    MavoNumber = assetItem.Asset.MavoItemNumber,
-                    AssetId = assetItem.Asset.Id,
-                    AssetName = assetItem.Asset.Name,
-                    AssetKind = assetItem.Asset.Kind,
+                    MavoNumber = assetItem.AssetMavoItemNumber,
+                    AssetId = assetItem.AssetId ?? 0,
+                    AssetName = assetItem.AssetName,
+                    AssetKind = assetItem.AssetKind ?? AssetKind.Consumable,
                     Barcodes = assetItem.Barcode,
                     AssetItemId = assetItem.Id
                 });
