@@ -41,7 +41,7 @@ namespace Mavo.Assets.Models
                 return null;
             }
             barcode = barcode.Trim();
-            return this.AssetItems.SingleOrDefault(x => x.Barcode == barcode);
+            return this.AssetItems.Include(x => x.Asset).SingleOrDefault(x => x.Barcode == barcode);
         }
     }
 

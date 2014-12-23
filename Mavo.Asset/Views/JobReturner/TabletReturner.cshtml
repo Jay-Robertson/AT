@@ -88,7 +88,8 @@
             resetMessages();
 
             // already scanned?
-            var barcode = $('#barcodeInput').val();
+            var barcode = $('#barcodeInput').val().trim();
+            if (barcode.length < 1) return false;
             if ($.inArray(barcode, alreadyReturned) > -1)
             {
                 $('#serializedErrorBlock').show();
@@ -98,6 +99,7 @@
                 return false;
             }
 
+            $('#loading').show();
             $.ajax({
                 type: 'POST',
                 url: '/JobReturner/ReturnSerialized',
@@ -107,13 +109,15 @@
                     isDamaged: $('#returnAsDamaged').is(':checked')
                 }
             })
-            .fail(function (data) {
+            .fail(function (xhr, status, data) {
+                $('#loading').hide();
                 $('#serializedErrorBlock').show();
-                $('#errorMessage').text(data);
+                $('#errorMessage').text(xhr.responseText);
                 $('#serializedErrorBlock').addClass('in');
                 resetBarcodeInput();
             })
             .success(function (data) {
+                $('#loading').hide();
                 $('#serializedSuccessBlock').show();
                 var assetItemId = $(data).data('asset-item-id');
                 $('#alreadyReturnedTable').append(data);
@@ -173,8 +177,31 @@
                 });
 
 
+        $('.quantity ~ a[data-increment]').click(function () {
+            var $text = $(this).prevAll('.quantity');
+
+            var val = Number($text.val());
+            var inc = Number($(this).data('increment'));
+            if (isNaN(inc)) return false;
+            if (isNaN(val)) val = 0;
+
+            val += inc;
+            if (val < 0) val = 0;
+
+            $text.val(val);
+            $label.text(val);
+            return true;
+        });
+
     </script>
 }
+
+<div id="loading" class="modal-backdrop" style="display: none;">
+    <div style="position: absolute; width: 100px; text-align: center; height: 40px; left: 50%; top: 50%; margin-left: -50px; margin-top: -20px; background: #fff; border-radius: 10px; line-height: 40px;">
+        Processing...
+    </div>
+</div>
+
 
 <div class="well well-small">
     @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
@@ -302,7 +329,9 @@
             </table>
             <label>
                 Quantity Returned
-                <input type="text" class="required" name="quantity" />
+                <input type="text" class="required quantity" name="quantity" />
+                <a href="#" class="btn btn-large btn-success increment" data-increment="1">+1</a>
+                <a href="#" class="btn btn-large btn-danger increment" data-increment="-1">-1</a>
             </label>
         </div>
         <div class="modal-footer">

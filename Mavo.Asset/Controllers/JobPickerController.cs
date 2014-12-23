@@ -103,6 +103,13 @@ namespace Mavo.Assets.Controllers
                     var asset = Context.Assets.Where(x => x.Barcode == barcode).FirstOrDefault();
                     if (null != asset)
                     {
+                        // double check that this asset is part of the job
+                        if (!job.Assets.Any(x => x.AssetId == asset.Id))
+                        {
+                            Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                            return Content(String.Format("{0} is not on the pick list for this job.", asset.Name));
+                        }
+                        
                         return this.Json(new
                         {
                             AssetId = asset.Id,
@@ -131,7 +138,7 @@ namespace Mavo.Assets.Controllers
             if (null == ask)
             {
                 Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
-                return Content(String.Format("{0} is not needed for this job.", assetItem.Asset.Name));
+                return Content(String.Format("{0} is not needed for this job.", assetItem.AssetName));
             }
 
             // count the existing picked 
@@ -139,7 +146,7 @@ namespace Mavo.Assets.Controllers
             if (quantityPicked >= ask.Quantity)
             {
                 Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
-                return Content(String.Format("You don't need to pick anymore {0} for this job.", ask.Asset.Name));
+                return Content(String.Format("You don't need to pick anymore {0} for this job.", ask.AssetName));
             }
             quantityPicked++;
 

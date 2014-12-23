@@ -7,11 +7,6 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
             @if (Request.IsAuthenticated)
             {
                 <div class=" ">
@@ -19,12 +14,16 @@
                         <a href="#" class="navbar-link">@User.Identity.Name</a> | 
                     <a href="/account/LogOff">Log Off</a>
                     </p>
-                    <ul class="nav">
-                        <li class="@(controller == "jobpicker" ? "active" : "")"><a href ="/jobpicker/list">Pick</a></li>
-                        <li class="@(controller == "jobreturner" ? "active" : "")"><a href ="/jobreturner/list">Return</a></li>
+                    <ul class="nav hidden-desktop">
+                        <li class="@(controller == "jobpicker" ? "active" : "")"><a href="/jobpicker/list">Pick</a></li>
+                        <li class="@(controller == "jobreturner" ? "active" : "")"><a href="/jobreturner/list">Return</a></li>
+                        <li class="@(controller == "job" ? "active" : "")"><a href="/job">Jobs</a></li>
+                        <li class="@(controller == "asset" ? "active" : "")"><a href="/asset">Assets</a></li>
+                        <li class="@(controller == "template" ? "active" : "")"><a href="/template">Templates</a></li>
                     </ul>
-
-                    <ul class="nav nav-collapse">
+                    <ul class="nav visible-desktop">
+                        <li class="@(controller == "jobpicker" ? "active" : "")"><a href="/jobpicker/list">Pick</a></li>
+                        <li class="@(controller == "jobreturner" ? "active" : "")"><a href="/jobreturner/list">Return</a></li>
                         <li class="dropdown @(controller == "job" ? "active" : "")">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Jobs <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -41,8 +40,6 @@
 
                             </ul>
                         </li>
-                    </ul>
-                    <ul class="nav nav-collapse">
                         <li class="dropdown @(controller == "asset" ? "active" : "")">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assets <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -52,8 +49,6 @@
                                 <li><a href="/asset/ItemReview"><i class="icon-wrench"></i>Review Damaged Items</a></li>
                             </ul>
                         </li>
-                    </ul>
-                    <ul class="nav nav-collapse">
                         <li class="dropdown @(controller == "template" ? "active" : "")">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Templates <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -62,8 +57,6 @@
                                 <li><a href="#templateModal" data-toggle="modal"><i class="icon-plus"></i>Clone</a></li>
                             </ul>
                         </li>
-                    </ul>
-                    <ul class="nav nav-collapse">
                         <li class="dropdown @(controller == "reporting" ? "active" : "")">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -75,15 +68,14 @@
                                 <li><a href="/Reporting/AssetExport">Asset Excel Export</a></li>
                             </ul>
                         </li>
-                    </ul>
-                    @if (ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
-                    {
-                        <ul class="nav nav-collapse">
+                        @if (ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
+                        {
                             <li class="@(controller == "usermanagement" ? "active" : "")">
                                 <a href="/usermanagement">Users</a>
                             </li>
-                        </ul>
-                    }
+                        }
+                    </ul>
+                    
                 </div>
               
                
