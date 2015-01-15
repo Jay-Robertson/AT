@@ -357,7 +357,7 @@ namespace Mavo.Assets.Controllers
                 QuantityAvailable = x.AssetInventory,
                 AssetCategory = x.AssetCategoryName,
                 MavoItemNumber = x.AssetMavoItemNumber
-            }).OrderByDescending(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList();
+            }).OrderBy(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList();
 
             viewModel.PickedAssets = job.PickedAssets.Select(x => new JobAsset
             {
@@ -370,7 +370,7 @@ namespace Mavo.Assets.Controllers
                 MavoItemNumber = x.AssetMavoItemNumber,
                 Barcode = x.Barcode,
                 AssetItemId = x.Item == null ? (int?)null : x.Item.Id
-            }).OrderByDescending(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList();
+            }).OrderBy(x => Asset.SortableMavoItemNumber(x.MavoItemNumber)).ToList();
             return View("TabletPicker", viewModel);
         }
     }
