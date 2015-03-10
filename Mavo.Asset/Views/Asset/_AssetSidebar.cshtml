@@ -15,6 +15,9 @@
                 </div>
             }
         </li>
+    </ul>
+    <ul class="nav nav-list visible-desktop">
+
         <li class="nav-header">Assets by Kind</li>
         <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.Consumable)>
             <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Consumable)"><i class="icon-fire"></i>&nbsp;@Mavo.Assets.Models.AssetKind.Consumable</a>
@@ -25,11 +28,13 @@
         <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["kind"], (int)Mavo.Assets.Models.AssetKind.Serialized)>
             <a href="/asset?kind=@((int)Mavo.Assets.Models.AssetKind.Serialized)"><i class="icon-barcode"></i>&nbsp;@Mavo.Assets.Models.AssetKind.Serialized</a>
         </li>
+    </ul>
+    <ul class="nav nav-list visible-desktop">
         <li class="nav-header">Assets by Category</li>
         @foreach (var item in ViewBag.AssetCategories)
         {
             <li @HtmlExtensions.GetActive(Url.RequestContext.HttpContext.Request["categoryId"], item.Id)><a href="/asset?categoryId=@item.Id">@item.Name</a></li>
         }
-
     </ul>
+
 </div>

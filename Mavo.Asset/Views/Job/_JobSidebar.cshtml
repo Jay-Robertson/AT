@@ -15,7 +15,7 @@
 
         <li class="divider"></li>
     </ul>
-    <ul class="nav nav-list">
+    <ul class="nav nav-list visible-desktop">
         <li>
             @using (Html.BeginForm(MVC.Job.Index(), FormMethod.Post, new { @class = "form-search" }))
             {
@@ -32,7 +32,7 @@
         }
     </ul>
 
-    <ul class="nav nav-list">
+    <ul class="nav nav-list visible-desktop">
         <li class="nav-header">Jobs By Manager</li>
         @foreach (var item in ViewBag.ProjectManagers)
         {
