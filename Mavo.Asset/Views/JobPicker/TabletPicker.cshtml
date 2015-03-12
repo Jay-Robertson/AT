@@ -152,12 +152,13 @@
             .done(function (data) {
 
                 // check for a non-serialized asset respons in json
-                if (data && data.AssetKind != 1) {
+                if (data && !isNaN(Number(data.AssetKind)) && data.AssetKind != 1) {
                     $('#pick-' + data.AssetId).modal('show');
                 }
                 else {
-                    var assetId = $(data).data('asset-id');
-                    var assetItemId = $(data).data('asset-item-id');
+                    data = $(data);
+                    var assetId = data.data('asset-id');
+                    var assetItemId = data.data('asset-item-id');
 
                     // append row to already picked table
                     $('#alreadyPickedTable').append(data);

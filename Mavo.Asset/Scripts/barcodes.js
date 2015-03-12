@@ -26,7 +26,7 @@ $(window).keypress(function (e) {
     else if (key === control[1]) {
 
         // end marker
-        var barcode = buf.join('');
+        var barcode = buf ? buf.join('') : null;
         buf = null;
         handled = true;
 
