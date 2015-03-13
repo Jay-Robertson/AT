@@ -177,8 +177,8 @@
                 });
 
 
-        $('.quantity ~ a[data-increment]').click(function () {
-            var $text = $(this).prevAll('.quantity');
+        $('.quantity ~ div.btn-group a[data-increment]').click(function () {
+            var $text = $(this).parent().prevAll('.quantity');
 
             var val = Number($text.val());
             var inc = Number($(this).data('increment'));
@@ -189,7 +189,6 @@
             if (val < 0) val = 0;
 
             $text.val(val);
-            $label.text(val);
             return true;
         });
 
@@ -328,10 +327,14 @@
                 </tbody>
             </table>
             <label>
-                Quantity Returned
-                <input type="text" class="required quantity" name="quantity" />
-                <a href="#" class="btn btn-large btn-success increment" data-increment="1">+1</a>
-                <a href="#" class="btn btn-large btn-danger increment" data-increment="-1">-1</a>
+                Qty:
+                <input type="text" class="form-control required quantity" name="quantity" style="width: 50px;" />
+                <div class="btn-group">
+                    <a href="#" class="btn btn-large btn-success increment" data-increment="10">+10</a>
+                    <a href="#" class="btn btn-large btn-success increment" data-increment="1">+1</a>
+                    <a href="#" class="btn btn-large btn-danger increment" data-increment="-1">-1</a>
+                    <a href="#" class="btn btn-large btn-danger increment" data-increment="-10">-10</a>
+                </div>
             </label>
         </div>
         <div class="modal-footer">
