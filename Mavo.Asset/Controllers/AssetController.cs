@@ -12,6 +12,7 @@ using System.Text;
 using Mavo.Assets.Services;
 using System.Web.UI;
 using System.Data.Objects.SqlClient;
+using Mavo.Assets.Attributes;
 
 namespace Mavo.Assets.Controllers
 {
@@ -333,6 +334,7 @@ namespace Mavo.Assets.Controllers
                     AssetId = assetItem.Asset.Id,
                     Barcode = assetItem.Barcode,
                     Condition = assetItem.Condition,
+                    Status = assetItem.Status,
                     Id = assetItem.Id,
                     Manufacturer = assetItem.Manufacturer,
                     ModelNumber = assetItem.ModelNumber,
@@ -351,6 +353,15 @@ namespace Mavo.Assets.Controllers
             ViewBag.AssetsForDropDown = db.Assets.Where(x => x.Category.Id == currentCategoryId).ToList();
             ViewBag.CurrentCategoryId = currentCategoryId;
             return View();
+        }
+
+        [AuthorizeUser(UserRole = UserRole.Administrator)]
+        public virtual ActionResult FoundItem(int id)
+        {
+            var assetItem = db.AssetItems.First(x => x.Id == id);
+            assetItem.Status = InventoryStatus.In;
+            db.SaveChanges();
+            return RedirectToAction("Scan", new { id = id });
         }
 
         [HttpPost]

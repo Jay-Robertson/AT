@@ -28,6 +28,7 @@ namespace Mavo.Assets.Models.ViewModel
         [Required]
         public string Barcode { get; set; }                 // mavo barcode value
         public AssetCondition Condition { get; set; }
+        public InventoryStatus Status { get; set; }
 
         // manufactuer/model/vendor data
         public string Manufacturer { get; set; }

@@ -1,5 +1,4 @@
 ﻿@model Mavo.Assets.Models.ViewModel.AssetScanPostModel
-
 @{
     ViewBag.Title = "Scan a new asset item";
 }
@@ -49,9 +48,28 @@
                 @Html.LabelTitleizeFor(x => x.Condition)
                 <div class="controls">
                     @Html.DropDownListFor(model => model.Condition, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.AssetCondition))))
-
                 </div>
             </div>
+            @if (Model.Id.HasValue)
+            {
+                <div class="control-group">
+                    @Html.LabelTitleizeFor(x => x.Status)
+                    <div class="controls">
+                        <a href="/Reporting/AssetHistoryFilter?Id=@Model.Barcode"><span class="label label-@(Model.Status == Mavo.Assets.Models.InventoryStatus.In ? "success" : "important")"><i class="icon-white icon-@(Model.Status == Mavo.Assets.Models.InventoryStatus.In ? "ok-sign" : "remove-circle")"></i>&nbsp;@Model.Status</span></a>
+                        @if (Model.Status == Mavo.Assets.Models.InventoryStatus.Out && ViewBag.CurrentUserRole.HasFlag(Mavo.Assets.Models.UserRole.Administrator))
+                        {
+                            <div class="alert alert-danger" style="margin-top: 10px;">
+                                <strong>You can return this item to inventory.</strong>
+                                If this item was lost and has now been found, or if it was accidently not marked as returned, you may use this feature
+                                to force the item back into available inventory. Do not use this function for performing normal returns.
+                                <p style="margin-top: 10px;">
+                                    <a href="/Assets/FoundItem/@Model.Id.Value" class="btn btn-danger">Return this item to inventory</a>
+                                </p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
         </div>
     </fieldset>
     <fieldset>
@@ -63,7 +81,6 @@
                     @Html.EditorFor(x => x.Manufacturer)
                 </div>
             </div>
-
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.ModelNumber)
                 <div class="controls">
@@ -74,28 +91,25 @@
     </fieldset>
     <fieldset>
         <legend>Warranty Information</legend>
-        <div class="well">    
+        <div class="well">
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.PurchaseDate)
                 <div class="controls">
                     @Html.EditorFor(x => x.PurchaseDate)
                 </div>
             </div>
-
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.PurchasePrice)
                 <div class="controls">
                     @Html.EditorFor(x => x.PurchasePrice)
                 </div>
             </div>
-
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.SerialNumber)
                 <div class="controls">
                     @Html.EditorFor(x => x.SerialNumber)
                 </div>
             </div>
-
             <div class="control-group">
                 @Html.LabelTitleizeFor(x => x.WarrantyExpiration)
                 <div class="controls">
@@ -104,14 +118,13 @@
             </div>
         </div>
     </fieldset>
-    
+
     <div class="row-fluid">
         <div class="form-actions">
             <input type="submit" class="btn btn-primary" />
         </div>
     </div>
 }
-
 @section Scripts
 {
     <script>
@@ -121,5 +134,4 @@
             });
         });
     </script>
-
 }
