@@ -106,6 +106,7 @@ namespace Mavo.Assets.Controllers
             return Context.Jobs
                 .Include("ProjectManager").Include("PickedBy").Include("ReturnedBy")
                 .Where(x => x.Status == JobStatus.ReadyToPick)
+                .OrderBy(x => x.PickupTime)
                 .ToList()
                 .Where(x => x.PickupTime.Date <= DateTime.Now.Date.AddDays(7))
                 .ToList();
