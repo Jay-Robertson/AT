@@ -116,13 +116,18 @@
                 $('#serializedErrorBlock').addClass('in');
                 resetBarcodeInput();
             })
-            .success(function (data) {
+            .done(function (data) {
                 $('#loading').hide();
                 $('#serializedSuccessBlock').show();
-                var assetItemId = $(data).data('asset-item-id');
-                $('#alreadyReturnedTable').append(data);
-                $('#toReturnTable tr[data-asset-item-id="' + assetItemId + '"]').remove();
-                resetBarcodeInput();
+                if (data && !isNaN(Number(data.AssetKind)) && data.AssetKind != 1) {
+                    $('#model-return-' + data.AssetId).modal('show');
+                }
+                else {
+                    var assetItemId = $(data).data('asset-item-id');
+                    $('#alreadyReturnedTable').append(data);
+                    $('#toReturnTable tr[data-asset-item-id="' + assetItemId + '"]').remove();
+                    resetBarcodeInput();
+                }
             });
 
             return false;
