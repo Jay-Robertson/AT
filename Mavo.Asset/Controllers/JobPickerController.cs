@@ -30,7 +30,7 @@ namespace Mavo.Assets.Controllers
         {
             var jobs = Context.Jobs
                 .Where(x => x.Status == JobStatus.ReadyToPick || x.Status == JobStatus.BeingPicked).ToList()
-                .GroupBy(x => x.EstimatedCompletionDate.Date)
+                .GroupBy(x => x.PickupTime.Date)
                 .OrderBy(x => x.Key);
             return View(jobs);
         }
