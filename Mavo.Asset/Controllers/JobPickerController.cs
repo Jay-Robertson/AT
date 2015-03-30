@@ -12,7 +12,33 @@ using System.Diagnostics;
 using System.Net;
 namespace Mavo.Assets.Controllers
 {
-    [Authorize]
+    public class AjaxAwareAuthorizeAttribute : AuthorizeAttribute
+    {
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            return base.AuthorizeCore(httpContext);
+        }
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            base.OnAuthorization(filterContext);
+        }
+
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                filterContext.HttpContext.Response.SuppressFormsAuthenticationRedirect = true;
+                filterContext.Result = new HttpUnauthorizedResult("You are not authorized to perform this action. Please refresh your browser and login before trying again.");
+            }
+            else
+            {
+                base.HandleUnauthorizedRequest(filterContext);
+            }
+        }
+    }
+
+    [AjaxAwareAuthorize]
     public partial class JobPickerController : BaseController
     {
 
@@ -189,7 +215,7 @@ namespace Mavo.Assets.Controllers
                 });
         }
 
-        [HttpPost]
+        [HttpPost, AjaxAwareAuthorize]
         public virtual ActionResult PickNonSerialized(int jobId, int assetId, int quantity)
         {
             var job = __GetJobForPickingActions(jobId, true);

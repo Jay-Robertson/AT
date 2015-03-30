@@ -196,6 +196,14 @@
             });
 
 
+            // redirect to login page on ajax 401 errors
+            $(document).ajaxError(function (event, jqxhr) {
+                if (jqxhr.status === 401)
+                {
+                    window.location = '/Account/Login';
+                }
+            });
+
             
 
 

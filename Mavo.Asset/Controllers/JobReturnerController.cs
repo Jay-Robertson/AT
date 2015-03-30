@@ -12,7 +12,7 @@ using System.Net;
 
 namespace Mavo.Assets.Controllers
 {
-    [Authorize]
+    [AjaxAwareAuthorize]
     public partial class JobReturnerController : BaseController
     {
         private readonly IAssetActivityManager AssetActivity;
