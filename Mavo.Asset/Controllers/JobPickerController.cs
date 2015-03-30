@@ -77,10 +77,20 @@ namespace Mavo.Assets.Controllers
                 .FirstOrDefault(x => x.Id == jobId);
 
             // mark it as being picked if needed
-            if (picking && job.Status != JobStatus.BeingPicked)
+            if (picking)
             {
-                job.Status = JobStatus.BeingPicked;
-                job.PickStarted = DateTime.Now;
+                if (job.Status != JobStatus.BeingPicked)
+                {
+                    job.Status = JobStatus.BeingPicked;
+                }
+                if (!job.PickStarted.HasValue)
+                {
+                    job.PickStarted = DateTime.Now;
+                }
+                if (null == job.PickedBy)
+                {
+                    job.PickedBy = Context.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+                }
                 Context.SaveChanges();
             }
 

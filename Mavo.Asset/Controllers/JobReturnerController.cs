@@ -82,12 +82,18 @@ namespace Mavo.Assets.Controllers
                 .FirstOrDefault(x => x.Id == jobId);
 
             // mark it as being returned if needed
-            if (job.Status == JobStatus.Started)
+            if (job.Status != JobStatus.BeingReturned)
             {
                 job.Status = JobStatus.BeingReturned;
-                job.ReturnStarted = DateTime.Now;
-                Context.SaveChanges();
             }
+            if (!job.ReturnStarted.HasValue)
+            {
+                job.ReturnStarted = DateTime.Now;
+            }
+            if (job.ReturnedBy == null){
+                job.ReturnedBy = Context.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+            }
+            Context.SaveChanges();
 
             return job;
         }
