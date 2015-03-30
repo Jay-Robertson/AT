@@ -102,8 +102,31 @@ namespace Mavo.Assets.Controllers
             // validate barcode
             if (null == assetItem)
             {
+                // look for a consumable/non-serialized that has this barcode on its bin
+                if (!String.IsNullOrWhiteSpace(barcode))
+                {
+                    barcode = barcode.Trim();
+                    var asset = Context.Assets.Where(x => x.Barcode == barcode).FirstOrDefault();
+                    if (null != asset)
+                    {
+                        // double check that this asset is part of the job
+                        if (!job.Assets.Any(x => x.AssetId == asset.Id))
+                        {
+                            Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
+                            return Content(String.Format("{0} is not on the pick list for this job.", asset.Name));
+                        }
+
+                        return this.Json(new
+                        {
+                            AssetId = asset.Id,
+                            AssetNumber = asset.MavoItemNumber,
+                            AssetKind = asset.Kind
+                        });
+                    }
+                }
+
                 Response.StatusCode = (int)HttpStatusCode.NotFound;
-                return Json(String.Format("{0} does not exist in inventory.", barcode));
+                return Content(String.Format("{0} does not exist in inventory.", barcode));
             }
 
             // validate item was picked
