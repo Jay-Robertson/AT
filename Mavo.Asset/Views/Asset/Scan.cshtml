@@ -50,7 +50,7 @@
                     @Html.DropDownListFor(model => model.Condition, new SelectList(Enum.GetValues(typeof(Mavo.Assets.Models.AssetCondition))))
                 </div>
             </div>
-            @if (Model.Id.HasValue)
+            @if (Model != null && Model.Id.HasValue)
             {
                 <div class="control-group">
                     @Html.LabelTitleizeFor(x => x.Status)
