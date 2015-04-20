@@ -296,9 +296,10 @@
 
 <div class="row-fluid">
     <div class="form-actions">
-        @using (Html.BeginForm(MVC.JobReturner.CompleteReturning(Model.JobId)))
+        @using (Html.BeginForm("CompleteReturning", "JobReturner", new { jobId = Model.JobId }))
         {
             <input type="submit" class="btn btn-primary" id="btnSubmit" value="Done Returning" />
+            <input type="submit" class="btn btn-default" id="btnSubmitNotDone" name="continue" value="Save and Continue Returning Later" />
         }
     </div>
 </div>

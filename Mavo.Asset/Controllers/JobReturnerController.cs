@@ -311,21 +311,29 @@ namespace Mavo.Assets.Controllers
             return View("Success");
         }
 
-        public virtual ActionResult CompleteReturning(int jobId)
+        public virtual ActionResult CompleteReturning(int jobId, string @continue)
         {
             Job job = Context.Jobs.Include("ProjectManager").FirstOrDefault(x => x.Id == jobId);
-            job.ReturnedBy = CurrentUser.GetCurrent();
-            job.ReturnCompleted = DateTime.Now;
-            job.Status = JobStatus.Completed;
-            Context.SaveChanges();
-
-            if (job.ProjectManager != null)
+            if (String.IsNullOrWhiteSpace(@continue))
             {
-                dynamic email = new Email("JobComplete");
-                email.Subject = String.Format("Job #{0} is complete!", job.JobNumber);
-                email.To = job.ProjectManager.Email;
-                email.Job = job;
-                email.Send();
+                job.ReturnedBy = CurrentUser.GetCurrent();
+                job.ReturnCompleted = DateTime.Now;
+                job.Status = JobStatus.Completed;
+                Context.SaveChanges();
+
+                if (job.ProjectManager != null)
+                {
+                    dynamic email = new Email("JobComplete");
+                    email.Subject = String.Format("Job #{0} is complete!", job.JobNumber);
+                    email.To = job.ProjectManager.Email;
+                    email.Job = job;
+                    email.Send();
+                }
+            }
+            else
+            {
+                job.Status = JobStatus.Started;
+                Context.SaveChanges();
             }
 
             return Success(jobId);

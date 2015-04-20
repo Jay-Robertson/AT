@@ -204,10 +204,11 @@ namespace Mavo.Assets.Controllers
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult CompleteReturning(int jobId)
+        public override System.Web.Mvc.ActionResult CompleteReturning(int jobId, string @continue)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.CompleteReturning);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "jobId", jobId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "continue", @continue);
             return callInfo;
         }
 
