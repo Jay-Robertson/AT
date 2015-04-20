@@ -116,7 +116,7 @@ namespace Mavo.Assets.Controllers
                     if (null != asset)
                     {
                         // double check that this asset is part of the job
-                        if (!job.Assets.Any(x => x.AssetId == asset.Id))
+                        if (!job.PickedAssets.Any(x => x.Asset == asset))
                         {
                             Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
                             return Content(String.Format("{0} is not on the pick list for this job.", asset.Name));

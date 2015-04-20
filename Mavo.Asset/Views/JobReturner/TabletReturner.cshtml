@@ -120,7 +120,7 @@
                 $('#loading').hide();
                 $('#serializedSuccessBlock').show();
                 if (data && !isNaN(Number(data.AssetKind)) && data.AssetKind != 1) {
-                    $('#model-return-' + data.AssetId).modal('show');
+                    $('#modal-return-' + data.AssetId).modal('show');
                 }
                 else {
                     var assetItemId = $(data).data('asset-item-id');
