@@ -14,7 +14,6 @@
         }
 
         function resetMessages() {
-            $('#serializedErrorBlock').removeClass('in');
             $('.alert').hide();
         }
 
@@ -28,8 +27,7 @@
 
             // must enter a number
             if (isNaN(quantityPicked)) {
-                $('#errorMessage').html('There was an error scanning this item');
-                $('#serializedErrorBlock').show();
+                toastr.error('There was an error scanning this item');
                 return false;
             }
 
@@ -43,8 +41,7 @@
                 }
             })
             .fail(function (xhr, status, data) {
-                $('#serializedErrorBlock').show();
-                $('#errorMessage').text(xhr.responseText);
+                toastr.error(xhr.responseText);
             })
             .done(function (data) {
 
@@ -99,7 +96,7 @@
                     quantity: newQty
                 }
             })
-            .fail(function () { alert('Error updating quantity.'); })
+            .fail(function () { toastr.error('Error updating quantity.'); })
             .done(function () { window.location.reload(); });
             return false;
         });
@@ -145,8 +142,7 @@
             })
             .fail(function (xhr, status, data) {
                 $('#loading').hide();
-                $('#serializedErrorBlock').show();
-                $('#errorMessage').text(xhr.responseText);
+                toastr.error(xhr.responseText);
                 resetBarcode();
             })
             .done(function (data) {
@@ -172,7 +168,7 @@
                         $pickRow.remove();
                     }
 
-                    $('#serializedSuccessBlock').show();
+                    toastr.success("Barcode Scanned Succesfully");
                 }
 
                 $('#loading').hide();
@@ -204,14 +200,6 @@
 <div id="add" style="display: none;">
     @{ Html.RenderAction("UnlockedAssetPickerForJob", "Asset", new { id = Model.JobId }); }
     <button id="add-done" class="btn btn-primary btn-large">Continue Picking</button>
-</div>
-
-<div class="alert alert-block alert-success hide" id="serializedSuccessBlock">
-    <strong>Barcode Scanned Succesfully</strong>
-</div>
-
-<div class="alert alert-block alert-error hide" id="serializedErrorBlock">
-    <h4 id="errorMessage">Error</h4>
 </div>
 
 <h2>

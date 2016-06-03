@@ -102,7 +102,7 @@
             return false;
         });
 
-        $('#asset-table input.quantity').live('keydown change', function () {
+        $(document).on('keydown change', '#asset-table input.quantity', function () {
             $(this).closest('tr').find('.btn-primary').css('visibility', 'visible');
         });
     });

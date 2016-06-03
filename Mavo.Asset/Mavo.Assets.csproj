@@ -512,12 +512,16 @@
     <Content Include="Content\themes\bootstrap\images\ui-icons_f6cf3b_256x240.png" />
     <Content Include="Content\themes\bootstrap\jquery-ui-1.8.16.custom.css" />
     <Content Include="Content\themes\bootstrap\jquery.ui.1.8.16.ie.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\logo.jpeg" />
     <Content Include="Scripts\barcodes.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Package.pubxml" />
     <Content Include="Properties\Settings.settings">
@@ -540,6 +544,8 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="T4MVC.tt.settings.xml" />
     <Content Include="Views\JobPicker\List.cshtml">
       <SubType>Code</SubType>

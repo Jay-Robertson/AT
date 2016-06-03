@@ -13,20 +13,19 @@
             }
             ''
         ];
-        $('#serializedErrorBlock').hide();
-
+        
         function resetMessages() {
-            $('#serializedErrorBlock').removeClass('in');
             $('.alert').hide();
         }
 
-        function resetBarcodeInput() {
+        function resetBarcodeInput(hideModal) {
             $('#barcodeInput').val('').focus();
             $('#returnAsDamaged').removeAttr('checked');
             $('#assetScanner :submit')
                 .toggleClass('btn-primary', true)
                 .toggleClass('btn-danger', false)
                 .val('Scan & Return');
+            if (hideModal !== false) $('#modal-return-serialized').modal('hide');
         }
 
         $('.modal-return-nonserialized form').submit(function () {
@@ -92,9 +91,7 @@
             if (barcode.length < 1) return false;
             if ($.inArray(barcode, alreadyReturned) > -1)
             {
-                $('#serializedErrorBlock').show();
-                $('#errorMessage').html('You have already scanned ' + $('#barcodeInput').val());
-                $('#serializedErrorBlock').addClass('in');
+                toastr.error('You have already scanned ' + $('#barcodeInput').val());
                 resetBarcodeInput();
                 return false;
             }
@@ -111,14 +108,12 @@
             })
             .fail(function (xhr, status, data) {
                 $('#loading').hide();
-                $('#serializedErrorBlock').show();
-                $('#errorMessage').text(xhr.responseText);
-                $('#serializedErrorBlock').addClass('in');
-                resetBarcodeInput();
+                toastr.error(xhr.responseText);
+                resetBarcodeInput(false);
             })
             .done(function (data) {
                 $('#loading').hide();
-                $('#serializedSuccessBlock').show();
+                toastr.success("Barcode Scanned Succesfully");
                 if (data && !isNaN(Number(data.AssetKind)) && data.AssetKind != 1) {
                     $('#modal-return-' + data.AssetId).modal('show');
                 }
@@ -200,43 +195,26 @@
     </script>
 }
 
+<style>
+    #serializedSuccessBlock {
+        position: fixed;
+        top: 40%;
+        
+    }
+</style>
+
 <div id="loading" class="modal-backdrop" style="display: none;">
     <div style="position: absolute; width: 100px; text-align: center; height: 40px; left: 50%; top: 50%; margin-left: -50px; margin-top: -20px; background: #fff; border-radius: 10px; line-height: 40px;">
         Processing...
     </div>
 </div>
 
-
-<div class="well well-small">
-    @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
-    {
-        var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
-        foreach (var serialzedAsset in serializedAssets)
-        {
-        <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
-        }
-        <input type="hidden" name="jobId" value="@Model.JobId" />
-        <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" data-barcode-receiver="true" />
-        <input type="submit" name="return" class="btn btn-primary btn-large" value="Scan & Return" />
-        <div style="margin-top: 10px;">
-            <label class="checkbox" id="returnAsDamagedLabel">
-                <input type="checkbox" name="returndamaged" value="1" id="returnAsDamaged" />
-                Item is Damaged
-            </label>
-        </div>
-        @*<input type="submit" name="returndamaged" class="btn btn-danger" value="Scan & Return Damaged" />*@
-    }
-</div>
-
-<div class="alert alert-block alert-success hide" id="serializedSuccessBlock">
-    <strong>Barcode Scanned Succesfully</strong>
-</div>
-
-<div class="alert alert-block alert-error fade" id="serializedErrorBlock">
-    <h4 id="errorMessage">Error</h4>
-</div>
-
-<h2>To Be Returned</h2>
+<h2>
+    To Be Returned
+    <div class="btn-group pull-right">
+        <a href="#modal-return-serialized" role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-barcode icon-white"></i>&nbsp;Enter Barcode</a>
+    </div>
+</h2>
 <table class="table table-striped table-hover" id="toReturnTable">
     <thead>
         <tr>
@@ -300,6 +278,32 @@
         {
             <input type="submit" class="btn btn-primary" id="btnSubmit" value="Done Returning" />
             <input type="submit" class="btn btn-default" id="btnSubmitNotDone" name="continue" value="Save and Continue Returning Later" />
+        }
+    </div>
+</div>
+
+<div id="modal-return-serialized" class="modal hide" tabindex="-1">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Return Serialized Item</h3>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm(MVC.Asset.GetAssetDetail(), FormMethod.Post, new { @class = "form form-inline", id = "assetScanner" }))
+        {
+            var serializedAssets = Model.Assets.Where(x => x.Kind == Mavo.Assets.Models.AssetKind.Serialized).ToList();
+            foreach (var serialzedAsset in serializedAssets)
+            {
+                <input type="hidden" name="availableAssets[@(serializedAssets.FindIndex(x => x.AssetId == serialzedAsset.AssetId).ToString())]" value="@serialzedAsset.AssetId" />
+            }
+            <input type="hidden" name="jobId" value="@Model.JobId" />
+            <input type="text" name="id" id="barcodeInput" placeholder="Scan a Barcode" class="input-large" style="height: 37px; font-size: 18px;" data-barcode-receiver="true" />
+            <input type="submit" name="return" class="btn btn-primary btn-large" value="Scan & Return" />
+            <div style="margin-top: 10px;">
+                <label class="checkbox" id="returnAsDamagedLabel">
+                    <input type="checkbox" name="returndamaged" value="1" id="returnAsDamaged" />
+                    Item is Damaged
+                </label>
+            </div>
         }
     </div>
 </div>

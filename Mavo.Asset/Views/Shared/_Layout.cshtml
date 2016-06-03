@@ -188,7 +188,7 @@
             });
             $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
-            $('form').live('submit', function () {
+            $(document).on('submit', 'form', function () {
                 var $form = $(this);
                 var $buttons = $form.find('.btn:submit');
                 $buttons.button('loading');

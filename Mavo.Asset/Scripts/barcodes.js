@@ -43,6 +43,8 @@ $(window).keypress(function (e) {
                 if (receiver.is('[data-barcode-submit]')) {
                     receiver.closest('form').submit();
                 }
+                var modal = receiver.closest('.modal');
+                if (modal) modal.modal('show');
             }
             else {
                 $(window).trigger('barcode', barcode);
