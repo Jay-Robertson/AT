@@ -103,7 +103,7 @@ namespace Mavo.Assets.Controllers
         {
             // find job and asset item
             var job = __GetJobForReturningActions(jobId);
-            var assetItem = Context.AssetItems.FirstOrDefault(x => x.Barcode == barcode.Trim());
+            var assetItem = Context.AssetItems.Include("Asset").FirstOrDefault(x => x.Barcode == barcode.Trim());
 
             // validate barcode
             if (null == assetItem)
@@ -139,14 +139,14 @@ namespace Mavo.Assets.Controllers
             if (!job.PickedAssets.Any(x => x.Item == assetItem))
             {
                 Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
-                return Json(String.Format("{1} {0} is not part of the job.", barcode, assetItem.Asset.Name));
+                return Json(String.Format("{1} {0} is not part of the job.", barcode, assetItem.Asset != null ? assetItem.Asset.Name : ""));
             }
 
             // validate item isnt already returned
             if (job.ReturnedAssets.Any(x => x.Item == assetItem))
             {
                 Response.StatusCode = (int)HttpStatusCode.MethodNotAllowed;
-                return Json(String.Format("{1} {0} has already been returned.", barcode, assetItem.Asset.Name));
+                return Json(String.Format("{1} {0} has already been returned.", barcode, assetItem.Asset != null ? assetItem.Asset.Name : ""));
             }
 
             // item is back in inventory
