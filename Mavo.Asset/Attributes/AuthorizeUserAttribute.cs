@@ -23,14 +23,8 @@ namespace Mavo.Assets.Attributes
 
             UserRole privilegeLevels = ServiceLocator.Current.GetInstance<ICurrentUserService>().GetCurrent().Role;
 
-            if (privilegeLevels.HasFlag(UserRole))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (privilegeLevels == UserRole.Administrator) return true;
+            return (privilegeLevels == this.UserRole);
         }
     }
 }

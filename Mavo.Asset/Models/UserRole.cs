@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Mavo.Assets.Models
 {
-    [Flags]
+    //[Flags]
     public enum UserRole
     {
         ProjectManager = 1,

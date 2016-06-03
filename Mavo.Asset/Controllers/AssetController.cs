@@ -11,7 +11,6 @@ using AutoMapper;
 using System.Text;
 using Mavo.Assets.Services;
 using System.Web.UI;
-using System.Data.Objects.SqlClient;
 using Mavo.Assets.Attributes;
 
 namespace Mavo.Assets.Controllers
