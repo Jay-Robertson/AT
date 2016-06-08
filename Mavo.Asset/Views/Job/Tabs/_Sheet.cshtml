@@ -1,0 +1,66 @@
+﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
+
+<style>
+    #sheet-column {
+        -webkit-column-width: 300px;
+        -moz-column-width: 300px;
+        column-width: 300px;
+        column-fill: balance;
+        font-size: 12px;
+        line-height: 16px;
+    }
+        #sheet-column > div {
+            -webkit-column-break-inside: avoid;
+            display: inline-block;
+            width: 100%;
+        }
+
+        #sheet-column  h5 {
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+        }
+
+        #sheet-column input[type=number] {
+            border: none;
+            border-bottom: 1px solid #000;
+            border-radius: 0;
+            padding: inherit;
+            margin: inherit;
+            box-shadow: none;
+            line-height: inherit;
+            font-size: inherit;
+            text-align: center;
+        }
+
+        #sheet-column .row-fluid > * {
+            min-height: inherit;
+        }
+</style>
+
+<div class="tab-pane @(Model.Status == Mavo.Assets.Models.JobStatus.New || Model.Status == Mavo.Assets.Models.JobStatus.ReadyToPick ? "active" : "")" id="assets">
+    <h4>Job Assets</h4>
+    @{ var categories = ((IEnumerable<Mavo.Assets.Models.AssetWithQuantity>)ViewBag.Assets).GroupBy(x => x.AssetCategoryName); }
+    <div id="sheet-column">
+        @foreach (var cat in categories.OrderBy(x => x.Key))
+        {
+            <div>
+                <h5 class="row-fluid">
+                    <div class="span9">@cat.Key</div>
+                    <div class="span3"><span style="width: 60px; text-align: center; display: inline-block;">O</span></div>
+                </h5>
+                @foreach (var x in cat.OrderBy(x => x.SortableAssetMavoItemNumber))
+                {
+                <div class="row-fluid">
+                    <div class="span2">@x.AssetMavoItemNumber&nbsp;</div>
+                    <div class="span5">@x.AssetName</div>
+                    <div class="span2">@x.AssetUnitOfMeasure</div>
+                    <div class="span3">
+                        <input type="hidden" name="asset" value="@x.AssetId" />
+                        <input type="number" class="input-mini" value="@x.Quantity" name="quantity" />
+                    </div>
+                </div>
+                }
+            </div>
+        }
+    </div>
+</div>

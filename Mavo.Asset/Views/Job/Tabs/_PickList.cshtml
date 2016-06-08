@@ -9,11 +9,11 @@
             <div class="well">
                 <h4>Template</h4>
                 @Html.DropDownList("TemplateId", ((IList<Mavo.Assets.Models.Template>)ViewBag.Templates).Select(x => new SelectListItem()
-       {
-           Value = x.Id.ToString(),
-           Text = x.Name,
-           Selected = Model == null || (ViewBag.TemplateId != null && ViewBag.TemplateId.HasValue) ? false : x.Id == ViewBag.TemplateId
-       }), string.Empty)
+           {
+               Value = x.Id.ToString(),
+               Text = x.Name,
+               Selected = Model == null || (ViewBag.TemplateId != null && ViewBag.TemplateId.HasValue) ? false : x.Id == ViewBag.TemplateId
+           }), string.Empty)
                 @if (Model != null)
                 {
                     <a href="#" id="btnAddFromTemplate" class="btn btn-success">Add Items from Template</a>
@@ -29,7 +29,12 @@
         }
         <div class="row-fluid">
             <div class="span12 well">
-                <h4>Job Assets</h4>
+                <h4>
+                    Job Assets
+                    <div class="pull-right btn-group">
+                        <a href="/job/Sheet/@(Model.Id)" class="btn btn-info">View as Sheet</a>
+                    </div>
+                </h4>
                 @{Html.RenderAction(MVC.Asset.AssetPickerForJob(Model.Id.Value));}
             </div>
         </div>

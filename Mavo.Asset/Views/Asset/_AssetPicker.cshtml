@@ -35,12 +35,24 @@
         return false;
     }
     function updateQuantity(assetId, quantity) {
-        if (0 == quantity || !quantity) {
+        @if (ViewBag.IsForJob == true) {
+        <text>
+        if (quantity < 1 || !quantity) {
             return removeRow(assetId);
+        }
+        </text>
+        }
+        else
+        {
+        <text>
+        if (quantity < 0 || !quantity) {
+            return removeRow(assetId);
+        }
+        </text>
         }
         $.post('/asset/updatequantity@(ViewBag.IsForJob ? "" : "fortemplate")/' + assetId + '?quantity=' + quantity);
         $('#asset-table #row-' + assetId + ' .btn-primary').css('visibility', 'hidden');
-    }
+        }
     jQuery(function ($) {
 
         $('#asset-category').change(function () {

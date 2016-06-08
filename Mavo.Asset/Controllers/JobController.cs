@@ -179,6 +179,44 @@ namespace Mavo.Assets.Controllers
 
         public virtual ActionResult Edit(int id)
         {
+            return __Edit(id, "Edit");
+        }
+
+        [HttpGet]
+        public virtual ActionResult Sheet(int id)
+        {
+            return __Edit(id, "Sheet");
+        }
+
+        public class SheetPostModel
+        {
+            public int[] asset { get; set; }
+            public int[] quantity { get; set; }
+        }
+
+        [HttpPost]
+        public virtual ActionResult Sheet(int id, SheetPostModel model)
+        {
+            var job = Context.Jobs
+                .Include("Assets")
+                .Include("Assets.Asset")
+                .FirstOrDefault(x => x.Id == id);
+
+            for (var i = 0; i < model.asset.Length; i++)
+            {
+                var a = job.Assets.FirstOrDefault(x => x.AssetId == model.asset[i]);
+                if (null != a)
+                {
+                    a.Quantity = model.quantity[i];
+                }
+            }
+            Context.SaveChanges();
+
+            return RedirectToAction("Edit", new { id = id });
+        }
+
+        private ActionResult __Edit(int id, string view)
+        {
             var job = Context.Jobs
                 .Include(x => x.PickedAssets)
                 .Include(x => x.PickedBy)
@@ -186,6 +224,7 @@ namespace Mavo.Assets.Controllers
                 .Include("PickedAssets.Item")
                 .Include("Assets")
                 .Include("Assets.Asset")
+                .Include("Assets.Asset.Category")
                 .FirstOrDefault(x => x.Id == id);
             if (job != null)
             {
@@ -197,7 +236,8 @@ namespace Mavo.Assets.Controllers
                 }
                 var result = AutoMapper.Mapper.Map<Job, EditJobPostModel>(job);
                 result.ShiftHours = job.Summary.ShiftHours;
-                return View("Edit", result);
+
+                return View(view, result);
             }
             else
             {
@@ -261,6 +301,7 @@ namespace Mavo.Assets.Controllers
 
             job = AutoMapper.Mapper.Map<EditJobPostModel, Job>(jobPostModel, job);
             job.Summary.ShiftHours = jobPostModel.ShiftHours;
+            var showSpreadsheetView = false;
             if (ModelState.IsValid)
             {
                 if (!String.IsNullOrEmpty(Request.Form["InvoiceDetail.SendConsultant"]))
@@ -292,6 +333,7 @@ namespace Mavo.Assets.Controllers
                     {
                         var assets = Context.TemplateAssets.Include("Asset").Where(x => x.Template.Id == jobPostModel.TemplateId.Value).ToList();
                         job.Assets = assets.Select(x => new AssetWithQuantity() { Quantity = x.Quantity, Asset = x.Asset }).ToList();
+                        showSpreadsheetView = true;
                     }
 
                     Context.Jobs.Add(job);
@@ -308,7 +350,7 @@ namespace Mavo.Assets.Controllers
                     email.Send();
                 }
 
-                return RedirectToAction("Edit", new { id = job.Id });
+                return RedirectToAction(showSpreadsheetView ? "Sheet" : "Edit", new { id = job.Id });
             }
             else
             {
@@ -390,6 +432,7 @@ namespace Mavo.Assets.Controllers
             ViewBag.Foremen = Context.Users.Where(x => (x.Role & UserRole.Foreman) == UserRole.Foreman && !x.Disabled).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
             ViewBag.ProjectManagers = Context.Users.Where(x => (x.Role & UserRole.ProjectManager) == UserRole.ProjectManager && !x.Disabled).OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
             ViewBag.JobsReadyToPick = new LeftNavViewModel() { Job = job, Jobs = Context.Jobs.ToList().GroupBy(x => x.Status).OrderBy(x => x.Key).ToList() };
+            ViewBag.Assets = job != null ? job.Assets : null;
         }
     }
 }

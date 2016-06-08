@@ -184,6 +184,17 @@ namespace Mavo.Assets.Models
         public string AssetMavoItemNumber { get { return Asset == null ? null : Asset.MavoItemNumber; } }
         public AssetCategory AssetCategory { get { return Asset == null ? null : Asset.Category; } }
         public string AssetCategoryName { get { return this.AssetCategory == null ? null : AssetCategory.Name; } }
+        public string AssetUnitOfMeasure { get { return Asset == null ? null : (Asset.UnitOfMeasure ?? "EACH"); } }
+
+        public int SortableAssetMavoItemNumber
+        {
+            get
+            {
+                int n;
+                if (int.TryParse(this.AssetMavoItemNumber, out n)) return n;
+                return 0;
+            }
+        }
     }
 
     [Table("PickedAsset")]
