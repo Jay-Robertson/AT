@@ -49,6 +49,7 @@ namespace Mavo.Assets.Controllers
             var clone = new Template();
             var source = ctx.Templates.Include("Assets").Include("Assets.Asset").First(x => x.Id == id);
             clone.Name = source.Name + " [Clone]";
+            clone.Master = false;
             clone.Assets = source.Assets.Select(x => new TemplateAsset() { Asset = x.Asset, Quantity = x.Quantity, Template = clone }).ToList();
             ctx.Templates.Add(clone);
             ctx.SaveChanges();
@@ -69,7 +70,13 @@ namespace Mavo.Assets.Controllers
             else
             {
                 var toSave = ctx.Templates.FirstOrDefault(x => x.Id == id);
+                var currentUserRole = (UserRole)ViewBag.CurrentUserRole;
+                if (toSave.Master && !(currentUserRole == UserRole.Administrator))
+                {
+                    throw new HttpException(403, "Only administrators may modify master templates.");
+                }
                 toSave.Name = template.Name;
+                toSave.Master = template.Master;
             }
 
             ctx.SaveChanges();

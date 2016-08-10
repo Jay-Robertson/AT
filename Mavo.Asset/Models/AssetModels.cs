@@ -15,6 +15,7 @@ namespace Mavo.Assets.Models
         public AssetContext()
             : base("DefaultConnection")
         {
+            Database.SetInitializer<AssetContext>(null);
         }
 
         public DbSet<JobAddon> JobAddons { get; set; }
@@ -164,6 +165,9 @@ namespace Mavo.Assets.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+
+        public bool Master { get; set; }
+
         public IList<TemplateAsset> Assets { get; set; }
     }
 
