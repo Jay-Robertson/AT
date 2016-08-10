@@ -33,8 +33,9 @@ namespace Mavo.Assets
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/themes/bootstrap/jquery-ui-1.8.16.custom.css",
+            bundles.Add(new StyleBundle("~/Content/css")
+                    .Include("~/Content/themes/bootstrap/jquery-ui-1.8.16.custom.css", new CssRewriteUrlTransform())
+                    .Include(
                         "~/Content/bootstrap.css",
                         "~/Content/bootstrap-responsive.css",
                         "~/Content/toastr.css"));

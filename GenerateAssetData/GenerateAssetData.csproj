@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="Data\FORMS32K_MavoDataSet.cs">
       <DependentUpon>FORMS32K_MavoDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Data\FORMS32K_MavoDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
