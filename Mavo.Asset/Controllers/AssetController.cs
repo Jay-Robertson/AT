@@ -316,6 +316,14 @@ namespace Mavo.Assets.Controllers
             return View(asset);
         }
 
+        public virtual ActionResult Delete(int id)
+        {
+            var asset = db.Assets.Find(id);
+            db.Assets.Remove(asset);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         //
         // POST: /Asset/Edit/5
 
@@ -352,6 +360,15 @@ namespace Mavo.Assets.Controllers
             ViewBag.AssetsForDropDown = db.Assets.Where(x => x.Category.Id == currentCategoryId).ToList();
             ViewBag.CurrentCategoryId = currentCategoryId;
             return View();
+        }
+
+        public virtual ActionResult DeleteItem(int id)
+        {
+            var item = db.AssetItems.Include("Asset").First(x => x.Id == id);
+            var assetId = item.Asset.Id;
+            db.AssetItems.Remove(item);
+            db.SaveChanges();
+            return RedirectToAction("Edit", new { Id = assetId });
         }
 
         [AuthorizeUser(UserRole = UserRole.Administrator)]

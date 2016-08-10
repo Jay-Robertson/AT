@@ -1,4 +1,5 @@
-﻿@model Mavo.Assets.Models.Asset
+﻿@using Mavo.Assets.Models
+@model Mavo.Assets.Models.Asset
 @{
     if (Model != null)
     {
@@ -149,6 +150,10 @@
     <div class="row-fluid">
         <div class="form-actions">
             <input type="submit" class="btn btn-primary" />
+            @if (null != Model && (null == Model.Items || Model.Items.Count == 0) && UserRole.Administrator == (UserRole)ViewBag.CurrentUserRole)
+            {
+                <a href="/Asset/Delete/@Model.Id" class="btn btn-danger" id="asset-delete">Delete</a>
+            }
         </div>
     </div>
 }
@@ -176,6 +181,13 @@
                         '</option>'
                     );
                 });
+            }
+        });
+
+        $('#asset-delete').click(function (e) {
+            if (!confirm("Are you sure you want to delete this asset? This should only be used to remove items that have not been used on a job yet.")) {
+                e.stopPropagation();
+                e.preventDefault();
             }
         });
     });
