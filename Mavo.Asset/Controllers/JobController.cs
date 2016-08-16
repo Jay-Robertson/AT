@@ -106,10 +106,11 @@ namespace Mavo.Assets.Controllers
         public virtual ActionResult Index(JobStatus? status = null, int? customerId = null, int? projectManagerId = null)
         {
             SetListsForCrud(null);
-            if (status.HasValue || customerId.HasValue || projectManagerId.HasValue)
-                return Index(new SearchResult() { Status = status, CustomerId = customerId, ProjectManagerId = projectManagerId });
+            var u = this.CurrentUserService.GetCurrent();
+            if (u != null && u.Role == UserRole.ProjectManager && !(status.HasValue || customerId.HasValue || projectManagerId.HasValue))
+                return Index(new SearchResult() { Status = status, CustomerId = customerId, ProjectManagerId = u.Id });
             else
-                return View();
+                return Index(new SearchResult() { Status = status, CustomerId = customerId, ProjectManagerId = projectManagerId });
         }
 
         [HttpPost]
