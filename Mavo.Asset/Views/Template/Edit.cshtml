@@ -8,7 +8,7 @@
 }
 @{ 
     var currentUserRole = (UserRole)ViewBag.CurrentUserRole;
-    var canEdit = !Model.Master || currentUserRole == UserRole.Administrator;
+    var canEdit = null == Model || !Model.Master || currentUserRole == UserRole.Administrator;
 }
 
 @using (Html.BeginForm(MVC.Template.Edit(Model == null ? 0 : Model.Id), FormMethod.Post, new { @class = "form-horizontal" }))
