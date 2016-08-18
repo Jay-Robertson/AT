@@ -673,6 +673,8 @@
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Views\Job\Sheet.cshtml" />
     <Content Include="Views\Job\Tabs\_Sheet.cshtml" />
+    <Content Include="Views\Job\Print.cshtml" />
+    <Content Include="Views\Shared\_JobHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -121,6 +121,12 @@
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
+
+        function printJob(id) {
+            var w = window.open('/job/print/' + id);
+            w.focus();
+        }
+
         /*
         * Form Validation
         * This script will set Bootstrap error classes when form.submit is called.

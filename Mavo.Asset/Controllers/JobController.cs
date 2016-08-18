@@ -189,6 +189,12 @@ namespace Mavo.Assets.Controllers
             return __Edit(id, "Sheet");
         }
 
+        [HttpGet]
+        public virtual ActionResult Print(int id)
+        {
+            return __Edit(id, "Print");
+        }
+
         public class SheetPostModel
         {
             public int[] asset { get; set; }
@@ -221,6 +227,8 @@ namespace Mavo.Assets.Controllers
             var job = Context.Jobs
                 .Include(x => x.PickedAssets)
                 .Include(x => x.PickedBy)
+                .Include(x => x.Customer)
+                .Include(x => x.Foreman)
                 .Include("PickedAssets.Asset")
                 .Include("PickedAssets.Item")
                 .Include("Assets")
@@ -236,6 +244,8 @@ namespace Mavo.Assets.Controllers
                     ViewBag.ItemsNotPicked = job.GetItemsNotPicked();
                 }
                 var result = AutoMapper.Mapper.Map<Job, EditJobPostModel>(job);
+                result.ForemanName = (job.Foreman != null ? job.Foreman.FullName : null);
+                result.Customer = job.Customer;
                 result.ShiftHours = job.Summary.ShiftHours;
 
                 return View(view, result);

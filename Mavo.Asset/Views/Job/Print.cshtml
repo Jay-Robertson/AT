@@ -1,28 +1,5 @@
 ﻿@model Mavo.Assets.Models.ViewModel.EditJobPostModel
-@{ ViewBag.Title = "Create Picklist :: " + Model.Name; }
-
-@section scripts {
-    <script type="text/javascript">
-        jQuery(function ($) {
-        });
-    </script>
-}
-
-@section LeftNav
-{
-    @{Html.RenderPartial(MVC.Job.Views._JobSidebar, new Mavo.Assets.Models.ViewModel.SearchResult());}
-}
-
-<style>
-    #jobheader-printable, #truck-info { display: none; }
-    @@media print {
-        @@page {
-            size: landscape;
-        }
-        #jobheader-printable, #truck-info { display: block; }
-    }
-</style>
-
+@{ ViewBag.Title = "Print :: " + Model.Name; }
 <table id="jobheader-printable">
     <tr>
         <td><strong>Job Number:</strong><span>@Model.JobNumber</span></td>
@@ -46,39 +23,28 @@
     </tr>
 </table>
 
-<form method="post">
 
-    <h2>
-        @if (null != Model)
-    {
-        <span>
-            @if (!String.IsNullOrEmpty(Model.JobNumber))
-            {
-                <text>#</text>@(Model.JobNumber)
-            }
-            @Model.Name
-        </span>
-        if (Model.IsAddon)
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Item</th>
+            <th>Needed</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Mavo.Assets.Models.AssetWithQuantity i in Model.Assets)
         {
-            <span class="label label-info"><i class="icon-plus-sign icon-white"></i></span>
+            <tr>
+                <td>@i.AssetMavoItemNumber</td>
+                <td>@i.AssetName</td>
+                <td>@i.Quantity</td>
+                <td></td>
+            </tr>
         }
-        <div class="pull-right btn-group">
-            <a class="btn" href="javascript:window.print();"><i class="icon-print"></i> Print</a>
-        </div>
-    }
-</h2>
-
-@{ Html.RenderPartial("Tabs\\_Sheet", Model); }
-
-<div class="row-fluid">
-    <div class="span12">
-        <div class="well">
-            <input type="submit" class="btn btn-success" value="Save" />
-        </div>
-    </div>
-</div>
-
-</form>
+    </tbody>
+</table>
 
 <table id="truck-info">
     <tr>
@@ -110,3 +76,10 @@
         <td>_____________________________________</td>
     </tr>
 </table>
+
+<script>
+    jQuery(function ($) {
+        window.print();
+        setTimeout(function () { window.close(); }, 1);
+    });
+</script>

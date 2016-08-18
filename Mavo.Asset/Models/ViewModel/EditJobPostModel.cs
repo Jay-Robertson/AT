@@ -51,6 +51,9 @@ namespace Mavo.Assets.Models.ViewModel
 
         [Display(Name = "Foreman")]
         public int? ForemanId { get; set; }
+
+        public string ForemanName { get; set;  }
+
         [Required]
         public int? ProjectManagerId { get; set; }
         public string ProjectManager { get; set; }
@@ -76,6 +79,7 @@ namespace Mavo.Assets.Models.ViewModel
         public string ReturnedByStr { get; set; }
 
         public IList<PickedAsset> PickedAssets { get; set; }
+        public IList<AssetWithQuantity> Assets { get; set; }
 
         public User SubmittedBy { get; set; }
 
