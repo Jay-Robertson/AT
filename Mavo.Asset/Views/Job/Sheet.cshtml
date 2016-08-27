@@ -20,6 +20,15 @@
             size: landscape;
         }
         #jobheader-printable, #truck-info { display: block; }
+        #screen-title { display: none; }
+        /*form #sheet-column {
+            -webkit-column-width: 400px;
+            -moz-column-width: 400px;
+            column-width: 400px;
+            column-fill: auto;
+            font-size: 10px;
+            line-height: 16px;
+        }*/
     }
 </style>
 
@@ -48,7 +57,7 @@
 
 <form method="post">
 
-    <h2>
+    <h2 id="screen-title">
         @if (null != Model)
     {
         <span>
